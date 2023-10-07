@@ -46,23 +46,12 @@ loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230904/2013248184Vpa3Qq6G.png"
 >&lt;/p>
 &lt;h2 id="計算機單位與轉換">計算機單位與轉換：&lt;/h2>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">1 Byte = 8 bit
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">1 Byte = 8 bit
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024Byte = 1KB
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024KB = 1MB
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024MB = 1GB
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024GB = 1TB
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481pQJXWgXWGg.png"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481pQJXWgXWGg.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481pQJXWgXWGg.png"
 >&lt;/p>

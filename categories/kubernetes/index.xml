@@ -133,35 +133,7 @@ data-flex-basis="350px"
 &lt;ul>
 &lt;li>&lt;strong>添加hosts解析&lt;/strong>&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &amp;gt;&amp;gt;/etc/hosts&lt;span class="s">&amp;lt;&amp;lt;EOF
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &amp;gt;&amp;gt;/etc/hosts&lt;span class="s">&amp;lt;&amp;lt;EOF
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">192.168.1.71 k8s-master71u
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">192.168.1.72 k8s-master72u
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">192.168.1.73 k8s-master73u
@@ -185,9 +157,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.73 k8s-master73u
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.75 k8s-node75u
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.76 k8s-node76u
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="二調整系統配置">二、調整系統配置&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="二調整系統配置">二、調整系統配置&lt;/h2>
 &lt;p>操作節點： 所有的master和node節點（&lt;code>k8s-master,k8s-node&lt;/code>）需要執行&lt;/p>
 &lt;blockquote>
 &lt;p>本章下述操作均以k8s-master為例，其他節點均是相同的操作（ip和hostname的值換成對應機器的真實值）&lt;/p>
@@ -199,70 +169,19 @@ data-flex-basis="350px"
 &lt;ul>
 &lt;li>&lt;strong>關閉防火牆&lt;/strong>&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# ufw status
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# ufw status
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Status: inactive
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;ul>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>&lt;strong>關閉swap&lt;/strong>&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# swapoff -a &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> sysctl -w vm.swappiness&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# swapoff -a &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> sysctl -w vm.swappiness&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vm.swappiness &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sed -i &lt;span class="s1">&amp;#39;s/.*swap.*/#&amp;amp;/g&amp;#39;&lt;/span> /etc/fstab
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#/dev/disk/by-id/dm-uuid-LVM-kAtY9KpfwxzNTDEpBzFkOODzcZgK93hc3OfpHLBwOVbgBZUOZC21pLNScKzDP2aI none swap sw 0 0&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;ul>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>&lt;strong>修改內核參數&lt;/strong>&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &lt;span class="s">&amp;lt;&amp;lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &lt;span class="s">&amp;lt;&amp;lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">overlay
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">br_netfilter
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
@@ -291,62 +210,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# lsmod &lt;span class="p">|&lt;/span>grep -e br_netfilter
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">br_netfilter &lt;span class="m">32768&lt;/span> &lt;span class="m">0&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bridge &lt;span class="m">307200&lt;/span> &lt;span class="m">1&lt;/span> br_netfilter
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt; /etc/sysctl.d/k8s.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &lt;span class="s">&amp;lt;&amp;lt;EOF &amp;gt; /etc/sysctl.d/k8s.conf
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">vm.max_map_count=262144
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">net.ipv4.ip_forward = 1
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">net.bridge.bridge-nf-call-iptables = 1
@@ -395,42 +259,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv4.tcp_max_syn_backlog &lt;span class="o">=&lt;/span> &lt;span class="m">16384&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv4.tcp_timestamps &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.core.somaxconn &lt;span class="o">=&lt;/span> &lt;span class="m">16384&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 報錯&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 報錯&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sysctl: cannot stat /proc/sys/net/netfilter/nf_conntrack_max: 沒有此一檔案或目錄
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -459,84 +288,10 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv4.tcp_max_syn_backlog &lt;span class="o">=&lt;/span> &lt;span class="m">16384&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.ipv4.tcp_timestamps &lt;span class="o">=&lt;/span> &lt;span class="m">0&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">net.core.somaxconn &lt;span class="o">=&lt;/span> &lt;span class="m">16384&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;ul>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>&lt;strong>添加ipvs，安裝套件&lt;/strong>&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;span class="lnt">50
-&lt;/span>&lt;span class="lnt">51
-&lt;/span>&lt;span class="lnt">52
-&lt;/span>&lt;span class="lnt">53
-&lt;/span>&lt;span class="lnt">54
-&lt;/span>&lt;span class="lnt">55
-&lt;/span>&lt;span class="lnt">56
-&lt;/span>&lt;span class="lnt">57
-&lt;/span>&lt;span class="lnt">58
-&lt;/span>&lt;span class="lnt">59
-&lt;/span>&lt;span class="lnt">60
-&lt;/span>&lt;span class="lnt">61
-&lt;/span>&lt;span class="lnt">62
-&lt;/span>&lt;span class="lnt">63
-&lt;/span>&lt;span class="lnt">64
-&lt;/span>&lt;span class="lnt">65
-&lt;/span>&lt;span class="lnt">66
-&lt;/span>&lt;span class="lnt">67
-&lt;/span>&lt;span class="lnt">68
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt -y install ipvsadm ipset sysstat conntrack libseccomp2 libseccomp-dev
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt -y install ipvsadm ipset sysstat conntrack libseccomp2 libseccomp-dev
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat &amp;gt; /etc/modules-load.d/ipvs.conf &lt;span class="s">&amp;lt;&amp;lt; EOF
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">ip_vs
@@ -604,38 +359,11 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nf_conntrack &lt;span class="m">172032&lt;/span> &lt;span class="m">2&lt;/span> nf_nat,ip_vs
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nf_defrag_ipv6 &lt;span class="m">24576&lt;/span> &lt;span class="m">2&lt;/span> nf_conntrack,ip_vs
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">libcrc32c &lt;span class="m">16384&lt;/span> &lt;span class="m">7&lt;/span> nf_conntrack,nf_nat,btrfs,nf_tables,xfs,raid456,ip_vs
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="三安裝docker">三、安裝docker&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="三安裝docker">三、安裝docker&lt;/h2>
 &lt;p>所有的master和node節點（&lt;code>k8s-master,k8s-node&lt;/code>）需要執行&lt;/p>
 &lt;p>&lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
 >https://docs.docker.com/engine/install/ubuntu/&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages to allow apt to use a repository over HTTPS:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install ca-certificates curl gnupg
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -656,46 +384,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 5. Update the apt package index&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看所有的可用版本&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看所有的可用版本&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt-cache madison docker-ce &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{ print $3 }&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5:24.0.6-1~ubuntu.22.04~jammy
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5:24.0.5-1~ubuntu.22.04~jammy
@@ -728,40 +417,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 指定版本，安裝docker-ce&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nv">VERSION_STRING&lt;/span>&lt;span class="o">=&lt;/span>5:20.10.13~3-0~ubuntu-jammy
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo apt-get install docker-ce&lt;span class="o">=&lt;/span>&lt;span class="nv">$VERSION_STRING&lt;/span> docker-ce-cli&lt;span class="o">=&lt;/span>&lt;span class="nv">$VERSION_STRING&lt;/span> containerd.io
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 配置docker使用cgroupdriver=systemd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 配置docker使用cgroupdriver=systemd&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# mkdir -p /etc/docker
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# vim /etc/docker/daemon.json
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>
@@ -788,46 +444,11 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Status: Downloaded newer image &lt;span class="k">for&lt;/span> hello-world:latest
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Hello from Docker!
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="四安裝cri-docker">四、安裝cri-docker&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="四安裝cri-docker">四、安裝cri-docker&lt;/h2>
 &lt;p>所有的master和node節點（&lt;code>k8s-master,k8s-node&lt;/code>）需要執行&lt;/p>
 &lt;p>&lt;a class="link" href="https://github.com/Mirantis/cri-dockerd" target="_blank" rel="noopener"
 >https://github.com/Mirantis/cri-dockerd&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.3/cri-dockerd_0.3.3.3-0.ubuntu-jammy_amd64.deb
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.3/cri-dockerd_0.3.3.3-0.ubuntu-jammy_amd64.deb
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo dpkg -i cri-dockerd_0.3.3.3-0.ubuntu-jammy_amd64.deb
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -856,34 +477,12 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Sep &lt;span class="m">20&lt;/span> 00:44:58 k8s-master71u cri-dockerd&lt;span class="o">[&lt;/span>5055&lt;span class="o">]&lt;/span>: &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;2023-09-20T00:44:58Z&amp;#34;&lt;/span> &lt;span class="nv">level&lt;/span>&lt;span class="o">=&lt;/span>info &lt;span class="nv">msg&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Starting the GRPC backend for &amp;gt;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">Sep 20 00:44:58 k8s-master71u cri-dockerd[5055]: time=&amp;#34;&lt;/span>2023-09-20T00:44:58Z&lt;span class="s2">&amp;#34; level=info msg=&amp;#34;&lt;/span>Start cri-dockerd grpc backend&lt;span class="s2">&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">Sep 20 00:44:58 k8s-master71u systemd[1]: Started CRI Interface for Docker Application Container Engine.
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h1 id="初始化集群">初始化集群&lt;/h1>
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="初始化集群">初始化集群&lt;/h1>
 &lt;h2 id="一安裝kubeadmkubeletkubectl">一、安裝kubeadm、kubelet、kubectl&lt;/h2>
 &lt;p>操作節點： 所有的master和node節點(&lt;code>k8s-master,k8s-node&lt;/code>) 需要執行&lt;/p>
 &lt;p>&lt;a class="link" href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/" target="_blank" rel="noopener"
 >https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages needed to use the Kubernetes apt repository:&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages needed to use the Kubernetes apt repository:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install -y apt-transport-https ca-certificates curl
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -899,26 +498,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 5. Update apt package index, install kubelet, kubeadm and kubectl, and pin their version:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo apt-get install -y &lt;span class="nv">kubelet&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00 &lt;span class="nv">kubeadm&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00 &lt;span class="nv">kubectl&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo apt-get install -y &lt;span class="nv">kubelet&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00 &lt;span class="nv">kubeadm&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00 &lt;span class="nv">kubectl&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 查看kubeadm 版本&lt;/span>
@@ -931,144 +511,11 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">KUBE_PROXY_MODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;ipvs&amp;#34;&lt;/span> &lt;span class="nv">KUBELET_EXTRA_ARGS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;--cgroup-driver=systemd --pod-infra-container-image=registry.k8s.io/pause:3.6&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# systemctl &lt;span class="nb">enable&lt;/span> --now kubelet
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="二安裝配置haproxykeepalived">二、安裝配置haproxy、keepalived&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="二安裝配置haproxykeepalived">二、安裝配置haproxy、keepalived&lt;/h2>
 &lt;p>&lt;font color=red>操作節點： 所有的master&lt;/font>&lt;/p>
 &lt;p>注意：如果有兩個集群，都在同一網段內，/etc/keepalived/keepalived.conf裡面的virtual_router_id 60記得要不一樣，不然/var/log/message會一直報錯。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt-get install keepalived haproxy -y
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt"> 10
-&lt;/span>&lt;span class="lnt"> 11
-&lt;/span>&lt;span class="lnt"> 12
-&lt;/span>&lt;span class="lnt"> 13
-&lt;/span>&lt;span class="lnt"> 14
-&lt;/span>&lt;span class="lnt"> 15
-&lt;/span>&lt;span class="lnt"> 16
-&lt;/span>&lt;span class="lnt"> 17
-&lt;/span>&lt;span class="lnt"> 18
-&lt;/span>&lt;span class="lnt"> 19
-&lt;/span>&lt;span class="lnt"> 20
-&lt;/span>&lt;span class="lnt"> 21
-&lt;/span>&lt;span class="lnt"> 22
-&lt;/span>&lt;span class="lnt"> 23
-&lt;/span>&lt;span class="lnt"> 24
-&lt;/span>&lt;span class="lnt"> 25
-&lt;/span>&lt;span class="lnt"> 26
-&lt;/span>&lt;span class="lnt"> 27
-&lt;/span>&lt;span class="lnt"> 28
-&lt;/span>&lt;span class="lnt"> 29
-&lt;/span>&lt;span class="lnt"> 30
-&lt;/span>&lt;span class="lnt"> 31
-&lt;/span>&lt;span class="lnt"> 32
-&lt;/span>&lt;span class="lnt"> 33
-&lt;/span>&lt;span class="lnt"> 34
-&lt;/span>&lt;span class="lnt"> 35
-&lt;/span>&lt;span class="lnt"> 36
-&lt;/span>&lt;span class="lnt"> 37
-&lt;/span>&lt;span class="lnt"> 38
-&lt;/span>&lt;span class="lnt"> 39
-&lt;/span>&lt;span class="lnt"> 40
-&lt;/span>&lt;span class="lnt"> 41
-&lt;/span>&lt;span class="lnt"> 42
-&lt;/span>&lt;span class="lnt"> 43
-&lt;/span>&lt;span class="lnt"> 44
-&lt;/span>&lt;span class="lnt"> 45
-&lt;/span>&lt;span class="lnt"> 46
-&lt;/span>&lt;span class="lnt"> 47
-&lt;/span>&lt;span class="lnt"> 48
-&lt;/span>&lt;span class="lnt"> 49
-&lt;/span>&lt;span class="lnt"> 50
-&lt;/span>&lt;span class="lnt"> 51
-&lt;/span>&lt;span class="lnt"> 52
-&lt;/span>&lt;span class="lnt"> 53
-&lt;/span>&lt;span class="lnt"> 54
-&lt;/span>&lt;span class="lnt"> 55
-&lt;/span>&lt;span class="lnt"> 56
-&lt;/span>&lt;span class="lnt"> 57
-&lt;/span>&lt;span class="lnt"> 58
-&lt;/span>&lt;span class="lnt"> 59
-&lt;/span>&lt;span class="lnt"> 60
-&lt;/span>&lt;span class="lnt"> 61
-&lt;/span>&lt;span class="lnt"> 62
-&lt;/span>&lt;span class="lnt"> 63
-&lt;/span>&lt;span class="lnt"> 64
-&lt;/span>&lt;span class="lnt"> 65
-&lt;/span>&lt;span class="lnt"> 66
-&lt;/span>&lt;span class="lnt"> 67
-&lt;/span>&lt;span class="lnt"> 68
-&lt;/span>&lt;span class="lnt"> 69
-&lt;/span>&lt;span class="lnt"> 70
-&lt;/span>&lt;span class="lnt"> 71
-&lt;/span>&lt;span class="lnt"> 72
-&lt;/span>&lt;span class="lnt"> 73
-&lt;/span>&lt;span class="lnt"> 74
-&lt;/span>&lt;span class="lnt"> 75
-&lt;/span>&lt;span class="lnt"> 76
-&lt;/span>&lt;span class="lnt"> 77
-&lt;/span>&lt;span class="lnt"> 78
-&lt;/span>&lt;span class="lnt"> 79
-&lt;/span>&lt;span class="lnt"> 80
-&lt;/span>&lt;span class="lnt"> 81
-&lt;/span>&lt;span class="lnt"> 82
-&lt;/span>&lt;span class="lnt"> 83
-&lt;/span>&lt;span class="lnt"> 84
-&lt;/span>&lt;span class="lnt"> 85
-&lt;/span>&lt;span class="lnt"> 86
-&lt;/span>&lt;span class="lnt"> 87
-&lt;/span>&lt;span class="lnt"> 88
-&lt;/span>&lt;span class="lnt"> 89
-&lt;/span>&lt;span class="lnt"> 90
-&lt;/span>&lt;span class="lnt"> 91
-&lt;/span>&lt;span class="lnt"> 92
-&lt;/span>&lt;span class="lnt"> 93
-&lt;/span>&lt;span class="lnt"> 94
-&lt;/span>&lt;span class="lnt"> 95
-&lt;/span>&lt;span class="lnt"> 96
-&lt;/span>&lt;span class="lnt"> 97
-&lt;/span>&lt;span class="lnt"> 98
-&lt;/span>&lt;span class="lnt"> 99
-&lt;/span>&lt;span class="lnt">100
-&lt;/span>&lt;span class="lnt">101
-&lt;/span>&lt;span class="lnt">102
-&lt;/span>&lt;span class="lnt">103
-&lt;/span>&lt;span class="lnt">104
-&lt;/span>&lt;span class="lnt">105
-&lt;/span>&lt;span class="lnt">106
-&lt;/span>&lt;span class="lnt">107
-&lt;/span>&lt;span class="lnt">108
-&lt;/span>&lt;span class="lnt">109
-&lt;/span>&lt;span class="lnt">110
-&lt;/span>&lt;span class="lnt">111
-&lt;/span>&lt;span class="lnt">112
-&lt;/span>&lt;span class="lnt">113
-&lt;/span>&lt;span class="lnt">114
-&lt;/span>&lt;span class="lnt">115
-&lt;/span>&lt;span class="lnt">116
-&lt;/span>&lt;span class="lnt">117
-&lt;/span>&lt;span class="lnt">118
-&lt;/span>&lt;span class="lnt">119
-&lt;/span>&lt;span class="lnt">120
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 所有master節點執行,注意替換最後的master節點IP地址&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt-get install keepalived haproxy -y
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 所有master節點執行,注意替換最後的master節點IP地址&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# vim /etc/haproxy/haproxy.cfg
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">global
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> maxconn &lt;span class="m">2000&lt;/span>
@@ -1188,65 +635,11 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Connected to 192.168.1.74.
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Escape character is &lt;span class="s1">&amp;#39;^]&amp;#39;&lt;/span>.
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Connection closed by foreign host.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="三初始化配置文件">三、初始化配置文件&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="三初始化配置文件">三、初始化配置文件&lt;/h2>
 &lt;p>操作節點： 只在master節點（&lt;code>k8s-master&lt;/code>）執行&lt;/p>
 &lt;p>&lt;a class="link" href="https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/" target="_blank" rel="noopener"
 >https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1.24.0版本之後，需修改為criSocket: unix:///var/run/cri-dockerd.sock&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1.24.0版本之後，需修改為criSocket: unix:///var/run/cri-dockerd.sock&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1.27.x版本之後，需修改為apiVersion: kubeadm.k8s.io/v1beta3，v1beta2不能用了&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># imageRepository: k8s.gcr.io已不更新，改imageRepository: registry.k8s.io&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># clusterName: kubernetes -&amp;gt;依自己需求修改&lt;/span>
@@ -1294,33 +687,9 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> podSubnet: 10.244.0.0/16
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> serviceSubnet: 10.245.0.0/16
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scheduler: &lt;span class="o">{}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="四提前下載鏡像">四、提前下載鏡像&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="四提前下載鏡像">四、提前下載鏡像&lt;/h2>
 &lt;p>操作節點：所有master節點執行&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubeadm config images list --config kubeadm.yaml
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubeadm config images list --config kubeadm.yaml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">registry.k8s.io/kube-apiserver:v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">registry.k8s.io/kube-controller-manager:v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">registry.k8s.io/kube-scheduler:v1.26.3
@@ -1338,57 +707,9 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>config/images&lt;span class="o">]&lt;/span> Pulled registry.k8s.io/pause:3.9
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>config/images&lt;span class="o">]&lt;/span> Pulled registry.k8s.io/etcd:3.5.6-0
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>config/images&lt;span class="o">]&lt;/span> Pulled registry.k8s.io/coredns/coredns:v1.9.3
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="五初始化master節點">五、初始化master節點&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="五初始化master節點">五、初始化master節點&lt;/h2>
 &lt;p>操作節點：只在master節點（&lt;code>k8s-master&lt;/code>）執行，找一台master執行即可&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubeadm init --config kubeadm.yaml --upload-certs
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubeadm init --config kubeadm.yaml --upload-certs
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 若初始化成功後，最後會提示如下信息：&lt;/span>
@@ -1430,37 +751,11 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# mkdir -p &lt;span class="nv">$HOME&lt;/span>/.kube
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo cp -i /etc/kubernetes/admin.conf &lt;span class="nv">$HOME&lt;/span>/.kube/config
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo chown &lt;span class="k">$(&lt;/span>id -u&lt;span class="k">)&lt;/span>:&lt;span class="k">$(&lt;/span>id -g&lt;span class="k">)&lt;/span> &lt;span class="nv">$HOME&lt;/span>/.kube/config
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;blockquote>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
 &lt;p>若執行初始化過程中出錯，根據錯誤信息調整後，執行 kubeadm reset -f ; ipvsadm &amp;ndash;clear ; rm -rf ~/.kube ; rm -rf /etc/kubernetes/manifests/* ; rm -rf /var/lib/etcd/&lt;/p>
 &lt;/blockquote>
 &lt;h2 id="六添加其他master節點到集群中">六、添加其他master節點到集群中&lt;/h2>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># k8s-master72u主機&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># k8s-master72u主機&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:~# kubeadm join 192.168.1.74:7443 --token 7t2weq.bjbawausm0jaxury &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --discovery-token-ca-cert-hash sha256:86af29371fd57d46a8592782fb4ae158035711372c0541449dcadfdc8f7fc243 &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --control-plane --certificate-key a543d4775e0ca9787d4d2936758a3447d189cdae117170512b4de60a23b59e8a &lt;span class="se">\
@@ -1480,25 +775,9 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:~# mkdir -p &lt;span class="nv">$HOME&lt;/span>/.kube
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:~# sudo cp -i /etc/kubernetes/admin.conf &lt;span class="nv">$HOME&lt;/span>/.kube/config
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:~# sudo chown &lt;span class="k">$(&lt;/span>id -u&lt;span class="k">)&lt;/span>:&lt;span class="k">$(&lt;/span>id -g&lt;span class="k">)&lt;/span> &lt;span class="nv">$HOME&lt;/span>/.kube/config
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="七添加node節點到集群中">七、添加node節點到集群中&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="七添加node節點到集群中">七、添加node節點到集群中&lt;/h2>
 &lt;p>操作節點：所有的node節點（&lt;code>k8s-node&lt;/code>）需要執行 在每台node節點，執行如下命令，該命令是在kubeadm init成功後提示信息中打印出來的，需要替換成實際init後打印出的命令。&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># k8s-node75u主機&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># k8s-node75u主機&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# kubeadm join 192.168.1.74:7443 --token 7t2weq.bjbawausm0jaxury &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --discovery-token-ca-cert-hash sha256:86af29371fd57d46a8592782fb4ae158035711372c0541449dcadfdc8f7fc243 &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --cri-socket&lt;span class="o">=&lt;/span>unix:///var/run/cri-dockerd.sock
@@ -1508,141 +787,22 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# kubeadm join 192.168.1.74:7443 --token 7t2weq.bjbawausm0jaxury &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --discovery-token-ca-cert-hash sha256:86af29371fd57d46a8592782fb4ae158035711372c0541449dcadfdc8f7fc243 &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --cri-socket&lt;span class="o">=&lt;/span>unix:///var/run/cri-dockerd.sock
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>如果忘記添加命令，可以通過如下命令生成：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ kubeadm token create --print-join-command
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>查看目前node狀況:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get node
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果忘記添加命令，可以通過如下命令生成：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ kubeadm token create --print-join-command
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>查看目前node狀況:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get node
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME STATUS ROLES AGE VERSION
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master71u NotReady control-plane 10m v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master72u NotReady control-plane 3m58s v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master73u NotReady control-plane 2m57s v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node75u NotReady &amp;lt;none&amp;gt; 55s v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node76u NotReady &amp;lt;none&amp;gt; 51s v1.26.3
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="部署容器網絡calico">部署容器網絡（calico）&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="部署容器網絡calico">部署容器網絡（calico）&lt;/h2>
 &lt;p>操作節點：只在master節點（&lt;code>k8s-master&lt;/code>）執行，找一台master執行即可，CNI&lt;/p>
 &lt;p>Calico是一個純三層的數據中心網絡方案，是目前Kubernetes主流的網絡方案。&lt;/p>
 &lt;p>&lt;a class="link" href="https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart" target="_blank" rel="noopener"
 >https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;span class="lnt">50
-&lt;/span>&lt;span class="lnt">51
-&lt;/span>&lt;span class="lnt">52
-&lt;/span>&lt;span class="lnt">53
-&lt;/span>&lt;span class="lnt">54
-&lt;/span>&lt;span class="lnt">55
-&lt;/span>&lt;span class="lnt">56
-&lt;/span>&lt;span class="lnt">57
-&lt;/span>&lt;span class="lnt">58
-&lt;/span>&lt;span class="lnt">59
-&lt;/span>&lt;span class="lnt">60
-&lt;/span>&lt;span class="lnt">61
-&lt;/span>&lt;span class="lnt">62
-&lt;/span>&lt;span class="lnt">63
-&lt;/span>&lt;span class="lnt">64
-&lt;/span>&lt;span class="lnt">65
-&lt;/span>&lt;span class="lnt">66
-&lt;/span>&lt;span class="lnt">67
-&lt;/span>&lt;span class="lnt">68
-&lt;/span>&lt;span class="lnt">69
-&lt;/span>&lt;span class="lnt">70
-&lt;/span>&lt;span class="lnt">71
-&lt;/span>&lt;span class="lnt">72
-&lt;/span>&lt;span class="lnt">73
-&lt;/span>&lt;span class="lnt">74
-&lt;/span>&lt;span class="lnt">75
-&lt;/span>&lt;span class="lnt">76
-&lt;/span>&lt;span class="lnt">77
-&lt;/span>&lt;span class="lnt">78
-&lt;/span>&lt;span class="lnt">79
-&lt;/span>&lt;span class="lnt">80
-&lt;/span>&lt;span class="lnt">81
-&lt;/span>&lt;span class="lnt">82
-&lt;/span>&lt;span class="lnt">83
-&lt;/span>&lt;span class="lnt">84
-&lt;/span>&lt;span class="lnt">85
-&lt;/span>&lt;span class="lnt">86
-&lt;/span>&lt;span class="lnt">87
-&lt;/span>&lt;span class="lnt">88
-&lt;/span>&lt;span class="lnt">89
-&lt;/span>&lt;span class="lnt">90
-&lt;/span>&lt;span class="lnt">91
-&lt;/span>&lt;span class="lnt">92
-&lt;/span>&lt;span class="lnt">93
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# mkdir calico
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# mkdir calico
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nb">cd&lt;/span> calico/
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -1735,41 +895,17 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kube-scheduler-k8s-master71u 1/1 Running &lt;span class="m">1&lt;/span> &lt;span class="o">(&lt;/span>24m ago&lt;span class="o">)&lt;/span> 31m
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kube-scheduler-k8s-master72u 1/1 Running &lt;span class="m">0&lt;/span> 24m
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kube-scheduler-k8s-master73u 1/1 Running &lt;span class="m">0&lt;/span> 22m
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>註：以後所有yaml文件都只在Master節點執行。&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>註：以後所有yaml文件都只在Master節點執行。&lt;/p>
 &lt;p>安裝目錄：/etc/kubernetes/&lt;/p>
 &lt;p>組件配置文件目錄：/etc/kubernetes/manifests/&lt;/p>
 &lt;h1 id="集群設置">集群設置&lt;/h1>
 &lt;h2 id="設置master節點是否可調度可選">設置master節點是否可調度（可選）&lt;/h2>
 &lt;p>操作節點：&lt;code>k8s-master&lt;/code>&lt;/p>
 &lt;p>默認部署成功後，master節點無法調度業務pod，如需設置master節點也可以參與pod的調度，需執行：&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ kubectl taint node k8s-master node-role.kubernetes.io/master:NoSchedule-
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="設置kubectl自動補全">設置kubectl自動補全&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ kubectl taint node k8s-master node-role.kubernetes.io/master:NoSchedule-
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="設置kubectl自動補全">設置kubectl自動補全&lt;/h2>
 &lt;p>操作節點：&lt;code>k8s-master&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt install -y bash-completion
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt install -y bash-completion
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# apt install plocate
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -1780,113 +916,9 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nb">source&lt;/span> &amp;lt;&lt;span class="o">(&lt;/span>kubectl completion bash&lt;span class="o">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;source &amp;lt;(kubectl completion bash)&amp;#34;&lt;/span> &amp;gt;&amp;gt; ~/.bashrc
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h1 id="調整證書過期">調整證書過期&lt;/h1>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="調整證書過期">調整證書過期&lt;/h1>
 &lt;p>使用kubeadm安裝的集群，證書默認有效期為1年，可以通過如下方式修改為10年。&lt;strong>全部master節點都要執行&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;span class="lnt">50
-&lt;/span>&lt;span class="lnt">51
-&lt;/span>&lt;span class="lnt">52
-&lt;/span>&lt;span class="lnt">53
-&lt;/span>&lt;span class="lnt">54
-&lt;/span>&lt;span class="lnt">55
-&lt;/span>&lt;span class="lnt">56
-&lt;/span>&lt;span class="lnt">57
-&lt;/span>&lt;span class="lnt">58
-&lt;/span>&lt;span class="lnt">59
-&lt;/span>&lt;span class="lnt">60
-&lt;/span>&lt;span class="lnt">61
-&lt;/span>&lt;span class="lnt">62
-&lt;/span>&lt;span class="lnt">63
-&lt;/span>&lt;span class="lnt">64
-&lt;/span>&lt;span class="lnt">65
-&lt;/span>&lt;span class="lnt">66
-&lt;/span>&lt;span class="lnt">67
-&lt;/span>&lt;span class="lnt">68
-&lt;/span>&lt;span class="lnt">69
-&lt;/span>&lt;span class="lnt">70
-&lt;/span>&lt;span class="lnt">71
-&lt;/span>&lt;span class="lnt">72
-&lt;/span>&lt;span class="lnt">73
-&lt;/span>&lt;span class="lnt">74
-&lt;/span>&lt;span class="lnt">75
-&lt;/span>&lt;span class="lnt">76
-&lt;/span>&lt;span class="lnt">77
-&lt;/span>&lt;span class="lnt">78
-&lt;/span>&lt;span class="lnt">79
-&lt;/span>&lt;span class="lnt">80
-&lt;/span>&lt;span class="lnt">81
-&lt;/span>&lt;span class="lnt">82
-&lt;/span>&lt;span class="lnt">83
-&lt;/span>&lt;span class="lnt">84
-&lt;/span>&lt;span class="lnt">85
-&lt;/span>&lt;span class="lnt">86
-&lt;/span>&lt;span class="lnt">87
-&lt;/span>&lt;span class="lnt">88
-&lt;/span>&lt;span class="lnt">89
-&lt;/span>&lt;span class="lnt">90
-&lt;/span>&lt;span class="lnt">91
-&lt;/span>&lt;span class="lnt">92
-&lt;/span>&lt;span class="lnt">93
-&lt;/span>&lt;span class="lnt">94
-&lt;/span>&lt;span class="lnt">95
-&lt;/span>&lt;span class="lnt">96
-&lt;/span>&lt;span class="lnt">97
-&lt;/span>&lt;span class="lnt">98
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/calico# &lt;span class="nb">cd&lt;/span> /etc/kubernetes/pki
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/calico# &lt;span class="nb">cd&lt;/span> /etc/kubernetes/pki
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/etc/kubernetes/pki# &lt;span class="k">for&lt;/span> i in &lt;span class="k">$(&lt;/span>ls *.crt&lt;span class="k">)&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;===== &lt;/span>&lt;span class="nv">$i&lt;/span>&lt;span class="s2"> =====&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> openssl x509 -in &lt;span class="nv">$i&lt;/span> -text -noout &lt;span class="p">|&lt;/span> grep -A &lt;span class="m">3&lt;/span> &lt;span class="s1">&amp;#39;Validity&amp;#39;&lt;/span> &lt;span class="p">;&lt;/span> &lt;span class="k">done&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">=====&lt;/span> apiserver.crt &lt;span class="o">=====&lt;/span>
@@ -1984,57 +1016,9 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Not Before: Sep &lt;span class="m">20&lt;/span> 05:17:59 &lt;span class="m">2023&lt;/span> GMT
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Not After : Sep &lt;span class="m">17&lt;/span> 05:17:59 &lt;span class="m">2033&lt;/span> GMT
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Subject: &lt;span class="nv">CN&lt;/span> &lt;span class="o">=&lt;/span> front-proxy-client
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h1 id="驗證集群">驗證集群&lt;/h1>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="驗證集群">驗證集群&lt;/h1>
 &lt;p>操作節點： 在master節點（&lt;code>k8s-master&lt;/code>）執行&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get nodes
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get nodes
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME STATUS ROLES AGE VERSION
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master71u Ready control-plane 39m v1.26.3
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master72u Ready control-plane 32m v1.26.3
@@ -2076,9 +1060,7 @@ data-flex-basis="350px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;p&amp;gt;&amp;lt;em&amp;gt;Thank you &lt;span class="k">for&lt;/span> using nginx.&amp;lt;/em&amp;gt;&amp;lt;/p&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;/body&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;/html&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</link><pubDate>Sat, 07 Oct 2023 02:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620.png"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</link><pubDate>Sat, 07 Oct 2023 02:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620.png"
 width="1185"
 height="787"
 srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620_hu5a39cd61ec6101b6320b865185a3e4e0_367454_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620_hu5a39cd61ec6101b6320b865185a3e4e0_367454_1024x0_resize_box_3.png 1024w"
@@ -2106,23 +1088,12 @@ data-flex-basis="319px"
 >&lt;/p>
 &lt;h2 id="一rancher-server安裝">一、Rancher Server安裝&lt;/h2>
 &lt;h3 id="一使用docker起容器">一、使用docker起容器&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# sudo docker run --privileged -d --restart&lt;span class="o">=&lt;/span>unless-stopped -p 80:80 -p 443:443 rancher/rancher
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# sudo docker run --privileged -d --restart&lt;span class="o">=&lt;/span>unless-stopped -p 80:80 -p 443:443 rancher/rancher
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# docker ps
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">0e92a3ece9cd rancher/rancher &lt;span class="s2">&amp;#34;entrypoint.sh&amp;#34;&lt;/span> &lt;span class="m">4&lt;/span> minutes ago Up About a minute 0.0.0.0:80-&amp;gt;80/tcp, :::80-&amp;gt;80/tcp, 0.0.0.0:443-&amp;gt;443/tcp, :::443-&amp;gt;443/tcp dreamy_rubin
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="二查看初始密碼">二、查看初始密碼&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="二查看初始密碼">二、查看初始密碼&lt;/h3>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920175456.png"
 width="766"
 height="755"
@@ -2133,17 +1104,9 @@ class="gallery-image"
 data-flex-grow="101"
 data-flex-basis="243px"
 >&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# docker logs 0e92a3ece9cd 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="p">|&lt;/span> grep &lt;span class="s2">&amp;#34;Bootstrap Password:&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# docker logs 0e92a3ece9cd 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="p">|&lt;/span> grep &lt;span class="s2">&amp;#34;Bootstrap Password:&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023/09/20 09:50:01 &lt;span class="o">[&lt;/span>INFO&lt;span class="o">]&lt;/span> Bootstrap Password: 79j4khgd9952rmn55kdntxt7kwxfn7f7dvpmrsgx6nr7wqblrtpp6l
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="三登入">三、登入&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="三登入">三、登入&lt;/h3>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920175658.png"
 width="783"
 height="768"
@@ -2221,20 +1184,7 @@ class="gallery-image"
 data-flex-grow="193"
 data-flex-basis="464px"
 >&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;span class="lnt">9
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># master節點執行&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># master節點執行&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# curl --insecure -sfL https://192.168.1.75/v3/import/ff4mlx8k768hsz8vmwl89lqhbmcsfbttkxqdtmk4m8pgqsrnd87pqc_c-m-gq2vbtfn.yaml &lt;span class="p">|&lt;/span> kubectl apply -f -
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看pod是否都創建成功&lt;/span>
@@ -2243,9 +1193,7 @@ data-flex-basis="464px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cattle-cluster-agent-6c97c478bb-mjgwg 1/1 Running &lt;span class="m">0&lt;/span> 5m 10.244.14.137 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cattle-cluster-agent-6c97c478bb-vdn59 1/1 Running &lt;span class="m">0&lt;/span> 16m 10.244.255.199 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-webhook-74c9bd4d6-znrdp 1/1 Running &lt;span class="m">0&lt;/span> 61s 10.244.255.201 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="五確認現有集群已加入納管">五、確認現有集群已加入納管&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="五確認現有集群已加入納管">五、確認現有集群已加入納管&lt;/h3>
 &lt;p>加入rancher需要一點時間，請耐心等候，如果鏡像拉取失敗，可以手動去下載鏡像&lt;/p>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920183031.png"
 width="1573"
@@ -2278,25 +1226,13 @@ class="gallery-image"
 data-flex-grow="165"
 data-flex-basis="396px"
 >&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n cattle-system -o wide
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n cattle-system -o wide
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cattle-cluster-agent-6c97c478bb-mjgwg 1/1 Running &lt;span class="m">0&lt;/span> 6m11s 10.244.14.137 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cattle-cluster-agent-6c97c478bb-vdn59 1/1 Running &lt;span class="m">0&lt;/span> 17m 10.244.255.199 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dashboard-shell-75g77 2/2 Running &lt;span class="m">0&lt;/span> 9s 10.244.255.202 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-webhook-74c9bd4d6-znrdp 1/1 Running &lt;span class="m">0&lt;/span> 2m12s 10.244.255.201 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="三加入windows-server-active-directory-ldap">三、加入Windows Server Active Directory (LDAP)&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="三加入windows-server-active-directory-ldap">三、加入Windows Server Active Directory (LDAP)&lt;/h2>
 &lt;p>Rancher官網設定網址： &lt;a class="link" href="https://ranchermanager.docs.rancher.com/zh/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/authentication-config/configure-active-directory" target="_blank" rel="noopener"
 >https://ranchermanager.docs.rancher.com/zh/how-to-guides/new-user-guides/authentication-permissions-and-global-configuration/authentication-config/configure-active-directory&lt;/a>&lt;/p>
 &lt;h3 id="一查看可以整合登入驗證的方式">一、查看可以整合登入驗證的方式&lt;/h3>
@@ -2362,73 +1298,7 @@ data-flex-grow="142"
 data-flex-basis="341px"
 >&lt;/p>
 &lt;h3 id="三使用ldapsearch測試一下是否可以查找到剛剛建立的使用者資訊">三、使用ldapsearch測試一下，是否可以查找到剛剛建立的使用者資訊&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;span class="lnt">50
-&lt;/span>&lt;span class="lnt">51
-&lt;/span>&lt;span class="lnt">52
-&lt;/span>&lt;span class="lnt">53
-&lt;/span>&lt;span class="lnt">54
-&lt;/span>&lt;span class="lnt">55
-&lt;/span>&lt;span class="lnt">56
-&lt;/span>&lt;span class="lnt">57
-&lt;/span>&lt;span class="lnt">58
-&lt;/span>&lt;span class="lnt">59
-&lt;/span>&lt;span class="lnt">60
-&lt;/span>&lt;span class="lnt">61
-&lt;/span>&lt;span class="lnt">62
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % ldapsearch -x -H &lt;span class="s2">&amp;#34;ldap://192.168.1.49:389&amp;#34;&lt;/span> -D &lt;span class="s2">&amp;#34;jimmyhome\rancheruser&amp;#34;&lt;/span> -w &lt;span class="s2">&amp;#34;密碼&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % ldapsearch -x -H &lt;span class="s2">&amp;#34;ldap://192.168.1.49:389&amp;#34;&lt;/span> -D &lt;span class="s2">&amp;#34;jimmyhome\rancheruser&amp;#34;&lt;/span> -w &lt;span class="s2">&amp;#34;密碼&amp;#34;&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -b &lt;span class="s2">&amp;#34;dc=jimmyhome,dc=tw&amp;#34;&lt;/span> -s sub &lt;span class="s2">&amp;#34;sAMAccountName=rancheruser&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># extended LDIF&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
@@ -2490,9 +1360,7 @@ data-flex-basis="341px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># numResponses: 5&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># numEntries: 1&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># numReferences: 3&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="四整合ad驗證">四、整合AD驗證&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="四整合ad驗證">四、整合AD驗證&lt;/h3>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920195828.png"
 width="1565"
 height="752"
@@ -2676,33 +1544,7 @@ class="gallery-image"
 data-flex-grow="308"
 data-flex-basis="739px"
 >&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. 將下載的設定檔，scp到常用linux主機&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. 將下載的設定檔，scp到常用linux主機&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % scp /Users/chenqingze/Downloads/kubernetes-config.yml root@192.168.1.76:/root/
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 2. 可以看到設定檔&lt;/span>
@@ -2724,9 +1566,7 @@ data-flex-basis="739px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 6. 其他namespace下的資源，是無法查看的&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# kubectl get pod -n kube-system
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Error from server &lt;span class="o">(&lt;/span>Forbidden&lt;span class="o">)&lt;/span>: pods is forbidden: User &lt;span class="s2">&amp;#34;u-hx7xy6ap22&amp;#34;&lt;/span> cannot list resource &lt;span class="s2">&amp;#34;pods&amp;#34;&lt;/span> in API group &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span> in the namespace &lt;span class="s2">&amp;#34;kube-system&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>使用Helm安裝Rancher管理平台，納管現有k8s集群( 高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/</link><pubDate>Sat, 07 Oct 2023 01:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936.png"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用Helm安裝Rancher管理平台，納管現有k8s集群( 高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/</link><pubDate>Sat, 07 Oct 2023 01:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936.png"
 width="1323"
 height="728"
 srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_1024x0_resize_box_3.png 1024w"
@@ -2746,61 +1586,7 @@ data-flex-basis="436px"
 &lt;p>github網址:&lt;/p>
 &lt;p>&lt;a class="link" href="https://github.com/kubernetes/ingress-nginx" target="_blank" rel="noopener"
 >https://github.com/kubernetes/ingress-nginx&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;span class="lnt">41
-&lt;/span>&lt;span class="lnt">42
-&lt;/span>&lt;span class="lnt">43
-&lt;/span>&lt;span class="lnt">44
-&lt;/span>&lt;span class="lnt">45
-&lt;/span>&lt;span class="lnt">46
-&lt;/span>&lt;span class="lnt">47
-&lt;/span>&lt;span class="lnt">48
-&lt;/span>&lt;span class="lnt">49
-&lt;/span>&lt;span class="lnt">50
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % scp /Users/chenqingze/Downloads/ingress-nginx-controller-v1.6.4.tar.gz root@192.168.1.71:/root
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % scp /Users/chenqingze/Downloads/ingress-nginx-controller-v1.6.4.tar.gz root@192.168.1.71:/root
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# tar -xzvf ingress-nginx-controller-v1.6.4.tar.gz
@@ -2850,55 +1636,22 @@ data-flex-basis="436px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-admission-patch-rlglf 0/1 Completed &lt;span class="m">0&lt;/span> 73s 10.244.14.133 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-controller-js2fl 1/1 Running &lt;span class="m">0&lt;/span> 73s 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-controller-mmc2h 1/1 Running &lt;span class="m">0&lt;/span> 73s 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="二kubectl與helm-cli-工具安裝">二、Kubectl與Helm CLI 工具安裝&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="二kubectl與helm-cli-工具安裝">二、Kubectl與Helm CLI 工具安裝&lt;/h2>
 &lt;p>官方安裝網站： &lt;a class="link" href="https://helm.sh/docs/intro/install/" target="_blank" rel="noopener"
 >https://helm.sh/docs/intro/install/&lt;/a>&lt;/p>
 &lt;p>Helm v3.12.3 Binary Releases：
 &lt;a class="link" href="https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz" target="_blank" rel="noopener"
 >https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz&lt;/a>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# wget https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# wget https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# tar -zxvf helm-v3.12.3-linux-amd64.tar.gz
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# mv linux-amd64/helm /usr/local/bin/helm
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Kubectl：
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Kubectl：
 &lt;a class="link" href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/" target="_blank" rel="noopener"
 >https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/&lt;/a>&lt;/p>
 &lt;p>如果主機就是master,應該都有kubectl了,此流程可以略過&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages needed to use the Kubernetes apt repository:&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages needed to use the Kubernetes apt repository:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install -y apt-transport-https ca-certificates curl
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -2914,81 +1667,22 @@ data-flex-basis="436px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 5. Update apt package index, install kubelet, kubeadm and kubectl, and pin their version:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo apt-get install -y &lt;span class="nv">kubectl&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo apt-get install -y &lt;span class="nv">kubectl&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看版本&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl version
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="三rancher高可用管理平台安裝">三、Rancher高可用管理平台安裝&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="三rancher高可用管理平台安裝">三、Rancher高可用管理平台安裝&lt;/h2>
 &lt;h3 id="一添加-helm-chart-倉庫">一、添加 Helm Chart 倉庫&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;rancher-stable&amp;#34;&lt;/span> has been added to your repositories
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="二為-rancher-建立命名空間">二、為 Rancher 建立命名空間&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl create namespace cattle-system
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="三選擇-ssl-配置">三、選擇 SSL 配置&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="二為-rancher-建立命名空間">二、為 Rancher 建立命名空間&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl create namespace cattle-system
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="三選擇-ssl-配置">三、選擇 SSL 配置&lt;/h3>
 &lt;p>Rancher 產生的憑證（預設）
 需要 cert-manager&lt;/p>
 &lt;h3 id="四安裝-cert-manager">四、安裝 cert-manager&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果你手動安裝了CRD，而不是在 Helm 安裝命令中添加了 &amp;#39;--set installCRDs=true&amp;#39; 選項，你應該在升級 Helm Chart 之前升級 CRD 資源。&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -3015,55 +1709,13 @@ data-flex-basis="436px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-cainjector-56bbdd5c47-4hngr 1/1 Running &lt;span class="m">0&lt;/span> 2m1s
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-startupapicheck-vzq7z 0/1 Completed &lt;span class="m">0&lt;/span> 2m
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-webhook-d4f4545d7-rhbkv 1/1 Running &lt;span class="m">0&lt;/span> 2m1s
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="五根據你選擇的證書選項通過-helm-安裝-rancher">五、根據你選擇的證書選項，通過 Helm 安裝 Rancher&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="五根據你選擇的證書選項通過-helm-安裝-rancher">五、根據你選擇的證書選項，通過 Helm 安裝 Rancher&lt;/h3>
 &lt;p>採Rancher 生成的證書方式&lt;/p>
 &lt;p>Rancher Helm Chart 選項：
 &lt;a class="link" href="https://ranchermanager.docs.rancher.com/zh/getting-started/installation-and-upgrade/installation-references/helm-chart-options" target="_blank" rel="noopener"
 >https://ranchermanager.docs.rancher.com/zh/getting-started/installation-and-upgrade/installation-references/helm-chart-options&lt;/a>&lt;/p>
 &lt;p>&lt;font color=red>需多指定ingressClassName為nginx&lt;/font>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm install rancher rancher-stable/rancher &lt;span class="se">\
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm install rancher rancher-stable/rancher &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --namespace cattle-system &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --set &lt;span class="nv">hostname&lt;/span>&lt;span class="o">=&lt;/span>rancher.jimmyhome.tw &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --set &lt;span class="nv">bootstrapPassword&lt;/span>&lt;span class="o">=&lt;/span>admin &lt;span class="se">\
@@ -3099,64 +1751,26 @@ data-flex-basis="436px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Happy Containering!
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 等待 Rancher 運行&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 等待 Rancher 運行&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system rollout status deploy/rancher
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Waiting &lt;span class="k">for&lt;/span> deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> rollout to finish: &lt;span class="m">0&lt;/span> of &lt;span class="m">3&lt;/span> updated replicas are available...
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Waiting &lt;span class="k">for&lt;/span> deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> rollout to finish: &lt;span class="m">1&lt;/span> of &lt;span class="m">3&lt;/span> updated replicas are available...
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Waiting &lt;span class="k">for&lt;/span> deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> rollout to finish: &lt;span class="m">2&lt;/span> of &lt;span class="m">3&lt;/span> updated replicas are available...
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> successfully rolled out
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="六驗證-rancher-server-是否部署成功">六、驗證 Rancher Server 是否部署成功&lt;/h3>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system get deploy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="六驗證-rancher-server-是否部署成功">六、驗證 Rancher Server 是否部署成功&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system get deploy
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY UP-TO-DATE AVAILABLE AGE
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher 3/3 &lt;span class="m">3&lt;/span> &lt;span class="m">3&lt;/span> 53s
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system get ingress
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME CLASS HOSTS ADDRESS PORTS AGE
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher nginx rancher.jimmyhome.tw 192.168.1.75,192.168.1.76 80, &lt;span class="m">443&lt;/span> 67s
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 我自己的筆電，先設定/etc/hosts測試網頁訪問&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 我自己的筆電，先設定/etc/hosts測試網頁訪問&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如是內部有dns server的，就到dns server設定a record解析&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % sudo vim /etc/hosts
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.75 rancher.jimmyhome.tw
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>打 &lt;a class="link" href="https://rancher.jimmyhome.tw" target="_blank" rel="noopener"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>打 &lt;a class="link" href="https://rancher.jimmyhome.tw" target="_blank" rel="noopener"
 >https://rancher.jimmyhome.tw&lt;/a> 可以看到網頁
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023255.png"
 width="1010"
@@ -3169,19 +1783,7 @@ data-flex-grow="112"
 data-flex-basis="271px"
 >
 由上方helm install rancher完成時，可以看到以下兩個指令，可以獲取到預設admin帳號的密碼&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># If this is the first time you installed Rancher, get started by running this command and clicking the URL it generates&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># If this is the first time you installed Rancher, get started by running this command and clicking the URL it generates&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nb">echo&lt;/span> https://rancher.jimmyhome.tw/dashboard/?setup&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>kubectl get secret --namespace cattle-system bootstrap-secret -o go-template&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{{.data.bootstrapPassword|base64decode}}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://rancher.jimmyhome.tw/dashboard/?setup&lt;span class="o">=&lt;/span>admin
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -3189,9 +1791,7 @@ data-flex-basis="271px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># To get just the bootstrap password on its own, run&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get secret --namespace cattle-system bootstrap-secret -o go-template&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{{.data.bootstrapPassword|base64decode}}{{ &amp;#34;\n&amp;#34; }}&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">admin
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>重設admin帳號的密碼
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>重設admin帳號的密碼
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023557.png"
 width="1008"
 height="893"
