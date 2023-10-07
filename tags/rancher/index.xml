@@ -1078,9 +1078,15 @@ data-flex-basis="436px"
 &lt;/div>
 &lt;/div>&lt;p>打 &lt;a class="link" href="https://rancher.jimmyhome.tw" target="_blank" rel="noopener"
 >https://rancher.jimmyhome.tw&lt;/a> 可以看到網頁
-&lt;img src="https://blog.goldfishbrain-fighting.com/Pasted-image-20230921023255.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/p/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%9Drancher%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0%E7%B4%8D%E7%AE%A1%E7%8F%BE%E6%9C%89k8s%E9%9B%86%E7%BE%A4-%E9%AB%98%E5%8F%AF%E7%94%A8/media/Pasted-image-20230921023255.png"
+width="1010"
+height="894"
+srcset="https://blog.goldfishbrain-fighting.com/p/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%9Drancher%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0%E7%B4%8D%E7%AE%A1%E7%8F%BE%E6%9C%89k8s%E9%9B%86%E7%BE%A4-%E9%AB%98%E5%8F%AF%E7%94%A8/media/Pasted-image-20230921023255_hu255ddf89689e804c5d835315e9863c95_89733_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/p/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%9Drancher%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0%E7%B4%8D%E7%AE%A1%E7%8F%BE%E6%9C%89k8s%E9%9B%86%E7%BE%A4-%E9%AB%98%E5%8F%AF%E7%94%A8/media/Pasted-image-20230921023255_hu255ddf89689e804c5d835315e9863c95_89733_1024x0_resize_box_3.png 1024w"
 loading="lazy"
-alt="Pasted-image-20230921023255.png"
+alt="media/Pasted-image-20230921023255.png"
+class="gallery-image"
+data-flex-grow="112"
+data-flex-basis="271px"
 >
 由上方helm install rancher完成時，可以看到以下兩個指令，可以獲取到預設admin帳號的密碼&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
