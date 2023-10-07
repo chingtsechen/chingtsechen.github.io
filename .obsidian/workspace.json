@@ -181,8 +181,10 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "700fc2ff591b7c8e",
+  "active": "2b9beb72094d6f8b",
   "lastOpenFiles": [
+    "assets/scss/custom.scss",
+    "content/post/kubernetes/kubernetes-helm/index.md",
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023255.png",
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230922172936.png",
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031746.png",
@@ -190,7 +192,6 @@
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031249.png",
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031136.png",
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023557.png",
-    "content/post/kubernetes/kubernetes-helm/index.md",
     "README.md",
     "layouts/sitemap.xml",
     "obs_sctipts",
@@ -209,7 +210,6 @@
     "8. blog/chingtsechen.github.io/static/google34ccbe637eb45edc.html",
     "8. blog/chingtsechen.github.io/static/favicon.png",
     "8. blog/chingtsechen.github.io/static/favicon-2.png",
-    "8. blog/chingtsechen.github.io/static/favicon-3.png",
     "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day04/index.md",
     "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day03/index.md",
     "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day02/index.md",
