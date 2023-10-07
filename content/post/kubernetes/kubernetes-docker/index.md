@@ -1,16 +1,16 @@
 ---
 title: 使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)
-description:
-slug: 
+description: 
+slug: kubernetes-docker
 date: 2023-10-07 02:00:00+0800
 image: 
 categories:
-    - kubernetes
+  - kubernetes
 tags:
-    - kubernetes
-    - docker
-    - rancher
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - kubernetes
+  - docker
+  - rancher
+weight: 1
 ---
 
 

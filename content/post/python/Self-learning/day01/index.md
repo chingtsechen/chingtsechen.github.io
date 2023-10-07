@@ -1,16 +1,16 @@
 ---
 title: Day01 - Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹
-description:
-slug: 
+description: 
+slug: python-self-learning-day01
 date: 2023-10-07 02:45:00+0800
 image: 
 categories:
-    - python
+  - python
 tags:
-    - python
-    - markdown
-    - blog
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - python
+  - markdown
+  - blog
+weight: 1
 ---
 
 

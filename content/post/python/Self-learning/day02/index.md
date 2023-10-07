@@ -1,14 +1,14 @@
 ---
 title: Day02 - 計算機三大核心，操作系統，程式語言分類，Python解釋器，Mac、Windows電腦安裝Python解釋器
-description:
-slug: 
+description: 
+slug: python-self-learning-day02
 date: 2023-10-07 02:50:00+0800
 image: 
 categories:
-    - python
+  - python
 tags:
-    - python
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - python
+weight: 1
 ---
 
 # 今日內容概要

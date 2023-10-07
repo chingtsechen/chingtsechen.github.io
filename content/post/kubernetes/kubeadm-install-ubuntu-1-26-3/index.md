@@ -1,17 +1,17 @@
 ---
 title: kubeadm安裝 高可用版(ubuntu2204+k8s版本1.26.3+docker+cri-docker)
-description:
-slug: 
+description: 
+slug: kubernetes-install
 date: 2023-10-07 02:30:00+0800
 image: 
 categories:
-    - kubernetes
+  - kubernetes
 tags:
-    - kubernetes
-    - ubuntu
-    - docker
-    - cri-docker
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - kubernetes
+  - ubuntu
+  - docker
+  - cri-docker
+weight: 1
 ---
 
 ![media/Pasted-image-20230919205815.png](media/Pasted-image-20230919205815.png)

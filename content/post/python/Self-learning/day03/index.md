@@ -1,15 +1,15 @@
 ---
 title: Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)
-description:
-slug: 
+description: 
+slug: python-self-learning-day03
 date: 2023-10-07 03:00:00+0800
 image: 
 categories:
-    - python
+  - python
 tags:
-    - python
-    - pycharm
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - python
+  - pycharm
+weight: 1
 ---
 
 

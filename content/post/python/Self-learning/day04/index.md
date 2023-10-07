@@ -1,14 +1,14 @@
 ---
 title: Day04 - 基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題
-description:
-slug: 
+description: 
+slug: python-self-learning-day04
 date: 2023-10-07 03:02:00+0800
 image: 
 categories:
-    - python
+  - python
 tags:
-    - python
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - python
+weight: 1
 ---
 
 # 今日内容概要

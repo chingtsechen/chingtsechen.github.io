@@ -13,18 +13,10 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/page/search/index.md",
+                "file": "content/post/kubernetes/kubernetes-helm/index.md",
                 "mode": "preview",
                 "source": true
               }
-            }
-          },
-          {
-            "id": "c40b0aa7205eb137",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
             }
           }
         ]
@@ -112,7 +104,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/page/search/index.md"
+                "file": "content/post/kubernetes/kubernetes-helm/index.md"
               }
             }
           },
@@ -122,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/page/search/index.md",
+                "file": "content/post/kubernetes/kubernetes-helm/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/page/search/index.md",
+                "file": "content/post/kubernetes/kubernetes-helm/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +153,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "content/page/search/index.md"
+                "file": "content/post/kubernetes/kubernetes-helm/index.md"
               }
             }
           }
@@ -191,8 +183,21 @@
   },
   "active": "b5f81ab095712d6c",
   "lastOpenFiles": [
-    "content/page/archives/index.md",
+    "content/_index.md",
+    "content/post/python/Self-learning/day04/index.md",
+    "assets/scss/partials/sidebar.scss.bak",
+    "assets/scss/partials/sidebar.scss",
+    "layouts/_default/single.html.bak",
+    "layouts/_default/single.html",
+    "layouts/partials/widget/toc.html",
+    "content/post/python/Self-learning/day03/index.md",
+    "content/post/python/Self-learning/day02/index.md",
+    "content/post/python/Self-learning/day01/index.md",
+    "content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
+    "content/post/kubernetes/kubernetes-docker/index.md",
+    "content/post/kubernetes/kubernetes-helm/index.md",
     "content/page/search/index.md",
+    "content/page/archives/index.md",
     "content/page/links/index.md",
     "content/page/info/index.md",
     "resources/_gen/images/page/info/media/Pasted-image-20230904195145_hu29fcbbb1b9a430c76b3ea5c53c657114_291907_1024x0_resize_box_3.png",
@@ -208,13 +213,7 @@
     "content/page/info/media/Pasted image 20230904195127.png",
     "content/page/info/media",
     "content/page/info/未命名檔案夾",
-    "content/post/kubernetes/kubernetes-helm/index.md",
     "assets/icons/info-square-rounded.svg",
-    "content/page/info",
-    "assets/scss/variables.scss.bak",
-    "assets/scss/variables.scss",
-    "assets/scss/partials/footer.scss.bak",
-    "assets/scss/partials/footer.scss",
     "themes/hugo-theme-stack/images/tn.png",
     "themes/hugo-theme-stack/exampleSite/content/post/rich-content/index.md",
     "themes/hugo-theme-stack/exampleSite/content/post/placeholder-text/index.md",
@@ -230,13 +229,6 @@
     "themes/hugo-theme-stack/exampleSite/content/page/about/index.md",
     "themes/hugo-theme-stack/exampleSite/content/categories/Test/_index.md",
     "themes/hugo-theme-stack/exampleSite/content/_index.zh-cn.md",
-    "themes/hugo-theme-stack/exampleSite/content/_index.md",
-    "themes/hugo-theme-stack/exampleSite/README.md",
-    "themes/hugo-theme-stack/archetypes/tags.md",
-    "themes/hugo-theme-stack/archetypes/default.md",
-    "themes/hugo-theme-stack/archetypes/categories.md",
-    "themes/hugo-theme-stack/README.md",
-    "README.md",
     "Excalidraw/未命名.canvas",
     "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
     "未命名.canvas",
