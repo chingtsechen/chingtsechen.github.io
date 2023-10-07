@@ -264,7 +264,7 @@ chenqingze@chenqingze-MBP ~ % sudo vim /etc/hosts
 ```
 
 打 https://rancher.jimmyhome.tw 可以看到網頁
-![Pasted-image-20230921023255.png](Pasted-image-20230921023255.png)
+![media/Pasted-image-20230921023255.png](media/Pasted-image-20230921023255.png)
 由上方helm install rancher完成時，可以看到以下兩個指令，可以獲取到預設admin帳號的密碼
 ```bash
 # If this is the first time you installed Rancher, get started by running this command and clicking the URL it generates

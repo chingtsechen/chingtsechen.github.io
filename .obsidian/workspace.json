@@ -1,0 +1,227 @@
+{
+  "main": {
+    "id": "bac97b488dd5f870",
+    "type": "split",
+    "children": [
+      {
+        "id": "3df0a3bf0432fdf2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "700fc2ff591b7c8e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/post/kubernetes/kubernetes-helm/index.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "71c824a7b8b048d1",
+    "type": "split",
+    "children": [
+      {
+        "id": "f765adbe8112f85f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2b9beb72094d6f8b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7b9a6b9ba1df9213",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tools",
+                "matchingCase": false,
+                "explainSearch": true,
+                "collapseAll": true,
+                "extraContext": true,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e3221d89dc46fdd9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 523.5,
+    "collapsed": true
+  },
+  "right": {
+    "id": "3ae68899d472b6bf",
+    "type": "split",
+    "children": [
+      {
+        "id": "30a09c1ef6d34e6f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "df7c9822e064ad48",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "2200332d24d64bdf",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "a859a2a57b8a13c4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "content/post/kubernetes/kubernetes-helm/index.md"
+              }
+            }
+          },
+          {
+            "id": "2368b97b1e424847",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "content/post/kubernetes/kubernetes-helm/index.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "377a7ad2afd11f0c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "content/post/kubernetes/kubernetes-helm/index.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0c35286a5ab6cb60",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 252.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "slide-note:Slide Note Block Generator": false,
+      "markdown-importer:開啟 Markdown 格式轉換器": false,
+      "workspaces:管理工作區配置": false,
+      "publish:發佈變動內容": false,
+      "canvas:建立新畫布": false,
+      "switcher:開啟快速切換": false,
+      "graph:查看關聯圖": false,
+      "command-palette:開啟命令面板": false,
+      "templates:插入模板": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "notion-like-tables:Create new loom": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false
+    }
+  },
+  "active": "700fc2ff591b7c8e",
+  "lastOpenFiles": [
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023255.png",
+    "content/post/kubernetes/kubernetes-helm/index.md",
+    "8. blog/chingtsechen.github.io/content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023255.png",
+    "8. blog/chingtsechen.github.io/content/post/kubernetes/kubernetes-helm/index.md",
+    "8. blog/Python/「Python」Day05-今日總結-/「Python」Day05-今日總結-.md",
+    "8. blog/chingtsechen.github.io/content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
+    "6. Other/帳號/帳號.md",
+    "8. blog/chingtsechen.github.io/layouts/partials/head/head.html",
+    "8. blog/chingtsechen.github.io/layouts/partials/head",
+    "8. blog/chingtsechen.github.io/layouts/_internal/google_analytics_async.html",
+    "8. blog/chingtsechen.github.io/layouts/_internal",
+    "8. blog/chingtsechen.github.io/layouts/partials/analytics-gtag.html",
+    "8. blog/chingtsechen.github.io/layouts/partials/head.html",
+    "8. blog/chingtsechen.github.io/static/google34ccbe637eb45edc.html",
+    "8. blog/chingtsechen.github.io/google34ccbe637eb45edc.html",
+    "8. blog/chingtsechen.github.io/static/CNAME",
+    "8. blog/chingtsechen.github.io/static/favicon.png",
+    "8. blog/chingtsechen.github.io/static/favicon-2.png",
+    "8. blog/chingtsechen.github.io/static/favicon-3.png",
+    "8. blog/chingtsechen.github.io/static",
+    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_480x0_resize_box_3.png",
+    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031746_hu87f73535b369c4edcdb990f935a08331_143573_480x0_resize_box_3.png",
+    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_1024x0_resize_box_3.png",
+    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031746_hu87f73535b369c4edcdb990f935a08331_143573_1024x0_resize_box_3.png",
+    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031718_hu475c36b1f3937b05de60533cd5928b74_159357_480x0_resize_box_3.png",
+    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031718_hu475c36b1f3937b05de60533cd5928b74_159357_1024x0_resize_box_3.png",
+    "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day04/index.md",
+    "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day03/index.md",
+    "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day02/index.md",
+    "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day01/index.md",
+    "8. blog/chingtsechen.github.io/content/post/kubernetes/kubernetes-docker/index.md",
+    "8. blog/chingtsechen.github.io/content/page/links/index.md",
+    "8. blog/chingtsechen.github.io/content/categories/kubernetes/_index.md",
+    "8. blog/chingtsechen.github.io/content/page/search/index.md",
+    "8. blog/chingtsechen.github.io/content/categories/python/_index.md",
+    "8. blog/chingtsechen.github.io/content/page/archives/index.md",
+    "8. blog/chingtsechen.github.io/content/_index.md",
+    "8. blog/chingtsechen.github.io/README.md",
+    "隨手記.md",
+    "goldfishbrain_fighting/content/post/python/Self-learning/day04/index.md",
+    "goldfishbrain_fighting/content/post/python/Self-learning/day03/index.md",
+    "goldfishbrain_fighting/content/post/python/Self-learning/day01/index.md",
+    "goldfishbrain_fighting/content/post/python/Self-learning/day02/index.md",
+    "goldfishbrain_fighting/content/post/kubernetes/kubernetes-helm/index.md",
+    "goldfishbrain_fighting/content/post/kubernetes/kubernetes-docker/index.md",
+    "goldfishbrain_fighting/content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
+    "Excalidraw/未命名.canvas",
+    "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
+    "未命名.canvas",
+    "1. 自我進修課程/PYTHON/「武沛齐」2022 Python的web开发（完整版） 入门全套教程，零基础入门到项目实战/未命名.canvas"
+  ]
+}
