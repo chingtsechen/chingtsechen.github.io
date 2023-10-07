@@ -8,14 +8,6 @@
 #newtab = true
 
 [[social]]
-identifier = "github"
-name = "GitHub"
-url = "https://github.com/chingtsechen/chingtsechen.github.io/tree/gh-pages"
-
-[social.params]
-icon = "brand-github"
-
-[[social]]
 identifier = "youtube"
 name = "Youtube"
 url = "https://www.youtube.com/@goldfishbrain_fighting"
