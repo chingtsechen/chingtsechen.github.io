@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "content/post/kubernetes/kubernetes-helm/index.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 523.5,
-    "collapsed": true
+    "width": 303.5
   },
   "right": {
     "id": "3ae68899d472b6bf",
@@ -147,8 +146,19 @@
                 "sortOrder": "frequency"
               }
             }
+          },
+          {
+            "id": "143d7c2827e41591",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "content/post/kubernetes/kubernetes-helm/index.md"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
@@ -174,7 +184,17 @@
   "active": "700fc2ff591b7c8e",
   "lastOpenFiles": [
     "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023255.png",
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230922172936.png",
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031746.png",
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031718.png",
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031249.png",
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031136.png",
+    "content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023557.png",
     "content/post/kubernetes/kubernetes-helm/index.md",
+    "README.md",
+    "layouts/sitemap.xml",
+    "obs_sctipts",
+    "未命名檔案夾",
     "8. blog/chingtsechen.github.io/content/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921023255.png",
     "8. blog/chingtsechen.github.io/content/post/kubernetes/kubernetes-helm/index.md",
     "8. blog/Python/「Python」Day05-今日總結-/「Python」Day05-今日總結-.md",
@@ -187,18 +207,9 @@
     "8. blog/chingtsechen.github.io/layouts/partials/analytics-gtag.html",
     "8. blog/chingtsechen.github.io/layouts/partials/head.html",
     "8. blog/chingtsechen.github.io/static/google34ccbe637eb45edc.html",
-    "8. blog/chingtsechen.github.io/google34ccbe637eb45edc.html",
-    "8. blog/chingtsechen.github.io/static/CNAME",
     "8. blog/chingtsechen.github.io/static/favicon.png",
     "8. blog/chingtsechen.github.io/static/favicon-2.png",
     "8. blog/chingtsechen.github.io/static/favicon-3.png",
-    "8. blog/chingtsechen.github.io/static",
-    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_480x0_resize_box_3.png",
-    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031746_hu87f73535b369c4edcdb990f935a08331_143573_480x0_resize_box_3.png",
-    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_1024x0_resize_box_3.png",
-    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031746_hu87f73535b369c4edcdb990f935a08331_143573_1024x0_resize_box_3.png",
-    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031718_hu475c36b1f3937b05de60533cd5928b74_159357_480x0_resize_box_3.png",
-    "8. blog/chingtsechen.github.io/resources/_gen/images/post/kubernetes/kubernetes-helm/media/Pasted-image-20230921031718_hu475c36b1f3937b05de60533cd5928b74_159357_1024x0_resize_box_3.png",
     "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day04/index.md",
     "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day03/index.md",
     "8. blog/chingtsechen.github.io/content/post/python/Self-learning/day02/index.md",
@@ -218,7 +229,6 @@
     "goldfishbrain_fighting/content/post/python/Self-learning/day02/index.md",
     "goldfishbrain_fighting/content/post/kubernetes/kubernetes-helm/index.md",
     "goldfishbrain_fighting/content/post/kubernetes/kubernetes-docker/index.md",
-    "goldfishbrain_fighting/content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
     "Excalidraw/未命名.canvas",
     "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
     "未命名.canvas",

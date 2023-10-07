@@ -1,16 +1,16 @@
 ---
 title: 使用Helm安裝Rancher管理平台，納管現有k8s集群( 高可用)
-description:
+description: 
 slug: 
 date: 2023-10-07 01:00:00+0800
-image: 
+image: media/Pasted-image-20230922172936
 categories:
-    - kubernetes
+  - kubernetes
 tags:
-    - kubernetes
-    - helm
-    - rancher
-weight: 1       # You can add weight to some posts to override the default sorting (date descending)
+  - kubernetes
+  - helm
+  - rancher
+weight: 1
 ---
 
 
