@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
+                "file": "content/post/life/software/capcut/index.md",
                 "mode": "source",
                 "source": true
               }
@@ -104,7 +104,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md"
+                "file": "content/post/life/software/capcut/index.md"
               }
             }
           },
@@ -114,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
+                "file": "content/post/life/software/capcut/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
+                "file": "content/post/life/software/capcut/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,7 +153,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md"
+                "file": "content/post/life/software/capcut/index.md"
               }
             }
           }
@@ -182,14 +182,26 @@
   },
   "active": "b5f81ab095712d6c",
   "lastOpenFiles": [
+    "resources/_gen/images/categories/life/Pasted-image-20231008123359_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_120x120_fill_box_smart1_3.png",
+    "resources/_gen/images/categories/life/_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_93bdf8504f8d88e1f017ec46aee058da.png",
+    "resources/_gen/images/categories/life",
+    "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
+    "content/post/python/Self-learning/day02/index.md",
+    "content/post/life/software/capcut/index.md",
+    "content/post/python/Self-learning/day01/index.md",
+    "content/categories/life/_index.md",
+    "content/post/life/software",
+    "content/post/life/software/capcut",
+    "content/post/life",
+    "content/categories/life/Pasted-image-20231008123359.png",
+    "content/categories/life/Pasted image 20231008123359.png",
+    "content/categories/python/_index.md",
+    "content/categories/life",
     "content/post/kubernetes/kubernetes-helm/index.md",
     "content/post/kubernetes/kubernetes-docker/index.md",
     "content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
     "content/post/python/Self-learning/day04/index.md",
     "content/post/python/Self-learning/day03/index.md",
-    "content/post/python/Self-learning/day02/index.md",
-    "content/post/python/Self-learning/day01/index.md",
-    "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
     "resources/_gen/images/categories/devops/Pasted-image-20231008114240_hue3dbdad2cbd887f24e89afbd44129939_87198_120x120_fill_box_smart1_3.png",
     "resources/_gen/images/categories/devops/_hue3dbdad2cbd887f24e89afbd44129939_87198_a14e83fcd8195ca429f772e9051a6a6a.png",
     "resources/_gen/images/categories/devops",
@@ -197,7 +209,6 @@
     "content/post/devops/devops-jenkins-gitlab-ansible-redis",
     "content/post/devops",
     "content/categories/kubernetes/_index.md",
-    "content/categories/python/_index.md",
     "content/categories/devops/Pasted-image-20231008114240.png",
     "content/categories/devops/Pasted image 20231008114240.png",
     "content/categories/kubernetes/Pasted-image-20231007022433.png",
@@ -205,19 +216,11 @@
     "static/img/code-header.svg",
     "static/img",
     "static/code-header.svg",
-    "layouts/_default/single.html.bak",
-    "layouts/_default/single.html",
-    "assets/scss/custom.scss",
-    "assets/scss/custom.scss.bak",
     "content/_index.md",
-    "assets/scss/partials/sidebar.scss.bak",
     "content/page/search/index.md",
     "content/page/archives/index.md",
     "content/page/links/index.md",
     "content/page/info/index.md",
-    "resources/_gen/images/page/info/media/Pasted-image-20230904195145_hu29fcbbb1b9a430c76b3ea5c53c657114_291907_1024x0_resize_box_3.png",
-    "resources/_gen/images/page/info/media/Pasted-image-20230904195145_hu29fcbbb1b9a430c76b3ea5c53c657114_291907_480x0_resize_box_3.png",
-    "resources/_gen/images/page/info/media/Pasted-image-20230904195127_hufe9d766c1787b64e198f330c3bd9100a_124754_480x0_resize_box_3.png",
     "themes/hugo-theme-stack/exampleSite/content/post/rich-content/index.md",
     "themes/hugo-theme-stack/exampleSite/content/post/placeholder-text/index.md",
     "themes/hugo-theme-stack/exampleSite/content/post/placeholder-text/index.ar.md",
@@ -225,8 +228,6 @@
     "themes/hugo-theme-stack/exampleSite/content/post/markdown-syntax/index.md",
     "themes/hugo-theme-stack/exampleSite/content/post/emoji-support/index.md",
     "themes/hugo-theme-stack/exampleSite/content/post/chinese-test/index.zh-cn.md",
-    "themes/hugo-theme-stack/exampleSite/content/page/search/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/page/links/index.md",
     "Excalidraw/未命名.canvas",
     "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
     "未命名.canvas",
