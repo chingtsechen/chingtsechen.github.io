@@ -150,5 +150,5 @@ id = ""
 
 [busuanzi]
 enabled = true
-site_offset = 10000
-visitor_offset = 5000
+site_offset = 100
+visitor_offset = 50
