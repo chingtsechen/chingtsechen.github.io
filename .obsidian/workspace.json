@@ -4,18 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "3df0a3bf0432fdf2",
+        "id": "92716c12e5c783be",
         "type": "tabs",
         "children": [
           {
-            "id": "b5f81ab095712d6c",
+            "id": "d45424be56c60e18",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/post/life/software/capcut/index.md",
+                "file": "content/post/life/language/voicetube-hero/lesson000/index.md",
                 "mode": "source",
-                "source": true
+                "source": false
               }
             }
           }
@@ -80,6 +80,16 @@
         "type": "tabs",
         "children": [
           {
+            "id": "a859a2a57b8a13c4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "content/post/life/language/voicetube-hero/lesson000/index.md"
+              }
+            }
+          },
+          {
             "id": "df7c9822e064ad48",
             "type": "leaf",
             "state": {
@@ -97,72 +107,12 @@
               "type": "calendar",
               "state": {}
             }
-          },
-          {
-            "id": "a859a2a57b8a13c4",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "content/post/life/software/capcut/index.md"
-              }
-            }
-          },
-          {
-            "id": "2368b97b1e424847",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "content/post/life/software/capcut/index.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "377a7ad2afd11f0c",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "content/post/life/software/capcut/index.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              }
-            }
-          },
-          {
-            "id": "0c35286a5ab6cb60",
-            "type": "leaf",
-            "state": {
-              "type": "all-properties",
-              "state": {
-                "sortOrder": "frequency"
-              }
-            }
-          },
-          {
-            "id": "143d7c2827e41591",
-            "type": "leaf",
-            "state": {
-              "type": "file-properties",
-              "state": {
-                "file": "content/post/life/software/capcut/index.md"
-              }
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 252.5
+    "width": 264.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -180,32 +130,39 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "b5f81ab095712d6c",
+  "active": "d45424be56c60e18",
   "lastOpenFiles": [
+    "content/post/life/language/voicetube-hero/lesson000/media/Pasted-image-20231009013654.png",
+    "content/post/life/language/voicetube-hero/lesson000/media",
+    "content/post/life/language/voicetube-hero/lesson000/index.md",
+    "content/post/life/language/voicetube-hero/lesson000",
+    "content/post/life/language/voicetube-hero",
+    "content/post/life/language",
+    "content/post/learn",
+    "README.md",
+    "content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
+    "content/post/life/test/未命名 1.md",
+    "content/post/life/test/未命名.md",
+    "content/post/life/未命名.md",
+    "content/post/life/test",
+    "content/post/life/test/index.md",
+    "template/index.md",
+    "content/post/life/test",
+    "content/post/life/software/capcut/index.md",
+    "template",
     "layouts/partials/head/script.html.bak",
     "layouts/partials/head/script.html",
-    "layouts/partials/head/head.html.bak",
-    "layouts/partials/head/head.html",
-    "layouts/partials/head",
-    "layouts/partials/article/components/details.html.bak",
-    "layouts/partials/article/components/details.html",
     "resources/_gen/images/categories/life/Pasted-image-20231008123359_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_120x120_fill_box_smart1_3.png",
     "resources/_gen/images/categories/life/_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_93bdf8504f8d88e1f017ec46aee058da.png",
-    "resources/_gen/images/categories/life",
     "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
     "content/post/python/Self-learning/day02/index.md",
-    "content/post/life/software/capcut/index.md",
     "content/post/python/Self-learning/day01/index.md",
     "content/categories/life/_index.md",
-    "content/post/life/software",
-    "content/post/life/software/capcut",
-    "content/post/life",
     "content/categories/life/Pasted-image-20231008123359.png",
     "content/categories/life/Pasted image 20231008123359.png",
     "content/categories/python/_index.md",
     "content/post/kubernetes/kubernetes-helm/index.md",
     "content/post/kubernetes/kubernetes-docker/index.md",
-    "content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
     "content/post/python/Self-learning/day04/index.md",
     "content/post/python/Self-learning/day03/index.md",
     "resources/_gen/images/categories/devops/Pasted-image-20231008114240_hue3dbdad2cbd887f24e89afbd44129939_87198_120x120_fill_box_smart1_3.png",
@@ -221,13 +178,6 @@
     "content/page/archives/index.md",
     "content/page/links/index.md",
     "content/page/info/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/rich-content/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/placeholder-text/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/placeholder-text/index.ar.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/math-typesetting/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/markdown-syntax/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/emoji-support/index.md",
-    "themes/hugo-theme-stack/exampleSite/content/post/chinese-test/index.zh-cn.md",
     "Excalidraw/未命名.canvas",
     "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
     "未命名.canvas",
