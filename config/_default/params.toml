@@ -147,3 +147,8 @@ clientSecret = ""
 [comments.cusdis]
 host = ""
 id = ""
+
+[busuanzi]
+enabled = true
+site_offset = 10000
+visitor_offset = 5000

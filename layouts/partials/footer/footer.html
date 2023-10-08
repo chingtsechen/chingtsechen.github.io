@@ -20,11 +20,6 @@
         {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} <br />
         {{ T "footer.designedBy" (dict "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
     </section>
-    <!-- Add blog running time -->
-    <section class="running-time">
-    本站已運行
-    <span id="runningdays" class="running-days"></span>
-    </section>
 
     <!-- Add total page and word count time -->
     <section class="totalcount">
@@ -32,7 +27,18 @@
         {{ range (where .Site.Pages "Kind" "page" )}}
             {{$scratch.Add "total" .WordCount}}
         {{ end }}
-        發表了{{ len (where .Site.RegularPages "Section" "post") }}篇文章 · 
+        發表了{{ len (where .Site.RegularPages "Section" "post") }}篇文章 ·
         總計{{ div ($scratch.Get "total") 1000.0 | lang.FormatNumber 2 }}k字
     </section>
+
+    <!-- Add blog running time -->
+    <section class="running-time">
+    本站已運行
+    <span id="runningdays" class="running-days"></span>
+    </section>
+
+    <!-- Add busuanzi不蒜子 count -->
+    <section class="visit-count">
+        <span id="busuanzi_container_site_pv" style='display:none'> 本站總訪問量 <span id="busuanzi_value_site_pv"></span> 次 </span>·
+        <span id="busuanzi_container_site_uv" style='display:none'> 總訪客數 <span id="busuanzi_value_site_uv"></span> 人</span>
 </footer>

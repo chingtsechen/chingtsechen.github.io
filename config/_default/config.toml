@@ -1,7 +1,7 @@
 # Change baseurl before deploy
 baseurl = "https://blog.goldfishbrain-fighting.com"
 languageCode = "en-us"
-paginate = 5
+paginate = 10
 title = "翻轉吧金魚腦"
 
 # Theme i18n support

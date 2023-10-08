@@ -37,3 +37,8 @@ footer.site-footer {
         color: var(--emphasize-text-color);
     }   
 }
+.totalcount {
+    color: var(--card-text-color-secondary);
+    font-weight: normal;
+    margin-bottom: 5px;
+    }
