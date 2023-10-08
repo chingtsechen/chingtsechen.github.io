@@ -1,6 +1,6 @@
 ---
 title: kubeadm安裝 高可用版(ubuntu2204+k8s版本1.26.3+docker+cri-docker)
-description: 
+description: 使用kubeadm方式，建置kubernetes集群，並採用haproxy、keepalived讓集群達到高可用。
 slug: kubernetes-install
 date: 2023-10-07 02:30:00+0800
 image: 

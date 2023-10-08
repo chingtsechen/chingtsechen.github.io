@@ -1,6 +1,6 @@
 ---
 title: python
-description: A description of this category
+description: python 文章技術分享
 image: Pasted-image-20231007025316.png
 
 # Badge style

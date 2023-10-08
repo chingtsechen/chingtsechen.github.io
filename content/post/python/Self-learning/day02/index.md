@@ -1,6 +1,6 @@
 ---
 title: Day02 - 計算機三大核心，操作系統，程式語言分類，Python解釋器，Mac、Windows電腦安裝Python解釋器
-description: 
+description: 計算機核心重點學習，操作系統與程式語言分類學習，Python解釋器初步使用，並在Mac與Windows系統學習安裝Python解釋器。
 slug: python-self-learning-day02
 date: 2023-10-07 02:50:00+0800
 image: 

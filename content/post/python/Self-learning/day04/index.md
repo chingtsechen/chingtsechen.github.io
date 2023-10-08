@@ -1,6 +1,6 @@
 ---
 title: Day04 - 基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題
-description: 
+description: 再學習基礎數據類型(bool、tuple、set)觀念並實際在pycharm執行代碼，各類運算符與賦值符學習，並將數據藉由python進行運算與邏輯判斷。
 slug: python-self-learning-day04
 date: 2023-10-07 03:02:00+0800
 image: 

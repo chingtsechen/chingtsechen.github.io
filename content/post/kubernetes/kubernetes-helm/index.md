@@ -1,6 +1,6 @@
 ---
 title: 使用Helm安裝Rancher管理平台，納管現有k8s集群( 高可用)
-description: 
+description: 使用Helm的方式，在kubernetes集群內，建置Rancher管理平台，預設deployment副本3個，各至落於各個kubernetes node節點中，以達到平台高可用。
 slug: kubernetes-helm
 date: 2023-10-07 01:00:00+0800
 image: 

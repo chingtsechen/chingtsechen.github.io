@@ -1,6 +1,6 @@
 ---
 title: Day01 - Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹
-description: 
+description: Typora Markdown編輯文章學習，計算機組成與核心學習，同時自我介紹我的學經歷與工作。
 slug: python-self-learning-day01
 date: 2023-10-07 02:45:00+0800
 image: 

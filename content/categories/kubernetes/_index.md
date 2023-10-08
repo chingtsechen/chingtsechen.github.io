@@ -1,6 +1,6 @@
 ---
 title: kubernetes
-description: A description of this category
+description: kubernetes 文章技術分享
 image: Pasted-image-20231007022433.png
 
 # Badge style

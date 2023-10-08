@@ -1,6 +1,6 @@
 ---
 title: 使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)
-description: 
+description: 使用Docker的方式，單獨於一台主機內建置Rancher管理平台，已達到管理平台只是納管集群功能，不影響與消耗kubernetes集群效能，缺點是，如果主機異常，Rancher管理平台也就會異常無法使用。
 slug: kubernetes-docker
 date: 2023-10-07 02:00:00+0800
 image: 

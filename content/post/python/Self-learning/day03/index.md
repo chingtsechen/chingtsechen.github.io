@@ -1,6 +1,6 @@
 ---
 title: Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)
-description: 
+description: pycharm軟體安裝與使用，並開始正式進入python語言基礎學習，pep8、變量常量、基礎數據類型(int、float、str、list、dict)觀念學習並實際在pycharm執行代碼。
 slug: python-self-learning-day03
 date: 2023-10-07 03:00:00+0800
 image: 
