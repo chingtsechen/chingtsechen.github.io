@@ -5,7 +5,7 @@ slug: voicetube-hero-learn-english
 date: 2023-10-09 01:37:00+0800
 image: 
 categories:
-  - life
+  - language
 tags:
   - english
   - voicetube-hero

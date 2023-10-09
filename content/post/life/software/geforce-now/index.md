@@ -5,7 +5,7 @@ slug: geforce-now
 date: 2023-10-09 07:33:09+0800
 image: 
 categories:
-  - life
+  - game
 tags:
   - geforce-now
   - steam
