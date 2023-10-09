@@ -1,5 +1,5 @@
 ---
-title: 第一次看見色彩
+title: Lesson001 - 第一次看見色彩
 description: Joshua 是一位色障人士，他雖然像其他人一樣有清晰的視力，但他無法完全看見紅色和綠色。當他聽說了這副專為色障人士量身打造的眼鏡時，他決定一試。
 slug: voicetube-hero-learn-english-lesson001
 date: 2023-10-09 21:44:08+0800
@@ -12,7 +12,7 @@ tags:
 weight: 1
 ---
 
-這次學習的影片：
+## 學習的影片
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/b0eSg_8Afh0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
