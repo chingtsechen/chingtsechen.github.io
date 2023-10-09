@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/hugo/</link><description>Recent content in hugo on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 09 Oct 2023 09:53:09 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>我使用hugo在github架設我的第一個Blog</title><link>https://blog.goldfishbrain-fighting.com/2023/blog-hugo/</link><pubDate>Mon, 09 Oct 2023 09:53:09 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/blog-hugo/</guid><description>&lt;p>先稍微記錄一下，整體建置與工作流程：&lt;/p>
+&lt;ol>
+&lt;li>hugo官網找喜歡的theme(&lt;a class="link" href="https://themes.gohugo.io/" target="_blank" rel="noopener"
+>https://themes.gohugo.io/&lt;/a>)&lt;/li>
+&lt;li>選擇使用Stack(&lt;a class="link" href="https://themes.gohugo.io/themes/hugo-theme-stack/" target="_blank" rel="noopener"
+>https://themes.gohugo.io/themes/hugo-theme-stack/&lt;/a>)&lt;/li>
+&lt;li>作者github裡面有教學，可以直接clone代碼匯入我的github repositiry
+&lt;ol>
+&lt;li>新repositiry名稱使用：github帳號id.github.io&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>git clone代碼到本機，hugo server執行看看，打上http://localhost:1313，就能直接看到頁面效果&lt;/li>
+&lt;li>修改手機版無法看到大綱toc問題(直接複製貼上裡面四個檔案到相對的目錄中)
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack/pull/615/files#diff-eef437e68bc6669e72d9b52c51e6f18c33aaedc919cd231abc1a68aa7030fcb3" target="_blank" rel="noopener"
+>https://github.com/CaiJimmy/hugo-theme-stack/pull/615/files#diff-eef437e68bc6669e72d9b52c51e6f18c33aaedc919cd231abc1a68aa7030fcb3&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網站左邊menu 透明漂亮icon使用，svg檔製作
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://tablericons.com/" target="_blank" rel="noopener"
+>https://tablericons.com/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網站左邊page新增與修改&lt;/li>
+&lt;li>色碼表，網站各處顏色更改會用到
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://www.ifreesite.com/color/" target="_blank" rel="noopener"
+>https://www.ifreesite.com/color/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>開始優化美化頁面
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://blog.linsnow.cn/p/modify-hugo/" target="_blank" rel="noopener"
+>https://blog.linsnow.cn/p/modify-hugo/&lt;/a>)&lt;/li>
+&lt;li>參考網站(&lt;a class="link" href="https://ponder.lol/2023/custom-hugo-theme-stack/" target="_blank" rel="noopener"
+>https://ponder.lol/2023/custom-hugo-theme-stack/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>添加網站底部顯示發表xx文章、本站運行xx天、本站總訪問量xx次功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://thirdshire.com/post/hugo-stack-renovation/" target="_blank" rel="noopener"
+>https://thirdshire.com/post/hugo-stack-renovation/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>添加disqus評論功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://blog.tershi.com/pages/cafd93/#%E8%A8%BB%E5%86%8A-disqus-%E5%B8%B3%E8%99%9F" target="_blank" rel="noopener"
+>https://blog.tershi.com/pages/cafd93/#%E8%A8%BB%E5%86%8A-disqus-%E5%B8%B3%E8%99%9F&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>添加channel.io頁面即時聊天功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://thirdshire.com/post/hugo-stack-renovation/" target="_blank" rel="noopener"
+>https://thirdshire.com/post/hugo-stack-renovation/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>以上在本地修改與美化頁面功能驗證完畢後，將代碼推送到github中&lt;/li>
+&lt;li>使用github workflow建立自動發佈gh-pages branch功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://www.zoeydc.com/zh/posts/2021-05-23-hugo-website_github-pages_custom-domain/" target="_blank" rel="noopener"
+>https://www.zoeydc.com/zh/posts/2021-05-23-hugo-website_github-pages_custom-domain/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網頁測試打(https://github帳號id.github.io)，網站是否呈現&lt;/li>
+&lt;li>購買domain name，我使用cloudflare(&lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
+>https://dash.cloudflare.com/&lt;/a>)
+&lt;ol>
+&lt;li>購買domain name&lt;/li>
+&lt;li>更新DNS記錄，設定CNAME，名稱blog，內容github預設pages頁面網址(github帳號id.github.io)&lt;/li>
+&lt;li>啟用http強制轉到https&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>將github pasges自訂網域名
+&lt;ol>
+&lt;li>至github專案中，Settings-&amp;gt;Pages-&amp;gt;Branch選擇gh-pages分支&lt;/li>
+&lt;li>Custom domain-&amp;gt;設定已註冊的domain name(blog.goldfishbrain-fighting.com)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網頁測試打domain name，網站是否呈現(&lt;a class="link" href="https://blog.goldfishbrain-fighting.com/" target="_blank" rel="noopener"
+>https://blog.goldfishbrain-fighting.com/&lt;/a>)&lt;/li>
+&lt;li>google-search-console添加
+&lt;ol>
+&lt;li>會需要驗證網站擁有權，將google提供檔案放置網站根目錄下(static/googlexxxxxx.html)&lt;/li>
+&lt;li>添加sitemap，好讓google幫我們產生索引，後續才能夠過google瀏覽器，搜尋到我的網站(可能會需要好多天，才能完成)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>google-analytics添加
+&lt;ol>
+&lt;li>好讓後續可以分析網站使用狀況&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>以上就完成了使用hugo在github架站&lt;/li>
+&lt;li>後續新文章撰寫，我是使用obsidian撰寫文章&lt;/li>
+&lt;li>使用template功能，寫文章時，快速插入front matter&lt;/li>
+&lt;li>如果categories有新增，記得要先去categories目錄新增出來&lt;/li>
+&lt;li>如有快速貼上圖片，圖片記得改檔名，因為會有空格，網站會無法正常辨識路徑和檔名&lt;/li>
+&lt;li>撰寫文章完畢，使用obsidian git插件，直接使用快捷鍵ctrl+p叫出命令面板，執行Commit all changes、Push就能將文章推送到我的github中&lt;/li>
+&lt;li>github接收到commit，就會自動使用workflow幫我佈屬gh-pages&lt;/li>
+&lt;li>以下就是網站呈現的樣子&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009110424.png"
+width="1490"
+height="950"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009110424_hu84eab75732cc34e50a711d3e6fb69eae_286216_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009110424_hu84eab75732cc34e50a711d3e6fb69eae_286216_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="156"
+data-flex-basis="376px"
+>&lt;/p></description></item></channel></rss>
