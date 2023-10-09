@@ -13,13 +13,12 @@ tags:
 weight: 1
 ---
 我選擇免費方案，每天能遊玩30分鐘，體驗一下
-![](media/Pasted%20image%2020231009081029.png)
+![](media/Pasted-image-20231009081029.png)
 
-![](media/Pasted%20image%2020231009081120.png)
+![](media/Pasted-image-20231009081120.png)
 
 使用我的MACBOOK M1 PRO登入Counter-Strike 2中，需要排隊一下
-![](media/Pasted%20image%2020231009073311.png)
+![](media/Pasted-image-20231009073311.png)
 
 下方就是我的遊玩體驗影片，很久沒玩CS，好爛 :)
-
-![](https://youtu.be/vvJtycIxnLM)
+[![Yes](https://img.youtube.com/vi/vvJtycIxnLM/0.jpg)](https://www.youtube.com/watch?v=vvJtycIxnLM)

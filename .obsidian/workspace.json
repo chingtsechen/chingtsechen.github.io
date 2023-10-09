@@ -14,8 +14,8 @@
               "type": "markdown",
               "state": {
                 "file": "content/post/life/software/geforce-now/index.md",
-                "mode": "source",
-                "source": false
+                "mode": "preview",
+                "source": true
               }
             }
           }
@@ -132,12 +132,14 @@
   },
   "active": "60f3f4ad5cb10b2f",
   "lastOpenFiles": [
-    "content/post/life/software/geforce-now/media/Pasted image 20231009081120.png",
-    "content/post/life/software/geforce-now/media/Pasted image 20231009081029.png",
-    "content/post/life/software/geforce-now/media/Pasted image 20231009073311.png",
+    "content/post/python/Self-learning/day01/index.md",
+    "content/post/python/Self-learning/day02/index.md",
+    "content/post/life/software/geforce-now/index.md",
+    "content/post/life/software/geforce-now/media/Pasted-image-20231009081120.png",
+    "content/post/life/software/geforce-now/media/Pasted-image-20231009081029.png",
+    "content/post/life/software/geforce-now/media/Pasted-image-20231009073311.png",
     "content/post/life/software/geforce-now/media",
     "content/post/life/language/voicetube-hero/lesson000/index.md",
-    "content/post/life/software/geforce-now/index.md",
     "content/post/life/software/geforce-now",
     "content/post/life/language/voicetube-hero/lesson001",
     "content/post/life/language/voicetube-hero/lesson000/media/Pasted-image-20231009013654.png",
@@ -159,8 +161,6 @@
     "resources/_gen/images/categories/life/Pasted-image-20231008123359_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_120x120_fill_box_smart1_3.png",
     "resources/_gen/images/categories/life/_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_93bdf8504f8d88e1f017ec46aee058da.png",
     "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
-    "content/post/python/Self-learning/day02/index.md",
-    "content/post/python/Self-learning/day01/index.md",
     "content/categories/life/_index.md",
     "content/categories/life/Pasted-image-20231008123359.png",
     "content/categories/life/Pasted image 20231008123359.png",
@@ -173,7 +173,6 @@
     "resources/_gen/images/categories/devops/_hue3dbdad2cbd887f24e89afbd44129939_87198_a14e83fcd8195ca429f772e9051a6a6a.png",
     "content/categories/devops/_index.md",
     "content/categories/kubernetes/_index.md",
-    "content/categories/devops/Pasted-image-20231008114240.png",
     "content/_index.md",
     "content/page/search/index.md",
     "content/page/archives/index.md",
