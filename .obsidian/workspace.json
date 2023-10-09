@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "92716c12e5c783be",
+        "id": "d52b2312d34ce2d3",
         "type": "tabs",
         "children": [
           {
-            "id": "d45424be56c60e18",
+            "id": "60f3f4ad5cb10b2f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/post/life/language/voicetube-hero/lesson000/index.md",
+                "file": "content/post/life/software/geforce-now/index.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/post/life/language/voicetube-hero/lesson000/index.md"
+                "file": "content/post/life/software/geforce-now/index.md"
               }
             }
           },
@@ -130,11 +130,18 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "d45424be56c60e18",
+  "active": "60f3f4ad5cb10b2f",
   "lastOpenFiles": [
+    "content/post/life/software/geforce-now/media/Pasted image 20231009081120.png",
+    "content/post/life/software/geforce-now/media/Pasted image 20231009081029.png",
+    "content/post/life/software/geforce-now/media/Pasted image 20231009073311.png",
+    "content/post/life/software/geforce-now/media",
+    "content/post/life/language/voicetube-hero/lesson000/index.md",
+    "content/post/life/software/geforce-now/index.md",
+    "content/post/life/software/geforce-now",
+    "content/post/life/language/voicetube-hero/lesson001",
     "content/post/life/language/voicetube-hero/lesson000/media/Pasted-image-20231009013654.png",
     "content/post/life/language/voicetube-hero/lesson000/media",
-    "content/post/life/language/voicetube-hero/lesson000/index.md",
     "content/post/life/language/voicetube-hero/lesson000",
     "content/post/life/language/voicetube-hero",
     "content/post/life/language",
@@ -149,9 +156,6 @@
     "template/index.md",
     "content/post/life/test",
     "content/post/life/software/capcut/index.md",
-    "template",
-    "layouts/partials/head/script.html.bak",
-    "layouts/partials/head/script.html",
     "resources/_gen/images/categories/life/Pasted-image-20231008123359_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_120x120_fill_box_smart1_3.png",
     "resources/_gen/images/categories/life/_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_93bdf8504f8d88e1f017ec46aee058da.png",
     "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
@@ -170,14 +174,10 @@
     "content/categories/devops/_index.md",
     "content/categories/kubernetes/_index.md",
     "content/categories/devops/Pasted-image-20231008114240.png",
-    "content/categories/devops/Pasted image 20231008114240.png",
-    "content/categories/kubernetes/Pasted-image-20231007022433.png",
-    "static/img/code-header.svg",
     "content/_index.md",
     "content/page/search/index.md",
     "content/page/archives/index.md",
     "content/page/links/index.md",
-    "content/page/info/index.md",
     "Excalidraw/未命名.canvas",
     "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
     "未命名.canvas",
