@@ -40,12 +40,10 @@ https://drive.google.com/uc?export=view&id=字串
 
 # 3. 此完整連結就能永久分享在各處，例如以下markdown插入圖片分享
 
-![](https://drive.google.com/uc?export=view&id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1
-)
+![](https://drive.google.com/uc?export=view&id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1)
 
 ```
 
 插入圖片效果
 
-![](https://drive.google.com/uc?export=view&id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1
-)
+![](https://drive.google.com/uc?export=view&id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1)
