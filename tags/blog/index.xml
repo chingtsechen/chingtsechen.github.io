@@ -34,8 +34,7 @@ data-flex-basis="257px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># 3. 此完整連結就能永久分享在各處，例如以下markdown插入圖片分享
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">![](https://drive.google.com/uc?export=view&amp;amp;id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">![](https://drive.google.com/uc?export=view&amp;amp;id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>插入圖片效果&lt;/p>
 &lt;p>&lt;img src="https://drive.google.com/uc?export=view&amp;amp;id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1"
 loading="lazy"
