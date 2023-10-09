@@ -100,14 +100,14 @@
 &lt;li>github接收到commit，就會自動使用workflow幫我佈屬gh-pages&lt;/li>
 &lt;li>以下就是網站呈現的樣子&lt;/li>
 &lt;/ol>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009110424.png"
-width="1490"
-height="950"
-srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009110424_hu84eab75732cc34e50a711d3e6fb69eae_286216_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009110424_hu84eab75732cc34e50a711d3e6fb69eae_286216_1024x0_resize_box_3.png 1024w"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009112857.png"
+width="1491"
+height="947"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009112857_hudc34fb163dc46197b208c6c4030eb97f_297694_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009112857_hudc34fb163dc46197b208c6c4030eb97f_297694_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
-data-flex-grow="156"
-data-flex-basis="376px"
+data-flex-grow="157"
+data-flex-basis="377px"
 >&lt;/p></description></item><item><title>Day01 - Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</link><pubDate>Sat, 07 Oct 2023 02:45:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</guid><description>&lt;h1 id="今日總結">今日總結&lt;/h1>
 &lt;ol>
 &lt;li>typora軟件
