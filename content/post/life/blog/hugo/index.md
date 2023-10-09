@@ -68,4 +68,4 @@ weight: 1
 28. github接收到commit，就會自動使用workflow幫我佈屬gh-pages
 29. 以下就是網站呈現的樣子
 
-![](media/Pasted-image-20231009110424.png)
+![](media/Pasted-image-20231009112857.png)
