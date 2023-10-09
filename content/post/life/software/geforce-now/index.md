@@ -20,5 +20,9 @@ weight: 1
 使用我的MACBOOK M1 PRO登入Counter-Strike 2中，需要排隊一下
 ![](media/Pasted-image-20231009073311.png)
 
-下方就是我的遊玩體驗影片，很久沒玩CS，好爛 :)
-[![Yes](https://img.youtube.com/vi/vvJtycIxnLM/0.jpg)](https://www.youtube.com/watch?v=vvJtycIxnLM)
+下方就是我的遊玩體驗影片，很久沒玩CS，有點爛，見諒 :)
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/vvJtycIxnLM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+

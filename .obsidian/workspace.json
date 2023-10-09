@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/post/life/read/readmoo/readmoo-book000/index.md",
-                "mode": "preview",
+                "file": "content/post/life/software/geforce-now/index.md",
+                "mode": "source",
                 "source": false
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/post/life/read/readmoo/readmoo-book000/index.md"
+                "file": "content/post/life/software/geforce-now/index.md"
               }
             }
           },
@@ -114,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/post/life/read/readmoo/readmoo-book000/index.md",
+                "file": "content/post/life/software/geforce-now/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +131,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "content/post/life/read/readmoo/readmoo-book000/index.md",
+                "file": "content/post/life/software/geforce-now/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -171,9 +171,9 @@
   },
   "active": "77fdbf70beb3967b",
   "lastOpenFiles": [
+    "content/post/life/read/readmoo/readmoo-book000/index.md",
     "content/post/life/language/voicetube-hero/lesson001/index.md",
     "content/post/life/language/voicetube-hero/lesson000/index.md",
-    "content/post/life/read/readmoo/readmoo-book000/index.md",
     "content/post/life/software/geforce-now/index.md",
     "content/categories/read/_index.md",
     "content/categories/python/_index.md",
