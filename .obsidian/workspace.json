@@ -13,9 +13,21 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "content/post/life/blog/hugo/index.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "b4d32d65cfd502db",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "content/post/life/software/geforce-now/index.md",
                 "mode": "preview",
-                "source": true
+                "source": false
               }
             }
           }
@@ -48,7 +60,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tools",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": true,
                 "collapseAll": true,
@@ -85,7 +97,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "content/post/life/software/geforce-now/index.md"
+                "file": "content/post/life/blog/hugo/index.md"
               }
             }
           },
@@ -132,9 +144,14 @@
   },
   "active": "60f3f4ad5cb10b2f",
   "lastOpenFiles": [
+    "content/post/life/blog/hugo/media/Pasted-image-20231009110424.png",
+    "content/post/life/blog/hugo/media",
+    "content/post/life/software/geforce-now/index.md",
+    "content/post/life/blog/hugo/index.md",
+    "content/post/life/blog/hugo",
+    "content/post/life/blog",
     "content/post/python/Self-learning/day01/index.md",
     "content/post/python/Self-learning/day02/index.md",
-    "content/post/life/software/geforce-now/index.md",
     "content/post/life/software/geforce-now/media/Pasted-image-20231009081120.png",
     "content/post/life/software/geforce-now/media/Pasted-image-20231009081029.png",
     "content/post/life/software/geforce-now/media/Pasted-image-20231009073311.png",
@@ -147,16 +164,13 @@
     "content/post/life/language/voicetube-hero/lesson000",
     "content/post/life/language/voicetube-hero",
     "content/post/life/language",
-    "content/post/learn",
     "README.md",
     "content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
     "content/post/life/test/未命名 1.md",
     "content/post/life/test/未命名.md",
     "content/post/life/未命名.md",
-    "content/post/life/test",
     "content/post/life/test/index.md",
     "template/index.md",
-    "content/post/life/test",
     "content/post/life/software/capcut/index.md",
     "resources/_gen/images/categories/life/Pasted-image-20231008123359_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_120x120_fill_box_smart1_3.png",
     "resources/_gen/images/categories/life/_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_93bdf8504f8d88e1f017ec46aee058da.png",
@@ -176,7 +190,6 @@
     "content/_index.md",
     "content/page/search/index.md",
     "content/page/archives/index.md",
-    "content/page/links/index.md",
     "Excalidraw/未命名.canvas",
     "1. Self-Learning/DOCKER_K8S/cks和ckad考试/2 CKS 1.25 全套资料/CKS v1.25 考试资料/考題自己整理/考题自己整理_20221231_canvas.canvas",
     "未命名.canvas",
