@@ -4,29 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "d52b2312d34ce2d3",
+        "id": "b83c0e47d76e37a4",
         "type": "tabs",
         "children": [
           {
-            "id": "60f3f4ad5cb10b2f",
+            "id": "77fdbf70beb3967b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "content/post/life/blog/hugo/index.md",
                 "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b4d32d65cfd502db",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "content/post/life/software/geforce-now/index.md",
-                "mode": "preview",
                 "source": false
               }
             }
@@ -142,28 +130,34 @@
       "obsidian-excalidraw-plugin:Create new drawing": false
     }
   },
-  "active": "60f3f4ad5cb10b2f",
+  "active": "77fdbf70beb3967b",
   "lastOpenFiles": [
-    "content/post/life/blog/hugo/media/Pasted-image-20231009110424.png",
-    "content/post/life/blog/hugo/media",
-    "content/post/life/software/geforce-now/index.md",
+    "resources/_gen/images/post/life/software/geforce-now/media/Pasted-image-20231009073311_hu5ce89885fd29bbfbe560ce6e0f930fbb_1316249_1024x0_resize_box_3.png",
+    "resources/_gen/images/post/life/software/geforce-now/media/Pasted-image-20231009073311_hu5ce89885fd29bbfbe560ce6e0f930fbb_1316249_480x0_resize_box_3.png",
+    "resources/_gen/images/post/life/software/geforce-now/media/Pasted-image-20231009081120_hu25c8e7fafb37afb6c3500c93d292da7d_110867_1024x0_resize_box_3.png",
+    "resources/_gen/images/post/life/software/geforce-now/media/Pasted-image-20231009081120_hu25c8e7fafb37afb6c3500c93d292da7d_110867_480x0_resize_box_3.png",
+    "resources/_gen/images/post/life/software/geforce-now/media/Pasted-image-20231009081029_hu148da14496559642bbb285fe5181bf47_154458_480x0_resize_box_3.png",
+    "resources/_gen/images/post/life/software/geforce-now/media/Pasted-image-20231009081029_hu148da14496559642bbb285fe5181bf47_154458_1024x0_resize_box_3.png",
+    "resources/_gen/images/post/life/software/geforce-now/media",
+    "resources/_gen/images/post/life/software/geforce-now",
+    "resources/_gen/images/post/life/software",
+    "resources/_gen/images/post/life/blog/hugo/media/Pasted-image-20231009110424_hu84eab75732cc34e50a711d3e6fb69eae_286216_1024x0_resize_box_3.png",
+    "resources/_gen/images/post/life/language/voicetube-hero/lesson000/media/Pasted-image-20231009013654_hu976612dcc39dba542b5c8d6641cc3c66_295855_480x0_resize_box_3.png",
+    "resources/_gen/images/post/life/language/voicetube-hero/lesson000/media/Pasted-image-20231009013654_hu976612dcc39dba542b5c8d6641cc3c66_295855_1024x0_resize_box_3.png",
+    "resources/_gen/images/post/life/language/voicetube-hero/lesson000/media",
+    "resources/_gen/images/post/life/blog/hugo/media/Pasted-image-20231009110424_hu84eab75732cc34e50a711d3e6fb69eae_286216_480x0_resize_box_3.png",
+    "resources/_gen/images/post/life/language/voicetube-hero/lesson000",
+    "resources/_gen/images/post/life/blog/hugo/media",
+    "resources/_gen/images/post/life/language/voicetube-hero",
+    "resources/_gen/images/post/life/blog/hugo",
+    "resources/_gen/images/post/life/language",
+    "resources/_gen/images/post/life/blog",
     "content/post/life/blog/hugo/index.md",
-    "content/post/life/blog/hugo",
-    "content/post/life/blog",
+    "content/post/life/software/geforce-now/index.md",
+    "content/post/life/blog/hugo/media/Pasted-image-20231009110424.png",
     "content/post/python/Self-learning/day01/index.md",
     "content/post/python/Self-learning/day02/index.md",
-    "content/post/life/software/geforce-now/media/Pasted-image-20231009081120.png",
-    "content/post/life/software/geforce-now/media/Pasted-image-20231009081029.png",
-    "content/post/life/software/geforce-now/media/Pasted-image-20231009073311.png",
-    "content/post/life/software/geforce-now/media",
     "content/post/life/language/voicetube-hero/lesson000/index.md",
-    "content/post/life/software/geforce-now",
-    "content/post/life/language/voicetube-hero/lesson001",
-    "content/post/life/language/voicetube-hero/lesson000/media/Pasted-image-20231009013654.png",
-    "content/post/life/language/voicetube-hero/lesson000/media",
-    "content/post/life/language/voicetube-hero/lesson000",
-    "content/post/life/language/voicetube-hero",
-    "content/post/life/language",
     "README.md",
     "content/post/kubernetes/kubeadm-install-ubuntu-1-26-3/index.md",
     "content/post/life/test/未命名 1.md",
@@ -172,19 +166,13 @@
     "content/post/life/test/index.md",
     "template/index.md",
     "content/post/life/software/capcut/index.md",
-    "resources/_gen/images/categories/life/Pasted-image-20231008123359_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_120x120_fill_box_smart1_3.png",
-    "resources/_gen/images/categories/life/_hu0c3a41d1709a9617884722bb4fc2ed2b_64894_93bdf8504f8d88e1f017ec46aee058da.png",
     "content/post/devops/devops-jenkins-gitlab-ansible-redis/index.md",
     "content/categories/life/_index.md",
-    "content/categories/life/Pasted-image-20231008123359.png",
-    "content/categories/life/Pasted image 20231008123359.png",
     "content/categories/python/_index.md",
     "content/post/kubernetes/kubernetes-helm/index.md",
     "content/post/kubernetes/kubernetes-docker/index.md",
     "content/post/python/Self-learning/day04/index.md",
     "content/post/python/Self-learning/day03/index.md",
-    "resources/_gen/images/categories/devops/Pasted-image-20231008114240_hue3dbdad2cbd887f24e89afbd44129939_87198_120x120_fill_box_smart1_3.png",
-    "resources/_gen/images/categories/devops/_hue3dbdad2cbd887f24e89afbd44129939_87198_a14e83fcd8195ca429f772e9051a6a6a.png",
     "content/categories/devops/_index.md",
     "content/categories/kubernetes/_index.md",
     "content/_index.md",

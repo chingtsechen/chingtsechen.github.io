@@ -37,34 +37,35 @@ weight: 1
 	2. 參考網站(https://ponder.lol/2023/custom-hugo-theme-stack/)
 10. 添加網站底部顯示發表xx文章、本站運行xx天、本站總訪問量xx次功能
 	1. 參考網站(https://thirdshire.com/post/hugo-stack-renovation/)
-11. 添加disqus評論功能
+11. 修改文章description描述字體大小，縮小(在article.scss裡面的.article-subtitle)
+12. 添加disqus評論功能
 	1. 參考網站(https://blog.tershi.com/pages/cafd93/#%E8%A8%BB%E5%86%8A-disqus-%E5%B8%B3%E8%99%9F)
-12. 添加channel.io頁面即時聊天功能
+13. 添加channel.io頁面即時聊天功能
 	1. 參考網站(https://thirdshire.com/post/hugo-stack-renovation/)
-13. 以上在本地修改與美化頁面功能驗證完畢後，將代碼推送到github中
-14. 使用github workflow建立自動發佈gh-pages branch功能
+14. 以上在本地修改與美化頁面功能驗證完畢後，將代碼推送到github中
+15. 使用github workflow建立自動發佈gh-pages branch功能
 	1. 參考網站(https://www.zoeydc.com/zh/posts/2021-05-23-hugo-website_github-pages_custom-domain/)
-15. 網頁測試打(https://github帳號id.github.io)，網站是否呈現
-16. 購買domain name，我使用cloudflare(https://dash.cloudflare.com/)
+16. 網頁測試打(https://github帳號id.github.io)，網站是否呈現
+17. 購買domain name，我使用cloudflare(https://dash.cloudflare.com/)
 	1. 購買domain name
 	2. 更新DNS記錄，設定CNAME，名稱blog，內容github預設pages頁面網址(github帳號id.github.io)
 	3. 啟用http強制轉到https
-17. 將github pasges自訂網域名
+18. 將github pages自訂網域名
 	1. 至github專案中，Settings->Pages->Branch選擇gh-pages分支
 	2. Custom domain->設定已註冊的domain name(blog.goldfishbrain-fighting.com)
-18. 網頁測試打domain name，網站是否呈現(https://blog.goldfishbrain-fighting.com/)
-19. google-search-console添加
+19. 網頁測試打domain name，網站是否呈現(https://blog.goldfishbrain-fighting.com/)
+20. google-search-console添加
 	1. 會需要驗證網站擁有權，將google提供檔案放置網站根目錄下(static/googlexxxxxx.html)
 	2. 添加sitemap，好讓google幫我們產生索引，後續才能夠過google瀏覽器，搜尋到我的網站(可能會需要好多天，才能完成)
-20. google-analytics添加
+21. google-analytics添加
 	1. 好讓後續可以分析網站使用狀況
-21. 以上就完成了使用hugo在github架站
-22. 後續新文章撰寫，我是使用obsidian撰寫文章
-23. 使用template功能，寫文章時，快速插入front matter
-24. 如果categories有新增，記得要先去categories目錄新增出來
-25. 如有快速貼上圖片，圖片記得改檔名，因為會有空格，網站會無法正常辨識路徑和檔名
-26. 撰寫文章完畢，使用obsidian git插件，直接使用快捷鍵ctrl+p叫出命令面板，執行Commit all changes、Push就能將文章推送到我的github中
-27. github接收到commit，就會自動使用workflow幫我佈屬gh-pages
-28. 以下就是網站呈現的樣子
+22. 以上就完成了使用hugo在github架站
+23. 後續新文章撰寫，我是使用obsidian撰寫文章
+24. 使用template功能，寫文章時，快速插入front matter
+25. 如果categories有新增，記得要先去categories目錄新增出來
+26. 如有快速貼上圖片，圖片記得改檔名，因為會有空格，網站會無法正常辨識路徑和檔名
+27. 撰寫文章完畢，使用obsidian git插件，直接使用快捷鍵ctrl+p叫出命令面板，執行Commit all changes、Push就能將文章推送到我的github中
+28. github接收到commit，就會自動使用workflow幫我佈屬gh-pages
+29. 以下就是網站呈現的樣子
 
 ![](media/Pasted-image-20231009110424.png)
