@@ -1,7 +1,7 @@
 ---
 title: Lesson000 - 我開始使用VoiceTube-Hero學習英文
 description: 好久以前，就想加強自己英文聽、說、讀能力，但遲遲沒有開始，藉由國慶連假，購買了VoiceTube-Hero 12個月，無限堂課程，希望有朝一日，語言不將會再是我對世界認識與探索的絆腳石。
-slug: voicetube-hero-learn-english
+slug: voicetube-hero-learn-english-lesson000
 date: 2023-10-09 01:37:00+0800
 image: 
 categories:
