@@ -13,7 +13,11 @@ weight: 1
 ---
 
 這次學習的影片：
-![](https://www.youtube.com/watch?v=b0eSg_8Afh0)
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/b0eSg_8Afh0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 
 ## 單字
 ```
