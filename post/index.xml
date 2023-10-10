@@ -8,7 +8,8 @@ class="gallery-image"
 data-flex-grow="208"
 data-flex-basis="500px"
 >&lt;/p>
-&lt;p>參考網站：https://www.criwits.top/page/20220828132827-0gnvmfs&lt;/p>
+&lt;p>參考網站： &lt;a class="link" href="https://www.criwits.top/page/20220828132827-0gnvmfs" target="_blank" rel="noopener"
+>https://www.criwits.top/page/20220828132827-0gnvmfs&lt;/a>&lt;/p>
 &lt;p>原始workflow yml檔如下：&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># chingtsechen.github.io/.github/workflows/gh-pages.yml&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
@@ -43,7 +44,8 @@ data-flex-basis="500px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">github_token&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ secrets.GITHUB_TOKEN }}&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">./public&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="創建source-code-repository">創建Source Code Repository&lt;/h2>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139.png"
+&lt;p>設定為Private，外部無法直接訪問
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139.png"
 width="1167"
 height="668"
 srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139_hue05f4b6dd4a9d7d04c9caaf937c186d0_92986_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139_hue05f4b6dd4a9d7d04c9caaf937c186d0_92986_1024x0_resize_box_3.png 1024w"
@@ -84,7 +86,7 @@ data-flex-grow="151"
 data-flex-basis="363px"
 >&lt;/p>
 &lt;h2 id="將source-code-推送進去repository">將Source Code 推送進去Repository&lt;/h2>
-&lt;p>由於Source Code Repository是privite的，所以pull code與push code要用帳號和密碼，
+&lt;p>由於Source Code Repository是Private的，所以pull code與push code要用帳號和密碼，
 現在密碼都改用token的方式，所以要生成一個token&lt;/p>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010111733.png"
 width="1215"
@@ -95,6 +97,7 @@ class="gallery-image"
 data-flex-grow="294"
 data-flex-basis="707px"
 >&lt;/p>
+&lt;p>使用帶帳號的方式git clone代碼&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># git clone帶帳號
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://chingtsechen@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -108,7 +111,8 @@ data-flex-basis="707px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Cloning into &lt;span class="s1">&amp;#39;blog-goldfishbrain-fighting&amp;#39;&lt;/span>...
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Password &lt;span class="k">for&lt;/span> &lt;span class="s1">&amp;#39;https://chingtsechen@github.com&amp;#39;&lt;/span>:
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">warning: You appear to have cloned an empty repository.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP blog-goldfishbrain-fighting % ll
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>clone下來會是空目錄，將blog源碼檔案放置進去&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP blog-goldfishbrain-fighting % ll
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">32&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r--@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">1066&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:24 LICENSE
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r--@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">2874&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:24 README.md
@@ -122,7 +126,8 @@ data-flex-basis="707px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x@ &lt;span class="m">9&lt;/span> chenqingze staff &lt;span class="m">288&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:25 static
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x@ &lt;span class="m">3&lt;/span> chenqingze staff &lt;span class="m">96&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:25 template
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x@ &lt;span class="m">3&lt;/span> chenqingze staff &lt;span class="m">96&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:26 themes
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP blog-goldfishbrain-fighting % git add . -A
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>推送至github&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP blog-goldfishbrain-fighting % git add . -A
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP blog-goldfishbrain-fighting % git commit -m &lt;span class="s2">&amp;#34;first commit&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -159,6 +164,7 @@ class="gallery-image"
 data-flex-grow="350"
 data-flex-basis="841px"
 >&lt;/p>
+&lt;p>workflow代碼如下，#處要注意，需依自己需求去修改&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># blog-goldfishbrain-fighting/.github/workflows/main.yml&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub Pages&lt;/span>&lt;span class="w">
@@ -224,7 +230,7 @@ class="gallery-image"
 data-flex-grow="160"
 data-flex-basis="384px"
 >&lt;/p>
-&lt;p>確認Settings-&amp;gt;Pages，Branch和Custom domain是否設定正確
+&lt;p>確認Settings-&amp;gt;Pages，使用Branch和Custom domain是否設定正確
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121538.png"
 width="1471"
 height="866"
@@ -233,6 +239,27 @@ loading="lazy"
 class="gallery-image"
 data-flex-grow="169"
 data-flex-basis="407px"
+>&lt;/p>
+&lt;h2 id="測試發佈文章">測試發佈文章&lt;/h2>
+&lt;p>推送代碼至blog-goldfisnbrain-fighting後，workflow執行編譯並推送編譯後靜態頁至chingtsechen.github.io中
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123422.png"
+width="1469"
+height="505"
+srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123422_huffca0ef7c6fb2850a727a08cc21b6094_106442_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123422_huffca0ef7c6fb2850a727a08cc21b6094_106442_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="290"
+data-flex-basis="698px"
+>
+可以看到，發佈文章成功，就此，整體hugo架構修改已大功告成了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123343.png"
+width="1483"
+height="942"
+srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123343_hu43765ec200dcb372d9a712a5764f5df7_267620_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123343_hu43765ec200dcb372d9a712a5764f5df7_267620_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="157"
+data-flex-basis="377px"
 >&lt;/p></description></item><item><title>book000 - 我開始使用Readmoo讀墨 閱讀電子書</title><link>https://blog.goldfishbrain-fighting.com/2023/book000-%E6%88%91%E9%96%8B%E5%A7%8B%E4%BD%BF%E7%94%A8readmoo%E8%AE%80%E5%A2%A8-%E9%96%B1%E8%AE%80%E9%9B%BB%E5%AD%90%E6%9B%B8/</link><pubDate>Tue, 10 Oct 2023 00:49:07 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/book000-%E6%88%91%E9%96%8B%E5%A7%8B%E4%BD%BF%E7%94%A8readmoo%E8%AE%80%E5%A2%A8-%E9%96%B1%E8%AE%80%E9%9B%BB%E5%AD%90%E6%9B%B8/</guid><description>&lt;p>分享一下，為了想讓生活多點想法，想知道成功人士分享的經驗，於是我開始閱讀習慣，選擇使用電子書，試閱讀之後，選擇用Readmoo讀墨這個平台，整體使用感受非常好，尤其能夠使用朗讀方式，幫我朗讀書，因為專注力很難集中，有了這個功能，大大增加了我對書的閱讀興趣，以下是使用平板試閱的影片，往後會再來分享，讀書心得。&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/40G1xUgpAWY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
