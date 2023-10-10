@@ -52,12 +52,12 @@ data-flex-basis="348px"
 &lt;p>「習慣雖小，力量無窮，這便是「原子習慣」一詞的真義」&lt;/p>
 &lt;h3 id="本章總覽">「本章總覽」&lt;/h3>
 &lt;ul>
-&lt;li>習慣是「自我改善」這件事的複利。每天進步百分之一，長久下來，進境可觀。」&lt;/li>
-&lt;li>「習慣是一把兩面刃，能載舟亦能覆舟，因此了解細節是必要的。&lt;/li>
+&lt;li>習慣是「自我改善」這件事的複利。每天進步百分之一，長久下來，進境可觀。&lt;/li>
+&lt;li>習慣是一把兩面刃，能載舟亦能覆舟，因此了解細節是必要的。&lt;/li>
 &lt;li>在跨越關鍵門檻之前，小改變往往看似無足輕重。所有複利過程的強大成果總是遲來，你要有耐性。&lt;/li>
 &lt;li>原子習慣是構成大系統的小習慣。如同原子是分子的組成單元，原子習慣是建構非凡成果的元件。&lt;/li>
 &lt;li>想要更好的結果，就別管目標設定，而是專注於你的系統。&lt;/li>
-&lt;li>決定你成功或失敗的，不是你的目標，而是你的系統。」&lt;/li>
+&lt;li>決定你成功或失敗的，不是你的目標，而是你的系統。&lt;/li>
 &lt;/ul></description></item><item><title>修改hugo在github上的架構</title><link>https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/</link><pubDate>Tue, 10 Oct 2023 10:38:49 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/</guid><description>&lt;p>架構修改如下圖：
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121753.png"
 width="2062"
