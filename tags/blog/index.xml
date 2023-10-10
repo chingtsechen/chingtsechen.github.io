@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>blog on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/blog/</link><description>Recent content in blog on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Oct 2023 10:38:49 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>修改hugo在github上的架構</title><link>https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/</link><pubDate>Tue, 10 Oct 2023 10:38:49 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/</guid><description>&lt;p>參考網站：https://www.criwits.top/page/20220828132827-0gnvmfs&lt;/p>
+&lt;p>原始workflow yml檔如下：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># chingtsechen.github.io/.github/workflows/gh-pages.yml&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">github pages&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">push&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branches&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">main &lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Set a branch to deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">deploy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ubuntu-20.04&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/checkout@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">submodules&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Fetch Hugo themes (true OR recursive)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">fetch-depth&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">0&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># Fetch all history for .GitInfo and .Lastmod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Setup Hugo&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">peaceiris/actions-hugo@v2&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hugo-version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;latest&amp;#39;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># &amp;#39;0.83.1&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">extended&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 有用擴充套件則將 # 移除&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">hugo --minify&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">peaceiris/actions-gh-pages@v3&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">github_token&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ secrets.GITHUB_TOKEN }}&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">./public&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="創建source-code-repository">創建Source Code Repository&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231010110139.png"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="生成公鑰與私鑰">生成公鑰與私鑰&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP 8. blog % ssh-keygen -t rsa -b &lt;span class="m">4096&lt;/span> -C &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>git config user.email&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -f gh-pages -N &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP 8. blog % ll
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">16&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x@ &lt;span class="m">6&lt;/span> chenqingze staff &lt;span class="m">192&lt;/span> &lt;span class="m">9&lt;/span> &lt;span class="m">21&lt;/span> 00:37 Kubernetes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x@ &lt;span class="m">5&lt;/span> chenqingze staff &lt;span class="m">160&lt;/span> &lt;span class="m">9&lt;/span> &lt;span class="m">30&lt;/span> 21:37 Python
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x@ &lt;span class="m">21&lt;/span> chenqingze staff &lt;span class="m">672&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">9&lt;/span> 15:25 chingtsechen.github.io
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw------- &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">3389&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:02 gh-pages
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">750&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:02 gh-pages.pub
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="配置source-code-repository-私鑰">配置Source Code Repository 私鑰&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP 8. blog % cat gh-pages
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231010110724.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231010110806.png"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="將source-code-推送進去repository">將Source Code 推送進去Repository&lt;/h2>
+&lt;p>由於Source Code Repository是privite的，所以pull code與push code要用帳號和密碼，
+現在密碼都改用token的方式，所以要生成一個token&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231010111733.png"
+loading="lazy"
+>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># git clone帶帳號
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://chingtsechen@
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># @git clone的連結
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">github.com/chingtsechen/blog-goldfishbrain-fighting.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># 完整動作
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git clone https://chingtsechen@github.com/chingtsechen/blog-goldfishbrain-fighting.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 會要求打密碼，就是使用token&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP 8. blog % git clone https://chingtsechen@github.com/chingtsechen/blog-goldfishbrain-fighting.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Cloning into &lt;span class="s1">&amp;#39;blog-goldfishbrain-fighting&amp;#39;&lt;/span>...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Password &lt;span class="k">for&lt;/span> &lt;span class="s1">&amp;#39;https://chingtsechen@github.com&amp;#39;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">warning: You appear to have cloned an empty repository.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用google drive當作圖床</title><link>https://blog.goldfishbrain-fighting.com/2023/google-drive-image/</link><pubDate>Mon, 09 Oct 2023 22:34:26 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-drive-image/</guid><description>&lt;p>簡單來說，將圖片存在google drive，設定共享，複製連結，將連結修改即可。&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-drive-image/media/Pasted-image-20231009224246.png"
+width="796"
+height="476"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-drive-image/media/Pasted-image-20231009224246_hu8b67f2d345989a394037088e9b68c891_43191_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-drive-image/media/Pasted-image-20231009224246_hu8b67f2d345989a394037088e9b68c891_43191_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="167"
+data-flex-basis="401px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-drive-image/media/Pasted-image-20231009224352.png"
+width="513"
+height="479"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-drive-image/media/Pasted-image-20231009224352_hu5ae54b65308a155a446c1928d8a321ce_47187_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-drive-image/media/Pasted-image-20231009224352_hu5ae54b65308a155a446c1928d8a321ce_47187_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="107"
+data-flex-basis="257px"
+>&lt;/p>
+&lt;p>點複製連結&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># 連結如下
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://drive.google.com/file/d/1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1/view?usp=sharing
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改連結&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># 1. 只要提取上述連結中的字串
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">....../file/d/字串/view?......
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">字串 = 1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># 2. 將字串與以下連結合併
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://drive.google.com/uc?export=view&amp;amp;id=字串
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">完整連結 = https://drive.google.com/uc?export=view&amp;amp;id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># 3. 此完整連結就能永久分享在各處，例如以下markdown插入圖片分享
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">![](https://drive.google.com/uc?export=view&amp;amp;id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>插入圖片效果&lt;/p>
+&lt;p>&lt;img src="https://drive.google.com/uc?export=view&amp;amp;id=1Gdh2dKRP1X4xv8Br6K56SZdn_RwgTOj1"
+loading="lazy"
+>&lt;/p></description></item><item><title>我使用hugo在github架設我的第一個Blog</title><link>https://blog.goldfishbrain-fighting.com/2023/blog-hugo/</link><pubDate>Mon, 09 Oct 2023 09:53:09 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/blog-hugo/</guid><description>&lt;p>先稍微記錄一下，整體建置與工作流程：&lt;/p>
+&lt;ol>
+&lt;li>hugo官網找喜歡的theme(&lt;a class="link" href="https://themes.gohugo.io/" target="_blank" rel="noopener"
+>https://themes.gohugo.io/&lt;/a>)&lt;/li>
+&lt;li>選擇使用Stack(&lt;a class="link" href="https://themes.gohugo.io/themes/hugo-theme-stack/" target="_blank" rel="noopener"
+>https://themes.gohugo.io/themes/hugo-theme-stack/&lt;/a>)&lt;/li>
+&lt;li>作者github裡面有教學，可以直接clone代碼匯入我的github repositiry
+&lt;ol>
+&lt;li>新repositiry名稱使用：github帳號id.github.io&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>git clone代碼到本機，hugo server執行看看，打上http://localhost:1313，就能直接看到頁面效果&lt;/li>
+&lt;li>修改手機版無法看到大綱toc問題(直接複製貼上裡面四個檔案到相對的目錄中)
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack/pull/615/files#diff-eef437e68bc6669e72d9b52c51e6f18c33aaedc919cd231abc1a68aa7030fcb3" target="_blank" rel="noopener"
+>https://github.com/CaiJimmy/hugo-theme-stack/pull/615/files#diff-eef437e68bc6669e72d9b52c51e6f18c33aaedc919cd231abc1a68aa7030fcb3&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網站左邊menu 透明漂亮icon使用，svg檔製作
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://tablericons.com/" target="_blank" rel="noopener"
+>https://tablericons.com/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網站左邊page新增與修改&lt;/li>
+&lt;li>色碼表，網站各處顏色更改會用到
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://www.ifreesite.com/color/" target="_blank" rel="noopener"
+>https://www.ifreesite.com/color/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>開始優化美化頁面
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://blog.linsnow.cn/p/modify-hugo/" target="_blank" rel="noopener"
+>https://blog.linsnow.cn/p/modify-hugo/&lt;/a>)&lt;/li>
+&lt;li>參考網站(&lt;a class="link" href="https://ponder.lol/2023/custom-hugo-theme-stack/" target="_blank" rel="noopener"
+>https://ponder.lol/2023/custom-hugo-theme-stack/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>添加網站底部顯示發表xx文章、本站運行xx天、本站總訪問量xx次功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://thirdshire.com/post/hugo-stack-renovation/" target="_blank" rel="noopener"
+>https://thirdshire.com/post/hugo-stack-renovation/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>修改文章description描述字體大小，縮小(在article.scss裡面的.article-subtitle)&lt;/li>
+&lt;li>添加disqus評論功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://blog.tershi.com/pages/cafd93/#%E8%A8%BB%E5%86%8A-disqus-%E5%B8%B3%E8%99%9F" target="_blank" rel="noopener"
+>https://blog.tershi.com/pages/cafd93/#%E8%A8%BB%E5%86%8A-disqus-%E5%B8%B3%E8%99%9F&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>添加channel.io頁面即時聊天功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://thirdshire.com/post/hugo-stack-renovation/" target="_blank" rel="noopener"
+>https://thirdshire.com/post/hugo-stack-renovation/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>以上在本地修改與美化頁面功能驗證完畢後，將代碼推送到github中&lt;/li>
+&lt;li>使用github workflow建立自動發佈gh-pages branch功能
+&lt;ol>
+&lt;li>參考網站(&lt;a class="link" href="https://www.zoeydc.com/zh/posts/2021-05-23-hugo-website_github-pages_custom-domain/" target="_blank" rel="noopener"
+>https://www.zoeydc.com/zh/posts/2021-05-23-hugo-website_github-pages_custom-domain/&lt;/a>)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網頁測試打(https://github帳號id.github.io)，網站是否呈現&lt;/li>
+&lt;li>購買domain name，我使用cloudflare(&lt;a class="link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener"
+>https://dash.cloudflare.com/&lt;/a>)
+&lt;ol>
+&lt;li>購買domain name&lt;/li>
+&lt;li>更新DNS記錄，設定CNAME，名稱blog，內容github預設pages頁面網址(github帳號id.github.io)&lt;/li>
+&lt;li>啟用http強制轉到https&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>將github pages自訂網域名
+&lt;ol>
+&lt;li>至github專案中，Settings-&amp;gt;Pages-&amp;gt;Branch選擇gh-pages分支&lt;/li>
+&lt;li>Custom domain-&amp;gt;設定已註冊的domain name(blog.goldfishbrain-fighting.com)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>網頁測試打domain name，網站是否呈現(&lt;a class="link" href="https://blog.goldfishbrain-fighting.com/" target="_blank" rel="noopener"
+>https://blog.goldfishbrain-fighting.com/&lt;/a>)&lt;/li>
+&lt;li>google-search-console添加
+&lt;ol>
+&lt;li>會需要驗證網站擁有權，將google提供檔案放置網站根目錄下(static/googlexxxxxx.html)&lt;/li>
+&lt;li>添加sitemap，好讓google幫我們產生索引，後續才能夠過google瀏覽器，搜尋到我的網站(可能會需要好多天，才能完成)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>google-analytics添加
+&lt;ol>
+&lt;li>好讓後續可以分析網站使用狀況&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>以上就完成了使用hugo在github架站&lt;/li>
+&lt;li>後續新文章撰寫，我是使用obsidian撰寫文章&lt;/li>
+&lt;li>使用template功能，寫文章時，快速插入front matter&lt;/li>
+&lt;li>如果categories有新增，記得要先去categories目錄新增出來&lt;/li>
+&lt;li>如有快速貼上圖片，圖片記得改檔名，因為會有空格，網站會無法正常辨識路徑和檔名&lt;/li>
+&lt;li>撰寫文章完畢，使用obsidian git插件，直接使用快捷鍵ctrl+p叫出命令面板，執行Commit all changes、Push就能將文章推送到我的github中&lt;/li>
+&lt;li>github接收到commit，就會自動使用workflow幫我佈屬gh-pages&lt;/li>
+&lt;li>以下就是網站呈現的樣子&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009112857.png"
+width="1491"
+height="947"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009112857_hudc34fb163dc46197b208c6c4030eb97f_297694_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo/media/Pasted-image-20231009112857_hudc34fb163dc46197b208c6c4030eb97f_297694_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="157"
+data-flex-basis="377px"
+>&lt;/p></description></item><item><title>Day01 - Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</link><pubDate>Sat, 07 Oct 2023 02:45:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</guid><description>&lt;h1 id="今日總結">今日總結&lt;/h1>
+&lt;ol>
+&lt;li>typora軟件
+&lt;ul>
+&lt;li>下載與安裝&lt;/li>
+&lt;li>文件路徑&lt;/li>
+&lt;li>主要功能&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>markdown語法&lt;/li>
+&lt;li>技術文章編寫教程&lt;/li>
+&lt;li>計算機本質&lt;/li>
+&lt;li>計算機五大組成部分&lt;/li>
+&lt;li>計算機三大核心硬件&lt;/li>
+&lt;/ol>
+&lt;h2 id="計算機五大組成部分">計算機五大組成部分：&lt;/h2>
+&lt;ol>
+&lt;li>控制器
+&lt;ul>
+&lt;li>似大腦控制各器官與四肢&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>運算器
+&lt;ul>
+&lt;li>似大腦運算，邏輯思考&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>存儲器
+&lt;ul>
+&lt;li>似人記憶，短期記憶(記憶體)，長期記憶(硬盤)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>輸入設備
+&lt;ul>
+&lt;li>似眼睛，接收外在訊息&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>輸出設備
+&lt;ul>
+&lt;li>似嘴巴，講述想法&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/2013248184Vpa3Qq6G.png"
+loading="lazy"
+alt="https://ithelp.ithome.com.tw/upload/images/20230904/2013248184Vpa3Qq6G.png"
+>&lt;/p>
+&lt;h2 id="計算機單位與轉換">計算機單位與轉換：&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">1 Byte = 8 bit
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024Byte = 1KB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024KB = 1MB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024MB = 1GB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1024GB = 1TB
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481pQJXWgXWGg.png"
+loading="lazy"
+alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481pQJXWgXWGg.png"
+>&lt;/p>
+&lt;h3 id="二進制十六進制十進制八進制-的轉換">二進制、十六進制、十進制、八進制 的轉換&lt;/h3>
+&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/201324813JAoN9yEfK.png"
+loading="lazy"
+alt="https://ithelp.ithome.com.tw/upload/images/20230904/201324813JAoN9yEfK.png"
+>&lt;/p>
+&lt;h1 id="自我介绍">自我介绍&lt;/h1>
+&lt;h2 id="就學歷程">就學歷程：&lt;/h2>
+&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481iHa7CpjGgD.png"
+loading="lazy"
+alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481iHa7CpjGgD.png"
+>&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>高中：就讀普通高中，讀2類自然組，對化學很有興趣，也考過全校化學競賽第一名，代表學校去參加全市比賽，但沒得名。
+就是在那次比賽後，有深刻的體悟，普通高中，實作實驗真的太少，去比賽時，幾乎都是實作實驗，讓我不知所措，才會再報考大學時，轉而去讀科技大學，希望能學到一技之常。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>大學：就讀科技大學電機系，果然是科技大學，很多都是實作課，那時候才發現我與同學們的差距那麼大，因為他們幾乎都是專科進來的，所以大部分實驗，很多都接觸過了，我那時候連麵包版都不會插，電阻看不懂，剛開始實在是超辛苦，還好有同儕的教學，讓我挺過來。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>當兵：海軍陸戰隊，戰車營，去新竹受訓3個月，回來營上，開戰車下基地，是我人生中，非常特殊的回憶。&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="工作經歷">工作經歷：&lt;/h2>
+&lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481nTcvrd2ocE.png"
+loading="lazy"
+alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481nTcvrd2ocE.png"
+>&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>弱電工程師：不超過110V的工程都做，佈網路線、電話線、監控、廣播，建置網路機房&amp;hellip;等，全台有配合的裝修場、配合的維護銀行，都要跑。做了3年半，做到主任，但考量薪水、工作環境差、未來規劃，裸辭，決定轉職進IT領域。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>特訓班：前份工作裸辭，就是為了能進特訓班，此特訓班不用費用，但前提是要沒有工作的人(就是勞動部幫助失業的人轉職)，同時也要進過考試和面試，學習到的課程：Windows Server管理、Linux Server管理、Cisco網路設備管理。&lt;code>(特訓完：考取CCNA證照)&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>網路FAE：特訓班結訓後，進入通路商，負責公司販賣的網路設備售後技術支援。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>MIS：和網路FAE是同一家公司，因為公司內部缺網管，長官希望我過去幫忙，就內轉到MIS部門，負責公司內部網路、伺服器建置與管理，會選擇離開，主要是MIS負責太多事了，沒辦法專心在一個領域技術提升。&lt;code>(考取：CCNP證照、RHCSA7證照、RCHE7證照、RHCSA8證照)&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>電商伺服器工程師：到此公司，就是專門負責電商對外伺服器管理和建置，原則上就幾乎都是linux系統和pve虛擬化系統，會選擇只做4個月就離開，主要是因為公司文化、公司凝聚力、部門間協調、SOP不明確、公司不賺錢，基於以上原因，才會選擇盡快離開。當然在此公司是非常好的經歷，因為電商領域，就是我轉職到IT時，一直想走上的路，也算讓我進到這個領域有了第一個敲門磚。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>電商伺服器 資深工程師：負責電商伺服器管理與建置、Redis服務管理與建置、K8S平台管理與建置、目前自學Python、前端、Django，主要是為了讓管理方式能更有效率、更系統化。目前在公司也會安排向內部員工進行教育訓練課程、分享技術，讓我在此工作上得到滿滿的成就感。就我自己認為，會再多，如果不能說到讓別人也瞭解，那就不是真的瞭解這個技術了。所以我熱衷於這份工作，能讓我分享技術，公司也不斷的引進新技術、新想法，讓我們去嘗試，所以目前在此工作，是非常開心的狀態，希望這種感覺，能一直持續下去。&lt;code>(考取：CKA證照、CKAD證照、CKS證照)&lt;/code>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h1 id="youtube教學影片">YouTube教學影片&lt;/h1>
+&lt;p>&lt;a class="link" href="https://www.youtube.com/watch?v=D-bPj6w-EmQ" target="_blank" rel="noopener"
+>&lt;img src="https://img.youtube.com/vi/D-bPj6w-EmQ/0.jpg"
+loading="lazy"
+alt="Yes"
+>&lt;/a>&lt;/p></description></item></channel></rss>

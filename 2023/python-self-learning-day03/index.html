@@ -1,0 +1,351 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="pycharm軟體安裝與使用，並開始正式進入python語言基礎學習，pep8、變量常量、基礎數據類型(int、float、str、list、dict)觀念學習並實際在pycharm執行代碼。"><title>Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)</title><link rel=canonical href=https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/><link rel=stylesheet href=/scss/style.min.d868909d7283a33ea0f0387696ac11ff970849e15f3a6149ee12c0f272b08e81.css><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><meta name=referrer content="no-referrer-when-downgrade"><script src=//cdn.bootcss.com/jquery/3.2.1/jquery.min.js></script>
+<script>$(document).ready(function(){var e=setInterval(s,100),t=100,n=50;function s(){$("#busuanzi_container_site_pv").css("display")!="none"&&(clearInterval(e),$("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html())+t),$("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html())+n))}})</script><meta property="og:title" content="Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)"><meta property="og:description" content="pycharm軟體安裝與使用，並開始正式進入python語言基礎學習，pep8、變量常量、基礎數據類型(int、float、str、list、dict)觀念學習並實際在pycharm執行代碼。"><meta property="og:url" content="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/"><meta property="og:site_name" content="翻轉吧金魚腦"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="python"><meta property="article:tag" content="pycharm"><meta property="article:published_time" content="2023-10-07T03:00:00+08:00"><meta property="article:modified_time" content="2023-10-07T03:00:00+08:00"><meta name=twitter:title content="Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)"><meta name=twitter:description content="pycharm軟體安裝與使用，並開始正式進入python語言基礎學習，pep8、變量常量、基礎數據類型(int、float、str、list、dict)觀念學習並實際在pycharm執行代碼。"><link rel="shortcut icon" href=/favicon.png><script async src="https://www.googletagmanager.com/gtag/js?id=G-QB4H991E1G"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-QB4H991E1G",{anonymize_ip:!1})}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><div id=article-toolbar style=position:sticky;top:5px;z-index:1000><a href=/ class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg><span>返回</span></a></div><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目錄</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#pycharm下載與使用>pycharm下載與使用</a><ol><li><a href=#mac版安裝>MAC版安裝：</a></li><li><a href=#windows版安裝>windows版安裝：</a></li><li><a href=#回到我的mac電腦創建項目>回到我的MAC電腦，創建項目</a></li></ol></li><li><a href=#python語法之注釋>python語法之注釋</a></li><li><a href=#pep8規範>PEP8規範</a></li><li><a href=#變數與常量>變數與常量</a></li><li><a href=#變數的基本使用>變數的基本使用</a><ol><li><a href=#1-日常生活中的變數案例>1. 日常生活中的變數案例</a></li><li><a href=#2--變數使用的語法結構與底層原理>2. 變數使用的語法結構與底層原理</a></li><li><a href=#3-變數名的命名規範>3. 變數名的命名規範</a></li><li><a href=#4-變數名的命名風格>4. 變數名的命名風格</a></li></ol></li><li><a href=#常量的基本使用>常量的基本使用</a></li><li><a href=#數據類型>數據類型</a></li><li><a href=#數據類型之整型int>數據類型之整型int</a></li><li><a href=#數據類型之浮點型float>數據類型之浮點型float</a></li><li><a href=#數據類型之字串str>數據類型之字串str</a><ol><li><a href=#1定義字串有四種方式>1.定義字串有四種方式</a></li></ol></li><li><a href=#數據類型之列表list>數據類型之列表list</a></li><li><a href=#數據類型之字典dict>數據類型之字典dict</a></li><li><a href=#小結-今日pep8規範>小結 今日PEP8規範</a></li><li><a href=#練習題數據類型>練習題(數據類型)</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/python/ style=background-color:#01814a;color:#fff>python</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/2023/python-self-learning-day03/>Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)</a></h2><h3 class=article-subtitle>pycharm軟體安裝與使用，並開始正式進入python語言基礎學習，pep8、變量常量、基礎數據類型(int、float、str、list、dict)觀念學習並實際在pycharm執行代碼。</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>2023/10/07</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>閱讀時間: 4 分鐘</time></div></footer></div></header><section class=article-content><section class="toc toc--inline"><h2>目錄</h2><div><nav id=TableOfContents><ol><li><ol><li><a href=#pycharm下載與使用>pycharm下載與使用</a><ol><li><a href=#mac版安裝>MAC版安裝：</a></li><li><a href=#windows版安裝>windows版安裝：</a></li><li><a href=#回到我的mac電腦創建項目>回到我的MAC電腦，創建項目</a></li></ol></li><li><a href=#python語法之注釋>python語法之注釋</a></li><li><a href=#pep8規範>PEP8規範</a></li><li><a href=#變數與常量>變數與常量</a></li><li><a href=#變數的基本使用>變數的基本使用</a><ol><li><a href=#1-日常生活中的變數案例>1. 日常生活中的變數案例</a></li><li><a href=#2--變數使用的語法結構與底層原理>2. 變數使用的語法結構與底層原理</a></li><li><a href=#3-變數名的命名規範>3. 變數名的命名規範</a></li><li><a href=#4-變數名的命名風格>4. 變數名的命名風格</a></li></ol></li><li><a href=#常量的基本使用>常量的基本使用</a></li><li><a href=#數據類型>數據類型</a></li><li><a href=#數據類型之整型int>數據類型之整型int</a></li><li><a href=#數據類型之浮點型float>數據類型之浮點型float</a></li><li><a href=#數據類型之字串str>數據類型之字串str</a><ol><li><a href=#1定義字串有四種方式>1.定義字串有四種方式</a></li></ol></li><li><a href=#數據類型之列表list>數據類型之列表list</a></li><li><a href=#數據類型之字典dict>數據類型之字典dict</a></li><li><a href=#小結-今日pep8規範>小結 今日PEP8規範</a></li><li><a href=#練習題數據類型>練習題(數據類型)</a></li></ol></li></ol></nav></div></section><h1 id=今日内容概要>今日内容概要</h1><ul><li>pycharm下載與使用<ul><li>MAC版安裝</li><li>WINDOWS版安裝</li></ul></li><li>python語法之注釋</li><li>PEP8規範</li><li>python語法之變數與常量</li><li>python基本數據類型(先大致了解有哪些)<ul><li>整型int</li><li>浮點型float</li><li>字串str</li><li>列表list</li><li>字典dict</li></ul></li><li>練習題(數據類型)</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 整體內容大綱</span>
+</span></span><span class=line><span class=cl><span class=n>pycharm下載與使用</span>
+</span></span><span class=line><span class=cl>    <span class=n>MAC版安裝</span><span class=err>：</span>
+</span></span><span class=line><span class=cl>    <span class=n>windows版安裝</span><span class=err>：</span>
+</span></span><span class=line><span class=cl>    <span class=n>回到我的MAC電腦</span><span class=err>，</span><span class=n>創建項目</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.</span> <span class=n>處建項目</span>
+</span></span><span class=line><span class=cl>        <span class=mf>2.</span> <span class=n>Location要填寫</span><span class=err>、</span><span class=n>解釋器選擇</span><span class=err>，</span><span class=n>先不要用虛擬環境</span>
+</span></span><span class=line><span class=cl>        <span class=mf>3.</span> <span class=n>儲存python代碼的文件後綴名一般叫</span><span class=o>.</span><span class=n>py</span>
+</span></span><span class=line><span class=cl>        <span class=mf>4.</span> <span class=n>使用pycharm創建的py文件在編寫程式碼的時候有自動提示</span> <span class=n>tab補全</span> <span class=n>方向鍵選擇</span>
+</span></span><span class=line><span class=cl>        <span class=mf>5.</span> <span class=n>配置調整</span>
+</span></span><span class=line><span class=cl>        <span class=mf>6.</span><span class=n>運行python代碼</span>
+</span></span><span class=line><span class=cl><span class=n>python語法之注釋</span>
+</span></span><span class=line><span class=cl><span class=n>PEP8規範</span>
+</span></span><span class=line><span class=cl><span class=n>變數與常量</span>
+</span></span><span class=line><span class=cl><span class=n>變數的基本使用</span>
+</span></span><span class=line><span class=cl>    <span class=mf>1.</span> <span class=n>日常生活中的變數案例</span>
+</span></span><span class=line><span class=cl>    <span class=mf>2.</span> <span class=n>變數使用的語法結構與底層原理</span>
+</span></span><span class=line><span class=cl>    <span class=mf>3.</span> <span class=n>變數名的命名規範</span>
+</span></span><span class=line><span class=cl>    <span class=mf>4.</span> <span class=n>變數名的命名風格</span>
+</span></span><span class=line><span class=cl><span class=n>常量的基本使用</span>
+</span></span><span class=line><span class=cl><span class=n>數據類型</span>
+</span></span><span class=line><span class=cl><span class=n>數據類型之整型int</span>
+</span></span><span class=line><span class=cl><span class=n>數據類型之浮點型float</span>
+</span></span><span class=line><span class=cl><span class=n>數據類型之字串str</span>
+</span></span><span class=line><span class=cl>    <span class=mf>1.</span><span class=n>定義字串有四種方式</span>
+</span></span><span class=line><span class=cl><span class=n>數據類型之列表list</span>
+</span></span><span class=line><span class=cl><span class=n>數據類型之字典dict</span>
+</span></span><span class=line><span class=cl><span class=n>小結</span> <span class=n>今日PEP8規範</span>
+</span></span><span class=line><span class=cl><span class=n>練習題</span>
+</span></span></code></pre></div><h3 id=pycharm下載與使用>pycharm下載與使用</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>該軟體分為收費版和免費版</span>
+</span></span><span class=line><span class=cl>  <span class=n>免費版功能太少</span><span class=p>(</span><span class=n>community</span><span class=p>)</span> <span class=n>我們盡量使用收費版</span><span class=p>(</span><span class=n>professional</span><span class=p>)</span> <span class=mi>30</span><span class=n>天試用</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>pycharm比較笨重</span>
+</span></span><span class=line><span class=cl>  <span class=n>本身占據的資源較多</span> <span class=n>並且保持運行的情況下需要消耗計算機1GB多的資源</span>
+</span></span><span class=line><span class=cl><span class=mf>3.</span><span class=n>文件後綴名</span>
+</span></span><span class=line><span class=cl>  <span class=n>儲存python代碼的文件後綴名一般叫</span><span class=o>.</span><span class=n>py</span>
+</span></span><span class=line><span class=cl><span class=mf>4.</span><span class=n>如何創建py文件</span>
+</span></span><span class=line><span class=cl>  <span class=n>使用pycharm創建的py文件在編寫程式碼的時候有自動提示</span> <span class=n>tab補全</span> <span class=n>方向鍵選擇</span>
+</span></span><span class=line><span class=cl><span class=mf>5.</span><span class=n>配置調整</span>
+</span></span><span class=line><span class=cl>  <span class=n>字體大小</span>
+</span></span><span class=line><span class=cl>  <span class=n>編程背景</span>
+</span></span><span class=line><span class=cl>  <span class=n>解釋器選擇</span>
+</span></span><span class=line><span class=cl><span class=mf>6.</span><span class=n>運行python代碼</span>
+</span></span></code></pre></div><p>Pycharm官網下載網址：
+<a class=link href="https://www.jetbrains.com/pycharm/download/?section=mac" target=_blank rel=noopener>https://www.jetbrains.com/pycharm/download/?section=mac</a></p><h4 id=mac版安裝>MAC版安裝：</h4><p>下載最新版Pycharm
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481jHMxC9Sxc9.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481jHMxC9Sxc9.png></p><p>下載其他版本，我電腦是mac m1晶片
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481b3mJVujroH.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481b3mJVujroH.png></p><p>拖曳過去Applications檔案夾即可
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481JodobzlU6q.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481JodobzlU6q.png></p><p>需要licenses授權，因為我是有購買的，所以我採取登入JB帳號，即可使用
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481MNpYFmG0Db.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481MNpYFmG0Db.png></p><h4 id=windows版安裝>windows版安裝：</h4><p>Next
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481beORdhOGFq.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481beORdhOGFq.png></p><p>目錄選擇簡單一點的名稱，方便後續查找
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481YlDMszlBcn.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481YlDMszlBcn.png></p><p>安裝後，桌面會一個PyCharm的icon捷徑
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481JFXQDhopa8.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481JFXQDhopa8.png></p><h4 id=回到我的mac電腦創建項目>回到我的MAC電腦，創建項目</h4><h5 id=1-處建項目>1. 處建項目</h5><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481a8M6SCQhSf.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481a8M6SCQhSf.png></p><h5 id=2-location要填寫解釋器選擇先不要用虛擬環境>2. Location要填寫、解釋器選擇，先不要用虛擬環境</h5><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481G2AyFwQPZh.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481G2AyFwQPZh.png></p><h5 id=3-儲存python代碼的文件後綴名一般叫py>3. 儲存python代碼的文件後綴名一般叫.py</h5><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/2013248193Hq5yFPpg.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/2013248193Hq5yFPpg.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481bIgMKnOZtX.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481bIgMKnOZtX.png></p><p>項目創建的資料，就會看到上面創建的.py文件
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481KhTkwcjYSy.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481KhTkwcjYSy.png></p><h5 id=4-使用pycharm創建的py文件在編寫程式碼的時候有自動提示-tab補全-方向鍵選擇>4. 使用pycharm創建的py文件在編寫程式碼的時候有自動提示 tab補全 方向鍵選擇</h5><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481uxHGEjr5gl.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481uxHGEjr5gl.png></p><h5 id=5-配置調整>5. 配置調整</h5><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/2013248176ZUTEGxB7.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/2013248176ZUTEGxB7.png></p><p>字體
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481mUSWuhh2lg.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481mUSWuhh2lg.png></p><p>背景，我習慣用白的，這裡再依各位個人喜好去修改
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481qNMwDfc2Gg.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481qNMwDfc2Gg.png></p><p>可以看到選擇Darcula，視窗就變暗色系了
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481atQeLJY1Fm.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481atQeLJY1Fm.png></p><p>如果pycharm無法找到python解釋器，可以再來這裡再設定
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324819cPDx76gio.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324819cPDx76gio.png></p><p>有新安裝版本，也能從旁右方齒輪按鍵，去新增
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Clm05y3Tkc.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Clm05y3Tkc.png></p><h5 id=6運行python代碼>6.運行python代碼</h5><p>代碼行處，右鍵，即可執行此當下這個.py文件代碼
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481YZKDpusEEK.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481YZKDpusEEK.png></p><p>或者視窗右上面，也能執行
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481rO1yQSlC9P.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481rO1yQSlC9P.png></p><h3 id=python語法之注釋>python語法之注釋</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>什麼是注釋</span>
+</span></span><span class=line><span class=cl>  <span class=n>注釋其實就是對一段代碼的解釋說明</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>如何編寫注釋</span>
+</span></span><span class=line><span class=cl>  <span class=n>方式1</span><span class=p>:</span><span class=n>解釋說明文字前加警號</span>   <span class=n>pycharm中有快捷鍵</span> <span class=n>ctrl</span> <span class=o>+</span> <span class=o>/</span> <span class=n>mac電腦</span><span class=err>，</span><span class=n>用</span> <span class=n>command</span> <span class=o>+</span> <span class=o>/</span>
+</span></span><span class=line><span class=cl>        <span class=c1># 注釋(單行注釋)  </span>
+</span></span><span class=line><span class=cl>  <span class=n>方式2</span><span class=p>:</span><span class=n>鍵盤enter鍵左邊那個鍵英文輸入法下連續按三下</span>
+</span></span><span class=line><span class=cl>         <span class=s1>&#39;&#39;&#39;
+</span></span></span><span class=line><span class=cl><span class=s1>         多行注釋
+</span></span></span><span class=line><span class=cl><span class=s1>         &#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>方式3</span><span class=p>:</span><span class=n>鍵盤enter鍵左邊那個鍵英文輸入法下</span><span class=o>+</span><span class=n>shift</span> <span class=n>連續按三下</span>
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>         多行注釋
+</span></span></span><span class=line><span class=cl><span class=s2>         &#34;&#34;&#34;</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s1>&#39;hello world&#39;</span><span class=p>)</span>  <span class=c1>#1. 這是列印數據方式，單行註釋  </span>
+</span></span><span class=line><span class=cl><span class=c1># print(&#39;hello world&#39;) # Prcharm快捷鍵，command + /(右邊shift左邊那個鍵)  </span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;  
+</span></span></span><span class=line><span class=cl><span class=s1>2. 多行註釋:  
+</span></span></span><span class=line><span class=cl><span class=s1>大家好，我是翻轉吧金魚腦  
+</span></span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;</span>  
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;  
+</span></span></span><span class=line><span class=cl><span class=s2>3. 多行註釋:  
+</span></span></span><span class=line><span class=cl><span class=s2>哈摟，我是翻轉吧金魚腦  
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span></code></pre></div><h3 id=pep8規範>PEP8規範</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>pycharm中很多時候會有各種顏色提示還有波浪線
+</span></span></span><span class=line><span class=cl><span class=s2>  只要不是紅線一般都不影響代碼運行
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>python代碼編寫規範</span>
+</span></span><span class=line><span class=cl>  <span class=mf>1.</span><span class=n>單行注釋如果跟在代碼之後</span> <span class=n>那麼警號與代碼之間需要空兩格</span> <span class=n>內容與警號空一格</span>
+</span></span><span class=line><span class=cl>  <span class=mf>2.</span><span class=n>如果單行注釋自成一行</span> <span class=n>那麼內容與警號空一格</span>
+</span></span><span class=line><span class=cl><span class=n>ps</span><span class=p>:</span><span class=n>如何學習規範</span> <span class=n>可以借助於pycharm自動化格式程式碼反向學習</span>
+</span></span></code></pre></div><p><strong><code>EX1: 單行注釋如果跟在代碼之後 那麼警號與代碼之間需要空兩格 內容與警號空一格</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324818R0yXdJ2qy.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324818R0yXdJ2qy.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324818uUz9fNCgy.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324818uUz9fNCgy.png></p><p><strong><code>EX2: 如果單行注釋自成一行 那麼內容與警號空一格</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324817kAqHOGaO6.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324817kAqHOGaO6.png>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481uWlvpQluAk.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481uWlvpQluAk.png></p><p><strong><code>EX3: 如何學習規範 可以借助於pycharm自動化格式程式碼反向學習</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324811qduMtokcQ.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324811qduMtokcQ.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324810ppTAhFBsw.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324810ppTAhFBsw.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png></p><h3 id=變數與常量>變數與常量</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>變數與常量就是為了讓程序具備人記錄事物狀態的能力</span>
+</span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>什麼是變數</span><span class=err>?</span>
+</span></span><span class=line><span class=cl>  <span class=n>記錄變化</span><span class=p>(</span><span class=n>可能會經常改變</span><span class=p>)</span><span class=n>的事物狀態</span>
+</span></span><span class=line><span class=cl>    <span class=n>eg</span><span class=p>:</span><span class=n>年齡</span> <span class=n>容貌</span> <span class=n>薪資</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>什麼是常量</span><span class=err>?</span>
+</span></span><span class=line><span class=cl>  <span class=n>記錄固定</span><span class=p>(</span><span class=n>可能不經常改變</span><span class=p>)</span><span class=n>的事物狀態</span>
+</span></span><span class=line><span class=cl>      <span class=n>eg</span><span class=p>:</span><span class=n>圓周率</span> <span class=n>重力加速度</span>
+</span></span></code></pre></div><h3 id=變數的基本使用>變數的基本使用</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>日常生活中的變數案例</span>
+</span></span><span class=line><span class=cl>  <span class=n>翻轉吧金魚腦</span>
+</span></span><span class=line><span class=cl>    <span class=n>姓名叫jimmy</span>
+</span></span><span class=line><span class=cl>      <span class=n>年齡是20</span>
+</span></span><span class=line><span class=cl>      <span class=n>性別是男性</span>
+</span></span><span class=line><span class=cl>      
+</span></span><span class=line><span class=cl><span class=n>代碼中如何記錄事物狀態</span>
+</span></span><span class=line><span class=cl>  <span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>age</span> <span class=o>=</span> <span class=mi>20</span>
+</span></span><span class=line><span class=cl>  <span class=n>gender</span> <span class=o>=</span> <span class=s1>&#39;male&#39;</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=n>變數使用的語法結構與底層原理</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>  name = &#39;jimmy&#39;
+</span></span></span><span class=line><span class=cl><span class=s2>  變數名 賦值符號 數據值
+</span></span></span><span class=line><span class=cl><span class=s2>  1.一旦看到賦值符號 那麼一定先看符號的右側
+</span></span></span><span class=line><span class=cl><span class=s2>  2.在記憶體空間中申請一塊記憶體空間儲存數據值
+</span></span></span><span class=line><span class=cl><span class=s2>  3.給數據值綁定一個變數名
+</span></span></span><span class=line><span class=cl><span class=s2>  4.以後就可以通過變數名訪問到數據值
+</span></span></span><span class=line><span class=cl><span class=s2>  &#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  <span class=n>注意事項</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>	  <span class=mf>1.</span><span class=n>同一個數據值可以綁定多個變數名</span>
+</span></span><span class=line><span class=cl>      <span class=mf>2.</span><span class=n>賦值符號也可能是變數名</span> <span class=n>如果是就先找該變數名綁定的數據值</span>
+</span></span><span class=line><span class=cl>      <span class=mf>3.</span><span class=n>一個變數名同一時間只能綁定一個數據值</span>
+</span></span><span class=line><span class=cl>	      <span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>	      <span class=n>name1</span> <span class=o>=</span> <span class=n>name</span>
+</span></span><span class=line><span class=cl>	      <span class=n>name2</span> <span class=o>=</span> <span class=n>name1</span>
+</span></span><span class=line><span class=cl>	      
+</span></span><span class=line><span class=cl>	      <span class=n>x</span> <span class=o>=</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl>	      <span class=n>x</span> <span class=o>=</span> <span class=n>x</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>	      <span class=nb>print</span><span class=p>(</span><span class=n>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl> 
+</span></span></code></pre></div><h4 id=1-日常生活中的變數案例>1. 日常生活中的變數案例</h4><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481WlmsceNEuR.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481WlmsceNEuR.png></p><h4 id=2--變數使用的語法結構與底層原理>2. 變數使用的語法結構與底層原理</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>  <span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>  name = &#39;jimmy&#39;
+</span></span></span><span class=line><span class=cl><span class=s2>  變數名 賦值符號 數據值
+</span></span></span><span class=line><span class=cl><span class=s2>  1.一旦看到賦值符號 那麼一定先看符號的右側
+</span></span></span><span class=line><span class=cl><span class=s2>  2.在記憶體空間中申請一塊記憶體空間儲存數據值
+</span></span></span><span class=line><span class=cl><span class=s2>  3.給數據值綁定一個變數名
+</span></span></span><span class=line><span class=cl><span class=s2>  4.以後就可以通過變數名訪問到數據值
+</span></span></span><span class=line><span class=cl><span class=s2>  &#34;&#34;&#34;</span>
+</span></span></code></pre></div><p><strong><code>EX1: 變數名 賦值符號 數據值</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324814tQJ0AtQde.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324814tQJ0AtQde.png></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>  <span class=n>注意事項</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>	  <span class=mf>1.</span> <span class=n>同一個數據值可以綁定多個變數名</span>
+</span></span><span class=line><span class=cl>      <span class=mf>2.</span><span class=n>賦值符號也可能是變數名</span> <span class=n>如果是就先找該變數名綁定的數據值</span>
+</span></span><span class=line><span class=cl>      <span class=mf>3.</span><span class=n>一個變數名同一時間只能綁定一個數據值</span>
+</span></span></code></pre></div><p><strong><code>EX1: 一個數據值可以綁定多個變數名(賦值符號也可能是變數名 如果是就先找該變數名綁定的數據值)</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324810DpWmvlU3V.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324810DpWmvlU3V.png>
+<strong><code>EX2: 一個變數名同一時間只能綁定一個數據值</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481oJfkaOoaOa.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481oJfkaOoaOa.png></p><h4 id=3-變數名的命名規範>3. 變數名的命名規範</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>變數名的命名規範</span>
+</span></span><span class=line><span class=cl>  <span class=mf>1.</span><span class=n>中文是可以用作變數名的</span> <span class=n>但是不建議使用</span> <span class=n>並且容易報錯</span>
+</span></span><span class=line><span class=cl>  <span class=mf>2.</span><span class=n>變數名只能出現字母</span><span class=err>、</span><span class=n>數字</span><span class=err>、</span><span class=n>下劃線</span>
+</span></span><span class=line><span class=cl>  <span class=mf>3.</span><span class=n>數字不能開頭</span>
+</span></span><span class=line><span class=cl>  <span class=mf>4.</span><span class=n>變數名盡量做到見名知意</span>
+</span></span><span class=line><span class=cl>  <span class=mf>5.</span><span class=n>變數名不能與關鍵字衝突</span>
+</span></span></code></pre></div><p><strong><code>EX1: 中文是可以用作變數名的 但是不建議使用 並且容易報錯</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481wGMhsG0ofs.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481wGMhsG0ofs.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481yfUJgOxbc4.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481yfUJgOxbc4.png></p><p><strong><code>EX2: 變數名只能出現字母、數字、下劃線、數字不能開頭</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324812wy2FJw4qC.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324812wy2FJw4qC.png></p><p><strong><code>EX3: 見名之意</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481cbvhLeBjuE.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481cbvhLeBjuE.png></p><p><strong><code>EX4: 關鍵字</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481cFujswvc4n.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481cFujswvc4n.png></p><h4 id=4-變數名的命名風格>4. 變數名的命名風格</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>變數名的命名風格</span>
+</span></span><span class=line><span class=cl>  <span class=mf>1.</span><span class=n>下劃線式</span>    <span class=n>python推薦使用</span>
+</span></span><span class=line><span class=cl>    <span class=n>變數名中單字很多</span> <span class=n>彼此使用下劃線隔開</span>
+</span></span><span class=line><span class=cl>      <span class=n>name_from_mysql_db1_userinfo</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=mf>2.</span><span class=n>駝峰體式</span>    <span class=n>JS推薦使用</span>
+</span></span><span class=line><span class=cl>      <span class=n>大駝峰</span>
+</span></span><span class=line><span class=cl>        <span class=n>NameFromMysqlDb1Userinfo</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>      <span class=n>小駝峰</span>
+</span></span><span class=line><span class=cl>        <span class=n>nameFromMysqlDb1Userinfo</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>ps</span><span class=p>:</span><span class=n>在同一個程式語言中盡量固定使用一種</span> <span class=n>不要隨意切換</span>
+</span></span></code></pre></div><p><strong><code>EX1: 下劃線式 (變數名中單字很多 彼此使用下劃線隔開)</code></strong></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481hkhaKSLRqx.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481hkhaKSLRqx.png></p><h3 id=常量的基本使用>常量的基本使用</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>在python沒有真正意義上的常量</span><span class=p>(</span><span class=n>定義了就不能改</span><span class=p>)</span> <span class=n>定義了可以隨時修改</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>在python中如果想表示出常量</span> <span class=n>那麼可以使用全大寫的變數名</span>
+</span></span><span class=line><span class=cl>  <span class=n>HOST</span> <span class=o>=</span> <span class=s1>&#39;127.0.0.1&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>ps</span><span class=p>:</span><span class=n>除了全大寫之外</span> <span class=n>其他與變數用法一致</span>
+</span></span></code></pre></div><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481LhJDVnqr2N.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481LhJDVnqr2N.png>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481htiFUXUnWY.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481htiFUXUnWY.png></p><h3 id=數據類型>數據類型</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>什麼是數據類型</span>
+</span></span><span class=line><span class=cl>  <span class=n>在日常生活中數據的表現形式多種多樣</span> <span class=n>在程序中也是如此</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>為何學習數據類型</span>
+</span></span><span class=line><span class=cl>  <span class=n>針對不同的數據採用最佳的數據類型來表示出該數據的價值</span>
+</span></span><span class=line><span class=cl><span class=mf>3.</span><span class=n>本次學習數據類型僅僅是了解</span>
+</span></span><span class=line><span class=cl>  <span class=n>只要看到每個數據類型能夠叫出它們的名字以及代碼如何編寫即可</span>
+</span></span><span class=line><span class=cl><span class=mf>4.</span><span class=n>學前必會</span>
+</span></span><span class=line><span class=cl>  <span class=n>如何查看數據值的數據類型</span>
+</span></span><span class=line><span class=cl>      <span class=nb>type</span><span class=p>(</span><span class=n>數據值</span><span class=p>)</span>\<span class=nb>type</span><span class=p>(</span><span class=n>變數名</span><span class=p>)</span>
+</span></span></code></pre></div><p><strong><code>EX1:</code></strong></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481ykVbo5EJLi.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481ykVbo5EJLi.png></p><h3 id=數據類型之整型int>數據類型之整型int</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>大白話的意思其實就是整數</span>
+</span></span><span class=line><span class=cl><span class=n>應用場景</span><span class=p>:</span><span class=n>年齡</span> <span class=n>班級人數</span> <span class=n>年份</span>
+</span></span></code></pre></div><p><strong><code>EX1:</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481MAkMG50Ua2.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481MAkMG50Ua2.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481qbEse25PFw.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481qbEse25PFw.png></p><h3 id=數據類型之浮點型float>數據類型之浮點型float</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>大白話的意思其實就是小數</span>
+</span></span><span class=line><span class=cl><span class=n>應用場景</span><span class=p>:</span><span class=n>身高</span> <span class=n>體重</span> <span class=n>薪資</span>
+</span></span></code></pre></div><p><strong><code>EX1:</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481d7OY4Wsja0.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481d7OY4Wsja0.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481gbzFuBRKCG.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481gbzFuBRKCG.png></p><h3 id=數據類型之字串str>數據類型之字串str</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>大白話的意思其實就是文本類型的數據</span><span class=o>&gt;&gt;&gt;</span><span class=p>:</span><span class=n>引號引起來的部分都是字串</span>
+</span></span><span class=line><span class=cl><span class=n>應用場景</span><span class=p>:</span><span class=n>姓名</span> <span class=n>地址</span> <span class=n>愛好</span>
+</span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>定義字串有四種方式</span>
+</span></span><span class=line><span class=cl>  <span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>name1</span> <span class=o>=</span> <span class=s2>&#34;jimmy&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=n>name2</span> <span class=o>=</span> <span class=s1>&#39;&#39;&#39;jimmy&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>name3</span> <span class=o>=</span> <span class=s2>&#34;&#34;&#34;jimmy&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>為什麼定義字串需要有多種方式</span>
+</span></span><span class=line><span class=cl>  <span class=n>我們在字串中編寫文本也可能會使用到引號</span> <span class=n>為了避免衝突</span> <span class=n>有了多種方式</span>
+</span></span><span class=line><span class=cl>  <span class=n>info</span> <span class=o>=</span> <span class=s2>&#34;jimmy說:&#39;好學&#39;&#34;</span>
+</span></span><span class=line><span class=cl><span class=mf>3.</span><span class=n>如何區分三引號是字串還是注釋</span>
+</span></span><span class=line><span class=cl>  <span class=n>關注左側是否含有賦值符號和變數名</span> <span class=n>如果有則為字串</span> <span class=n>沒有則為注釋</span>
+</span></span></code></pre></div><p><strong><code>EX1:</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481JpAuNseOuw.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481JpAuNseOuw.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481AmriHTCGrm.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481AmriHTCGrm.png></p><h4 id=1定義字串有四種方式>1.定義字串有四種方式</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>定義字串有四種方式</span>
+</span></span><span class=line><span class=cl>  <span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>name1</span> <span class=o>=</span> <span class=s2>&#34;jimmy&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=n>name2</span> <span class=o>=</span> <span class=s1>&#39;&#39;&#39;jimmy&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=n>name3</span> <span class=o>=</span> <span class=s2>&#34;&#34;&#34;jimmy&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>為什麼定義字串需要有多種方式</span>
+</span></span><span class=line><span class=cl>  <span class=n>我們在字串中編寫文本也可能會使用到引號</span> <span class=n>為了避免衝突</span> <span class=n>有了多種方式</span>
+</span></span><span class=line><span class=cl>  <span class=n>info</span> <span class=o>=</span> <span class=s2>&#34;jimmy說：&#39;好學&#39;&#34;</span>
+</span></span><span class=line><span class=cl><span class=mf>3.</span><span class=n>如何區分三引號是字串還是注釋</span>
+</span></span><span class=line><span class=cl>  <span class=n>關注左側是否含有賦值符號和變數名</span> <span class=n>如果有則為字串</span> <span class=n>沒有則為注釋</span>
+</span></span></code></pre></div><p><strong><code>EX1:</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/2013248168cjHdewDQ.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/2013248168cjHdewDQ.png></p><p><strong><code>EX2: 為什麼定義字串需要有多種方式(為了避免衝突)</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481eW3QBenJiO.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481eW3QBenJiO.png></p><h3 id=數據類型之列表list>數據類型之列表list</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>大白話的意思其實就是可以儲存多個數據值的類型</span> <span class=n>並且可以非常方便的取</span>
+</span></span><span class=line><span class=cl><span class=n>應用場景</span><span class=p>:</span><span class=n>儲存多個數據值</span> <span class=n>並且將來可能需要單獨取其中一些</span>
+</span></span><span class=line><span class=cl><span class=n>代碼實現</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>name_list</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;jimmy&#39;</span><span class=p>,</span> <span class=s1>&#39;tony&#39;</span><span class=p>,</span> <span class=s1>&#39;kevin&#39;</span><span class=p>,</span> <span class=s1>&#39;oscar&#39;</span><span class=p>,</span> <span class=s1>&#39;jerry&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>列表的文字描述</span>
+</span></span><span class=line><span class=cl>  <span class=n>中括號括起來</span> <span class=n>內部可以存放多個數據值</span> <span class=n>數據值與數據值之間逗號隔開</span> <span class=n>數據值可以是任意數據類型</span>
+</span></span><span class=line><span class=cl>    <span class=n>l1</span> <span class=o>=</span> <span class=p>[</span><span class=mi>11</span><span class=p>,</span> <span class=mf>11.11</span><span class=p>,</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>,[</span><span class=mi>11</span><span class=p>,</span> <span class=mi>22</span><span class=p>]]</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>索引取值</span>
+</span></span><span class=line><span class=cl>  <span class=n>起始數字是從0開始</span> 
+</span></span><span class=line><span class=cl>    <span class=n>l1</span><span class=p>[</span><span class=n>索引值</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   
+</span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>PEP8規範補充
+</span></span></span><span class=line><span class=cl><span class=s2>  1.逗號後面與數據值空一格
+</span></span></span><span class=line><span class=cl><span class=s2>  2.賦值符號左右都得空一格
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span></code></pre></div><p><strong><code>EX1:</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324814hopyTagwk.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324814hopyTagwk.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324810yyJKkC5FZ.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324810yyJKkC5FZ.png></p><p><strong><code>EX2:</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Noiht6ZySb.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Noiht6ZySb.png>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481NlCZgoMV42.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481NlCZgoMV42.png></p><h3 id=數據類型之字典dict>數據類型之字典dict</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>能夠非常精確的儲存和表達數據值的含義</span>
+</span></span><span class=line><span class=cl><span class=n>代碼實現</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>info_dict</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;username&#39;</span><span class=p>:</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;age&#39;</span><span class=p>:</span> <span class=mi>20</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;hobby&#39;</span><span class=p>:</span> <span class=s1>&#39;coding&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>  <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>字典文字描述</span>
+</span></span><span class=line><span class=cl>  <span class=n>大括號括起來</span> <span class=n>內部可以存放多個數據</span> <span class=n>數據的組織形式是K</span><span class=p>:</span><span class=n>V鍵值對</span>
+</span></span><span class=line><span class=cl>  <span class=n>鍵值對與鍵值對之間逗號隔開</span>
+</span></span><span class=line><span class=cl>      <span class=n>K是對V的描述性性質的資訊</span><span class=p>(</span><span class=n>解釋說明</span><span class=p>)</span> <span class=n>一般都是字串類型</span>
+</span></span><span class=line><span class=cl>      <span class=n>V是真正的數據值</span> <span class=n>可以是任意數據類型</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>按K取值</span>
+</span></span><span class=line><span class=cl>   <span class=n>字典只能按K取值</span> <span class=n>因為字典是無序的</span> <span class=n>沒有索引的概念</span>
+</span></span><span class=line><span class=cl>   <span class=n>info_dict</span><span class=p>[</span><span class=s1>&#39;username&#39;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;
+</span></span></span><span class=line><span class=cl><span class=s2>PEP8規範補充
+</span></span></span><span class=line><span class=cl><span class=s2>  1.字典K:V，:右邊要空一格
+</span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
+</span></span></code></pre></div><p><strong><code>EX1:字典</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/2013248183BgL1bxlf.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/2013248183BgL1bxlf.png></p><p><strong><code>EX2: 按鍵取值</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481YcLzi4Ap67.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481YcLzi4Ap67.png></p><h3 id=小結-今日pep8規範>小結 今日PEP8規範</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>  <span class=mf>1.</span><span class=n>單行注釋如果跟在代碼之後</span> <span class=n>那麼警號與代碼之間需要空兩格</span> <span class=n>內容與警號空一格</span>
+</span></span><span class=line><span class=cl>  <span class=mf>2.</span><span class=n>如果單行注釋自成一行</span> <span class=n>那麼內容與警號空一格</span>
+</span></span><span class=line><span class=cl>  <span class=mf>3.</span><span class=n>list</span>
+</span></span><span class=line><span class=cl>    <span class=mf>1.</span><span class=n>逗號後面與數據值空一格</span>
+</span></span><span class=line><span class=cl>    <span class=mf>2.</span><span class=n>賦值符號左右都得空一格</span>   
+</span></span><span class=line><span class=cl>  <span class=mf>4.</span><span class=n>dict</span>
+</span></span><span class=line><span class=cl>    <span class=mf>1.</span><span class=n>字典K</span><span class=p>:</span><span class=n>V</span><span class=err>，</span><span class=p>:</span><span class=n>右邊要空一格</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ps</span><span class=p>:</span><span class=n>如何學習規範</span> <span class=n>可以借助於pycharm自動化格式程式碼反向學習</span>
+</span></span><span class=line><span class=cl><span class=p>(</span><span class=n>mac快捷鍵command</span><span class=o>+</span><span class=n>option</span><span class=o>+</span><span class=n>L</span><span class=p>)</span>
+</span></span></code></pre></div><h3 id=練習題數據類型>練習題(數據類型)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 附加練習題(提示:一步步拆解)</span>
+</span></span><span class=line><span class=cl><span class=c1># 1.想辦法列印出jimmy</span>
+</span></span><span class=line><span class=cl><span class=n>l1</span> <span class=o>=</span> <span class=p>[</span><span class=mi>11</span><span class=p>,</span>  
+</span></span><span class=line><span class=cl>      <span class=mi>22</span><span class=p>,</span>      
+</span></span><span class=line><span class=cl>      <span class=s1>&#39;kevin&#39;</span><span class=p>,</span>      
+</span></span><span class=line><span class=cl>      <span class=p>[</span><span class=s1>&#39;tony&#39;</span><span class=p>,</span> <span class=s1>&#39;jerry&#39;</span><span class=p>,</span> <span class=p>[</span><span class=mi>123</span><span class=p>,</span> <span class=mi>456</span><span class=p>,</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>]]</span>      
+</span></span><span class=line><span class=cl>      <span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;分步操作&#39;&#39;&#39;</span>  
+</span></span><span class=line><span class=cl><span class=c1># 1.先看大列表到底有幾個數據值 以及我們想要的數據值在哪個裡面  </span>
+</span></span><span class=line><span class=cl><span class=c1># print(l1[3])  </span>
+</span></span><span class=line><span class=cl><span class=n>l2</span> <span class=o>=</span> <span class=n>l1</span><span class=p>[</span><span class=mi>3</span><span class=p>]</span>  <span class=c1># [&#39;tony&#39;, &#39;jerry&#39;, [123, 456, &#39;jimmy&#39;]]  </span>
+</span></span><span class=line><span class=cl><span class=c1># 2.再次思考小列表有幾個數據值 以及我們想要的數據值在哪個裡面  </span>
+</span></span><span class=line><span class=cl><span class=c1># print(l2[2])  </span>
+</span></span><span class=line><span class=cl><span class=n>l3</span> <span class=o>=</span> <span class=n>l2</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span>  <span class=c1># [123, 456, &#39;jimmy&#39;]  </span>
+</span></span><span class=line><span class=cl><span class=c1># 3.最後轉化成了簡單的索引直接取值  </span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>l3</span><span class=p>[</span><span class=mi>2</span><span class=p>])</span>  
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;簡化操作&#39;&#39;&#39;</span>  
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>l1</span><span class=p>[</span><span class=mi>3</span><span class=p>][</span><span class=mi>2</span><span class=p>][</span><span class=mi>2</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 2.想辦法列印出大寶貝</span>
+</span></span><span class=line><span class=cl><span class=n>d1</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;name&#39;</span><span class=p>:</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>      <span class=s1>&#39;others&#39;</span><span class=p>:</span> <span class=p>{</span><span class=s1>&#39;a1&#39;</span><span class=p>:</span> <span class=s1>&#39;heiheihei&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                 <span class=s1>&#39;a2&#39;</span><span class=p>:</span> <span class=p>{</span><span class=s1>&#39;k1&#39;</span><span class=p>:</span> <span class=s1>&#39;hahaha&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                        <span class=s1>&#39;k2&#39;</span><span class=p>:</span> <span class=s1>&#39;hehehe&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                        <span class=s1>&#39;k3&#39;</span><span class=p>:</span> <span class=s1>&#39;大寶貝&#39;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>                 <span class=p>}</span>
+</span></span><span class=line><span class=cl>      <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;分步操作&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># 1.先拿大字典第二個鍵值對的值</span>
+</span></span><span class=line><span class=cl><span class=c1># print(d1[&#39;others&#39;])</span>
+</span></span><span class=line><span class=cl><span class=n>d2</span> <span class=o>=</span> <span class=n>d1</span><span class=p>[</span><span class=s1>&#39;others&#39;</span><span class=p>]</span>  <span class=c1># {&#39;a1&#39;: &#39;heiheihei&#39;, &#39;a2&#39;: {&#39;k1&#39;: &#39;hahaha&#39;, &#39;k2&#39;: &#39;hehehe&#39;, &#39;k3&#39;: &#39;大寶貝&#39;}}</span>
+</span></span><span class=line><span class=cl><span class=c1># 2.再拿小字典第二個鍵值對的值</span>
+</span></span><span class=line><span class=cl><span class=c1># print(d2[&#39;a2&#39;])</span>
+</span></span><span class=line><span class=cl><span class=n>d3</span> <span class=o>=</span> <span class=n>d2</span><span class=p>[</span><span class=s1>&#39;a2&#39;</span><span class=p>]</span> <span class=c1># {&#39;k1&#39;: &#39;hahaha&#39;, &#39;k2&#39;: &#39;hehehe&#39;, &#39;k3&#39;: &#39;大寶貝&#39;}</span>
+</span></span><span class=line><span class=cl><span class=c1># 3.轉化成簡單的按k直接取值</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>d3</span><span class=p>[</span><span class=s1>&#39;k3&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;簡化操作&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>d1</span><span class=p>[</span><span class=s1>&#39;others&#39;</span><span class=p>][</span><span class=s1>&#39;a2&#39;</span><span class=p>][</span><span class=s1>&#39;k3&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 3.想辦法列印出run</span>
+</span></span><span class=line><span class=cl><span class=n>data</span> <span class=o>=</span> <span class=p>{</span><span class=s1>&#39;username&#39;</span><span class=p>:</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>        <span class=s1>&#39;hobby&#39;</span><span class=p>:</span> <span class=p>[</span><span class=mi>11</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                  <span class=mi>22</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                  <span class=p>{</span><span class=s1>&#39;height&#39;</span><span class=p>:</span> <span class=mi>183</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                   <span class=s1>&#39;hobby&#39;</span><span class=p>:</span> <span class=p>[</span><span class=s1>&#39;read&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                             <span class=s1>&#39;run&#39;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>                             <span class=s1>&#39;music&#39;</span>
+</span></span><span class=line><span class=cl>                             <span class=p>]</span>
+</span></span><span class=line><span class=cl>                   <span class=p>}</span>
+</span></span><span class=line><span class=cl>                  <span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;分步操作&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=c1># print(data[&#39;hobby&#39;])</span>
+</span></span><span class=line><span class=cl><span class=n>data1</span> <span class=o>=</span> <span class=n>data</span><span class=p>[</span><span class=s1>&#39;hobby&#39;</span><span class=p>]</span>  <span class=c1># [11, 22, {&#39;height&#39;: 183, &#39;hobby&#39;: [&#39;read&#39;, &#39;run&#39;, &#39;music&#39;]}]</span>
+</span></span><span class=line><span class=cl><span class=c1># print(data1[2])</span>
+</span></span><span class=line><span class=cl><span class=n>data2</span> <span class=o>=</span> <span class=n>data1</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span>  <span class=c1># {&#39;height&#39;: 183, &#39;hobby&#39;: [&#39;read&#39;, &#39;run&#39;, &#39;music&#39;]}</span>
+</span></span><span class=line><span class=cl><span class=c1># print(data2[&#39;hobby&#39;])</span>
+</span></span><span class=line><span class=cl><span class=n>data3</span> <span class=o>=</span> <span class=n>data2</span><span class=p>[</span><span class=s1>&#39;hobby&#39;</span><span class=p>]</span> <span class=c1># [&#39;read&#39;, &#39;run&#39;, &#39;music&#39;]</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>data3</span><span class=p>[</span><span class=mi>1</span><span class=p>])</span>
+</span></span><span class=line><span class=cl><span class=s1>&#39;&#39;&#39;簡化操作&#39;&#39;&#39;</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>data</span><span class=p>[</span><span class=s1>&#39;hobby&#39;</span><span class=p>][</span><span class=mi>2</span><span class=p>][</span><span class=s1>&#39;hobby&#39;</span><span class=p>][</span><span class=mi>1</span><span class=p>])</span>
+</span></span></code></pre></div><p><strong><code>EX1: 想辦法列印出jimmy</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481kMbzFu90dY.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481kMbzFu90dY.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481VR7kMNfM5R.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481VR7kMNfM5R.png></p><p><strong><code>EX2: 想辦法列印出大寶貝</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481DWOpQt4Cpp.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481DWOpQt4Cpp.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481E2BOkRwmGK.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481E2BOkRwmGK.png></p><p><strong><code>EX3: 想辦法列印出run</code></strong>
+<img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481LvFAeXpEMx.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481LvFAeXpEMx.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324813l3KmpF0xH.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324813l3KmpF0xH.png></p><h1 id=youtube教學影片>YouTube教學影片</h1><p><a class=link href="https://www.youtube.com/watch?v=QVndMgzyljI" target=_blank rel=noopener><img src=https://img.youtube.com/vi/QVndMgzyljI/0.jpg loading=lazy alt=Yes></a></p></section><footer class=article-footer><section class=article-tags><a href=/tags/python/>python</a>
+<a href=/tags/pycharm/>pycharm</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相關文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/2023/python-self-learning-day04/><div class=article-details><h2 class=article-title>Day04 - 基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題</h2></div></a></article><article><a href=/2023/python-self-learning-day02/><div class=article-details><h2 class=article-title>Day02 - 計算機三大核心，操作系統，程式語言分類，Python解釋器，Mac、Windows電腦安裝Python解釋器</h2></div></a></article><article><a href=/2023/python-self-learning-day01/><div class=article-details><h2 class=article-title>Day01 - Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//blog-goldfishbrain-fighting-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2022 -
+2023 翻轉吧金魚腦</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 建立<br>主題 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.20.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 設計</section><section class=totalcount>發表了16篇文章 ·
+總計7.88k字</section><section class=running-time>本站已運行
+<span id=runningdays class=running-days></span></section><section class=visit-count><span id=busuanzi_container_site_pv style=display:none>本站總訪問量 <span id=busuanzi_value_site_pv></span> 次 </span>·
+<span id=busuanzi_container_site_uv style=display:none>總訪客數 <span id=busuanzi_value_site_uv></span> 人</span></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><a href=# id=back-to-top title=返回顶部></a><style>#back-to-top{display:none;position:fixed;bottom:20px;right:55px;width:55px;height:55px;border-radius:7px;background-color:rgba(64,158,255,.5);box-shadow:var(--shadow-l2);font-size:30px;text-align:center;line-height:50px;cursor:pointer}#back-to-top:before{content:' ';display:inline-block;position:relative;top:0;transform:rotate(135deg);height:10px;width:10px;border-width:0 0 2px 2px;border-color:var(--back-to-top-color);border-style:solid}#back-to-top:hover:before{border-color:#2674e0}@media screen and (max-width:768px){#back-to-top{bottom:20px;right:20px;width:40px;height:40px;font-size:10px}}@media screen and (min-width:1024px){#back-to-top{bottom:20px;right:40px}}@media screen and (min-width:1280px){#back-to-top{bottom:20px;right:55px}}@media screen and (min-width:1536px){#back-to-top{visibility:hidden}}</style><script>function backToTop(){document.documentElement.scrollIntoView({behavior:"smooth"})}window.onload=function(){let t=this.document.documentElement.scrollTop||this.document.body.scrollTop,e=this.document.getElementById("back-to-top");t>0?e.style.display="inline":e.style.display="none"},window.onscroll=function(){let t=this.document.documentElement.scrollTop||this.document.body.scrollTop,e=this.document.getElementById("back-to-top");t<200?e.style.display="none":(e.style.display="inline",e.addEventListener("click",backToTop,!1))}</script><script>(function(){var t,e=window;if(e.ChannelIO)return e.console.error("ChannelIO script included twice.");t=function(){t.c(arguments)},t.q=[],t.c=function(e){t.q.push(e)},e.ChannelIO=t;function n(){if(e.ChannelIOInitialized)return;e.ChannelIOInitialized=!0;var n,t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://cdn.channel.io/plugin/ch-plugin-web.js",n=document.getElementsByTagName("script")[0],n.parentNode&&n.parentNode.insertBefore(t,n)}document.readyState==="complete"?n():(e.addEventListener("DOMContentLoaded",n),e.addEventListener("load",n))})(),ChannelIO("boot",{pluginKey:"ad479103-2d28-421a-a916-ae09e72ce014"})</script><script>let s1="2023-10-7";s1=new Date(s1.replace(/-/g,"/"));let s2=new Date,timeDifference=s2.getTime()-s1.getTime(),days=Math.floor(timeDifference/(1e3*60*60*24)),hours=Math.floor(timeDifference%(1e3*60*60*24)/(1e3*60*60)),minutes=Math.floor(timeDifference%(1e3*60*60)/(1e3*60)),result=days+"天"+hours+"小時"+minutes+"分鐘";document.getElementById("runningdays").innerHTML=result</script></body></html>

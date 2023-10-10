@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>helm on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/helm/</link><description>Recent content in helm on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Oct 2023 01:00:00 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/helm/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Helm安裝Rancher管理平台，納管現有k8s集群( 高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/</link><pubDate>Sat, 07 Oct 2023 01:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936.png"
+width="1323"
+height="728"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230922172936_hu707fbbc58435615f6600069941230842_701550_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230922172936.png"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="436px"
+>&lt;/p>
+&lt;p>安裝先決條件：&lt;/p>
+&lt;ul>
+&lt;li>kubernetes 集群&lt;/li>
+&lt;li>Ingress Controller&lt;/li>
+&lt;li>Helm 、kubectl CLI 工具&lt;/li>
+&lt;/ul>
+&lt;h2 id="一ingress-controller安裝">一、Ingress Controller安裝&lt;/h2>
+&lt;p>github網址:&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/kubernetes/ingress-nginx" target="_blank" rel="noopener"
+>https://github.com/kubernetes/ingress-nginx&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % scp /Users/chenqingze/Downloads/ingress-nginx-controller-v1.6.4.tar.gz root@192.168.1.71:/root
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# tar -xzvf ingress-nginx-controller-v1.6.4.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nb">cd&lt;/span> ingress-nginx-controller-v1.6.4/deploy/static/provider/baremetal
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Deployment改成DaemonSet &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 添加hostNetwork: true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/ingress-nginx-controller-v1.6.4/deploy/static/provider/baremetal# vim deploy.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: apps/v1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kind: DaemonSet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> labels:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/component: controller
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/instance: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/name: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/part-of: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/version: 1.6.4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: ingress-nginx-controller
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> namespace: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> minReadySeconds: &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> revisionHistoryLimit: &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> selector:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> matchLabels:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/component: controller
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/instance: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/name: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> template:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> metadata:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> labels:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/component: controller
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/instance: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> app.kubernetes.io/name: ingress-nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> hostNetwork: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> containers:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/ingress-nginx-controller-v1.6.4/deploy/static/provider/baremetal# kubectl apply -f deploy.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/ingress-nginx-controller-v1.6.4/deploy/static/provider/baremetal# kubectl get pod -n ingress-nginx -owide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-admission-create-zmkrl 0/1 Completed &lt;span class="m">0&lt;/span> 73s 10.244.255.199 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-admission-patch-rlglf 0/1 Completed &lt;span class="m">0&lt;/span> 73s 10.244.14.133 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-controller-js2fl 1/1 Running &lt;span class="m">0&lt;/span> 73s 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ingress-nginx-controller-mmc2h 1/1 Running &lt;span class="m">0&lt;/span> 73s 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="二kubectl與helm-cli-工具安裝">二、Kubectl與Helm CLI 工具安裝&lt;/h2>
+&lt;p>官方安裝網站： &lt;a class="link" href="https://helm.sh/docs/intro/install/" target="_blank" rel="noopener"
+>https://helm.sh/docs/intro/install/&lt;/a>&lt;/p>
+&lt;p>Helm v3.12.3 Binary Releases：
+&lt;a class="link" href="https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz" target="_blank" rel="noopener"
+>https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# wget https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# tar -zxvf helm-v3.12.3-linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# mv linux-amd64/helm /usr/local/bin/helm
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Kubectl：
+&lt;a class="link" href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/" target="_blank" rel="noopener"
+>https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/&lt;/a>&lt;/p>
+&lt;p>如果主機就是master,應該都有kubectl了,此流程可以略過&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1. Update the apt package index and install packages needed to use the Kubernetes apt repository:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get install -y apt-transport-https ca-certificates curl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 2. Download the Google Cloud public signing key:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg &lt;span class="p">|&lt;/span> sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 3. Add the Kubernetes apt repository:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> sudo tee /etc/apt/sources.list.d/kubernetes.list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 4. 檢查是否已經添加源 &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# cat /etc/apt/sources.list.d/kubernetes.list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">deb &lt;span class="o">[&lt;/span>signed-by&lt;span class="o">=&lt;/span>/etc/apt/keyrings/kubernetes-archive-keyring.gpg&lt;span class="o">]&lt;/span> https://apt.kubernetes.io/ kubernetes-xenial main
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 5. Update apt package index, install kubelet, kubeadm and kubectl, and pin their version:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt-get update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# sudo apt-get install -y &lt;span class="nv">kubectl&lt;/span>&lt;span class="o">=&lt;/span>1.26.3-00
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看版本&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="三rancher高可用管理平台安裝">三、Rancher高可用管理平台安裝&lt;/h2>
+&lt;h3 id="一添加-helm-chart-倉庫">一、添加 Helm Chart 倉庫&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm repo add rancher-stable https://releases.rancher.com/server-charts/stable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;rancher-stable&amp;#34;&lt;/span> has been added to your repositories
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="二為-rancher-建立命名空間">二、為 Rancher 建立命名空間&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl create namespace cattle-system
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="三選擇-ssl-配置">三、選擇 SSL 配置&lt;/h3>
+&lt;p>Rancher 產生的憑證（預設）
+需要 cert-manager&lt;/p>
+&lt;h3 id="四安裝-cert-manager">四、安裝 cert-manager&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如果你手動安裝了CRD，而不是在 Helm 安裝命令中添加了 &amp;#39;--set installCRDs=true&amp;#39; 選項，你應該在升級 Helm Chart 之前升級 CRD 資源。&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 添加 Jetstack Helm 倉庫&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm repo add jetstack https://charts.jetstack.io
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 更新本地 Helm Chart 倉庫緩存&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm repo update
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Hang tight &lt;span class="k">while&lt;/span> we grab the latest from your chart repositories...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...Successfully got an update from the &lt;span class="s2">&amp;#34;jetstack&amp;#34;&lt;/span> chart repository
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...Successfully got an update from the &lt;span class="s2">&amp;#34;rancher-stable&amp;#34;&lt;/span> chart repository
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Update Complete. ⎈Happy Helming!⎈
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 安裝 cert-manager Helm Chart&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm install cert-manager jetstack/cert-manager &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --namespace cert-manager &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --create-namespace &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --version v1.11.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 安裝完 cert-manager 后，你可以通過檢查 cert-manager 命名空間中正在運行的 Pod 來驗證它是否已正確部署&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pods --namespace cert-manager
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-64f9f45d6f-8j65z 1/1 Running &lt;span class="m">0&lt;/span> 2m1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-cainjector-56bbdd5c47-4hngr 1/1 Running &lt;span class="m">0&lt;/span> 2m1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-startupapicheck-vzq7z 0/1 Completed &lt;span class="m">0&lt;/span> 2m
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cert-manager-webhook-d4f4545d7-rhbkv 1/1 Running &lt;span class="m">0&lt;/span> 2m1s
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="五根據你選擇的證書選項通過-helm-安裝-rancher">五、根據你選擇的證書選項，通過 Helm 安裝 Rancher&lt;/h3>
+&lt;p>採Rancher 生成的證書方式&lt;/p>
+&lt;p>Rancher Helm Chart 選項：
+&lt;a class="link" href="https://ranchermanager.docs.rancher.com/zh/getting-started/installation-and-upgrade/installation-references/helm-chart-options" target="_blank" rel="noopener"
+>https://ranchermanager.docs.rancher.com/zh/getting-started/installation-and-upgrade/installation-references/helm-chart-options&lt;/a>&lt;/p>
+&lt;p>&lt;font color=red>需多指定ingressClassName為nginx&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# helm install rancher rancher-stable/rancher &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --namespace cattle-system &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --set &lt;span class="nv">hostname&lt;/span>&lt;span class="o">=&lt;/span>rancher.jimmyhome.tw &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --set &lt;span class="nv">bootstrapPassword&lt;/span>&lt;span class="o">=&lt;/span>admin &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --set ingress.ingressClassName&lt;span class="o">=&lt;/span>nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME: rancher
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">LAST DEPLOYED: Wed Sep &lt;span class="m">20&lt;/span> 18:31:10 &lt;span class="m">2023&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAMESPACE: cattle-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">STATUS: deployed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">REVISION: &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">TEST SUITE: None
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NOTES:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Rancher Server has been installed.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NOTE: Rancher may take several minutes to fully initialize. Please standby &lt;span class="k">while&lt;/span> Certificates are being issued, Containers are started and the Ingress rule comes up.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Check out our docs at https://rancher.com/docs/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If you provided your own bootstrap password during installation, browse to https://rancher.jimmyhome.tw to get started.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If this is the first &lt;span class="nb">time&lt;/span> you installed Rancher, get started by running this &lt;span class="nb">command&lt;/span> and clicking the URL it generates:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> https://rancher.jimmyhome.tw/dashboard/?setup&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>kubectl get secret --namespace cattle-system bootstrap-secret -o go-template&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{{.data.bootstrapPassword|base64decode}}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">To get just the bootstrap password on its own, run:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl get secret --namespace cattle-system bootstrap-secret -o go-template&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{{.data.bootstrapPassword|base64decode}}{{ &amp;#34;\n&amp;#34; }}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Happy Containering!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 等待 Rancher 運行&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system rollout status deploy/rancher
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Waiting &lt;span class="k">for&lt;/span> deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> rollout to finish: &lt;span class="m">0&lt;/span> of &lt;span class="m">3&lt;/span> updated replicas are available...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Waiting &lt;span class="k">for&lt;/span> deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> rollout to finish: &lt;span class="m">1&lt;/span> of &lt;span class="m">3&lt;/span> updated replicas are available...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Waiting &lt;span class="k">for&lt;/span> deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> rollout to finish: &lt;span class="m">2&lt;/span> of &lt;span class="m">3&lt;/span> updated replicas are available...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">deployment &lt;span class="s2">&amp;#34;rancher&amp;#34;&lt;/span> successfully rolled out
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="六驗證-rancher-server-是否部署成功">六、驗證 Rancher Server 是否部署成功&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system get deploy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY UP-TO-DATE AVAILABLE AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher 3/3 &lt;span class="m">3&lt;/span> &lt;span class="m">3&lt;/span> 53s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl -n cattle-system get ingress
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME CLASS HOSTS ADDRESS PORTS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher nginx rancher.jimmyhome.tw 192.168.1.75,192.168.1.76 80, &lt;span class="m">443&lt;/span> 67s
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 我自己的筆電，先設定/etc/hosts測試網頁訪問&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 如是內部有dns server的，就到dns server設定a record解析&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % sudo vim /etc/hosts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.75 rancher.jimmyhome.tw
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>打 &lt;a class="link" href="https://rancher.jimmyhome.tw" target="_blank" rel="noopener"
+>https://rancher.jimmyhome.tw&lt;/a> 可以看到網頁
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023255.png"
+width="1010"
+height="894"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023255_hu255ddf89689e804c5d835315e9863c95_89733_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023255_hu255ddf89689e804c5d835315e9863c95_89733_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230921023255.png"
+class="gallery-image"
+data-flex-grow="112"
+data-flex-basis="271px"
+>
+由上方helm install rancher完成時，可以看到以下兩個指令，可以獲取到預設admin帳號的密碼&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># If this is the first time you installed Rancher, get started by running this command and clicking the URL it generates&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="nb">echo&lt;/span> https://rancher.jimmyhome.tw/dashboard/?setup&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>kubectl get secret --namespace cattle-system bootstrap-secret -o go-template&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{{.data.bootstrapPassword|base64decode}}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">https://rancher.jimmyhome.tw/dashboard/?setup&lt;span class="o">=&lt;/span>admin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># To get just the bootstrap password on its own, run&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get secret --namespace cattle-system bootstrap-secret -o go-template&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{{.data.bootstrapPassword|base64decode}}{{ &amp;#34;\n&amp;#34; }}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">admin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>重設admin帳號的密碼
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023557.png"
+width="1008"
+height="893"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023557_hu9e81d5777cb32757e44e3be582d3603e_90642_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921023557_hu9e81d5777cb32757e44e3be582d3603e_90642_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230921023557.png"
+class="gallery-image"
+data-flex-grow="112"
+data-flex-basis="270px"
+>&lt;/p>
+&lt;p>輸入剛剛重設的admin密碼，登入
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031136.png"
+width="991"
+height="782"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031136_hubdf0d5ed0ba43ff474725ac5a8ecccc3_79311_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031136_hubdf0d5ed0ba43ff474725ac5a8ecccc3_79311_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230921031136.png"
+class="gallery-image"
+data-flex-grow="126"
+data-flex-basis="304px"
+>&lt;/p>
+&lt;p>可以看到集群資訊，state為Active
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031249.png"
+width="1457"
+height="722"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031249_hucbbfb060f3c77e6be7bccf554592ce7d_77193_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031249_hucbbfb060f3c77e6be7bccf554592ce7d_77193_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230921031249.png"
+class="gallery-image"
+data-flex-grow="201"
+data-flex-basis="484px"
+>&lt;/p>
+&lt;p>進入集群，可以看到集群詳細訊息
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031718.png"
+width="1975"
+height="944"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031718_hu475c36b1f3937b05de60533cd5928b74_159357_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031718_hu475c36b1f3937b05de60533cd5928b74_159357_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230921031718.png"
+class="gallery-image"
+data-flex-grow="209"
+data-flex-basis="502px"
+>&lt;/p>
+&lt;p>也可以使用dashboard shell去管理集群
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031746.png"
+width="1983"
+height="721"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031746_hu87f73535b369c4edcdb990f935a08331_143573_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-helm/media/Pasted-image-20230921031746_hu87f73535b369c4edcdb990f935a08331_143573_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="media/Pasted-image-20230921031746.png"
+class="gallery-image"
+data-flex-grow="275"
+data-flex-basis="660px"
+>&lt;/p></description></item></channel></rss>
