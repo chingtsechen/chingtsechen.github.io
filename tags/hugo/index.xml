@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/hugo/</link><description>Recent content in hugo on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Oct 2023 10:38:49 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>修改hugo在github上的架構</title><link>https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/</link><pubDate>Tue, 10 Oct 2023 10:38:49 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/</guid><description>&lt;p>架構修改如下圖：
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121753.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hugo on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/hugo/</link><description>Recent content in hugo on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Oct 2023 10:38:49 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/hugo/index.xml" rel="self" type="application/rss+xml"/><item><title>修改hugo在github上的架構</title><link>https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/</link><pubDate>Tue, 10 Oct 2023 10:38:49 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/</guid><description>&lt;p>架構修改如下圖：
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121753.png"
 width="2062"
 height="989"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121753_hu722b33167e8c2db1cf4f4b4091ce8b6b_182791_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121753_hu722b33167e8c2db1cf4f4b4091ce8b6b_182791_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121753_hu722b33167e8c2db1cf4f4b4091ce8b6b_182791_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121753_hu722b33167e8c2db1cf4f4b4091ce8b6b_182791_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="208"
@@ -45,10 +45,10 @@ data-flex-basis="500px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">./public&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="創建source-code-repository">創建Source Code Repository&lt;/h2>
 &lt;p>設定為Private，外部無法直接訪問
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110139.png"
 width="1167"
 height="668"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139_hue05f4b6dd4a9d7d04c9caaf937c186d0_92986_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110139_hue05f4b6dd4a9d7d04c9caaf937c186d0_92986_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110139_hue05f4b6dd4a9d7d04c9caaf937c186d0_92986_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110139_hue05f4b6dd4a9d7d04c9caaf937c186d0_92986_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="174"
@@ -67,19 +67,19 @@ data-flex-basis="419px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">750&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="m">10&lt;/span> 11:02 gh-pages.pub
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="配置source-code-repository-私鑰">配置Source Code Repository 私鑰&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP 8. blog % cat gh-pages
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110724.png"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110724.png"
 width="1265"
 height="693"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110724_hud1dd307ae4c8d1167ccdf1c5297ca7e9_114499_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110724_hud1dd307ae4c8d1167ccdf1c5297ca7e9_114499_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110724_hud1dd307ae4c8d1167ccdf1c5297ca7e9_114499_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110724_hud1dd307ae4c8d1167ccdf1c5297ca7e9_114499_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="182"
 data-flex-basis="438px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110806.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110806.png"
 width="1242"
 height="820"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110806_huf863af346627722d5ccd1def131b1545_170454_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010110806_huf863af346627722d5ccd1def131b1545_170454_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110806_huf863af346627722d5ccd1def131b1545_170454_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010110806_huf863af346627722d5ccd1def131b1545_170454_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="151"
@@ -88,10 +88,10 @@ data-flex-basis="363px"
 &lt;h2 id="將source-code-推送進去repository">將Source Code 推送進去Repository&lt;/h2>
 &lt;p>由於Source Code Repository是Private的，所以pull code與push code要用帳號和密碼，
 現在密碼都改用token的方式，所以要生成一個token&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010111733.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010111733.png"
 width="1215"
 height="412"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010111733_hu60a98ae0319cf750676e58975440cffe_76081_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010111733_hu60a98ae0319cf750676e58975440cffe_76081_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010111733_hu60a98ae0319cf750676e58975440cffe_76081_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010111733_hu60a98ae0319cf750676e58975440cffe_76081_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="294"
@@ -133,10 +133,10 @@ data-flex-basis="707px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP blog-goldfishbrain-fighting % git push
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到，代碼都push上來了
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010114858.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010114858.png"
 width="1360"
 height="783"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010114858_huaa21c3c5f75eda0ba9830e62ce57fb50_143754_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010114858_huaa21c3c5f75eda0ba9830e62ce57fb50_143754_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010114858_huaa21c3c5f75eda0ba9830e62ce57fb50_143754_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010114858_huaa21c3c5f75eda0ba9830e62ce57fb50_143754_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="173"
@@ -144,10 +144,10 @@ data-flex-basis="416px"
 >&lt;/p>
 &lt;h2 id="配置靜態頁repository-公鑰">配置靜態頁Repository 公鑰&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP 8. blog % cat gh-pages.pub
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121041.png"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121041.png"
 width="1252"
 height="706"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121041_hub816b42453fea6f6af4edbf1595e7949_112477_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121041_hub816b42453fea6f6af4edbf1595e7949_112477_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121041_hub816b42453fea6f6af4edbf1595e7949_112477_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121041_hub816b42453fea6f6af4edbf1595e7949_112477_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="177"
@@ -155,10 +155,10 @@ data-flex-basis="425px"
 >&lt;/p>
 &lt;h2 id="為source-code-repository創建workflow">為Source Code Repository創建workflow&lt;/h2>
 &lt;p>Actions → set up a workflow yourself&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010115519.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010115519.png"
 width="1192"
 height="340"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010115519_hu901d591c1d4323787798857db8935b76_51975_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010115519_hu901d591c1d4323787798857db8935b76_51975_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010115519_hu901d591c1d4323787798857db8935b76_51975_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010115519_hu901d591c1d4323787798857db8935b76_51975_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="350"
@@ -201,40 +201,40 @@ data-flex-basis="841px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">main&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">publish_dir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">./public&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 要發佈的目錄&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">cname&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">blog.goldfishbrain-fighting.com&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 如果有修改域名，這裡打上&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010120114.png"
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010120114.png"
 width="1466"
 height="870"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010120114_hue4dad10fa05f5e3e099535c2c354d415_235519_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010120114_hue4dad10fa05f5e3e099535c2c354d415_235519_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010120114_hue4dad10fa05f5e3e099535c2c354d415_235519_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010120114_hue4dad10fa05f5e3e099535c2c354d415_235519_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="168"
 data-flex-basis="404px"
 >&lt;/p>
 &lt;p>可以看到佈屬成功
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121235.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121235.png"
 width="1481"
 height="390"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121235_hu7e7a1c304c07bb1e8cb31f20e928b566_67577_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121235_hu7e7a1c304c07bb1e8cb31f20e928b566_67577_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121235_hu7e7a1c304c07bb1e8cb31f20e928b566_67577_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121235_hu7e7a1c304c07bb1e8cb31f20e928b566_67577_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="379"
 data-flex-basis="911px"
 >&lt;/p>
 &lt;h2 id="到靜態頁repository查看是否佈屬成功">到靜態頁Repository查看是否佈屬成功&lt;/h2>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121355.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121355.png"
 width="1394"
 height="871"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121355_hu25b0395051ca69fc83ce68405b57e0e0_244310_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121355_hu25b0395051ca69fc83ce68405b57e0e0_244310_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121355_hu25b0395051ca69fc83ce68405b57e0e0_244310_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121355_hu25b0395051ca69fc83ce68405b57e0e0_244310_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="160"
 data-flex-basis="384px"
 >&lt;/p>
 &lt;p>確認Settings-&amp;gt;Pages，使用Branch和Custom domain是否設定正確
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121538.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121538.png"
 width="1471"
 height="866"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121538_hufbdeabb492ad79c245bff0c207799aa6_172878_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010121538_hufbdeabb492ad79c245bff0c207799aa6_172878_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121538_hufbdeabb492ad79c245bff0c207799aa6_172878_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121538_hufbdeabb492ad79c245bff0c207799aa6_172878_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="169"
@@ -242,20 +242,20 @@ data-flex-basis="407px"
 >&lt;/p>
 &lt;h2 id="測試發佈文章">測試發佈文章&lt;/h2>
 &lt;p>推送代碼至blog-goldfisnbrain-fighting後，workflow執行編譯並推送編譯後靜態頁至chingtsechen.github.io中
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123422.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010123422.png"
 width="1469"
 height="505"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123422_huffca0ef7c6fb2850a727a08cc21b6094_106442_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123422_huffca0ef7c6fb2850a727a08cc21b6094_106442_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010123422_huffca0ef7c6fb2850a727a08cc21b6094_106442_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010123422_huffca0ef7c6fb2850a727a08cc21b6094_106442_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="290"
 data-flex-basis="698px"
 >
 可以看到，發佈文章成功，就此，整體hugo架構修改已大功告成了
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123343.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010123343.png"
 width="1483"
 height="942"
-srcset="https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123343_hu43765ec200dcb372d9a712a5764f5df7_267620_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/%E4%BF%AE%E6%94%B9hugo%E5%9C%A8github%E4%B8%8A%E7%9A%84%E6%9E%B6%E6%A7%8B/media/Pasted-image-20231010123343_hu43765ec200dcb372d9a712a5764f5df7_267620_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010123343_hu43765ec200dcb372d9a712a5764f5df7_267620_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010123343_hu43765ec200dcb372d9a712a5764f5df7_267620_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="157"
