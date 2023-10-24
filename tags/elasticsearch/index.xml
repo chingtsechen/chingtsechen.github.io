@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>elasticsearch on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/elasticsearch/</link><description>Recent content in elasticsearch on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 24 Oct 2023 06:52:48 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/elasticsearch/index.xml" rel="self" type="application/rss+xml"/><item><title>ELK8.x 多節點集群佈署-啟用security(tls)登入驗證(Docker-Compose)</title><link>https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/</link><pubDate>Tue, 24 Oct 2023 06:52:48 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/</guid><description>&lt;h3 id="前情提要與架構規劃">前情提要與架構規劃&lt;/h3>
+&lt;p>參考專案: &lt;a class="link" href="https://github.com/deviantony/docker-elk/tree/tls" target="_blank" rel="noopener"
+>https://github.com/deviantony/docker-elk/tree/tls&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">由於此專案演示的，是將所有角色在單機上佈屬，
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">然後我這裡是要示範，如何在跨節點主機上，去佈屬各項角色，達到角色拆分。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>主機規劃，與角色分配&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>主機名稱&lt;/th>
+&lt;th>主機IP&lt;/th>
+&lt;th>node.name&lt;/th>
+&lt;th>角色&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>k8s-master71u&lt;/td>
+&lt;td>192.168.1.71&lt;/td>
+&lt;td>elasticsearch01&lt;/td>
+&lt;td>elasticsearch&lt;br>&lt;br>kibana&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>k8s-master72u&lt;/td>
+&lt;td>192.168.1.72&lt;/td>
+&lt;td>elasticsearch02&lt;br>&lt;br>logstach02&lt;/td>
+&lt;td>elasticsearch&lt;br>&lt;br>logstach&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>k8s-master73u&lt;/td>
+&lt;td>192.168.1.73&lt;/td>
+&lt;td>elasticsearch03&lt;br>&lt;br>logstach03&lt;/td>
+&lt;td>elasticsearch&lt;br>&lt;br>logstach&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="目錄結構">目錄結構&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 目錄結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./docker-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── elasticsearch.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── logs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./etc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── timezone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./extensions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── kibana.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./LICENSE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./logstash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── logstash.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── pipeline
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── logstash.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── entrypoint.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── lib.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── roles
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./tls
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── certs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── entrypoint.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── instances.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── README.md
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="clone代碼建立目錄">Clone代碼，建立目錄&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>每一台皆要執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># git clone項目&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# git clone --branch tls https://github.com/deviantony/docker-elk.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# &lt;span class="nb">cd&lt;/span> docker-elk/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# ll
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">48&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">10&lt;/span> root root &lt;span class="m">4096&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 ./
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">3&lt;/span> root root &lt;span class="m">24&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 ../
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">5440&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 docker-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">3&lt;/span> root root &lt;span class="m">59&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 elasticsearch/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">1502&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 .env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">9&lt;/span> root root &lt;span class="m">143&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 extensions/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">8&lt;/span> root root &lt;span class="m">163&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 .git/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">83&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 .gitattributes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">4&lt;/span> root root &lt;span class="m">45&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 .github/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">3&lt;/span> root root &lt;span class="m">59&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 kibana/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">1082&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 LICENSE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">4&lt;/span> root root &lt;span class="m">75&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 logstash/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">23158&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">3&lt;/span> root root &lt;span class="m">93&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 setup/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">3&lt;/span> root root &lt;span class="m">117&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:14 tls/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 建立共用檔案，放置目錄&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# mkdir etc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# &lt;span class="nb">cd&lt;/span> etc/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 將localtime、timezone，校時與時區檔案傳入&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# chmod &lt;span class="m">777&lt;/span> -R etc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# ll etc/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">12&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxrwxrwx &lt;span class="m">2&lt;/span> root root &lt;span class="m">39&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:17 ./
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">11&lt;/span> root root &lt;span class="m">4096&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:15 ../
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxrwxrwx &lt;span class="m">1&lt;/span> root root &lt;span class="m">764&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:17 localtime*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxrwxrwx &lt;span class="m">1&lt;/span> root root &lt;span class="m">12&lt;/span> Oct &lt;span class="m">23&lt;/span> 23:17 timezone*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 建立各功能，所需目錄&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# mkdir elasticsearch/data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# mkdir elasticsearch/logs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# chmod &lt;span class="m">777&lt;/span> -R elasticsearch/data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# chmod &lt;span class="m">777&lt;/span> -R elasticsearch/logs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# mkdir kibana/data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# chmod &lt;span class="m">777&lt;/span> -R kibana/data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="生成憑證">生成憑證&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>選一台執行，再將生成憑證拷貝至其他主機&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 編寫instances主機資訊，要用來產生憑證&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# vim tls/instances.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># This file is used by elasticsearch-certutil to generate X.509 certificates&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># for stack components.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Ref. https://www.elastic.co/guide/en/elasticsearch/reference/current/certutil.html#certutil-silent&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 多instance可以寫一起&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">instances:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- name: elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> dns:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elasticsearch01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elasticsearch02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elasticsearch03
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - elasticsearch # Compose service, resolved by the embedded Docker DNS server name&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - localhost # local connections&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ip:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 192.168.1.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 192.168.1.72
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 192.168.1.73
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - 127.0.0.1 # local connections&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - ::1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- name: kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> dns:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - kibana.127.0.0.1.nip.io # Examples of resolvable domains.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - kibana.127.0.0.1.sslip.io #&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - localhost&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ip:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 192.168.1.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - 127.0.0.1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - ::1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 執行tls容器，產生憑證&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up tls
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Attaching to docker-elk_tls_1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> CA certificate and key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ Created
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ SHA256 fingerprint: 73cfd9c6c9220b46005ae2fcf0c0e1234093a70f4c62741ef9d701b192150a52
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/ca/ca.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/ca/ca.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Server certificates and keys
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ Created
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/elasticsearch/elasticsearch.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/elasticsearch/elasticsearch.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/kibana/kibana.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/kibana/kibana.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/fleet-server/fleet-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/fleet-server/fleet-server.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/apm-server/apm-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/apm-server/apm-server.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# scp -r tls/certs root@192.168.1.72:/data/docker-elk/tls/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# scp -r tls/certs root@192.168.1.73:/data/docker-elk/tls/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="修改docker-compose設定">修改docker-compose設定&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>每一台皆要執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 佈署檔案docker-compose設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# vim docker-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">version: &lt;span class="s1">&amp;#39;3.7&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">services:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># The &amp;#39;tls&amp;#39; service runs a one-off script which initializes TLS certificates and&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># private keys for all components of the stack inside the local tls/ directory.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># This task only needs to be performed once, *before* the first stack startup.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># By default, it is excluded from the services started by &amp;#39;docker compose up&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># due to the non-default profile it belongs to. To run it, either provide the&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># &amp;#39;--profile=setup&amp;#39; CLI flag to Compose commands, or &amp;#34;up&amp;#34; the service by name&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># such as &amp;#39;docker compose up tls&amp;#39;.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> tls:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> profiles:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> build:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> context: tls/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_VERSION: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_VERSION&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> user: root &lt;span class="c1"># ensures we can write to the local tls/ directory.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> init: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/entrypoint.sh:/entrypoint.sh:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/instances.yml:/usr/share/elasticsearch/tls/instances.yml:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs:/usr/share/elasticsearch/tls/certs:z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># The &amp;#39;setup&amp;#39; service runs a one-off script which initializes users inside&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Elasticsearch — such as &amp;#39;logstash_internal&amp;#39; and &amp;#39;kibana_system&amp;#39; — with the&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># values of the passwords defined in the &amp;#39;.env&amp;#39; file. It also creates the&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># roles required by some of these users.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># This task only needs to be performed once, during the *initial* startup of&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># the stack. Any subsequent run will reset the passwords of existing users to&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># the values defined inside the &amp;#39;.env&amp;#39; file, and the built-in roles to their&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># default permissions.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># By default, it is excluded from the services started by &amp;#39;docker compose up&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># due to the non-default profile it belongs to. To run it, either provide the&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># &amp;#39;--profile=setup&amp;#39; CLI flag to Compose commands, or &amp;#34;up&amp;#34; the service by name&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># such as &amp;#39;docker compose up setup&amp;#39;.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> setup:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> profiles:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> build:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> context: setup/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_VERSION: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_VERSION&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> init: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./setup/lib.sh:/lib.sh:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./setup/roles:/roles:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (!) CA certificate. Generate using the &amp;#39;tls&amp;#39; service.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/ca/ca.crt:/ca.crt:ro,z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> environment:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LOGSTASH_INTERNAL_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">LOGSTASH_INTERNAL_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> KIBANA_SYSTEM_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">KIBANA_SYSTEM_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> METRICBEAT_INTERNAL_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">METRICBEAT_INTERNAL_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> FILEBEAT_INTERNAL_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">FILEBEAT_INTERNAL_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> HEARTBEAT_INTERNAL_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">HEARTBEAT_INTERNAL_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> MONITORING_INTERNAL_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">MONITORING_INTERNAL_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> BEATS_SYSTEM_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">BEATS_SYSTEM_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> networks:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> depends_on:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elasticsearch:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> build:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> context: elasticsearch/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_VERSION: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_VERSION&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># elasticsearch存放data與logs目錄，依需求自行定義&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./elasticsearch/data:/usr/share/elasticsearch/data:Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./elasticsearch/logs:/usr/share/elasticsearch/logs:Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (!) TLS certificates. Generate using the &amp;#39;tls&amp;#39; service.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/ca/ca.crt:/usr/share/elasticsearch/config/ca.crt:ro,z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/elasticsearch/elasticsearch.crt:/usr/share/elasticsearch/config/elasticsearch.crt:ro,z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/elasticsearch/elasticsearch.key:/usr/share/elasticsearch/config/elasticsearch.key:ro,z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 校時文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./etc/localtime:/etc/localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./etc/timezone:/etc/timezone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ports:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 9200:9200
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 9300:9300
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> environment:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># node.name 每一台要不一樣&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> node.name: elasticsearch01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ES_JAVA_OPTS: -Xms512m -Xmx512m
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Bootstrap password.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Used to initialize the keystore during the initial startup of&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Elasticsearch. Ignored on subsequent runs.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Use single node discovery in order to disable production mode and avoid bootstrap checks.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">#discovery.type: single-node&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 主機IP&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> network.publish_host: 192.168.1.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Use other cluster nodes for unicast discovery.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> discovery.seed_hosts: 192.168.1.71:9300,192.168.1.72:9300,192.168.1.73:9300
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Define initial masters, assuming a cluster size of at least 3.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster.initial_master_nodes: 192.168.1.71,192.168.1.72,192.168.1.73
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> networks:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> restart: unless-stopped
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> logstash:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> build:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> context: logstash/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_VERSION: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_VERSION&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (!) CA certificate. Generate using the &amp;#39;tls&amp;#39; service.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/ca/ca.crt:/usr/share/logstash/config/ca.crt:ro,z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 校時文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./etc/localtime:/etc/localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./etc/timezone:/etc/timezone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ports:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 5044:5044
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 50000:50000/tcp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 50000:50000/udp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 9600:9600
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> environment:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LS_JAVA_OPTS: -Xms256m -Xmx256m
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> LOGSTASH_INTERNAL_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">LOGSTASH_INTERNAL_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> networks:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> depends_on:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> restart: unless-stopped
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> kibana:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> build:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> context: kibana/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> args:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ELASTIC_VERSION: &lt;span class="si">${&lt;/span>&lt;span class="nv">ELASTIC_VERSION&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># kibana存放data目錄，依需求自行定義&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./kibana/data:/usr/share/kibana/data:Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (!) TLS certificates. Generate using the &amp;#39;tls&amp;#39; service.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/ca/ca.crt:/usr/share/kibana/config/ca.crt:ro,z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/kibana/kibana.crt:/usr/share/kibana/config/kibana.crt:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./tls/certs/kibana/kibana.key:/usr/share/kibana/config/kibana.key:ro,Z
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 校時文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./etc/localtime:/etc/localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ./etc/timezone:/etc/timezone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ports:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - 5601:5601
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> environment:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> KIBANA_SYSTEM_PASSWORD: &lt;span class="si">${&lt;/span>&lt;span class="nv">KIBANA_SYSTEM_PASSWORD&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> networks:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> depends_on:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> restart: unless-stopped
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">networks:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elk:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> driver: bridge
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">volumes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elasticsearch:
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="修改elasticsearch設定">修改elasticsearch設定&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>需要安裝elasticsearch的執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># elasticsearch 設定檔設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# vim elasticsearch/config/elasticsearch.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Default Elasticsearch configuration from Elasticsearch base image.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## https://github.com/elastic/elasticsearch/blob/main/distribution/docker/src/docker/config/elasticsearch.yml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># cluster.name名稱，依需求自行定義&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cluster.name: elk-cluster
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">network.host: 0.0.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## X-Pack settings&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-settings.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改license，由trial改成basic&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.license.self_generated.type: basic
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.enabled: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## TLS configuration&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## See instructions from README to enable.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Communications between nodes in a cluster&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## see https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#tls-transport&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.transport.ssl.enabled: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.transport.ssl.verification_mode: certificate
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.transport.ssl.certificate_authorities: &lt;span class="o">[&lt;/span> ca.crt &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.transport.ssl.certificate: elasticsearch.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.transport.ssl.key: elasticsearch.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## HTTP client communications&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## see https://www.elastic.co/guide/en/elasticsearch/reference/current/configuring-tls.html#tls-http&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.http.ssl.enabled: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.http.ssl.certificate_authorities: &lt;span class="o">[&lt;/span> ca.crt &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.http.ssl.certificate: elasticsearch.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.security.http.ssl.key: elasticsearch.key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="修改kibana設定">修改kibana設定&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>需要安裝kibana的執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># kibana 設定檔設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# vim kibana/config/kibana.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Default Kibana configuration from Kibana base image.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## https://github.com/elastic/kibana/blob/main/src/dev/build/tasks/os_packages/docker_generator/templates/kibana_yml.template.ts&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">server.name: kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">server.host: 0.0.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 多節點elasticsearch，都寫上&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">elasticsearch.hosts: &lt;span class="o">[&lt;/span> &lt;span class="s2">&amp;#34;https://192.168.1.71:9200&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;https://192.168.1.72:9200&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;https://192.168.1.73:9200&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">monitoring.ui.container.elasticsearch.enabled: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">monitoring.ui.container.logstash.enabled: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## X-Pack security credentials&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">elasticsearch.username: kibana_system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">elasticsearch.password: &lt;span class="si">${&lt;/span>&lt;span class="nv">KIBANA_SYSTEM_PASSWORD&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## TLS configuration&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## See instructions from README to enable.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Communications between Kibana and Elasticsearch&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## see https://www.elastic.co/guide/en/kibana/current/configuring-tls.html#configuring-tls-kib-es&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 寫上根憑證位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">elasticsearch.ssl.certificateAuthorities: &lt;span class="o">[&lt;/span> config/ca.crt &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Communications between web browsers and Kibana&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## see https://www.elastic.co/guide/en/kibana/current/configuring-tls.html#configuring-tls-browser-kib&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 開啟kibana ssl，填寫憑證位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">server.ssl.enabled: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">server.ssl.certificate: config/kibana.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">server.ssl.key: config/kibana.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Encryption keys (optional but highly recommended)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Generate with either&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## $ docker container run --rm docker.elastic.co/kibana/kibana:8.6.2 bin/kibana-encryption-keys generate&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## $ openssl rand -hex 32&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## https://www.elastic.co/guide/en/kibana/current/using-kibana-with-security.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## https://www.elastic.co/guide/en/kibana/current/kibana-encryption-keys.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#xpack.security.encryptionKey:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#xpack.encryptedSavedObjects.encryptionKey:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#xpack.reporting.encryptionKey:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Fleet&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.fleet.agents.fleet_server.hosts: &lt;span class="o">[&lt;/span> https://fleet-server:8220 &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.fleet.outputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - id: fleet-default-output
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: default
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> type: elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 多節點elasticsearch，都寫上&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> hosts: &lt;span class="o">[&lt;/span> &lt;span class="s2">&amp;#34;https://192.168.1.71:9200&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;https://192.168.1.72:9200&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;https://192.168.1.73:9200&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Set to output of &amp;#39;docker-compose up tls&amp;#39;. Example:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1">#ca_trusted_fingerprint: 846637d1bb82209640d31b79869a370c8e47c2dc15c7eafd4f3d615e51e3d503&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> is_default: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> is_default_monitoring: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.fleet.packages:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: fleet_server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> version: latest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> version: latest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: elastic_agent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> version: latest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: apm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> version: latest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">xpack.fleet.agentPolicies:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: Fleet Server Policy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> id: fleet-server-policy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> description: Static agent policy &lt;span class="k">for&lt;/span> Fleet Server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> monitoring_enabled:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - logs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - metrics
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package_policies:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: fleet_server-1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: fleet_server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: system-1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: elastic_agent-1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: elastic_agent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: Agent Policy APM Server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> id: agent-policy-apm-server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> description: Static agent policy &lt;span class="k">for&lt;/span> the APM Server integration
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> monitoring_enabled:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - logs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - metrics
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package_policies:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: system-1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: elastic_agent-1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: elastic_agent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: apm-1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> package:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> name: apm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># See the APM package manifest for a list of possible inputs.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># https://github.com/elastic/apm-server/blob/v8.5.0/apmpackage/apm/manifest.yml#L41-L168&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> inputs:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - type: apm
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> vars:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: host
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: 0.0.0.0:8200
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: url
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: https://apm-server:8200
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: tls_enabled
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: tls_certificate
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: /usr/share/elastic-agent/apm-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - name: tls_key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> value: /usr/share/elastic-agent/apm-server.key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="修改logstash設定">修改logstash設定&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>需要安裝logstash的執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># logstash 設定檔設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# vim logstash/config/logstash.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Default Logstash configuration from Logstash base image.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## https://github.com/elastic/logstash/blob/main/docker/data/logstash/config/logstash-full.yml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http.host: 0.0.0.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># node.name 每一台要不一樣&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">node.name: logstash02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 測試抓容器內的log，發送到elasticsearch是否成功&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# vim logstash/pipeline/logstash.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">input &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> beats &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">port&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="m">5044&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> tcp &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">port&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="m">50000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">path&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="o">[&lt;/span>&lt;span class="s2">&amp;#34;/var/log/bootstrap.log&amp;#34;&lt;/span>&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">type&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;system&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">start_position&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;beginning&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Add your filters / logstash plugins configuration here&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">output &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elasticsearch &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">hosts&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="o">[&lt;/span>&lt;span class="s2">&amp;#34;192.168.1.71:9200&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;192.168.1.72:9200&amp;#34;&lt;/span>,&lt;span class="s2">&amp;#34;192.168.1.73:9200&amp;#34;&lt;/span>&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">user&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;logstash_internal&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">password&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOGSTASH_INTERNAL_PASSWORD&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">ssl&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">cacert&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;config/ca.crt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">index&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;logstash-%{+YYYY.MM.dd}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">codec&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="s2">&amp;#34;rubydebug&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="啟動setup與elasticsearch">啟動setup與elasticsearch&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>需要安裝elasticsearch的執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># setup腳本會帶憑證去判斷elasticsearch是否存活了，判斷存活才會設定elasticsearch所需要的帳號和密碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 所以將setup腳本中的環境變數elasticsearch:9200，替換成node.name名稱(前面有定義過)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# sed -i &lt;span class="s1">&amp;#39;s/elasticsearch:9200/elasticsearch01:9200/g&amp;#39;&lt;/span> setup/lib.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# sed -i &lt;span class="s1">&amp;#39;s/elasticsearch:9200/elasticsearch02:9200/g&amp;#39;&lt;/span> setup/lib.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# sed -i &lt;span class="s1">&amp;#39;s/elasticsearch:9200/elasticsearch03:9200/g&amp;#39;&lt;/span> setup/lib.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 添加hosts，node.name&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# vim /etc/hosts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.71 elasticsearch01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.72 elasticsearch02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.73 elasticsearch03
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# vim /etc/hosts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.71 elasticsearch01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.72 elasticsearch02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.73 elasticsearch03
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# vim /etc/hosts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.71 elasticsearch01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.72 elasticsearch02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.73 elasticsearch03
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>**&lt;font color=red>需要安裝elasticsearch的執行&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 執行setup容器，啟動elasticsearch，並設定elasticsearch所需要使用到的帳號和密碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker-compose up setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# docker-compose up setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 可以看到以下，就是elasticsearch成功啟動，且已設定elasticsearch所需要使用到的帳號和密碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker-elk_elasticsearch_1 is up-to-date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Starting docker-elk_setup_1 ... &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Attaching to docker-elk_setup_1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Waiting &lt;span class="k">for&lt;/span> availability of Elasticsearch. This can take several minutes.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ Elasticsearch is running
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Waiting &lt;span class="k">for&lt;/span> initialization of built-in users
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ Built-in users were initialized
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Role &lt;span class="s1">&amp;#39;heartbeat_writer&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ Creating/updating
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Role &lt;span class="s1">&amp;#39;metricbeat_writer&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ Creating/updating
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Role &lt;span class="s1">&amp;#39;filebeat_writer&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ Creating/updating
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Role &lt;span class="s1">&amp;#39;logstash_writer&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ Creating/updating
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;filebeat_internal&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ No password defined, skipping
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;kibana_system&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ User exists, setting password
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;logstash_internal&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ User exists, setting password
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;heartbeat_internal&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ No password defined, skipping
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;metricbeat_internal&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ No password defined, skipping
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;monitoring_internal&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ No password defined, skipping
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> User &lt;span class="s1">&amp;#39;beats_system&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">setup_1 &lt;span class="p">|&lt;/span> ⠿ No password defined, skipping
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker-elk_setup_1 exited with code &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker ps &lt;span class="p">|&lt;/span> grep -i elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">13130e0e2653 docker-elk_elasticsearch &lt;span class="s2">&amp;#34;/bin/tini -- /usr/l…&amp;#34;&lt;/span> &lt;span class="m">3&lt;/span> minutes ago Up &lt;span class="m">3&lt;/span> minutes 0.0.0.0:9200-&amp;gt;9200/tcp, :::9200-&amp;gt;9200/tcp, 0.0.0.0:9300-&amp;gt;9300/tcp, :::9300-&amp;gt;9300/tcp docker-elk_elasticsearch_1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>https://192.168.1.71:9200/&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220535.png"
+width="905"
+height="308"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220535_hu7687eda4f9ca66bf49c5100d449e1522_33921_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220535_hu7687eda4f9ca66bf49c5100d449e1522_33921_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="293"
+data-flex-basis="705px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220559.png"
+width="505"
+height="392"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220559_huc23ed2490624e48fc2f5f8eb872c5fde_55184_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220559_huc23ed2490624e48fc2f5f8eb872c5fde_55184_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="128"
+data-flex-basis="309px"
+>&lt;/p>
+&lt;p>https://192.168.1.71:9200/_cat/health?v&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220713.png"
+width="1160"
+height="188"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220713_hud0e7452ea50f0a65183a6bf5bfa5fbfb_37341_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024220713_hud0e7452ea50f0a65183a6bf5bfa5fbfb_37341_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="617"
+data-flex-basis="1480px"
+>&lt;/p>
+&lt;h3 id="啟動kibana">啟動kibana&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>需要安裝kibana的執行&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 執行kibana容器，啟動kibana&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up -d kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker ps &lt;span class="p">|&lt;/span> grep -i elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">a652860861bc docker-elk_kibana &lt;span class="s2">&amp;#34;/bin/tini -- /usr/l…&amp;#34;&lt;/span> &lt;span class="m">45&lt;/span> seconds ago Up &lt;span class="m">38&lt;/span> seconds 0.0.0.0:5601-&amp;gt;5601/tcp, :::5601-&amp;gt;5601/tcp docker-elk_kibana_1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">13130e0e2653 docker-elk_elasticsearch &lt;span class="s2">&amp;#34;/bin/tini -- /usr/l…&amp;#34;&lt;/span> &lt;span class="m">11&lt;/span> minutes ago Up &lt;span class="m">11&lt;/span> minutes 0.0.0.0:9200-&amp;gt;9200/tcp, :::9200-&amp;gt;9200/tcp, 0.0.0.0:9300-&amp;gt;9300/tcp, :::9300-&amp;gt;9300/tcp docker-elk_elasticsearch_1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>https://192.168.1.71:5601/&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221117.png"
+width="950"
+height="635"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221117_hu5ccbdcd97d532a51c81b93dd17f0c90c_47418_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221117_hu5ccbdcd97d532a51c81b93dd17f0c90c_47418_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="149"
+data-flex-basis="359px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221159.png"
+width="1491"
+height="980"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221159_hu718524bc52e4e726c36836bd028cf749_209262_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221159_hu718524bc52e4e726c36836bd028cf749_209262_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="152"
+data-flex-basis="365px"
+>&lt;/p>
+&lt;h3 id="啟動logstash">啟動logstash&lt;/h3>
+&lt;p>&lt;strong>需要安裝logstash的執行&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 執行logstash容器，啟動logstash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker-compose up -d logstash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# docker-compose up -d logstash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker ps &lt;span class="p">|&lt;/span> grep -i elk
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">c7712d2eb7bd docker-elk_logstash &lt;span class="s2">&amp;#34;/usr/local/bin/dock…&amp;#34;&lt;/span> &lt;span class="m">31&lt;/span> seconds ago Up &lt;span class="m">30&lt;/span> seconds 0.0.0.0:5044-&amp;gt;5044/tcp, :::5044-&amp;gt;5044/tcp, 0.0.0.0:9600-&amp;gt;9600/tcp, :::9600-&amp;gt;9600/tcp, 0.0.0.0:50000-&amp;gt;50000/tcp, :::50000-&amp;gt;50000/tcp, 0.0.0.0:50000-&amp;gt;50000/udp, :::50000-&amp;gt;50000/udp docker-elk_logstash_1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">678934a90729 docker-elk_elasticsearch &lt;span class="s2">&amp;#34;/bin/tini -- /usr/l…&amp;#34;&lt;/span> &lt;span class="m">13&lt;/span> minutes ago Up &lt;span class="m">13&lt;/span> minutes 0.0.0.0:9200-&amp;gt;9200/tcp, :::9200-&amp;gt;9200/tcp, 0.0.0.0:9300-&amp;gt;9300/tcp, :::9300-&amp;gt;9300/tcp docker-elk_elasticsearch_1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以從kibana頁面看到，有索引進來了&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221559.png"
+width="1486"
+height="644"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221559_hu0b65a9bd0ec421a6e5979f34902073e3_129987_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221559_hu0b65a9bd0ec421a6e5979f34902073e3_129987_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="230"
+data-flex-basis="553px"
+>&lt;/p>
+&lt;p>創建Data Views&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221647.png"
+width="1491"
+height="876"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221647_huef1bb4750e7f138a139312e6bed51d22_134314_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221647_huef1bb4750e7f138a139312e6bed51d22_134314_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="170"
+data-flex-basis="408px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221736.png"
+width="1120"
+height="454"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221736_hue70087df2ebefe204471f1fb69cf1ec7_53471_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221736_hue70087df2ebefe204471f1fb69cf1ec7_53471_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="246"
+data-flex-basis="592px"
+>&lt;/p>
+&lt;p>可以從Discover查看到收集的log訊息了&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221820.png"
+width="1500"
+height="994"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221820_hu10c771c26dc4325490ea3a8693f83a9e_288133_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221820_hu10c771c26dc4325490ea3a8693f83a9e_288133_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="362px"
+>&lt;/p>
+&lt;p>點擊，Stack Monitoring
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221944.png"
+width="1062"
+height="932"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221944_hub2d210a90cf90aa33361e2042aba0b08_133784_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024221944_hub2d210a90cf90aa33361e2042aba0b08_133784_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="113"
+data-flex-basis="273px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222042.png"
+width="644"
+height="494"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222042_hu29dabbce900bcb4e9e0ac4914ee83e9d_45700_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222042_hu29dabbce900bcb4e9e0ac4914ee83e9d_45700_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="130"
+data-flex-basis="312px"
+>
+可以簡單看到elasticsearch和kibana的狀態
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222122.png"
+width="1494"
+height="884"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222122_hu8d402cb3ec2f131a779e1c2689ce6bfa_160449_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222122_hu8d402cb3ec2f131a779e1c2689ce6bfa_160449_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="169"
+data-flex-basis="405px"
+>&lt;/p>
+&lt;h3 id="注意自簽憑證3年到期">(注意)自簽憑證3年到期&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222246.png"
+width="544"
+height="666"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222246_hu7381ac84c543957ed9ecb5299eedd136_69571_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024222246_hu7381ac84c543957ed9ecb5299eedd136_69571_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
+>&lt;/p>
+&lt;h3 id="重新頒發憑證並改10年到期">重新頒發憑證(並改10年到期)&lt;/h3>
+&lt;p>停掉所有elasticsearch和kibana和logstash&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose down
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker-compose down
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# docker-compose down
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose ps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Name Command State Ports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">------------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker-compose ps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Name Command State Ports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">------------------------------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# docker-compose ps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Name Command State Ports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">------------------------------
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>刪除原本憑證&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# rm -rf tls/certs/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# rm -rf tls/certs/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# rm -rf tls/certs/*
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>&lt;font color=red>選一台執行，再將生成憑證拷貝至其他主機&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改憑證頒發到期時間為10年，有bin/elasticsearch-certutil這段，都加上--days 3650&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# vim tls/entrypoint.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s1">&amp;#39;[+] CA certificate and key&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> ! -f tls/certs/ca/ca.key &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">symbol&lt;/span>&lt;span class="o">=&lt;/span>⠿
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bin/elasticsearch-certutil ca &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --days &lt;span class="m">3650&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --silent &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --pem &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --out tls/certs/ca.zip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s1">&amp;#39;[+] Server certificates and keys&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> ! -f tls/certs/elasticsearch/elasticsearch.key &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">symbol&lt;/span>&lt;span class="o">=&lt;/span>⠿
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> bin/elasticsearch-certutil cert &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --days &lt;span class="m">3650&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --silent &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --pem &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --in tls/instances.yml &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --ca-cert tls/certs/ca/ca.crt &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --ca-key tls/certs/ca/ca.key &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --out tls/certs/certs.zip
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 頒發憑證&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up tls
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Creating network &lt;span class="s2">&amp;#34;docker-elk_default&amp;#34;&lt;/span> with the default driver
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Creating network &lt;span class="s2">&amp;#34;docker-elk_elk&amp;#34;&lt;/span> with driver &lt;span class="s2">&amp;#34;bridge&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Creating docker-elk_tls_1 ... &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Attaching to docker-elk_tls_1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> CA certificate and key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ Created
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ SHA256 fingerprint: d93ccec000656ad3cd2ea04e1de39c0c2d32eef1b20b32a117d3c92469ed94fb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/ca/ca.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/ca/ca.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> &lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Server certificates and keys
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ Created
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/elasticsearch/elasticsearch.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/elasticsearch/elasticsearch.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/kibana/kibana.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/kibana/kibana.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/fleet-server/fleet-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/fleet-server/fleet-server.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/apm-server/apm-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tls_1 &lt;span class="p">|&lt;/span> ⠿ tls/certs/apm-server/apm-server.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker-elk_tls_1 exited with code &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# scp -r tls/certs root@192.168.1.72:/data/docker-elk/tls/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# scp -r tls/certs root@192.168.1.73:/data/docker-elk/tls/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>將各台服務啟動&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up -d elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker-compose up -d elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# docker-compose up -d elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# docker-compose up -d kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/docker-elk# docker-compose up -d logstash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/docker-elk# docker-compose up -d logstash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>https://192.168.1.71:9200/&lt;/p>
+&lt;p>elasticsearch憑證更換成10年了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230048.png"
+width="544"
+height="666"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230048_hu3d834ebb846991f6e64530588d316f89_72864_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230048_hu3d834ebb846991f6e64530588d316f89_72864_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
+>&lt;/p>
+&lt;p>kibana可以正常登入&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230321.png"
+width="963"
+height="641"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230321_huccfd83508b5652092b376b9ab70d34c8_48165_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230321_huccfd83508b5652092b376b9ab70d34c8_48165_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+>&lt;/p>
+&lt;p>kibana憑證更換成10年了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230348.png"
+width="544"
+height="666"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230348_hu7381ac84c543957ed9ecb5299eedd136_70933_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230348_hu7381ac84c543957ed9ecb5299eedd136_70933_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="81"
+data-flex-basis="196px"
+>&lt;/p>
+&lt;p>資料也有正常進來了，完成更換憑證&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230459.png"
+width="1500"
+height="994"
+srcset="https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230459_hu2112db49c92ffdb9951f6e6149bc8ce8_293959_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/docker-compose-elk-multinodes-cluster/media/Pasted-image-20231024230459_hu2112db49c92ffdb9951f6e6149bc8ce8_293959_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="362px"
+>&lt;/p></description></item></channel></rss>
