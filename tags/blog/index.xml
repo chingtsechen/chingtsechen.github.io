@@ -410,7 +410,7 @@ loading="lazy"
 class="gallery-image"
 data-flex-grow="157"
 data-flex-basis="377px"
->&lt;/p></description></item><item><title>Day01 - Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</link><pubDate>Sat, 07 Oct 2023 02:45:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</guid><description>&lt;h1 id="今日總結">今日總結&lt;/h1>
+>&lt;/p></description></item><item><title>Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</link><pubDate>Sat, 07 Oct 2023 02:45:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</guid><description>&lt;h2 id="今日總結">今日總結&lt;/h2>
 &lt;ol>
 &lt;li>typora軟件
 &lt;ul>
@@ -472,8 +472,8 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481pQJXWgXWGg.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230904/201324813JAoN9yEfK.png"
 >&lt;/p>
-&lt;h1 id="自我介绍">自我介绍&lt;/h1>
-&lt;h2 id="就學歷程">就學歷程：&lt;/h2>
+&lt;h2 id="自我介绍">自我介绍&lt;/h2>
+&lt;h3 id="就學歷程">就學歷程：&lt;/h3>
 &lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481iHa7CpjGgD.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481iHa7CpjGgD.png"
@@ -490,7 +490,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481iHa7CpjGgD.png"
 &lt;p>當兵：海軍陸戰隊，戰車營，去新竹受訓3個月，回來營上，開戰車下基地，是我人生中，非常特殊的回憶。&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;h2 id="工作經歷">工作經歷：&lt;/h2>
+&lt;h3 id="工作經歷">工作經歷：&lt;/h3>
 &lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230904/20132481nTcvrd2ocE.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481nTcvrd2ocE.png"
@@ -515,7 +515,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230904/20132481nTcvrd2ocE.png"
 &lt;p>電商伺服器 資深工程師：負責電商伺服器管理與建置、Redis服務管理與建置、K8S平台管理與建置、目前自學Python、前端、Django，主要是為了讓管理方式能更有效率、更系統化。目前在公司也會安排向內部員工進行教育訓練課程、分享技術，讓我在此工作上得到滿滿的成就感。就我自己認為，會再多，如果不能說到讓別人也瞭解，那就不是真的瞭解這個技術了。所以我熱衷於這份工作，能讓我分享技術，公司也不斷的引進新技術、新想法，讓我們去嘗試，所以目前在此工作，是非常開心的狀態，希望這種感覺，能一直持續下去。&lt;code>(考取：CKA證照、CKAD證照、CKS證照)&lt;/code>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;h1 id="youtube教學影片">YouTube教學影片&lt;/h1>
+&lt;h2 id="youtube教學影片">YouTube教學影片&lt;/h2>
 &lt;p>&lt;a class="link" href="https://www.youtube.com/watch?v=D-bPj6w-EmQ" target="_blank" rel="noopener"
 >&lt;img src="https://img.youtube.com/vi/D-bPj6w-EmQ/0.jpg"
 loading="lazy"
