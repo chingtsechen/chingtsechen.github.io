@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>golang on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/golang/</link><description>Recent content in golang on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Oct 2023 09:31:05 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Golang001 - go介紹、安裝配置環境、寫第一個go程序、go基礎語法、變量、基本數據類型、運算符、輸入輸出函數</title><link>https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/</link><pubDate>Sat, 28 Oct 2023 09:31:05 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/golang.png" alt="Featured image of post Golang001 - go介紹、安裝配置環境、寫第一個go程序、go基礎語法、變量、基本數據類型、運算符、輸入輸出函數" />&lt;h2 id="go介紹">Go介紹&lt;/h2>
+&lt;p>GOOGLE開發的&lt;/p>
+&lt;p>PYTHON開發效率極高
+C語言、C++極致運行性能&lt;/p>
+&lt;p>GO極致開發效率與運行性能&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028094205.png"
+width="836"
+height="283"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028094205_hu31645902e06ef25f56f31ce3d7610991_72496_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028094205_hu31645902e06ef25f56f31ce3d7610991_72496_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="295"
+data-flex-basis="708px"
+>&lt;/p>
+&lt;h3 id="go語言的誕生">Go語言的誕生&lt;/h3>
+&lt;p>三位創作者：
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028094400.png"
+width="459"
+height="217"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028094400_hu997198b53c7ce7eace5f5e656cd8a9d8_152859_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028094400_hu997198b53c7ce7eace5f5e656cd8a9d8_152859_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="211"
+data-flex-basis="507px"
+>&lt;/p>
+&lt;p>中間：&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E7%BE%85%E5%8B%83%C2%B7%E6%B4%BE%E5%85%8B" target="_blank" rel="noopener"
+>Rob Pike&lt;/a>
+unix開發者
+utf8開發者&lt;/p>
+&lt;p>右邊：&lt;a class="link" href="https://zh.wikipedia.org/wiki/%E8%82%AF%C2%B7%E6%B1%A4%E6%99%AE%E9%80%8A" target="_blank" rel="noopener"
+>Ken Thompson&lt;/a>
+B語言開發者&lt;/p>
+&lt;p>左邊：&lt;a class="link" href="https://en.wikipedia.org/wiki/Robert_Griesemer" title="en:Robert Griesemer"
+target="_blank" rel="noopener"
+>Robert Griesemer&lt;/a>&lt;/p>
+&lt;p>三位本身都是用C++編程的&lt;/p>
+&lt;h3 id="go語言的優勢">Go語言的優勢&lt;/h3>
+&lt;blockquote>
+&lt;p>優勢總結：&lt;/p>
+&lt;ol>
+&lt;li>開發效率高、運行性能好(均衡)&lt;/li>
+&lt;li>高併發&lt;/li>
+&lt;/ol>
+&lt;/blockquote>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095229.png"
+width="840"
+height="223"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095229_hub545ca985306ed61e0a04b73ae95120e_104834_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095229_hub545ca985306ed61e0a04b73ae95120e_104834_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="376"
+data-flex-basis="904px"
+>&lt;/p>
+&lt;p>GO出現在雙核處理器後面，之前的語言都是基於單核，所以GO才能立足於高併發的優勢&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095720.png"
+width="835"
+height="481"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095720_hue38aa9d7728ce26d0b7e5bdd25c4fa46_299376_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095720_hue38aa9d7728ce26d0b7e5bdd25c4fa46_299376_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="416px"
+>&lt;/p>
+&lt;h3 id="go語言的應用領域">Go語言的應用領域&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095953.png"
+width="836"
+height="610"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095953_hu85f21fd9a90d415a19836f9e30ec45b6_222425_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028095953_hu85f21fd9a90d415a19836f9e30ec45b6_222425_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="137"
+data-flex-basis="328px"
+>&lt;/p>
+&lt;p>區塊鏈：Web3.0去中心化，Go就是在其中的語言&lt;/p>
+&lt;p>GO主要就是在&amp;quot;網路併發層&amp;quot;發光發熱&lt;/p>
+&lt;p>使用GO的大型網路公司：
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028100646.png"
+width="596"
+height="639"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028100646_hu4715a7d104df7580db4a85a370a0ef82_109114_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028100646_hu4715a7d104df7580db4a85a370a0ef82_109114_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="93"
+data-flex-basis="223px"
+>&lt;/p>
+&lt;h2 id="計算機硬體組成">計算機硬體組成&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028102016.png"
+width="837"
+height="419"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028102016_hu4f48ca6cf2aaa2eb62bac6169da5fc42_179302_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028102016_hu4f48ca6cf2aaa2eb62bac6169da5fc42_179302_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="199"
+data-flex-basis="479px"
+>&lt;/p>
+&lt;p>CPU：有兩個部分，運算器、控制器&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028102524.png"
+width="412"
+height="326"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028102524_hua3ace491c78f353d935912f091091977_14921_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231028102524_hua3ace491c78f353d935912f091091977_14921_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="126"
+data-flex-basis="303px"
+>&lt;/p>
+&lt;h2 id="編程語言介紹">編程語言介紹&lt;/h2>
+&lt;h3 id="什麼是編程語言">什麼是編程語言&lt;/h3>
+&lt;p>人與計算機溝通的語言&lt;/p></description></item></channel></rss>
