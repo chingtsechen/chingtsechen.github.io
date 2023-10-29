@@ -61,7 +61,7 @@ class="gallery-image"
 data-flex-grow="186"
 data-flex-basis="446px"
 >&lt;/p>
-&lt;h2 id="我拍的現場照片">我拍的現場照片&lt;/h2>
+&lt;h2 id="我拍的照片">我拍的照片&lt;/h2>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/900C265C-28CE-465E-80E3-867F1418DB8E_1_105_c.jpeg"
 width="768"
 height="1024"
@@ -206,8 +206,14 @@ class="gallery-image"
 data-flex-grow="73"
 data-flex-basis="176px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231029210053.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029210053.png"
+width="1218"
+height="715"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029210053_huac3f77c77e155f6b9eed6e5c1d97535c_1687183_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029210053_huac3f77c77e155f6b9eed6e5c1d97535c_1687183_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="170"
+data-flex-basis="408px"
 >&lt;/p>
 &lt;h2 id="我參加的議程">我參加的議程&lt;/h2>
 &lt;h3 id="1025-1">10/25&lt;/h3>
