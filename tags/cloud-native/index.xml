@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cloud-native on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/cloud-native/</link><description>Recent content in cloud-native on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Oct 2023 18:37:28 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/cloud-native/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes Summit 2023</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/</link><pubDate>Sun, 29 Oct 2023 18:37:28 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029184656.png" alt="Featured image of post Kubernetes Summit 2023" />&lt;h2 id="議程">議程&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cloud-native on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/cloud-native/</link><description>Recent content in cloud-native on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Oct 2023 18:37:28 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/cloud-native/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes Summit 2023</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/</link><pubDate>Sun, 29 Oct 2023 18:37:28 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029184656.png" alt="Featured image of post Kubernetes Summit 2023" />&lt;h2 id="大會議程">大會議程&lt;/h2>
 &lt;h3 id="1025">10/25&lt;/h3>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/agenda#day01" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/agenda#day01&lt;/a>&lt;/p>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029184954.png"
@@ -31,7 +31,7 @@ data-flex-grow="245"
 data-flex-basis="590px"
 >&lt;/p>
 &lt;h3 id="1026">10/26&lt;/h3>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/agenda#day02" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/agenda#day02&lt;/a>&lt;/p>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029185219.png"
@@ -61,7 +61,7 @@ class="gallery-image"
 data-flex-grow="186"
 data-flex-basis="446px"
 >&lt;/p>
-&lt;h2 id="現場照片">現場照片&lt;/h2>
+&lt;h2 id="我拍的現場照片">我拍的現場照片&lt;/h2>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/900C265C-28CE-465E-80E3-867F1418DB8E_1_105_c.jpeg"
 width="768"
 height="1024"
@@ -179,34 +179,61 @@ class="gallery-image"
 data-flex-grow="75"
 data-flex-basis="180px"
 >&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/B4169EF3-F3D0-4A02-A0E4-BA20C628D42C_1_105_c.jpeg"
+width="768"
+height="1024"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/B4169EF3-F3D0-4A02-A0E4-BA20C628D42C_1_105_c_hu850f2375f3fd56a481dbec66fc59c869_269975_480x0_resize_q75_box.jpeg 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/B4169EF3-F3D0-4A02-A0E4-BA20C628D42C_1_105_c_hu850f2375f3fd56a481dbec66fc59c869_269975_1024x0_resize_q75_box.jpeg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="75"
+data-flex-basis="180px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/29DA918C-6413-410E-AAFE-29CCB2D55649_1_105_c.jpeg"
+width="768"
+height="1024"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/29DA918C-6413-410E-AAFE-29CCB2D55649_1_105_c_huc9109aaca3490527c508592e03b6c70a_208841_480x0_resize_q75_box.jpeg 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/29DA918C-6413-410E-AAFE-29CCB2D55649_1_105_c_huc9109aaca3490527c508592e03b6c70a_208841_1024x0_resize_q75_box.jpeg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="75"
+data-flex-basis="180px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029201517.png"
+width="595"
+height="807"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029201517_hua893e301d11dc2358b761030eaec4916_809012_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-summit-2023/media/Pasted-image-20231029201517_hua893e301d11dc2358b761030eaec4916_809012_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="73"
+data-flex-basis="176px"
+>&lt;/p>
 &lt;h2 id="我參加的議程">我參加的議程&lt;/h2>
 &lt;h3 id="1025-1">10/25&lt;/h3>
 &lt;h4 id="ㄧ大規模-kubernetes-運維甘苦談關於自建雲端和-cicd-的那些大小事">(ㄧ)大規模 Kubernetes 運維甘苦談：關於自建、雲端和 CI/CD 的那些大小事&lt;/h4>
 &lt;p>本議程將分享趨勢科技實際進行大規模 Kubernetes 運維的經驗與踩過的雷。&lt;/p>
 &lt;p>透過最初自建的背景介紹，經歷雲端半託管時期，一路到現在全雲端託管的 Kubernetes 叢集部署的策略演進（以 AWS EKS 為例），分享CI/CD的最佳實踐經驗，並帶各位了解大規模維運會碰到的挑戰，包含如何進行有效的資源管理與擴展、故障排除及監控等。&lt;/p>
 &lt;p>希望這些辛酸血淚史能對有志管理大型 Kubernetes cluster的同路人有所幫助。&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2250" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2250&lt;/a>&lt;/p>
 &lt;h4 id="二融合-ai-技術加速應用開發交付與優化">(二)融合 AI 技術，加速應用開發、交付與優化&lt;/h4>
 &lt;p>應用現代化和多雲是數位化轉型的核心。研究顯示，超過 70% 的企業正在開發全新的雲原生應用，而專為多雲設計的現代化應用在企業中的使用率現已超過傳統應用 ; 因此，應用開發的敏捷性和上市速度對於企業能否在競爭中取得成功至關重要。本議程探討如何運用 VMware Tanzu 平台加速應用開發、交付和提供智能管理，藉以提升業務敏捷性與整合多雲應用。&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2317" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2317&lt;/a>&lt;/p>
 &lt;h4 id="三google-重塑新一代-kubernetes-ops-與-ai-技術的致勝關鍵">(三)Google 重塑新一代 Kubernetes Ops 與 AI 技術的致勝關鍵&lt;/h4>
 &lt;p>歡迎參加本議程活動，了解 Google 新一代 Kubernetes Ops 的最新消息與致勝關鍵，包括從容器至 AI 等主要議題。不論是透過雲端服務打造自己的平台，抑或是開發與管理應用程式，您將可透過本議程了解如何在每日 IT 維運任務中提升效率、可靠性及資安條件。您亦可了解業界頂尖公司如何運用具高度擴展性且自動化的 Kubernetes，迅速打造專屬自己的雲端致勝模式，並借助 AI 的力量邁向成功之路。&lt;/p>
 &lt;p>Join this session to learn the latest and best from Google for Next Genereation Kubernetes Ops – from containers to AI. Whether you’re building your own platform or developing and managing applications using cloud services, learn how to improve efficiency, reliability, and security in your IT operations. You’ll also discover how leading companies use the most scalable and automated Kubernetes to build fast and harness AI in their IT operations.&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2318" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2318&lt;/a>&lt;/p>
 &lt;h4 id="四how-to-link-k8s-to-business-讓主管們都聽得懂">(四)How to link K8s to Business 讓主管們都聽得懂&lt;/h4>
 &lt;p>探討及分享雲架構平台跟業務的關係，從 CIO 角度看技術轉型。&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2319" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2319&lt;/a>&lt;/p>
 &lt;h4 id="五從數據看台灣企業雲原生採用大趨勢">(五)從數據看台灣企業雲原生採用大趨勢&lt;/h4>
 &lt;p>即將揭曉，敬請期待&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2356" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2356&lt;/a>&lt;/p>
 &lt;h4 id="六resource-as-code-for-kubernetes-stop-kubectl-apply">(六)Resource as Code for Kubernetes: Stop kubectl apply&lt;/h4>
@@ -221,20 +248,20 @@ data-flex-basis="180px"
 &lt;/ul>
 &lt;p>當服務的 app code base 都已經用 chart 打包，使用 vcs 管理後，為何依賴的 k8s resource (namespace, secret, label, crd, &amp;hellip;) 不需要推上 vcs 管理的？&lt;/p>
 &lt;p>本次演講集合幾個管理 K8s 的範例，將 K8s resource 以 code 管理，推上 vcs，並使用 argoCD, secret operator, &amp;hellip; 等工具進行管理，來讓避免低級的人工操作錯誤，降低團隊整體失誤率，並降低 K8s admin 管理的成本，提高管理效率&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2331" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2331&lt;/a>&lt;/p>
 &lt;h4 id="七kubernetes-資安攻防---採用機密運算與零信任策略守護您的應用">(七)Kubernetes 資安攻防 - 採用機密運算與零信任策略，守護您的應用&lt;/h4>
 &lt;p>我們將探討如何使用機密運算和零信任方法在 Kubernetes 環境中保護應用程式和數據。Kubernetes 已經成為現代各大企業軟體開發和運營的必然趨勢，然而，與之相關的安全挑戰也成為現在大家關注的重點。在這個議程中，我們將深入探討您日常 Kubernetes 運營中可能面臨的潛在風險和安全挑戰。我們將透過實際案例和最佳實踐，與您分享如何有效應對這些挑戰，並強調採取相關進階措施的必要性。&lt;/p>
 &lt;p>透過參加此議程，您將有機會深入了解如何運用機密運算和基於零信任的安全方法來保護您的 Kubernetes 環境。無論您是一名 Kubernetes 初學者還是資深專家，這個議程都將為您提供相關見解，以確保您的應用程式和數據得到最高水平的保護。&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2352" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2352&lt;/a>&lt;/p>
 &lt;h4 id="八新世代的-service-mesh---istio-ambient-mesh">(八)新世代的 Service Mesh - Istio Ambient Mesh&lt;/h4>
 &lt;p>在 Kubernetes 平台上開發應用程式時, 通常很容易會討論到是否要使用 Service Mesh。而 Service Mesh 中的代表性解決方案 Istio, 更是目前廣為採用的 Service Mesh 之一。Istio 能夠對服務的溝通，管理，乃至於監控, 提供一個強大的平台。但相對的，使用 Istio 的所需要付出的代價也相當不小，往往令許多人有心採用的人往而卻步。&lt;/p>
 &lt;p>有鑑於此，Istio 在 2022 年的九月，發表了 Ambient Mesh, 一個全新的 Istio Data Plane Mode，旨在簡化操作，拓展應用成式兼容性，降低基礎架構所需成本。 Ambient Mesh 讓使用者不再需要使用之前的 Sidecar 模式，將 Data Plane 無縫地整合進 Kubernetes 基礎架構，同時還能保有 Istio 既有的零信任安全、觀測性和流量治理等核心特性。&lt;/p>
 &lt;p>在 2023 三月, Ambient Mesh 進入了 Istio 開源專案的 main branch, 預計在 2023 年底會 production ready。這正是一個絕佳的時刻，讓大家能了解 Ambient Mesh 所帶來的新架構的優勢, 讓有心想要導入 Istio 的人能夠重新評估 Ambient Mesh 的可能性，對於 Sidecar &amp;amp; Sidecarless 的 Istio 應該如何選擇使用，進行一個深入淺出的探討。&lt;/p>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2326" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2326&lt;/a>&lt;/p>
 &lt;h4 id="九通往-cloud-native-的神奇之旅自製-kubernetes-工具大揭秘">(九)通往 Cloud Native 的神奇之旅：自製 Kubernetes 工具大揭秘&lt;/h4>
@@ -260,8 +287,95 @@ data-flex-basis="180px"
 &lt;li>窺探在架構轉型後，我們經歷了哪些系統性調整&lt;/li>
 &lt;li>探討更多可持續優化的可能性&lt;/li>
 &lt;/ul>
-&lt;p>&lt;strong>官方網站連結：&lt;/strong>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
 &lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2353" target="_blank" rel="noopener"
 >https://k8s.ithome.com.tw/2023/session-page/2353&lt;/a>&lt;/p>
 &lt;h3 id="1026-1">10/26&lt;/h3>
+&lt;h4 id="一kubernetes-apis-for-the-future-building-platforms-and-managing-everything">(一)Kubernetes APIs for the Future: Building Platforms and Managing Everything&lt;/h4>
+&lt;p>Kubernetes is a powerful platform for building platforms. With CustomResourceDefinition (CRD), you can build the APIs you need to manage your applications and infrastructure. Kubernetes is becoming universal for everything, and you can use Kubernetes APIs to manage cloud resources, as well as applications and services.&lt;/p>
+&lt;p>GitOps is a Git-based approach to managing infrastructure and applications. It removes toil and reduces the barrier for using Kubernetes, making it easier to be effective. With GitOps, you can build your platform using Kubernetes APIs easier, safer, and faster.&lt;/p>
+&lt;p>This keynote speech is for anyone who wants to learn more about how to use Kubernetes to build and manage platforms, applications, and infrastructure. Whether you are a beginner or an expert, you will learn something new.&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2336" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2336&lt;/a>&lt;/p>
+&lt;h4 id="二打造雲原生世界的資安堡壘">(二)打造雲原生世界的資安堡壘&lt;/h4>
+&lt;p>成功的企業容器安全計劃必須要能從容器生命週期的建構、部署到運作的所有階段，以及底層的容器基礎架構中執行主要控制措施。&lt;/p>
+&lt;p>不知從何著手嗎？本議程介紹 Red Hat 容器平台如何在雲原生世界提供完整的安全防護，為企業打造最堅實的現代化資安堡壘。&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2337" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2337&lt;/a>&lt;/p>
+&lt;h4 id="三幫服務建立觀測性利用-itsm-與自動化完成數位企業最後一哩路">(三)幫服務建立觀測性，利用 ITSM 與自動化完成數位企業最後一哩路&lt;/h4>
+&lt;p>企業熱衷於新技術導入，越來越多服務導入不同種新技術建立在不同的運作平台上，單純的服務監控已經不能滿足需求，需要建立觀測性(Observability)來協助我們更了解服務的運作狀態，尤其當容器化的世代來臨，更複雜的 IT 環境需要更好的工具協助我們觀測且協作，透過自動化工具，協助企業動態且快速建立服務所需要的資源；BMC 將分享關於如何建立服務觀測性，透過 AI/ML 工具有效將服務與 IT 整合起來，起到協同運作、共做共榮的使用情境，加速數位企業轉型，達成目標。&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2338" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2338&lt;/a>&lt;/p>
+&lt;h4 id="四feature-toggle-makes-development-more-efficient">(四)Feature Toggle Makes Development more Efficient&lt;/h4>
+&lt;p>在 Kubernetes 的部署中，經常會面臨一些挑戰。例如，新功能的部署可能會導致系統穩定性下降，甚至可能需要回朔上次部署，從而提高部署風險。此外，每次部署都需要全面的測試，這不僅增加了部署和測試的複雜性，也消耗了更多的時間。這可能會對用戶的使用體驗產生影響。透過這次的演講，我們將探討如何透過 Feature Toggle 來解決這些問題，並提升我們的部署與開發的效率和靈活性。&lt;/p>
+&lt;p>因此，我們的議程將會包含以下的內容：&lt;/p>
+&lt;ul>
+&lt;li>Feature Toggle 的簡介：&lt;/li>
+&lt;/ul>
+&lt;p>我們將介紹什麼是 Feature Toggle，以及它的基本概念和工作原理。&lt;/p>
+&lt;ul>
+&lt;li>Feature Toggle 的應用場景：&lt;/li>
+&lt;/ul>
+&lt;p>我們將分享 Feature Toggle 的實際應用場景，包括 AB testing, Canary Release 等。&lt;/p>
+&lt;ul>
+&lt;li>LINE台灣在推動的工法：&lt;/li>
+&lt;/ul>
+&lt;p>我們將分享 LINE 台灣在推動 Feature Toggle 的經驗和工法。&lt;/p>
+&lt;ul>
+&lt;li>從 Feature Toggle 到 Kubernetes 的影響：&lt;/li>
+&lt;/ul>
+&lt;p>我們將探討 Feature Toggle 如何影響到開發流程和 CI/CD 在 Kubernetes 上的部署，並分享如何解決上述的痛點。&lt;/p>
+&lt;ul>
+&lt;li>如何持續地縮短 Release 週期與增進開發效率：&lt;/li>
+&lt;/ul>
+&lt;p>我們將分享如何透過 Feature Toggle 持續地縮短 Release 週期和提高開發效率。&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2339" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2339&lt;/a>&lt;/p>
+&lt;h4 id="五on-premise-workload-遷移-kubernetes-心路歷程">(五)On-premise Workload 遷移 Kubernetes 心路歷程&lt;/h4>
+&lt;p>往雲端 Kubernetes 遷移 workload 的過程，服務會同時並行於 on-premise 和雲端一段混合的過程，KKBOX 擁有超過千萬會員，首先面對的挑戰會是，要如何最小化遷移對使用者的影響，遷移邁入後期後，則需要持續優化營運成本。此次分享會對上述議題，分享 KKBOX 如何解決這些技術上的難題。&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2355" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2355&lt;/a>&lt;/p>
+&lt;h4 id="六如何在銀行內部用-k8s-打造無伺服器批次運算平台">(六)如何在銀行內部用 K8s 打造無伺服器批次運算平台&lt;/h4>
+&lt;p>過去企業需要考量著基礎設施的管理議題，但隨著近幾年無伺服器概念的推出，徹底的改變既有的思路，讓企業開發者能夠更專注在開發應用，而並非架構上，同時又能有效節省冗餘硬體資源並提升整體效益等優點。&lt;/p>
+&lt;p>隨著 Google 將 Knative 專案貢獻給雲端原生運算基金會 (CNCF)，迅速帶起各大企業使用Serverless的浪潮，而玉山也乘著這波概念的浪潮，打造獨有的無伺服器批次運算平台，來強化玉山批次運行架構，以達對硬體資源使用、開發、維運整體效益整體的提升。&lt;/p>
+&lt;p>本次演講會分享所謂 Serverless 概念及 Knative 的運作原理，並說明玉山銀行如何結合 Serverless，改造批次運行架構，提高硬體使用集縮比，以降低硬體資源成本。&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2347" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2347&lt;/a>&lt;/p>
+&lt;h4 id="七聯邦學習在-k8s-上的實現與應用">(七)聯邦學習在 K8s 上的實現與應用&lt;/h4>
+&lt;p>Machine learning 的模型建立時需要足夠的資料量與足夠的解釋力特徵，如欲建立機器學習模型時最重要的的任務即是蒐集足夠的資料量與特徵，但往往在企業上同一客戶的資料可能會分散在不同的子公司上，或是想統整運用不同子公司各自擁有的客戶群資料以提升模型準確性，基於隱私條款的限制，子公司間是無法直接進行資料交換來做使用。在資料量與特徵不足的情況下機器學習模型的整體效果就較難做進一步的提升。&lt;/p>
+&lt;p>國泰資料科學團隊以 KubeFate 聯邦學習框架的基礎下開發名為 CaFe 的聯邦學習框架，使用 Helm 建立高效的聯邦學習架構，開發 Operator 用於同步不同 Namespaces 中的 ConfigMap 資料，藉由 webhook 實現自動掛載 ConfigMap 到相應的應用程式，使整個建置過程更加自動化和高效。子公司的使用者能在不交換實體資料的情況下於各自 K8S 環境共同訓練出效果比單一方自行訓練的模型效果更佳，進而提升整體模型效度。我們將與大家分享以下內容：&lt;/p>
+&lt;ol>
+&lt;li>聯邦學習簡介&lt;/li>
+&lt;li>聯邦學習框架 KubeFate 使用評估&lt;/li>
+&lt;li>CaFe 部署於 OKD 上與內部資料科學平台的結合&lt;/li>
+&lt;li>POC 測試案&lt;/li>
+&lt;/ol>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2350" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2350&lt;/a>&lt;/p>
+&lt;h4 id="八cloud-native-messaging-service-by-nats">(八)Cloud-native messaging service by NATS&lt;/h4>
+&lt;p>NATS 是一個 open source pub/sub messaging system，於 2018 年成為 CNCF 的 incubating project 後，歷經快速的發展，2019 年 NATS 2.0 增加了 supercluster、 leafnode 和 decentralized security 功能，2021 年 NATS2.2 將新的分散式儲存系統 JetStream 正式 GA 整合進 NATS，直到最近的 NATS2.9 持續提升穩定性，此議程想讓觀眾了解 NATS 的功能、最新的 NATS 發展與佈署 NATS 在 K8s 上維運的建議。&lt;/p>
+&lt;ol>
+&lt;li>NATS 的基本介紹，什麼是 NATS Core 和 JetStream，以 demo 形式讓觀眾快速了解&lt;/li>
+&lt;li>NATS open source project 的發展現況&lt;/li>
+&lt;li>NATS cluster 於 K8s 的佈署、維運、如何持續擴充&lt;/li>
+&lt;li>導入 NATS 的建議流程&lt;/li>
+&lt;li>目前有哪些 open source project 支援 NATS JetStream&lt;/li>
+&lt;/ol>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2325" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2325&lt;/a>&lt;/p>
+&lt;h4 id="九adopt-kubernetes-for-infrastructure-as-code-打造以-k8s-為底層的-iac-系統">(九)Adopt Kubernetes for Infrastructure as Code (打造以 K8S 為底層的 IaC 系統）&lt;/h4>
+&lt;p>K8S 從開源以來，就以宣告式的方式，提供標準資源的自癒與擴充能力，在 1.13 後提供的客制資源 (CRD) 管理的擴充能力，延伸了 K8S 的宣告式平台。&lt;/p>
+&lt;p>Google 在 GCP 上首先提出了 KCC (Kubernetes Config Connector) 的實作，通過 GKE 管理 GCP 各項 IT 資源的生命週期，Google 也進一步與開源社群 (Crossplane) 合作，將 KCC 的概念延伸到其他的基礎架構提供者中，打造新的 IaC 生命週期管理機制：Cloud Resource Accelerator。&lt;/p>
+&lt;p>這個機制，通過 YAML 物件的解耦，有效的限制開發者與管理者對 IaC 的控制能力，同時通過 K8S 的宣告機制，讓部署出來的資源能受到 K8S 的完整保護，這些強化都有效的彌補現有 IaC CLI 的不足。&lt;/p>
+&lt;p>&lt;font color=blue>官方網站連結：&lt;/font>
+&lt;a class="link" href="https://k8s.ithome.com.tw/2023/session-page/2322" target="_blank" rel="noopener"
+>https://k8s.ithome.com.tw/2023/session-page/2322&lt;/a>&lt;/p>
 &lt;h2 id="心得與收穫">心得與收穫&lt;/h2></description></item></channel></rss>
