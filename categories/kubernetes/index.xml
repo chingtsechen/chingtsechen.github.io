@@ -206,6 +206,9 @@ class="gallery-image"
 data-flex-grow="73"
 data-flex-basis="176px"
 >&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231029210053.png"
+loading="lazy"
+>&lt;/p>
 &lt;h2 id="我參加的議程">我參加的議程&lt;/h2>
 &lt;h3 id="1025-1">10/25&lt;/h3>
 &lt;h4 id="ㄧ大規模-kubernetes-運維甘苦談關於自建雲端和-cicd-的那些大小事">(ㄧ)大規模 Kubernetes 運維甘苦談：關於自建、雲端和 CI/CD 的那些大小事&lt;/h4>
