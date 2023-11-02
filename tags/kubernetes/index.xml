@@ -395,7 +395,7 @@ data-flex-basis="408px"
 &lt;p>是Google分享了他們目前看到的趨勢，預計到2027，企業將正式生產環境導入容器或Kubernetes會高達90%，也就是說，那時候，會將近有90%的企業，會使用容器或Kubernetes當作直接對外服務的主要環境。&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>也是Google分享了Isitio在網路流量治理的變革，以前，要使用Isitio進行Kubernetes流量治理與管理，是採用sidecar的方式，也就是說，在Kubernetes平台中，每起一個Pod(服務)，都得伴隨著一個邊車容器Sidecar，每個Pod(服務)流量進出，都得經過Sidecar，對於整個Kubernetes平台，侵入性非常高，等於現在如果有100個Pod(服務)，就得起100個Sidecar容器，對於Kubernetes平台的資源消耗也非常高，變革後，採用Istio Ambient Mesh，不用每個Pod都得起一個Sidecar容器，現在是改在每個Node節點部屬流量治理，容器改連至那裡，進行流量治理與管理，大大了減少整體Kubernetes平台性能與資源消耗，並能針對L4層和L7層，分別進行流量管理與治理。&lt;/p>
+&lt;p>也是Google分享了istio在網路流量治理的變革，以前，要使用istio進行Kubernetes流量治理與管理，是採用sidecar的方式，也就是說，在Kubernetes平台中，每起一個Pod(服務)，都得伴隨著一個邊車容器Sidecar，每個Pod(服務)流量進出，都得經過Sidecar，對於整個Kubernetes平台，侵入性非常高，等於現在如果有100個Pod(服務)，就得起100個Sidecar容器，對於Kubernetes平台的資源消耗也非常高，變革後，採用Istio Ambient Mesh，不用每個Pod都得起一個Sidecar容器，現在是改在每個Node節點部屬流量治理，容器改連至那裡，進行流量治理與管理，大大了減少整體Kubernetes平台性能與資源消耗，並能針對L4層和L7層，分別進行流量管理與治理。&lt;/p>
 &lt;/li>
 &lt;li>
 &lt;p>兩天下來，幾乎8成的公司，都是採用GitOps的方式，進行Kubernetes的業務部屬和管理，看到最多的方式，就是採用Argocd開源專案。&lt;/p>
