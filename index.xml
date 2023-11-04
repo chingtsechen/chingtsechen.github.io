@@ -4671,18 +4671,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230913/20132481R6pScPLx4K.png"
 >&lt;img src="https://img.youtube.com/vi/2h1r68Im_Bg/0.jpg"
 loading="lazy"
 alt="Yes"
->&lt;/a>&lt;/p></description></item><item><title>基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</link><pubDate>Sat, 07 Oct 2023 03:02:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</guid><description>&lt;h2 id="今日内容概要">今日内容概要&lt;/h2>
-&lt;ul>
-&lt;li>python基本數據類型&lt;/li>
-&lt;li>與使用者交互&lt;/li>
-&lt;li>格式化輸出&lt;/li>
-&lt;li>基本運算符&lt;/li>
-&lt;li>多種賦值方式&lt;/li>
-&lt;li>邏輯運算符&lt;/li>
-&lt;li>成員運算符&lt;/li>
-&lt;li>身份運算符&lt;/li>
-&lt;/ul>
-&lt;h4 id="基本數據類型之布爾值bool">基本數據類型之布爾值bool&lt;/h4>
+>&lt;/a>&lt;/p></description></item><item><title>基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</link><pubDate>Sat, 07 Oct 2023 03:02:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</guid><description>&lt;h2 id="基本數據類型之布爾值bool">基本數據類型之布爾值bool&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">用來判斷事物的對錯&lt;/span> &lt;span class="n">是否可行&lt;/span> &lt;span class="n">只要用於流程控制中&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">只有兩種狀態&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kc">True&lt;/span> &lt;span class="n">對的&lt;/span> &lt;span class="n">真的&lt;/span> &lt;span class="n">可行的&lt;/span>
@@ -4708,7 +4697,7 @@ alt="[media/Pasted image 20230924132454.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924132503.png]"
 >&lt;/p>
-&lt;h4 id="基本數據類型之元組tuple">基本數據類型之元組tuple&lt;/h4>
+&lt;h2 id="基本數據類型之元組tuple">基本數據類型之元組tuple&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">也稱為&lt;/span>&lt;span class="err">『&lt;/span>&lt;span class="n">不可變&lt;/span>&lt;span class="err">』&lt;/span>&lt;span class="n">的列表&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">元組內索引綁定的記憶體位址不能修改&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">小括弧括起來&lt;/span> &lt;span class="n">內部存放多個數據值&lt;/span> &lt;span class="n">數據值與數據值之間逗號隔開&lt;/span> &lt;span class="n">數據值可以是任何數據類型&lt;/span>
@@ -4796,7 +4785,7 @@ alt="[media/Pasted image 20230924134920.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924140052.png]"
 >&lt;/p>
-&lt;h4 id="基本數據類型之集合set">基本數據類型之集合set&lt;/h4>
+&lt;h2 id="基本數據類型之集合set">基本數據類型之集合set&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">集合只能用於去重和關係運算&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">後面再講&lt;/span> &lt;span class="n">暫且忽略&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">集合內數據只能是不可變類型&lt;/span>
@@ -4812,7 +4801,7 @@ alt="[media/Pasted image 20230924140052.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924135732.png]"
 >&lt;/p>
-&lt;h4 id="與使用者交互">與使用者交互&lt;/h4>
+&lt;h2 id="與使用者交互">與使用者交互&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">獲取使用者輸入&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">input&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># 獲取使用者輸入&lt;/span>
@@ -4913,7 +4902,7 @@ alt="[media/Pasted image 20230924153037.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924153154.png]"
 >&lt;/p>
-&lt;h4 id="格式化輸出">格式化輸出&lt;/h4>
+&lt;h2 id="格式化輸出">格式化輸出&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">提前定義好一些內容&lt;/span> &lt;span class="n">將來需要使用的時候可以局部修改&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">代碼實現&lt;/span>
@@ -4979,7 +4968,7 @@ alt="[media/Pasted image 20230924155002.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924155155.png]"
 >&lt;/p>
-&lt;h4 id="基本運算符">基本運算符&lt;/h4>
+&lt;h2 id="基本運算符">基本運算符&lt;/h2>
 &lt;p>以下假設變數： &lt;strong>a=10，b=20&lt;/strong>：&lt;/p>
 &lt;table>
 &lt;thead>
@@ -5040,7 +5029,7 @@ alt="[media/Pasted image 20230924155155.png]"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">n&lt;/span> &lt;span class="o">**=&lt;/span> &lt;span class="mi">1&lt;/span> &lt;span class="c1"># n = n ** 1&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">比較運算符&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="o">==&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">等於號&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">!=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">不等於&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="常用賦值符">常用賦值符&lt;/h4>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="常用賦值符">常用賦值符&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">鏈式賦值&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># name = &amp;#39;jimmy&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># name1 = name&lt;/span>
@@ -5147,7 +5136,7 @@ alt="[media/Pasted image 20230924162813.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924163036.png]"
 >&lt;/p>
-&lt;h4 id="邏輯運算符">邏輯運算符&lt;/h4>
+&lt;h2 id="邏輯運算符">邏輯運算符&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s1">&amp;#39;&amp;#39;&amp;#39;主要配合條件一起使用&amp;#39;&amp;#39;&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="ow">and&lt;/span> &lt;span class="n">與&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">and連接的多個條件必須全部成立&lt;/span> &lt;span class="n">結果才成立&lt;/span>
@@ -5215,7 +5204,7 @@ alt="[media/Pasted image 20230924214814.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924215046.png]"
 >&lt;/p>
-&lt;h4 id="成員運算符">成員運算符&lt;/h4>
+&lt;h2 id="成員運算符">成員運算符&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">判斷個體在不在群體內&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># name_list = [&amp;#39;jimmy&amp;#39;, &amp;#39;kevin&amp;#39;, &amp;#39;oscar&amp;#39;, &amp;#39;jerry&amp;#39;]&lt;/span>
@@ -5248,7 +5237,7 @@ alt="[media/Pasted image 20230924215537.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924215657.png]"
 >&lt;/p>
-&lt;h4 id="身份運算符">身份運算符&lt;/h4>
+&lt;h2 id="身份運算符">身份運算符&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">id() 返回一串數字 該數字可以看成是記憶體位址
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>
@@ -5295,7 +5284,7 @@ alt="[media/Pasted image 20230924220655.png]"
 loading="lazy"
 alt="[media/Pasted image 20230924220726.png]"
 >&lt;/p>
-&lt;h4 id="練習題">練習題&lt;/h4>
+&lt;h2 id="練習題">練習題&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">獲取使用者輸入並列印成下列格式&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">------------&lt;/span> &lt;span class="n">info&lt;/span> &lt;span class="n">of&lt;/span> &lt;span class="n">Jimmy&lt;/span> &lt;span class="o">-----------&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Name&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">Jimmy&lt;/span>
@@ -5334,58 +5323,7 @@ alt="[media/Pasted image 20230924221852.png]"
 &lt;p>&lt;img src="https://drive.google.com/uc?export=view&amp;amp;id=1ZDzI9mW1ffwb0sF06RyYHZMuolKfKUN5"
 loading="lazy"
 alt="[media/Pasted image 20230924222521.png]"
->&lt;/p></description></item><item><title>pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</link><pubDate>Sat, 07 Oct 2023 03:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</guid><description>&lt;h2 id="今日内容概要">今日内容概要&lt;/h2>
-&lt;ul>
-&lt;li>pycharm下載與使用
-&lt;ul>
-&lt;li>MAC版安裝&lt;/li>
-&lt;li>WINDOWS版安裝&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>python語法之注釋&lt;/li>
-&lt;li>PEP8規範&lt;/li>
-&lt;li>python語法之變數與常量&lt;/li>
-&lt;li>python基本數據類型(先大致了解有哪些)
-&lt;ul>
-&lt;li>整型int&lt;/li>
-&lt;li>浮點型float&lt;/li>
-&lt;li>字串str&lt;/li>
-&lt;li>列表list&lt;/li>
-&lt;li>字典dict&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>練習題(數據類型)&lt;/li>
-&lt;/ul>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 整體內容大綱&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">pycharm下載與使用&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">MAC版安裝&lt;/span>&lt;span class="err">：&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">windows版安裝&lt;/span>&lt;span class="err">：&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">回到我的MAC電腦&lt;/span>&lt;span class="err">，&lt;/span>&lt;span class="n">創建項目&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span> &lt;span class="n">處建項目&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">2.&lt;/span> &lt;span class="n">Location要填寫&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">解釋器選擇&lt;/span>&lt;span class="err">，&lt;/span>&lt;span class="n">先不要用虛擬環境&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">3.&lt;/span> &lt;span class="n">儲存python代碼的文件後綴名一般叫&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">py&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">4.&lt;/span> &lt;span class="n">使用pycharm創建的py文件在編寫程式碼的時候有自動提示&lt;/span> &lt;span class="n">tab補全&lt;/span> &lt;span class="n">方向鍵選擇&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">5.&lt;/span> &lt;span class="n">配置調整&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">6.&lt;/span>&lt;span class="n">運行python代碼&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">python語法之注釋&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PEP8規範&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">變數與常量&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">變數的基本使用&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span> &lt;span class="n">日常生活中的變數案例&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">2.&lt;/span> &lt;span class="n">變數使用的語法結構與底層原理&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">3.&lt;/span> &lt;span class="n">變數名的命名規範&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">4.&lt;/span> &lt;span class="n">變數名的命名風格&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">常量的基本使用&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">數據類型&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">數據類型之整型int&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">數據類型之浮點型float&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">數據類型之字串str&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="n">定義字串有四種方式&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">數據類型之列表list&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">數據類型之字典dict&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">小結&lt;/span> &lt;span class="n">今日PEP8規範&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">練習題&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="pycharm下載與使用">pycharm下載與使用&lt;/h3>
+>&lt;/p></description></item><item><title>pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</link><pubDate>Sat, 07 Oct 2023 03:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</guid><description>&lt;h3 id="pycharm下載與使用">pycharm下載與使用&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">該軟體分為收費版和免費版&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">免費版功能太少&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">community&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">我們盡量使用收費版&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">professional&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="mi">30&lt;/span>&lt;span class="n">天試用&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">pycharm比較笨重&lt;/span>
@@ -5974,16 +5912,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324813l3KmpF0xH.png"
 >&lt;img src="https://img.youtube.com/vi/QVndMgzyljI/0.jpg"
 loading="lazy"
 alt="Yes"
->&lt;/a>&lt;/p></description></item><item><title>計算機三大核心，操作系統，程式語言分類，Python解釋器，Mac、Windows電腦安裝Python解釋器</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day02/</link><pubDate>Sat, 07 Oct 2023 02:50:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day02/</guid><description>&lt;h2 id="今日內容概要">今日內容概要&lt;/h2>
-&lt;ul>
-&lt;li>計算機三大核心硬體&lt;/li>
-&lt;li>操作系統&lt;/li>
-&lt;li>程式語言的分類&lt;/li>
-&lt;li>python解釋器&lt;/li>
-&lt;li>運行python程序的三種方式&lt;/li>
-&lt;li>mac、windows電腦安裝python解釋器(多版本)&lt;/li>
-&lt;/ul>
-&lt;h2 id="計算機三大核心硬體">計算機三大核心硬體&lt;/h2>
+>&lt;/a>&lt;/p></description></item><item><title>計算機三大核心，操作系統，程式語言分類，Python解釋器，Mac、Windows電腦安裝Python解釋器</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day02/</link><pubDate>Sat, 07 Oct 2023 02:50:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day02/</guid><description>&lt;h2 id="計算機三大核心硬體">計算機三大核心硬體&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">計算機三大核心硬體&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">CPU&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">記憶體&lt;/span>
@@ -6257,22 +6186,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230909/20132481HayFEFPEwW.png"
 >&lt;img src="https://img.youtube.com/vi/JqtGViPO4Ts/0.jpg"
 loading="lazy"
 alt="Yes"
->&lt;/a>&lt;/p></description></item><item><title>Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</link><pubDate>Sat, 07 Oct 2023 02:45:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</guid><description>&lt;h2 id="今日總結">今日總結&lt;/h2>
-&lt;ol>
-&lt;li>typora軟件
-&lt;ul>
-&lt;li>下載與安裝&lt;/li>
-&lt;li>文件路徑&lt;/li>
-&lt;li>主要功能&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>markdown語法&lt;/li>
-&lt;li>技術文章編寫教程&lt;/li>
-&lt;li>計算機本質&lt;/li>
-&lt;li>計算機五大組成部分&lt;/li>
-&lt;li>計算機三大核心硬件&lt;/li>
-&lt;/ol>
-&lt;h2 id="計算機五大組成部分">計算機五大組成部分&lt;/h2>
+>&lt;/a>&lt;/p></description></item><item><title>Typora、Markdown、技術文章編寫、計算機五大組成、三大核心、自我介紹</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</link><pubDate>Sat, 07 Oct 2023 02:45:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day01/</guid><description>&lt;h2 id="計算機五大組成部分">計算機五大組成部分&lt;/h2>
 &lt;ol>
 &lt;li>控制器
 &lt;ul>
