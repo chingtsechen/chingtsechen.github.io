@@ -820,8 +820,14 @@ data-flex-grow="139"
 data-flex-basis="335px"
 >&lt;/p>
 &lt;p>全程下一步就可以
-&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231104145236.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145236.png"
+width="620"
+height="444"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145236_hu66aa624296408fb64f8da8cc22c2af02_39141_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145236_hu66aa624296408fb64f8da8cc22c2af02_39141_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="139"
+data-flex-basis="335px"
 >&lt;/p>
 &lt;p>安裝成功，檢查&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % go version
@@ -847,7 +853,7 @@ data-flex-basis="1575px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># go代理位置&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GOPROXY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;https://proxy.golang.org,direct&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>/usr/local/go&lt;/code>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>GOROOT='/usr/local/go'&lt;/code>
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145739.png"
 width="920"
 height="436"
@@ -862,7 +868,7 @@ data-flex-basis="506px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 放置依賴包&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">go/src
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>/Users/chenqingze/go&lt;/code>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>GOPATH='/Users/chenqingze/go'&lt;/code>
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104150106.png"
 width="920"
 height="436"
