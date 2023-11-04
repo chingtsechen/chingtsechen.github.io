@@ -757,11 +757,11 @@ data-flex-basis="303px"
 &lt;h2 id="編程語言介紹">編程語言介紹&lt;/h2>
 &lt;h3 id="什麼是編程語言">什麼是編程語言&lt;/h3>
 &lt;p>人與計算機溝通的語言&lt;/p>
-&lt;p>編程語言的發展經歷：
-機器語言(指令系統) =&amp;gt; 匯編語言 =&amp;gt; 高級語言 (C、java、Go等)&lt;/p>
+&lt;p>編程語言的發展經歷：&lt;/p>
+&lt;p>機器語言(指令系統) =&amp;gt; 匯編語言 =&amp;gt; 高級語言 (C、java、Go等)&lt;/p>
 &lt;blockquote>
-&lt;p>匯編語言：指令符號化010010010101 =&amp;gt; ADD
-高級語言：多條指令合成一條指令&lt;/p>
+&lt;p>匯編語言：指令符號化010010010101 =&amp;gt; ADD&lt;/p>
+&lt;p>高級語言：多條指令合成一條指令&lt;/p>
 &lt;/blockquote>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104142007.png"
 width="466"
@@ -773,8 +773,20 @@ data-flex-grow="86"
 data-flex-basis="208px"
 >&lt;/p>
 &lt;h3 id="編譯型語言與解釋型語言">編譯型語言與解釋型語言&lt;/h3>
-&lt;p>編譯型：C++、C
-解釋型：python、js&lt;/p>
+&lt;p>編譯型：C++、C&lt;/p>
+&lt;p>解釋型：python、js&lt;/p>
+&lt;p>編譯型：
+開發一個軟體，透過軟體(編譯器)，將程式語言，轉成可執行的二進制文件(EX: .exe)，調CPU執行這些程式的效果。&lt;/p>
+&lt;ul>
+&lt;li>優點：可執行的二進制文件，後續可一直覆用&lt;/li>
+&lt;li>缺點：因為編譯是基於當下環境，產生可執行文件，跨平台性弱&lt;/li>
+&lt;/ul>
+&lt;p>解釋型：
+逐行逐行執行，不會編譯成一個可執行文件&lt;/p>
+&lt;ul>
+&lt;li>優點：不生成執行文件，跨平台性就比較好&lt;/li>
+&lt;li>缺點：每次要看結果，都要重新翻譯執行&lt;/li>
+&lt;/ul>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104143406.png"
 width="828"
 height="677"
@@ -783,7 +795,300 @@ loading="lazy"
 class="gallery-image"
 data-flex-grow="122"
 data-flex-basis="293px"
->&lt;/p></description></item><item><title>Lesson009 - 中國 AI 科技進入校園！學生上課狀況一目了然！</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson009/</link><pubDate>Fri, 27 Oct 2023 21:46:23 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson009/</guid><description>&lt;h2 id="學習影片">學習影片&lt;/h2>
+>&lt;/p>
+&lt;h2 id="go環境安裝">go環境安裝&lt;/h2>
+&lt;p>官網： &lt;a class="link" href="https://go.dev/dl/" target="_blank" rel="noopener"
+>https://go.dev/dl/&lt;/a>&lt;/p>
+&lt;h3 id="mac系統">mac系統&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104144958.png"
+width="1406"
+height="663"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104144958_hud6f86177d1a39b25689b9f26a0ff78ae_137214_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104144958_hud6f86177d1a39b25689b9f26a0ff78ae_137214_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="212"
+data-flex-basis="508px"
+>&lt;/p>
+&lt;p>這裡是顯示，我之前已經安裝過go了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145100.png"
+width="620"
+height="444"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145100_hud223a01ebfb5382682db06a3674b80f0_75018_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145100_hud223a01ebfb5382682db06a3674b80f0_75018_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="139"
+data-flex-basis="335px"
+>&lt;/p>
+&lt;p>全程下一步就可以
+&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231104145236.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>安裝成功，檢查&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % go version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">go version go1.21.1 darwin/arm64
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ %
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145504.png"
+width="932"
+height="142"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145504_hu27afa27ae7fea21379ca6934b213d31b_21618_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145504_hu27afa27ae7fea21379ca6934b213d31b_21618_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="656"
+data-flex-basis="1575px"
+>&lt;/p>
+&lt;p>環境變數&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % go env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># go安裝的根目錄&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GOROOT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;/usr/local/go&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># go代碼放置處&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GOPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;/Users/chenqingze/go&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># go代理位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GOPROXY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;https://proxy.golang.org,direct&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>/usr/local/go&lt;/code>
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145739.png"
+width="920"
+height="436"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145739_hu2daf24caeb85f8b282b6ac35b5345a20_101972_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104145739_hu2daf24caeb85f8b282b6ac35b5345a20_101972_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="211"
+data-flex-basis="506px"
+>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 放編譯器&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">go/bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 放置依賴包&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">go/src
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>/Users/chenqingze/go&lt;/code>
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104150106.png"
+width="920"
+height="436"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104150106_hu86afc9489a8e24f32cdef2d6ff9059ca_45698_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104150106_hu86afc9489a8e24f32cdef2d6ff9059ca_45698_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="211"
+data-flex-basis="506px"
+>&lt;/p>
+&lt;h3 id="第一個go程序">第一個go程序&lt;/h3>
+&lt;p>&lt;strong>先關閉MODULE&lt;/strong>
+啟用 Go 模組系統。在這種模式下，Go 會忽略 GOPATH 環境變數和其他傳統 Go 程序搜索路徑，並且只在當前模組的 go.mod 文件中指定的模組路徑中查找包&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % go env -w &lt;span class="s2">&amp;#34;GO111MODULE=off&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 退出當前terminal再登入，查看環境變數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % go env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GO111MODULE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;off&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>最小寫程式單元，一定要創建目錄，再來寫代碼&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % &lt;span class="nb">cd&lt;/span> /Users/chenqingze/Desktop/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP Desktop % mkdir hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP Desktop % &lt;span class="nb">cd&lt;/span> hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r--@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">70&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 15:16 main.go
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>main.go&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;hello jimmy&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>直接執行編譯，並執行&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % go run main.go
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hello jimmy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="生成可執行文件">生成可執行文件&lt;/h3>
+&lt;p>配置GOPATH，將編程代碼都放置此處&lt;/p>
+&lt;p>&lt;code>/Users/chenqingze/goWork&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 當前家目錄創建goWork目錄&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % mkdir goWork
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % &lt;span class="nb">cd&lt;/span> goWork
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP goWork % mkdir src
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 配置環境變數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % vim ~/.zprofile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">GOPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$HOME&lt;/span>/goWork
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 退出當前terminal再登入，查看環境變數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % go env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GOPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;/Users/chenqingze/goWork&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>先執行編譯產生可執行文件，再執行&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % &lt;span class="nb">cd&lt;/span> Desktop/hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r--@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">70&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 15:16 main.go
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 編譯產生可執行文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % go build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">3776&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxr-xr-x@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">1925602&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 16:02 hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r--@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">70&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 15:16 main.go
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 執行&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % ./hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hello jimmy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;font color=red>如果改源碼，需再執行編譯產生可執行文件，新代碼結果才會呈現&lt;/font>&lt;/p>
+&lt;p>自定義執行文件檔名&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % go build -o hi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">7544&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxr-xr-x@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">1925602&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 16:02 hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxr-xr-x@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">1925602&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 16:06 hi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r--@ &lt;span class="m">1&lt;/span> chenqingze staff &lt;span class="m">70&lt;/span> &lt;span class="m">11&lt;/span> &lt;span class="m">4&lt;/span> 15:16 main.go
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP hello % ./hi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hello jimmy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="小結">小結&lt;/h3>
+&lt;ul>
+&lt;li>go build [-o] 生成一個可執行文件&lt;/li>
+&lt;li>go run 編譯並執行&lt;/li>
+&lt;li>寫代碼流程，先創建文件夾，進入創建xxx.go程式，開始撰寫代碼&lt;/li>
+&lt;/ul>
+&lt;p>代碼解釋&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="cm">/* 主包 */&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cm">/* 主程序入口 */&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;hello jimmy&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="ide的安裝和使用">IDE的安裝和使用&lt;/h2>
+&lt;p>安裝Goland或Vscode&lt;/p>
+&lt;p>幫助快速開發&lt;/p>
+&lt;h3 id="mac系統-1">mac系統&lt;/h3>
+&lt;p>Goland官網： &lt;a class="link" href="https://www.jetbrains.com/go/download/#section=mac" target="_blank" rel="noopener"
+>https://www.jetbrains.com/go/download/#section=mac&lt;/a>&lt;/p>
+&lt;p>我選擇使用較舊的版本
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162220.png"
+width="1337"
+height="794"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162220_hua78aa1b6d846f49cb60573602d60d959_128496_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162220_hua78aa1b6d846f49cb60573602d60d959_128496_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="168"
+data-flex-basis="404px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162329.png"
+width="782"
+height="354"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162329_hueaf1eb4a8662470ae38025b5d1b65a97_40350_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162329_hueaf1eb4a8662470ae38025b5d1b65a97_40350_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="220"
+data-flex-basis="530px"
+>&lt;/p>
+&lt;p>第一次打開畫面，選擇New Project
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162530.png"
+width="800"
+height="600"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162530_huec606c859ef0a0c1ccc845900d27fa8d_65276_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162530_huec606c859ef0a0c1ccc845900d27fa8d_65276_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+>&lt;/p>
+&lt;p>目錄選擇
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162936.png"
+width="800"
+height="600"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162936_hu513d8d8debd333ea8993d3aac2ef480d_41436_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104162936_hu513d8d8debd333ea8993d3aac2ef480d_41436_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="133"
+data-flex-basis="320px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104163213.png"
+width="1400"
+height="954"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104163213_hu3111ca316a172a327c88b187db3db6cf_77522_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104163213_hu3111ca316a172a327c88b187db3db6cf_77522_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="146"
+data-flex-basis="352px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104163125.png"
+width="920"
+height="436"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104163125_huc0571c5c01f0fa48a19305a9e27d98fc_51110_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104163125_huc0571c5c01f0fa48a19305a9e27d98fc_51110_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="211"
+data-flex-basis="506px"
+>&lt;/p>
+&lt;h3 id="創建go程序">創建go程序&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164719.png"
+width="539"
+height="255"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164719_hu5ab07f2fce97fc891fdef7b7a9920720_41993_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164719_hu5ab07f2fce97fc891fdef7b7a9920720_41993_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="211"
+data-flex-basis="507px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164246.png"
+width="461"
+height="240"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164246_hue124ba74138bcacf0bf71c5a0afe24af_17672_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164246_hue124ba74138bcacf0bf71c5a0afe24af_17672_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="192"
+data-flex-basis="461px"
+>&lt;/p>
+&lt;h3 id="生成可執行文件-1">生成可執行文件&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164826.png"
+width="738"
+height="215"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164826_hu6b38bd098235b2a8607ee6fb10ad56f9_29029_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164826_hu6b38bd098235b2a8607ee6fb10ad56f9_29029_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="343"
+data-flex-basis="823px"
+>&lt;/p>
+&lt;p>先關閉go module&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164935.png"
+width="900"
+height="700"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164935_hu9988cc539877e978fd28adeeb5428d87_56140_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104164935_hu9988cc539877e978fd28adeeb5428d87_56140_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="128"
+data-flex-basis="308px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165034.png"
+width="626"
+height="130"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165034_hu852357d5c8837854028c5c86b1204a8c_20372_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165034_hu852357d5c8837854028c5c86b1204a8c_20372_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="481"
+data-flex-basis="1155px"
+>&lt;/p>
+&lt;h3 id="ide直接執行go-run">IDE直接執行go run&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165200.png"
+width="545"
+height="474"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165200_hu58012ea307ec68ffa010834ce62415de_50551_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165200_hu58012ea307ec68ffa010834ce62415de_50551_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="114"
+data-flex-basis="275px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165252.png"
+width="347"
+height="211"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165252_huef6c42f53d3d61a2b3fcc863258d6c26_26586_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104165252_huef6c42f53d3d61a2b3fcc863258d6c26_26586_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="394px"
+>&lt;/p>
+&lt;h2 id="基礎語法">基礎語法&lt;/h2>
+&lt;h3 id="註釋">註釋&lt;/h3></description></item><item><title>Lesson009 - 中國 AI 科技進入校園！學生上課狀況一目了然！</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson009/</link><pubDate>Fri, 27 Oct 2023 21:46:23 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson009/</guid><description>&lt;h2 id="學習影片">學習影片&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/JMLsHI8aV0g" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
 &lt;/div>
