@@ -26,10 +26,10 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">新生代&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">青春代&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">老年代&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">越往下檢測頻率越低&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>2.標記清除&lt;/code>&lt;/p>
 &lt;p>圖解：
-![[media/Pasted image 20230930215924.png]]&lt;/p>
+![[media/Pasted-image-20230930215924.png]]&lt;/p>
 &lt;p>&lt;code>3.分代回收&lt;/code>&lt;/p>
 &lt;p>圖解：
-![[media/Pasted image 20230930220512.png]]&lt;/p>
+![[media/Pasted-image-20230930220512.png]]&lt;/p>
 &lt;h2 id="流程控制理論">流程控制理論&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">流程控制&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">控制事物的執行流程&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">事物執行流程總共可以分為三種&lt;/span>
@@ -42,7 +42,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">在代碼的世界裡&lt;/span> &lt;span class="n">很多時候可能會出現三者混合&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">提示&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">作為小白&lt;/span> &lt;span class="n">在學習流程控制的時候&lt;/span> &lt;span class="n">建議做到代碼和圖形的結合&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>圖解：
-![[media/Pasted image 20230930221247.png]]&lt;/p>
+![[media/Pasted-image-20230930221247.png]]&lt;/p>
 &lt;h2 id="流程控制必備知識">流程控制必備知識&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">python中使用代碼的縮進來表示代碼的從屬關係&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">從屬關係&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">縮進的代碼&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">子代碼&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">是否執行取決於上面沒有縮進的&lt;/span>
@@ -118,22 +118,22 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;不是tony做不出來這件事&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>1.單if分支結構&lt;/code>&lt;/p>
-&lt;p>![[media/Pasted image 20230930222324.png]]&lt;/p>
-&lt;p>![[media/Pasted image 20230930222334.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930222324.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930222334.png]]&lt;/p>
 &lt;p>&lt;code>if的嵌套使用&lt;/code>
-![[media/Pasted image 20230930222636.png]]&lt;/p>
-&lt;p>![[media/Pasted image 20230930222649.png]]&lt;/p>
+![[media/Pasted-image-20230930222636.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930222649.png]]&lt;/p>
 &lt;p>&lt;code>2.if...else...分支結構&lt;/code>&lt;/p>
-&lt;p>![[media/Pasted image 20230930222951.png]]&lt;/p>
-&lt;p>![[media/Pasted image 20230930222920.png]]&lt;/p>
-&lt;p>![[media/Pasted image 20230930222937.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930222951.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930222920.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930222937.png]]&lt;/p>
 &lt;p>&lt;code>3.if...elif...else分支結構&lt;/code>&lt;/p>
 &lt;p>圖解：
-![[media/Pasted image 20230930223455.png]]&lt;/p>
-&lt;p>![[media/Pasted image 20230930223641.png]]&lt;/p>
-&lt;p>![[media/Pasted image 20230930223650.png]]&lt;/p>
+![[media/Pasted-image-20230930223455.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930223641.png]]&lt;/p>
+&lt;p>![[media/Pasted-image-20230930223650.png]]&lt;/p>
 &lt;p>問題：字串判斷大小
-![[media/Pasted image 20230930224041.png]]&lt;/p>
+![[media/Pasted-image-20230930224041.png]]&lt;/p>
 &lt;p>&lt;code>4.if的嵌套使用(有點難)&lt;/code>&lt;/p></description></item><item><title>蛤蟆先生去看心理師 - Summary - 我的感想與收穫</title><link>https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/</link><pubDate>Wed, 01 Nov 2023 21:09:57 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/counselling-for-toads.png" alt="Featured image of post 蛤蟆先生去看心理師 - Summary - 我的感想與收穫" />&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/Pasted-image-20231101211305.png"
 width="676"
 height="958"
