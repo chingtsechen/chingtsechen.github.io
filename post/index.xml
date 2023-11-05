@@ -1,4 +1,61 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/post/</link><description>Recent content in Posts on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 05 Nov 2023 14:44:37 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 05 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/post/</link><description>Recent content in Posts on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 05 Nov 2023 16:32:52 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Github-Pages deploy error 佈屬失敗解決(報錯原因Deployment request failed for xxx due to in progress，Please cancel xxxx first or wait for it to complete)</title><link>https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/</link><pubDate>Sun, 05 Nov 2023 16:32:52 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/</guid><description>&lt;h2 id="報錯畫面">報錯畫面&lt;/h2>
+&lt;p>突然開始，佈屬皆會報錯
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170143.png"
+width="1314"
+height="403"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170143_hu6f1d37c78277579d54c2e637f5b0f0fd_83855_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170143_hu6f1d37c78277579d54c2e637f5b0f0fd_83855_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="326"
+data-flex-basis="782px"
+>&lt;/p>
+&lt;p>報錯原因
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105164043.png"
+width="853"
+height="63"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105164043_hua2a1e34c26f85ebf0d208d433f3ef6da_25548_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105164043_hua2a1e34c26f85ebf0d208d433f3ef6da_25548_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="1353"
+data-flex-basis="3249px"
+>&lt;/p>
+&lt;h2 id="打api查詢佈屬id">打API查詢佈屬ID&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># &amp;lt;TOKEN&amp;gt; 更換您的GITHUB TOKEN&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># grep id 更換成您報錯頁面提示的ID &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % curl -L &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments &lt;span class="p">|&lt;/span> grep -i -B &lt;span class="m">40&lt;/span> f011f3e1c2edc5fa42d95fe890265994405a045a
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>就可以看到，佈屬IP&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;url&amp;#34;&lt;/span>: &lt;span class="s2">&amp;#34;https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;id&amp;#34;&lt;/span>: 1156464224,
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="先將佈屬id狀態設定為inactive">先將佈屬ID狀態設定為inactive&lt;/h2>
+&lt;p>如果直接執行刪除，會出現以下報錯&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chenqingze@chenqingze-MBP ~ % curl -L &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -X DELETE &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;message&amp;#34;&lt;/span>: &lt;span class="s2">&amp;#34;Validation Failed&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;errors&amp;#34;&lt;/span>: &lt;span class="o">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;We cannot delete an active deployment unless it is the only deployment in a given environment.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">]&lt;/span>,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;documentation_url&amp;#34;&lt;/span>: &lt;span class="s2">&amp;#34;https://docs.github.com/rest/deployments/deployments#delete-a-deployment&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>所以需要先將佈屬ID狀態設定為inactive&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224/statuses -X POST -d &lt;span class="s1">&amp;#39;{&amp;#34;state&amp;#34;:&amp;#34;inactive&amp;#34;}&amp;#39;&lt;/span> -H &lt;span class="s1">&amp;#39;accept: application/vnd.github.ant-man-preview+json&amp;#39;&lt;/span> -H &lt;span class="s2">&amp;#34;authorization: token &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="用api刪除佈屬id">用API刪除佈屬ID&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl -L &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -X DELETE &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 05 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">有一些語言 記憶體空間的申請和釋放都需要程式設計師自己寫程式碼才可以完成
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">但是python卻不需要 通過垃圾回收機制自動管理
