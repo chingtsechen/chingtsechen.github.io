@@ -55,7 +55,17 @@ data-flex-basis="3249px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>&lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2></description></item><item><title>修改hugo在github上的架構</title><link>https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/</link><pubDate>Tue, 10 Oct 2023 10:38:49 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/</guid><description>&lt;p>架構修改如下圖：
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2>
+&lt;p>可以看到，佈屬成功了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520.png"
+width="1315"
+height="467"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520_huec5175671014d87ca18ff8c6f0745df6_97123_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520_huec5175671014d87ca18ff8c6f0745df6_97123_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="281"
+data-flex-basis="675px"
+>&lt;/p></description></item><item><title>修改hugo在github上的架構</title><link>https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/</link><pubDate>Tue, 10 Oct 2023 10:38:49 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/</guid><description>&lt;p>架構修改如下圖：
 &lt;img src="https://blog.goldfishbrain-fighting.com/2023/blog-hugo-architecture/media/Pasted-image-20231010121753.png"
 width="2062"
 height="989"

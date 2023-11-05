@@ -55,7 +55,17 @@ data-flex-basis="3249px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>&lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2></description></item><item><title>2023/10 慢跑(100.8公里)</title><link>https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/</link><pubDate>Tue, 31 Oct 2023 12:18:36 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/media/IMG_26A918BEC33A-1.jpeg"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2>
+&lt;p>可以看到，佈屬成功了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520.png"
+width="1315"
+height="467"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520_huec5175671014d87ca18ff8c6f0745df6_97123_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520_huec5175671014d87ca18ff8c6f0745df6_97123_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="281"
+data-flex-basis="675px"
+>&lt;/p></description></item><item><title>2023/10 慢跑(100.8公里)</title><link>https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/</link><pubDate>Tue, 31 Oct 2023 12:18:36 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/media/IMG_26A918BEC33A-1.jpeg"
 width="1170"
 height="1844"
 srcset="https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/media/IMG_26A918BEC33A-1_hu90409b2168dbf3bfe4d6ba973f62c3c8_389877_480x0_resize_q75_box.jpeg 480w, https://blog.goldfishbrain-fighting.com/2023/exercise-jogging-202310/media/IMG_26A918BEC33A-1_hu90409b2168dbf3bfe4d6ba973f62c3c8_389877_1024x0_resize_q75_box.jpeg 1024w"

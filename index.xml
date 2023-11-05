@@ -55,7 +55,17 @@ data-flex-basis="3249px"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer &amp;lt;TOKEN&amp;gt;&amp;#34;&lt;/span>&lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -H &lt;span class="s2">&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> https://api.github.com/repos/chingtsechen/chingtsechen.github.io/deployments/1156464224
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 05 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="可以成功繼續佈屬">可以成功繼續佈屬&lt;/h2>
+&lt;p>可以看到，佈屬成功了
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520.png"
+width="1315"
+height="467"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520_huec5175671014d87ca18ff8c6f0745df6_97123_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-pages-deploy-error/media/Pasted-image-20231105170520_huec5175671014d87ca18ff8c6f0745df6_97123_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="281"
+data-flex-basis="675px"
+>&lt;/p></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 05 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">有一些語言 記憶體空間的申請和釋放都需要程式設計師自己寫程式碼才可以完成
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">但是python卻不需要 通過垃圾回收機制自動管理
