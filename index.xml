@@ -1,8 +1,140 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/</link><description>Recent content on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 05 Nov 2023 14:44:37 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Day05 -</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 05 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">有一些語言 記憶體空間的申請和釋放都需要程式設計師自己寫程式碼才可以完成
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">但是python卻不需要 通過垃圾回收機制自動管理
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">引用計數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;jimmy&amp;#39;&lt;/span> &lt;span class="n">數據值jimmy身上的引用計數為1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">name&lt;/span> &lt;span class="n">數據值jimmy身上的引用計數加一&lt;/span> &lt;span class="n">為2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">del&lt;/span> &lt;span class="n">name1&lt;/span> &lt;span class="n">數據值jimmy身上的引用計數減一&lt;/span> &lt;span class="n">為1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">當數據值身上的引用計數為0的時候&lt;/span> &lt;span class="n">就會被垃圾回收機制當做垃圾回收掉&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">當數據值身上的引用計數不為0的時候&lt;/span> &lt;span class="n">永遠不會被垃圾回收機制回收&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">標記清除&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">主要針對循環引用問題&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mi">11&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">22&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="c1"># 引用計數為1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l2&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="mi">33&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">44&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="c1"># 引用計數為1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">l2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># l1 = [11, 22, l2列表] 引用計數為2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">l2&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">l1&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># l2 = [33, 44, l1列表] 引用計數為2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">del&lt;/span> &lt;span class="n">l1&lt;/span> &lt;span class="c1"># 斷開變數名l1與列表的綁定關係 引用計數為1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">del&lt;/span> &lt;span class="n">l2&lt;/span> &lt;span class="c1"># 斷開變數名l2與列表的綁定關係 引用計數為1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">當記憶體占用達到臨界值的時候&lt;/span> &lt;span class="n">程序會自動停止&lt;/span> &lt;span class="n">然後掃描程序中所有的數據&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">並給只產生循環引用的數據打上標記&lt;/span> &lt;span class="n">之後一次性清除&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">3.&lt;/span>&lt;span class="n">分代回收&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">垃圾回收機制的頻繁運行也會損耗各項資源&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">新生代&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">青春代&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">老年代&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">越往下檢測頻率越低&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>2.標記清除&lt;/code>&lt;/p>
+&lt;p>圖解：
+![[media/Pasted image 20230930215924.png]]&lt;/p>
+&lt;p>&lt;code>3.分代回收&lt;/code>&lt;/p>
+&lt;p>圖解：
+![[media/Pasted image 20230930220512.png]]&lt;/p>
 &lt;h2 id="流程控制理論">流程控制理論&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">流程控制&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">控制事物的執行流程&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">事物執行流程總共可以分為三種&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="n">順序結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">從上往下依次執行&lt;/span> &lt;span class="n">之前所編寫的代碼都屬於該結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">2.&lt;/span>&lt;span class="n">分支結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">事物的執行會根據條件的不同做出不同的執行策略&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">3.&lt;/span>&lt;span class="n">循環結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">事物的執行會根據某個條件出現重複&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">在代碼的世界裡&lt;/span> &lt;span class="n">很多時候可能會出現三者混合&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">提示&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">作為小白&lt;/span> &lt;span class="n">在學習流程控制的時候&lt;/span> &lt;span class="n">建議做到代碼和圖形的結合&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>圖解：
+![[media/Pasted image 20230930221247.png]]&lt;/p>
 &lt;h2 id="流程控制必備知識">流程控制必備知識&lt;/h2>
-&lt;h2 id="分支結構">分支結構&lt;/h2>
-&lt;h2 id="循環結構">循環結構&lt;/h2></description></item><item><title>蛤蟆先生去看心理師 - Summary - 我的感想與收穫</title><link>https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/</link><pubDate>Wed, 01 Nov 2023 21:09:57 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/counselling-for-toads.png" alt="Featured image of post 蛤蟆先生去看心理師 - Summary - 我的感想與收穫" />&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/Pasted-image-20231101211305.png"
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">python中使用代碼的縮進來表示代碼的從屬關係&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">從屬關係&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">縮進的代碼&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">子代碼&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">是否執行取決於上面沒有縮進的&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">並不是所有的代碼都可以擁有縮進的代碼&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">子代碼&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">if關鍵字&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">3.&lt;/span>&lt;span class="n">如果有多行子代碼屬於同一個父代碼&lt;/span> &lt;span class="n">那麼這些子代碼需要保證相同的縮進量&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">4.&lt;/span>&lt;span class="n">python中針對縮進量沒有具體的要求&lt;/span> &lt;span class="n">但是推薦使用四個空格&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">windows中tab鍵&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">5.&lt;/span>&lt;span class="n">當某一行程式碼需要編寫子代碼的時候&lt;/span> &lt;span class="n">那麼這一行程式碼的結尾肯定需要冒號&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">6.&lt;/span>&lt;span class="n">相同縮進量的代碼彼此之間平起平坐&lt;/span> &lt;span class="n">按照順序結構依次執行&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="分支結構">分支結構&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">單if分支結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">條件&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">條件成立之後才會執行的代碼快&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">單if可以借助於流程圖理解&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">input&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;username&amp;gt;&amp;gt;&amp;gt;:&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">username&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;jimmy&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;老師好&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="k">else&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="n">分支結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">條件&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">條件成立之後執行的子代碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">條件不成立執行的子代碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">input&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;username&amp;gt;&amp;gt;&amp;gt;:&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">username&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;jimmy&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;老師好&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;你不是jimmy&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">3.&lt;/span>&lt;span class="k">if&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="k">elif&lt;/span>&lt;span class="o">...&lt;/span>&lt;span class="n">else分支結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">條件1&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">條件1成立之後執行的子代碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">條件2&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">條件1不成立&lt;/span> &lt;span class="n">條件2成立執行的子代碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">條件3&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">條件1和2都不成立&lt;/span> &lt;span class="n">條件3成立執行的子代碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">上述條件都不成立&lt;/span> &lt;span class="n">執行的子代碼&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">中間的elif可以寫多個&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">上述子代碼永遠只會走一個&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">score&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">input&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;請輸入學生成績&amp;gt;&amp;gt;&amp;gt;:&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">score&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">int&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">score&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 將字串的整數轉換成整型的整數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">score&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">90&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;優秀&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">score&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;良好&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">score&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">70&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;一般&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="n">score&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="mi">60&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;及格&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;重修&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">4.&lt;/span>&lt;span class="n">if的嵌套使用&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">有點難&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">age&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">28&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">height&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">170&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">weight&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">110&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">is_beautiful&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">is_success&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;tony&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">username&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;tony&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;tony發現目標&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">age&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">30&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">height&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="mi">160&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">weight&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="mi">150&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">is_beautiful&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;大女孩 手機掏出來 讓我加微信&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">is_success&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;吃飯 看電影 天黑了...&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;去你妹的 流氓!!!&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;不好意思 認錯人了&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;不是tony做不出來這件事&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>1.單if分支結構&lt;/code>&lt;/p>
+&lt;p>![[media/Pasted image 20230930222324.png]]&lt;/p>
+&lt;p>![[media/Pasted image 20230930222334.png]]&lt;/p>
+&lt;p>&lt;code>if的嵌套使用&lt;/code>
+![[media/Pasted image 20230930222636.png]]&lt;/p>
+&lt;p>![[media/Pasted image 20230930222649.png]]&lt;/p>
+&lt;p>&lt;code>2.if...else...分支結構&lt;/code>&lt;/p>
+&lt;p>![[media/Pasted image 20230930222951.png]]&lt;/p>
+&lt;p>![[media/Pasted image 20230930222920.png]]&lt;/p>
+&lt;p>![[media/Pasted image 20230930222937.png]]&lt;/p>
+&lt;p>&lt;code>3.if...elif...else分支結構&lt;/code>&lt;/p>
+&lt;p>圖解：
+![[media/Pasted image 20230930223455.png]]&lt;/p>
+&lt;p>![[media/Pasted image 20230930223641.png]]&lt;/p>
+&lt;p>![[media/Pasted image 20230930223650.png]]&lt;/p>
+&lt;p>問題：字串判斷大小
+![[media/Pasted image 20230930224041.png]]&lt;/p>
+&lt;p>&lt;code>4.if的嵌套使用(有點難)&lt;/code>&lt;/p></description></item><item><title>蛤蟆先生去看心理師 - Summary - 我的感想與收穫</title><link>https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/</link><pubDate>Wed, 01 Nov 2023 21:09:57 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/counselling-for-toads.png" alt="Featured image of post 蛤蟆先生去看心理師 - Summary - 我的感想與收穫" />&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/Pasted-image-20231101211305.png"
 width="676"
 height="958"
 srcset="https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/Pasted-image-20231101211305_hu373f3e3cf23a48d387bc839ff822ad37_237023_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/counselling-for-toads-summary/media/Pasted-image-20231101211305_hu373f3e3cf23a48d387bc839ff822ad37_237023_1024x0_resize_box_3.png 1024w"
