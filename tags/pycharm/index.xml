@@ -209,7 +209,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">age&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">20&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">gender&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;male&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">變數使用的語法結構與底層原理&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">變數使用的語法結構與底層原理&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> name = &amp;#39;jimmy&amp;#39;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> 變數名 賦值符號 數據值
@@ -219,7 +219,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> 4.以後就可以通過變數名訪問到數據值
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> &amp;#34;&amp;#34;&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">注意事項&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">注意事項&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="n">同一個數據值可以綁定多個變數名&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">2.&lt;/span>&lt;span class="n">賦值符號也可能是變數名&lt;/span> &lt;span class="n">如果是就先找該變數名綁定的數據值&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">3.&lt;/span>&lt;span class="n">一個變數名同一時間只能綁定一個數據值&lt;/span>
