@@ -68,10 +68,10 @@
 <img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324811qduMtokcQ.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324811qduMtokcQ.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324810ppTAhFBsw.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324810ppTAhFBsw.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png></p><h3 id=變數與常量>變數與常量</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>變數與常量就是為了讓程序具備人記錄事物狀態的能力</span>
 </span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>什麼是變數</span><span class=err>?</span>
 </span></span><span class=line><span class=cl>  <span class=n>記錄變化</span><span class=p>(</span><span class=n>可能會經常改變</span><span class=p>)</span><span class=n>的事物狀態</span>
-</span></span><span class=line><span class=cl>	  <span class=n>eg</span><span class=p>:</span><span class=n>年齡</span> <span class=n>容貌</span> <span class=n>薪資</span>
+</span></span><span class=line><span class=cl>      <span class=n>eg</span><span class=p>:</span><span class=n>年齡</span> <span class=n>容貌</span> <span class=n>薪資</span>
 </span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>什麼是常量</span><span class=err>?</span>
 </span></span><span class=line><span class=cl>  <span class=n>記錄固定</span><span class=p>(</span><span class=n>可能不經常改變</span><span class=p>)</span><span class=n>的事物狀態</span>
-</span></span><span class=line><span class=cl>	  <span class=n>eg</span><span class=p>:</span><span class=n>圓周率</span> <span class=n>重力加速度</span>
+</span></span><span class=line><span class=cl>      <span class=n>eg</span><span class=p>:</span><span class=n>圓周率</span> <span class=n>重力加速度</span>
 </span></span></code></pre></div><h3 id=變數的基本使用>變數的基本使用</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>日常生活中的變數案例</span>
 </span></span><span class=line><span class=cl>  <span class=n>翻轉吧金魚腦</span>
 </span></span><span class=line><span class=cl>    <span class=n>姓名叫jimmy</span>
@@ -94,16 +94,16 @@
 </span></span></span><span class=line><span class=cl><span class=s2>  &#34;&#34;&#34;</span>
 </span></span><span class=line><span class=cl>  
 </span></span><span class=line><span class=cl><span class=n>注意事項</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>	<span class=mf>1.</span><span class=n>同一個數據值可以綁定多個變數名</span>
-</span></span><span class=line><span class=cl>	<span class=mf>2.</span><span class=n>賦值符號也可能是變數名</span> <span class=n>如果是就先找該變數名綁定的數據值</span>
-</span></span><span class=line><span class=cl>	<span class=mf>3.</span><span class=n>一個變數名同一時間只能綁定一個數據值</span>
-</span></span><span class=line><span class=cl>		<span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
-</span></span><span class=line><span class=cl>		<span class=n>name1</span> <span class=o>=</span> <span class=n>name</span>
-</span></span><span class=line><span class=cl>		<span class=n>name2</span> <span class=o>=</span> <span class=n>name1</span>
-</span></span><span class=line><span class=cl>		
-</span></span><span class=line><span class=cl>		<span class=n>x</span> <span class=o>=</span> <span class=mi>10</span>
-</span></span><span class=line><span class=cl>		<span class=n>x</span> <span class=o>=</span> <span class=n>x</span> <span class=o>+</span> <span class=mi>1</span>
-</span></span><span class=line><span class=cl>		<span class=nb>print</span><span class=p>(</span><span class=n>x</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=mf>1.</span><span class=n>同一個數據值可以綁定多個變數名</span>
+</span></span><span class=line><span class=cl>    <span class=mf>2.</span><span class=n>賦值符號也可能是變數名</span> <span class=n>如果是就先找該變數名綁定的數據值</span>
+</span></span><span class=line><span class=cl>    <span class=mf>3.</span><span class=n>一個變數名同一時間只能綁定一個數據值</span>
+</span></span><span class=line><span class=cl>        <span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>
+</span></span><span class=line><span class=cl>        <span class=n>name1</span> <span class=o>=</span> <span class=n>name</span>
+</span></span><span class=line><span class=cl>        <span class=n>name2</span> <span class=o>=</span> <span class=n>name1</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=n>x</span> <span class=o>=</span> <span class=mi>10</span>
+</span></span><span class=line><span class=cl>        <span class=n>x</span> <span class=o>=</span> <span class=n>x</span> <span class=o>+</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=n>x</span><span class=p>)</span>
 </span></span><span class=line><span class=cl> 
 </span></span></code></pre></div><h4 id=1-日常生活中的變數案例>1. 日常生活中的變數案例</h4><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png></p><p><img src=https://ithelp.ithome.com.tw/upload/images/20230916/20132481WlmsceNEuR.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/20132481WlmsceNEuR.png></p><h4 id=2--變數使用的語法結構與底層原理>2. 變數使用的語法結構與底層原理</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>  <span class=s2>&#34;&#34;&#34;
 </span></span></span><span class=line><span class=cl><span class=s2>  name = &#39;jimmy&#39;
@@ -115,7 +115,7 @@
 </span></span></span><span class=line><span class=cl><span class=s2>  &#34;&#34;&#34;</span>
 </span></span></code></pre></div><p><strong><code>EX1: 變數名 賦值符號 數據值</code></strong>
 <img src=https://ithelp.ithome.com.tw/upload/images/20230916/201324814tQJ0AtQde.png loading=lazy alt=https://ithelp.ithome.com.tw/upload/images/20230916/201324814tQJ0AtQde.png></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>  <span class=n>注意事項</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>	  <span class=mf>1.</span> <span class=n>同一個數據值可以綁定多個變數名</span>
+</span></span><span class=line><span class=cl>      <span class=mf>1.</span> <span class=n>同一個數據值可以綁定多個變數名</span>
 </span></span><span class=line><span class=cl>      <span class=mf>2.</span><span class=n>賦值符號也可能是變數名</span> <span class=n>如果是就先找該變數名綁定的數據值</span>
 </span></span><span class=line><span class=cl>      <span class=mf>3.</span><span class=n>一個變數名同一時間只能綁定一個數據值</span>
 </span></span></code></pre></div><p><strong><code>EX1: 一個數據值可以綁定多個變數名(賦值符號也可能是變數名 如果是就先找該變數名綁定的數據值)</code></strong>

@@ -4,62 +4,62 @@
 </span></span></span><span class=line><span class=cl><span class=s2>但是python卻不需要 通過垃圾回收機制自動管理
 </span></span></span><span class=line><span class=cl><span class=s2>&#34;&#34;&#34;</span>
 </span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>引用計數</span>
-</span></span><span class=line><span class=cl>	<span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>  <span class=n>數據值jimmy身上的引用計數為1</span>
-</span></span><span class=line><span class=cl>	<span class=n>name1</span> <span class=o>=</span> <span class=n>name</span>	<span class=n>數據值jimmy身上的引用計數加一</span> <span class=n>為2</span>
-</span></span><span class=line><span class=cl>	<span class=k>del</span> <span class=n>name1</span>		<span class=n>數據值jimmy身上的引用計數減一</span> <span class=n>為1</span>
-</span></span><span class=line><span class=cl>	<span class=n>當數據值身上的引用計數為0的時候</span> <span class=n>就會被垃圾回收機制當做垃圾回收掉</span>
-</span></span><span class=line><span class=cl>	<span class=n>當數據值身上的引用計數不為0的時候</span> <span class=n>永遠不會被垃圾回收機制回收</span>
+</span></span><span class=line><span class=cl>    <span class=n>name</span> <span class=o>=</span> <span class=s1>&#39;jimmy&#39;</span>  <span class=n>數據值jimmy身上的引用計數為1</span>
+</span></span><span class=line><span class=cl>    <span class=n>name1</span> <span class=o>=</span> <span class=n>name</span>    <span class=n>數據值jimmy身上的引用計數加一</span> <span class=n>為2</span>
+</span></span><span class=line><span class=cl>    <span class=k>del</span> <span class=n>name1</span>       <span class=n>數據值jimmy身上的引用計數減一</span> <span class=n>為1</span>
+</span></span><span class=line><span class=cl>    <span class=n>當數據值身上的引用計數為0的時候</span> <span class=n>就會被垃圾回收機制當做垃圾回收掉</span>
+</span></span><span class=line><span class=cl>    <span class=n>當數據值身上的引用計數不為0的時候</span> <span class=n>永遠不會被垃圾回收機制回收</span>
 </span></span><span class=line><span class=cl>    
 </span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>標記清除</span>
-</span></span><span class=line><span class=cl>	<span class=n>主要針對循環引用問題</span>
-</span></span><span class=line><span class=cl>		<span class=n>l1</span> <span class=o>=</span> <span class=p>[</span><span class=mi>11</span><span class=p>,</span> <span class=mi>22</span><span class=p>]</span>  <span class=c1># 引用計數為1</span>
-</span></span><span class=line><span class=cl>		<span class=n>l2</span> <span class=o>=</span> <span class=p>[</span><span class=mi>33</span><span class=p>,</span> <span class=mi>44</span><span class=p>]</span>  <span class=c1># 引用計數為1</span>
-</span></span><span class=line><span class=cl>		<span class=n>l1</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>l2</span><span class=p>)</span>  <span class=c1># l1 = [11, 22, l2列表]  引用計數為2</span>
-</span></span><span class=line><span class=cl>		<span class=n>l2</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>l1</span><span class=p>)</span>  <span class=c1># l2 = [33, 44, l1列表]  引用計數為2</span>
-</span></span><span class=line><span class=cl>		<span class=k>del</span> <span class=n>l1</span>  <span class=c1># 斷開變數名l1與列表的綁定關係   引用計數為1</span>
-</span></span><span class=line><span class=cl>		<span class=k>del</span> <span class=n>l2</span>  <span class=c1># 斷開變數名l2與列表的綁定關係   引用計數為1</span>
-</span></span><span class=line><span class=cl>	<span class=n>當記憶體占用達到臨界值的時候</span> <span class=n>程序會自動停止</span> <span class=n>然後掃描程序中所有的數據</span>
-</span></span><span class=line><span class=cl>	<span class=n>並給只產生循環引用的數據打上標記</span> <span class=n>之後一次性清除</span>
+</span></span><span class=line><span class=cl>    <span class=n>主要針對循環引用問題</span>
+</span></span><span class=line><span class=cl>        <span class=n>l1</span> <span class=o>=</span> <span class=p>[</span><span class=mi>11</span><span class=p>,</span> <span class=mi>22</span><span class=p>]</span>  <span class=c1># 引用計數為1</span>
+</span></span><span class=line><span class=cl>        <span class=n>l2</span> <span class=o>=</span> <span class=p>[</span><span class=mi>33</span><span class=p>,</span> <span class=mi>44</span><span class=p>]</span>  <span class=c1># 引用計數為1</span>
+</span></span><span class=line><span class=cl>        <span class=n>l1</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>l2</span><span class=p>)</span>  <span class=c1># l1 = [11, 22, l2列表]  引用計數為2</span>
+</span></span><span class=line><span class=cl>        <span class=n>l2</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>l1</span><span class=p>)</span>  <span class=c1># l2 = [33, 44, l1列表]  引用計數為2</span>
+</span></span><span class=line><span class=cl>        <span class=k>del</span> <span class=n>l1</span>  <span class=c1># 斷開變數名l1與列表的綁定關係   引用計數為1</span>
+</span></span><span class=line><span class=cl>        <span class=k>del</span> <span class=n>l2</span>  <span class=c1># 斷開變數名l2與列表的綁定關係   引用計數為1</span>
+</span></span><span class=line><span class=cl>    <span class=n>當記憶體占用達到臨界值的時候</span> <span class=n>程序會自動停止</span> <span class=n>然後掃描程序中所有的數據</span>
+</span></span><span class=line><span class=cl>    <span class=n>並給只產生循環引用的數據打上標記</span> <span class=n>之後一次性清除</span>
 </span></span><span class=line><span class=cl>    
 </span></span><span class=line><span class=cl><span class=mf>3.</span><span class=n>分代回收</span>
-</span></span><span class=line><span class=cl>	<span class=n>垃圾回收機制的頻繁運行也會損耗各項資源</span> 
-</span></span><span class=line><span class=cl>	<span class=n>新生代</span><span class=err>、</span><span class=n>青春代</span><span class=err>、</span><span class=n>老年代</span><span class=p>(</span><span class=n>越往下檢測頻率越低</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>垃圾回收機制的頻繁運行也會損耗各項資源</span> 
+</span></span><span class=line><span class=cl>    <span class=n>新生代</span><span class=err>、</span><span class=n>青春代</span><span class=err>、</span><span class=n>老年代</span><span class=p>(</span><span class=n>越往下檢測頻率越低</span><span class=p>)</span>
 </span></span></code></pre></div><p><code>2.標記清除</code></p><p>圖解：
 ![[media/Pasted-image-20230930215924.png]]</p><p><code>3.分代回收</code></p><p>圖解：
 ![[media/Pasted-image-20230930220512.png]]</p><h2 id=流程控制理論>流程控制理論</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>流程控制</span><span class=o>&gt;&gt;&gt;</span><span class=p>:</span><span class=n>控制事物的執行流程</span>
-</span></span><span class=line><span class=cl>	<span class=n>事物執行流程總共可以分為三種</span>
-</span></span><span class=line><span class=cl>    	<span class=mf>1.</span><span class=n>順序結構</span>
-</span></span><span class=line><span class=cl>			<span class=n>從上往下依次執行</span> <span class=n>之前所編寫的代碼都屬於該結構</span>
-</span></span><span class=line><span class=cl>		<span class=mf>2.</span><span class=n>分支結構</span>
-</span></span><span class=line><span class=cl>			<span class=n>事物的執行會根據條件的不同做出不同的執行策略</span>
-</span></span><span class=line><span class=cl>		<span class=mf>3.</span><span class=n>循環結構</span>
-</span></span><span class=line><span class=cl>			<span class=n>事物的執行會根據某個條件出現重複</span>
-</span></span><span class=line><span class=cl>	<span class=n>ps</span><span class=p>:</span><span class=n>在代碼的世界裡</span> <span class=n>很多時候可能會出現三者混合</span>
+</span></span><span class=line><span class=cl>    <span class=n>事物執行流程總共可以分為三種</span>
+</span></span><span class=line><span class=cl>        <span class=mf>1.</span><span class=n>順序結構</span>
+</span></span><span class=line><span class=cl>            <span class=n>從上往下依次執行</span> <span class=n>之前所編寫的代碼都屬於該結構</span>
+</span></span><span class=line><span class=cl>        <span class=mf>2.</span><span class=n>分支結構</span>
+</span></span><span class=line><span class=cl>            <span class=n>事物的執行會根據條件的不同做出不同的執行策略</span>
+</span></span><span class=line><span class=cl>        <span class=mf>3.</span><span class=n>循環結構</span>
+</span></span><span class=line><span class=cl>            <span class=n>事物的執行會根據某個條件出現重複</span>
+</span></span><span class=line><span class=cl>    <span class=n>ps</span><span class=p>:</span><span class=n>在代碼的世界裡</span> <span class=n>很多時候可能會出現三者混合</span>
 </span></span><span class=line><span class=cl><span class=n>提示</span><span class=p>:</span><span class=n>作為小白</span> <span class=n>在學習流程控制的時候</span> <span class=n>建議做到代碼和圖形的結合</span>
 </span></span></code></pre></div><p>圖解：
 ![[media/Pasted-image-20230930221247.png]]</p><h2 id=流程控制必備知識>流程控制必備知識</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>python中使用代碼的縮進來表示代碼的從屬關係</span>
-</span></span><span class=line><span class=cl>	<span class=n>從屬關係</span><span class=p>:</span><span class=n>縮進的代碼</span><span class=p>(</span><span class=n>子代碼</span><span class=p>)</span><span class=n>是否執行取決於上面沒有縮進的</span>
+</span></span><span class=line><span class=cl>    <span class=n>從屬關係</span><span class=p>:</span><span class=n>縮進的代碼</span><span class=p>(</span><span class=n>子代碼</span><span class=p>)</span><span class=n>是否執行取決於上面沒有縮進的</span>
 </span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>並不是所有的代碼都可以擁有縮進的代碼</span><span class=p>(</span><span class=n>子代碼</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>if關鍵字</span>
+</span></span><span class=line><span class=cl>    <span class=n>if關鍵字</span>
 </span></span><span class=line><span class=cl><span class=mf>3.</span><span class=n>如果有多行子代碼屬於同一個父代碼</span> <span class=n>那麼這些子代碼需要保證相同的縮進量</span>
 </span></span><span class=line><span class=cl><span class=mf>4.</span><span class=n>python中針對縮進量沒有具體的要求</span> <span class=n>但是推薦使用四個空格</span><span class=p>(</span><span class=n>windows中tab鍵</span><span class=p>)</span>
 </span></span><span class=line><span class=cl><span class=mf>5.</span><span class=n>當某一行程式碼需要編寫子代碼的時候</span> <span class=n>那麼這一行程式碼的結尾肯定需要冒號</span>
 </span></span><span class=line><span class=cl><span class=mf>6.</span><span class=n>相同縮進量的代碼彼此之間平起平坐</span> <span class=n>按照順序結構依次執行</span>
 </span></span></code></pre></div><h2 id=分支結構>分支結構</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=mf>1.</span><span class=n>單if分支結構</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>條件</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>條件成立之後才會執行的代碼塊</span>
-</span></span><span class=line><span class=cl>	<span class=n>ps</span><span class=p>:</span><span class=n>單if可以借助於流程圖理解</span>
-</span></span><span class=line><span class=cl>	<span class=n>username</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;username&gt;&gt;&gt;:&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>username</span> <span class=o>==</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=nb>print</span><span class=p>(</span><span class=s1>&#39;老師好&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>條件</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>條件成立之後才會執行的代碼塊</span>
+</span></span><span class=line><span class=cl>    <span class=n>ps</span><span class=p>:</span><span class=n>單if可以借助於流程圖理解</span>
+</span></span><span class=line><span class=cl>    <span class=n>username</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;username&gt;&gt;&gt;:&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>username</span> <span class=o>==</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;老師好&#39;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=mf>2.</span><span class=k>if</span><span class=o>...</span><span class=k>else</span><span class=o>...</span><span class=n>分支結構</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>條件</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>條件成立之後執行的子代碼</span>
-</span></span><span class=line><span class=cl>	<span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>條件不成立執行的子代碼</span>
-</span></span><span class=line><span class=cl>	<span class=n>username</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;username&gt;&gt;&gt;:&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>條件</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>條件成立之後執行的子代碼</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>條件不成立執行的子代碼</span>
+</span></span><span class=line><span class=cl>    <span class=n>username</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;username&gt;&gt;&gt;:&#39;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>username</span> <span class=o>==</span> <span class=s1>&#39;jimmy&#39;</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;老師好&#39;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
@@ -67,16 +67,16 @@
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=mf>3.</span><span class=k>if</span><span class=o>...</span><span class=k>elif</span><span class=o>...</span><span class=n>else分支結構</span>
-</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=n>條件1</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>條件1成立之後執行的子代碼</span>
-</span></span><span class=line><span class=cl>	<span class=k>elif</span> <span class=n>條件2</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>條件1不成立</span> <span class=n>條件2成立執行的子代碼</span>
-</span></span><span class=line><span class=cl>	<span class=k>elif</span> <span class=n>條件3</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>條件1和2都不成立</span> <span class=n>條件3成立執行的子代碼</span>
-</span></span><span class=line><span class=cl>	<span class=k>else</span><span class=p>:</span>
-</span></span><span class=line><span class=cl>		<span class=n>上述條件都不成立</span> <span class=n>執行的子代碼</span>
-</span></span><span class=line><span class=cl>	<span class=n>ps</span><span class=p>:</span><span class=n>中間的elif可以寫多個</span><span class=err>、</span><span class=n>上述子代碼永遠只會走一個</span>
-</span></span><span class=line><span class=cl>	<span class=n>score</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;請輸入學生成績&gt;&gt;&gt;:&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>條件1</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>條件1成立之後執行的子代碼</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=n>條件2</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>條件1不成立</span> <span class=n>條件2成立執行的子代碼</span>
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=n>條件3</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>條件1和2都不成立</span> <span class=n>條件3成立執行的子代碼</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>上述條件都不成立</span> <span class=n>執行的子代碼</span>
+</span></span><span class=line><span class=cl>    <span class=n>ps</span><span class=p>:</span><span class=n>中間的elif可以寫多個</span><span class=err>、</span><span class=n>上述子代碼永遠只會走一個</span>
+</span></span><span class=line><span class=cl>    <span class=n>score</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;請輸入學生成績&gt;&gt;&gt;:&#39;</span><span class=p>)</span>
 </span></span><span class=line><span class=cl>    <span class=n>score</span> <span class=o>=</span> <span class=nb>int</span><span class=p>(</span><span class=n>score</span><span class=p>)</span>  <span class=c1># 將字串的整數轉換成整型的整數</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>score</span> <span class=o>&gt;=</span> <span class=mi>90</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s1>&#39;優秀&#39;</span><span class=p>)</span>
@@ -91,7 +91,7 @@
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=mf>4.</span><span class=n>if的嵌套使用</span><span class=p>(</span><span class=n>有點難</span><span class=p>)</span>
-</span></span><span class=line><span class=cl>	<span class=n>age</span> <span class=o>=</span> <span class=mi>28</span>
+</span></span><span class=line><span class=cl>    <span class=n>age</span> <span class=o>=</span> <span class=mi>28</span>
 </span></span><span class=line><span class=cl>    <span class=n>height</span> <span class=o>=</span> <span class=mi>170</span>
 </span></span><span class=line><span class=cl>    <span class=n>weight</span> <span class=o>=</span> <span class=mi>110</span>
 </span></span><span class=line><span class=cl>    <span class=n>is_beautiful</span> <span class=o>=</span> <span class=kc>True</span>
