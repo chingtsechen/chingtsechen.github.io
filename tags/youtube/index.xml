@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>youtube on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/youtube/</link><description>Recent content in youtube on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Nov 2023 11:43:35 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/youtube/index.xml" rel="self" type="application/rss+xml"/><item><title>獲取Youtube影片，封面照</title><link>https://blog.goldfishbrain-fighting.com/2023/youtube-cover-photo/</link><pubDate>Mon, 06 Nov 2023 11:43:35 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/youtube-cover-photo/</guid><description>&lt;h2 id="獲取影片idvid">獲取影片ID，v=ID&lt;/h2>
+&lt;p>影片連結：https://www.youtube.com/watch?v=KJM7Nj1DCwk
+影片ID：KJM7Nj1DCwk
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/youtube-cover-photo/media/Pasted-image-20231106114606.png"
+width="647"
+height="306"
+srcset="https://blog.goldfishbrain-fighting.com/2023/youtube-cover-photo/media/Pasted-image-20231106114606_hu2bbf4bc42d91aad5bb283ea728c64ab5_93620_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/youtube-cover-photo/media/Pasted-image-20231106114606_hu2bbf4bc42d91aad5bb283ea728c64ab5_93620_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="211"
+data-flex-basis="507px"
+>&lt;/p>
+&lt;h2 id="結合以下網址就可以獲取封面照">結合以下網址就可以獲取封面照&lt;/h2>
+&lt;p>將影片ID換成您的影片ID&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>高解析度大圖（1280 × 720）&lt;/strong>&lt;br>
+&lt;a class="link" href="http://img.youtube.com/vi/KJM7Nj1DCwk/maxresdefault.jpg" target="_blank" rel="noopener"
+>http://img.youtube.com/vi/KJM7Nj1DCwk/maxresdefault.jpg&lt;/a>&lt;/li>
+&lt;li>&lt;strong>標準清晰圖 （640 × 480）&lt;/strong>&lt;br>
+&lt;a class="link" href="http://img.youtube.com/vi/KJM7Nj1DCwk/sddefault.jpg" target="_blank" rel="noopener"
+>http://img.youtube.com/vi/KJM7Nj1DCwk/sddefault.jpg&lt;/a>&lt;/li>
+&lt;li>&lt;strong>高品質縮圖（480×360）&lt;/strong>&lt;br>
+&lt;a class="link" href="https://img.youtube.com/vi/KJM7Nj1DCwk/hqdefault.jpg" target="_blank" rel="noopener"
+>https://img.youtube.com/vi/KJM7Nj1DCwk/hqdefault.jpg&lt;/a>&lt;/li>
+&lt;li>&lt;strong>播放器背景縮圖（480×360）&lt;/strong>&lt;br>
+&lt;a class="link" href="http://img.youtube.com/vi/KJM7Nj1DCwk/0.jpg" target="_blank" rel="noopener"
+>http://img.youtube.com/vi/KJM7Nj1DCwk/0.jpg&lt;/a>　&lt;/li>
+&lt;li>&lt;strong>影片開始畫面縮圖（120×90）&lt;/strong>&lt;br>
+&lt;a class="link" href="http://img.youtube.com/vi/KJM7Nj1DCwk/1.jpg" target="_blank" rel="noopener"
+>http://img.youtube.com/vi/KJM7Nj1DCwk/1.jpg&lt;/a>&lt;/li>
+&lt;li>&lt;strong>影片中間片段縮圖（120×90）&lt;/strong>&lt;br>
+&lt;a class="link" href="http://img.youtube.com/vi/KJM7Nj1DCwk/2.jpg" target="_blank" rel="noopener"
+>http://img.youtube.com/vi/KJM7Nj1DCwk/2.jpg&lt;/a>&lt;/li>
+&lt;li>&lt;strong>影片結束縮圖（120×90）&lt;/strong>&lt;br>
+&lt;a class="link" href="http://img.youtube.com/vi/KJM7Nj1DCwk/3.jpg" target="_blank" rel="noopener"
+>http://img.youtube.com/vi/KJM7Nj1DCwk/3.jpg&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>參考網站：
+&lt;a class="link" href="https://www.kocpc.com.tw/archives/273287" target="_blank" rel="noopener"
+>https://www.kocpc.com.tw/archives/273287&lt;/a>&lt;/p></description></item></channel></rss>
