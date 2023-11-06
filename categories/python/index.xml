@@ -897,7 +897,7 @@ alt="[media/Pasted image 20230924221852.png]"
 &lt;p>&lt;img src="https://drive.google.com/uc?export=view&amp;amp;id=1ZDzI9mW1ffwb0sF06RyYHZMuolKfKUN5"
 loading="lazy"
 alt="[media/Pasted image 20230924222521.png]"
->&lt;/p></description></item><item><title>Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</link><pubDate>Sat, 07 Oct 2023 03:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</guid><description>&lt;h3 id="pycharm下載與使用">pycharm下載與使用&lt;/h3>
+>&lt;/p></description></item><item><title>Day03 - pycharm，註解，PEP8規範，變量與常量，基本數據類型int、float、str、list、dict(初探)，練習題(數據類型)</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</link><pubDate>Sat, 07 Oct 2023 03:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day03/</guid><description>&lt;h2 id="pycharm下載與使用">pycharm下載與使用&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">該軟體分為收費版和免費版&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">免費版功能太少&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">community&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">我們盡量使用收費版&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">professional&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="mi">30&lt;/span>&lt;span class="n">天試用&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">pycharm比較笨重&lt;/span>
@@ -914,7 +914,7 @@ alt="[media/Pasted image 20230924222521.png]"
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Pycharm官網下載網址：
 &lt;a class="link" href="https://www.jetbrains.com/pycharm/download/?section=mac" target="_blank" rel="noopener"
 >https://www.jetbrains.com/pycharm/download/?section=mac&lt;/a>&lt;/p>
-&lt;h4 id="mac版安裝">MAC版安裝：&lt;/h4>
+&lt;h3 id="mac版安裝">MAC版安裝：&lt;/h3>
 &lt;p>下載最新版Pycharm
 &lt;img src="https://ithelp.ithome.com.tw/upload/images/20230916/20132481jHMxC9Sxc9.png"
 loading="lazy"
@@ -935,7 +935,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481JodobzlU6q.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481MNpYFmG0Db.png"
 >&lt;/p>
-&lt;h4 id="windows版安裝">windows版安裝：&lt;/h4>
+&lt;h3 id="windows版安裝">windows版安裝：&lt;/h3>
 &lt;p>Next
 &lt;img src="https://ithelp.ithome.com.tw/upload/images/20230916/20132481beORdhOGFq.png"
 loading="lazy"
@@ -951,7 +951,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481YlDMszlBcn.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481JFXQDhopa8.png"
 >&lt;/p>
-&lt;h4 id="回到我的mac電腦創建項目">回到我的MAC電腦，創建項目&lt;/h4>
+&lt;h3 id="回到我的mac電腦創建項目">回到我的MAC電腦，創建項目&lt;/h3>
 &lt;h4 id="1-處建項目">1. 處建項目&lt;/h4>
 &lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230916/20132481a8M6SCQhSf.png"
 loading="lazy"
@@ -1022,7 +1022,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481YZKDpusEEK.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481rO1yQSlC9P.png"
 >&lt;/p>
-&lt;h3 id="python語法之注釋">python語法之注釋&lt;/h3>
+&lt;h2 id="python語法之注釋">python語法之注釋&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">什麼是注釋&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">注釋其實就是對一段代碼的解釋說明&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">如何編寫注釋&lt;/span>
@@ -1048,7 +1048,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481rO1yQSlC9P.png"
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">3. 多行註釋:
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">哈摟，我是翻轉吧金魚腦
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="pep8規範">PEP8規範&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="pep8規範">PEP8規範&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">pycharm中很多時候會有各種顏色提示還有波浪線
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> 只要不是紅線一般都不影響代碼運行
@@ -1088,7 +1088,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324810ppTAhFBsw.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png"
 >&lt;/p>
-&lt;h3 id="變數與常量">變數與常量&lt;/h3>
+&lt;h2 id="變數與常量">變數與常量&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">變數與常量就是為了讓程序具備人記錄事物狀態的能力&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">什麼是變數&lt;/span>&lt;span class="err">?&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">記錄變化&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">可能會經常改變&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">的事物狀態&lt;/span>
@@ -1096,7 +1096,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">什麼是常量&lt;/span>&lt;span class="err">?&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">記錄固定&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">可能不經常改變&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">的事物狀態&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">eg&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">圓周率&lt;/span> &lt;span class="n">重力加速度&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="變數的基本使用">變數的基本使用&lt;/h3>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="變數的基本使用">變數的基本使用&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">日常生活中的變數案例&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">翻轉吧金魚腦&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">姓名叫jimmy&lt;/span>
@@ -1130,7 +1130,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324817MWBV5NMs6.png"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">x&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">x&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">x&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="1-日常生活中的變數案例">1. 日常生活中的變數案例&lt;/h4>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="1-日常生活中的變數案例">1. 日常生活中的變數案例&lt;/h3>
 &lt;p>&lt;img src="https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png"
@@ -1139,7 +1139,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481Uzvr5cf1io.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481WlmsceNEuR.png"
 >&lt;/p>
-&lt;h4 id="2--變數使用的語法結構與底層原理">2. 變數使用的語法結構與底層原理&lt;/h4>
+&lt;h3 id="2--變數使用的語法結構與底層原理">2. 變數使用的語法結構與底層原理&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> name = &amp;#39;jimmy&amp;#39;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> 變數名 賦值符號 數據值
@@ -1167,7 +1167,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/201324810DpWmvlU3V.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481oJfkaOoaOa.png"
 >&lt;/p>
-&lt;h4 id="3-變數名的命名規範">3. 變數名的命名規範&lt;/h4>
+&lt;h3 id="3-變數名的命名規範">3. 變數名的命名規範&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">變數名的命名規範&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="n">中文是可以用作變數名的&lt;/span> &lt;span class="n">但是不建議使用&lt;/span> &lt;span class="n">並且容易報錯&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">2.&lt;/span>&lt;span class="n">變數名只能出現字母&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">數字&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">下劃線&lt;/span>
@@ -1198,7 +1198,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481cbvhLeBjuE.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481cFujswvc4n.png"
 >&lt;/p>
-&lt;h4 id="4-變數名的命名風格">4. 變數名的命名風格&lt;/h4>
+&lt;h3 id="4-變數名的命名風格">4. 變數名的命名風格&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">變數名的命名風格&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="n">下劃線式&lt;/span> &lt;span class="n">python推薦使用&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">變數名中單字很多&lt;/span> &lt;span class="n">彼此使用下劃線隔開&lt;/span>
@@ -1214,7 +1214,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481cFujswvc4n.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481hkhaKSLRqx.png"
 >&lt;/p>
-&lt;h3 id="常量的基本使用">常量的基本使用&lt;/h3>
+&lt;h2 id="常量的基本使用">常量的基本使用&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">在python沒有真正意義上的常量&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">定義了就不能改&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">定義了可以隨時修改&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">在python中如果想表示出常量&lt;/span> &lt;span class="n">那麼可以使用全大寫的變數名&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">HOST&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;127.0.0.1&amp;#39;&lt;/span>
@@ -1227,7 +1227,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481LhJDVnqr2N.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481htiFUXUnWY.png"
 >&lt;/p>
-&lt;h3 id="數據類型">數據類型&lt;/h3>
+&lt;h2 id="數據類型">數據類型&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">什麼是數據類型&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">在日常生活中數據的表現形式多種多樣&lt;/span> &lt;span class="n">在程序中也是如此&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">為何學習數據類型&lt;/span>
@@ -1242,7 +1242,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481htiFUXUnWY.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481ykVbo5EJLi.png"
 >&lt;/p>
-&lt;h4 id="數據類型之整型int">數據類型之整型int&lt;/h4>
+&lt;h3 id="數據類型之整型int">數據類型之整型int&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">大白話的意思其實就是整數&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">應用場景&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">年齡&lt;/span> &lt;span class="n">班級人數&lt;/span> &lt;span class="n">年份&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>&lt;code>EX1:&lt;/code>&lt;/strong>
@@ -1254,7 +1254,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481MAkMG50Ua2.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481qbEse25PFw.png"
 >&lt;/p>
-&lt;h4 id="數據類型之浮點型float">數據類型之浮點型float&lt;/h4>
+&lt;h3 id="數據類型之浮點型float">數據類型之浮點型float&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">大白話的意思其實就是小數&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">應用場景&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">身高&lt;/span> &lt;span class="n">體重&lt;/span> &lt;span class="n">薪資&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>&lt;code>EX1:&lt;/code>&lt;/strong>
@@ -1266,7 +1266,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481d7OY4Wsja0.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481gbzFuBRKCG.png"
 >&lt;/p>
-&lt;h4 id="數據類型之字串str">數據類型之字串str&lt;/h4>
+&lt;h3 id="數據類型之字串str">數據類型之字串str&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">大白話的意思其實就是文本類型的數據&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">引號引起來的部分都是字串&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">應用場景&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">姓名&lt;/span> &lt;span class="n">地址&lt;/span> &lt;span class="n">愛好&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">定義字串有四種方式&lt;/span>
@@ -1288,7 +1288,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481JpAuNseOuw.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481AmriHTCGrm.png"
 >&lt;/p>
-&lt;h5 id="1定義字串有四種方式">1.定義字串有四種方式&lt;/h5>
+&lt;h4 id="1定義字串有四種方式">1.定義字串有四種方式&lt;/h4>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">定義字串有四種方式&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;jimmy&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name1&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;jimmy&amp;#34;&lt;/span>
@@ -1309,7 +1309,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/2013248168cjHdewDQ.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481eW3QBenJiO.png"
 >&lt;/p>
-&lt;h4 id="數據類型之列表list">數據類型之列表list&lt;/h4>
+&lt;h3 id="數據類型之列表list">數據類型之列表list&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">大白話的意思其實就是可以儲存多個數據值的類型&lt;/span> &lt;span class="n">並且可以非常方便的取&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">應用場景&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">儲存多個數據值&lt;/span> &lt;span class="n">並且將來可能需要單獨取其中一些&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">代碼實現&lt;/span>&lt;span class="p">:&lt;/span>
@@ -1344,7 +1344,7 @@ alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481Noiht6ZySb.png"
 loading="lazy"
 alt="https://ithelp.ithome.com.tw/upload/images/20230916/20132481NlCZgoMV42.png"
 >&lt;/p>
-&lt;h4 id="數據類型之字典dict">數據類型之字典dict&lt;/h4>
+&lt;h3 id="數據類型之字典dict">數據類型之字典dict&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">能夠非常精確的儲存和表達數據值的含義&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">代碼實現&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">info_dict&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>
