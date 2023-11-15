@@ -40,6 +40,10 @@
 </span></span></code></pre></div><h4 id=docker-composeyml>docker-compose.yml</h4><p>docker-compose.yml需依照環境修改部分：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=c># 1. thanos_sidecar_one 填寫當下安裝prometheus的主機IP</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span>- <span class=s2>&#34;--prometheus.url=http://192.168.1.71:9090&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># 2. thanos_rule 依據當下安裝prometheus的external_labels填寫，每一台prometheus的replica名稱一定要不一樣</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;--label=region=\&#34;JIMMYHOME\&#34;&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;--label=replica=\&#34;A\&#34;&#34;</span><span class=w>
 </span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-YAML data-lang=YAML><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;3.2&#39;</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>minio</span><span class=p>:</span><span class=w>
