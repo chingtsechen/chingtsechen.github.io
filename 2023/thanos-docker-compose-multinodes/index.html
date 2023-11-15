@@ -3962,7 +3962,7 @@
 </span></span></code></pre></div><h4 id=prometheus添加監控並重啟>prometheus添加監控，並重啟</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:/data/thanos-docker-compose# vim prometheus/conf/sd_config/t1zone-redis/web-front.json
 </span></span><span class=line><span class=cl><span class=o>[</span>
 </span></span><span class=line><span class=cl>  <span class=o>{</span>
-</span></span><span class=line><span class=cl>    <span class=s2>&#34;targets&#34;</span>: <span class=o>[</span><span class=s2>&#34;redis://192.168.1.11:6379&#34;</span>, <span class=s2>&#34;redis://192.168.12.:6379&#34;</span><span class=o>]</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;targets&#34;</span>: <span class=o>[</span><span class=s2>&#34;redis://192.168.1.11:6379&#34;</span>, <span class=s2>&#34;redis://192.168.1.12:6379&#34;</span><span class=o>]</span>,
 </span></span><span class=line><span class=cl>    <span class=s2>&#34;labels&#34;</span>: <span class=o>{</span><span class=s2>&#34;env&#34;</span>:<span class=s2>&#34;t1zone&#34;</span>,<span class=s2>&#34;function&#34;</span>:<span class=s2>&#34;web-front&#34;</span><span class=o>}</span>
 </span></span><span class=line><span class=cl>  <span class=o>}</span>
 </span></span><span class=line><span class=cl><span class=o>]</span>
@@ -3970,7 +3970,7 @@
 </span></span><span class=line><span class=cl>root@k8s-master71u:/data/thanos-docker-compose# vim prometheus/conf/sd_config/t2zone-redis/search.json
 </span></span><span class=line><span class=cl><span class=o>[</span>
 </span></span><span class=line><span class=cl>  <span class=o>{</span>
-</span></span><span class=line><span class=cl>    <span class=s2>&#34;targets&#34;</span>: <span class=o>[</span><span class=s2>&#34;redis://192.168.1.13:6379&#34;</span>, <span class=s2>&#34;redis://192.168.14.:6379&#34;</span><span class=o>]</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;targets&#34;</span>: <span class=o>[</span><span class=s2>&#34;redis://192.168.1.13:6379&#34;</span>, <span class=s2>&#34;redis://192.168.1.14:6379&#34;</span><span class=o>]</span>,
 </span></span><span class=line><span class=cl>    <span class=s2>&#34;labels&#34;</span>: <span class=o>{</span><span class=s2>&#34;env&#34;</span>:<span class=s2>&#34;t2zone&#34;</span>,<span class=s2>&#34;function&#34;</span>:<span class=s2>&#34;search&#34;</span><span class=o>}</span>
 </span></span><span class=line><span class=cl>  <span class=o>}</span>
 </span></span><span class=line><span class=cl><span class=o>]</span>
