@@ -4397,7 +4397,7 @@ data-flex-basis="369px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl status redis_exporter2
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
 &lt;p>ExecStart=/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6379 -redis.user prometheus-user -redis.password XXXX -web.listen-address=:9121 &lt;/p>
-&lt;h1 id="1090872406379-搭配--weblisten-address9121">10.90.87.240:6379 搭配 -web.listen-address=:9121 &lt;/h1>
+&lt;p>#10.90.87.240:6379 搭配 -web.listen-address=:9121 &lt;/p>
 &lt;p>ExecStart=/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6380 -web.listen-address=:9122&lt;/p>
-&lt;h1 id="1090872406380-搭配--weblisten-address9122">10.90.87.240:6380 搭配 -web.listen-address=:9122&lt;/h1>
+&lt;p>#10.90.87.240:6380 搭配 -web.listen-address=:9122&lt;/p>
 &lt;/blockquote></description></item></channel></rss>

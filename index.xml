@@ -4397,9 +4397,9 @@ data-flex-basis="369px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl status redis_exporter2
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
 &lt;p>ExecStart=/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6379 -redis.user prometheus-user -redis.password XXXX -web.listen-address=:9121 &lt;/p>
-&lt;h1 id="1090872406379-搭配--weblisten-address9121">10.90.87.240:6379 搭配 -web.listen-address=:9121 &lt;/h1>
+&lt;p>#10.90.87.240:6379 搭配 -web.listen-address=:9121 &lt;/p>
 &lt;p>ExecStart=/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6380 -web.listen-address=:9122&lt;/p>
-&lt;h1 id="1090872406380-搭配--weblisten-address9122">10.90.87.240:6380 搭配 -web.listen-address=:9122&lt;/h1>
+&lt;p>#10.90.87.240:6380 搭配 -web.listen-address=:9122&lt;/p>
 &lt;/blockquote></description></item><item><title>Github push main error push失敗解決(報錯原因error: src refspec main does not match any)</title><link>https://blog.goldfishbrain-fighting.com/2023/github-push-main-error/</link><pubDate>Wed, 15 Nov 2023 16:36:52 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/github-push-main-error/</guid><description>&lt;p>報錯訊息&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# git push -u origin main
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">error: src refspec main does not match any
