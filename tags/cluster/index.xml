@@ -35,42 +35,122 @@
 &lt;/tbody>
 &lt;/table>
 &lt;h3 id="目錄結構">目錄結構&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 目錄結構&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./docker-compose.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./elasticsearch
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── config
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── elasticsearch.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── data
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── logs
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./etc
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── localtime
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── timezone
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./extensions
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./kibana
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── config
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── kibana.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── data
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── Dockerfile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./LICENSE
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./logstash
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── config
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── logstash.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── pipeline
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── logstash.conf
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./README.md
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./setup
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── entrypoint.sh
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── lib.sh
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── roles
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./tls
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── certs
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── entrypoint.sh
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── instances.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── README.md
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# tree -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 目錄結構&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── docker-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── elasticsearch.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .gitignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── logs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── .gitignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── .env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── etc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── timezone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── extensions
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── curator
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ ├── curator.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── delete_log_files_curator.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── curator-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── enterprise-search
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── enterprise-search.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── enterprise-search-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── filebeat
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── filebeat.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── filebeat-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── fleet
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── agent-apmserver-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── fleet-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── heartbeat
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── heartbeat.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── heartbeat-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── logspout
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── build.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── logspout-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── modules.go
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── metricbeat
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── metricbeat.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── metricbeat-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── kibana.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── LICENSE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── logstash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── logstash.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── pipeline
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── logstash.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── setup
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── entrypoint.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── lib.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── roles
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── filebeat_writer.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── heartbeat_writer.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── logstash_writer.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── metricbeat_writer.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── tls
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── certs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── apm-server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ ├── apm-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ └── apm-server.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── ca
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ ├── ca.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ └── ca.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── elasticsearch
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ ├── elasticsearch.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ └── elasticsearch.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── fleet-server
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ ├── fleet-server.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ │ └── fleet-server.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── .gitignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ └── kibana
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── kibana.crt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ └── kibana.key
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── entrypoint.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── instances.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── README.md
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="clone代碼建立目錄">Clone代碼，建立目錄&lt;/h3>
 &lt;p>&lt;strong>&lt;font color=red>每一台皆要執行&lt;/font>&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># git clone項目&lt;/span>
@@ -115,6 +195,51 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# chmod &lt;span class="m">777&lt;/span> -R elasticsearch/logs
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# mkdir kibana/data
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/docker-elk# chmod &lt;span class="m">777&lt;/span> -R kibana/data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="修改env設定">修改.env設定&lt;/h3>
+&lt;p>&lt;strong>&lt;font color=red>每一台皆要執行，ELASTIC版本指定，ELASTIC密碼，LOGSTASH_INTERNAL密碼，KIBANA_SYSTEM密碼，依當下需求修改，每一台保持一樣即可&lt;/font>&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@b1-se-prometheus01:/data/docker-elk# cat .env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ELASTIC_VERSION&lt;/span>&lt;span class="o">=&lt;/span>8.6.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Passwords for stack users&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># User &amp;#39;elastic&amp;#39; (built-in)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Superuser role, full access to cluster management and data indices.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># https://www.elastic.co/guide/en/elasticsearch/reference/current/built-in-users.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ELASTIC_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;changeme&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># User &amp;#39;logstash_internal&amp;#39; (custom)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># The user Logstash uses to connect and send data to Elasticsearch.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># https://www.elastic.co/guide/en/logstash/current/ls-security.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOGSTASH_INTERNAL_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;changeme&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># User &amp;#39;kibana_system&amp;#39; (built-in)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># The user Kibana uses to connect and communicate with Elasticsearch.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># https://www.elastic.co/guide/en/elasticsearch/reference/current/built-in-users.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">KIBANA_SYSTEM_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;changeme&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Users &amp;#39;metricbeat_internal&amp;#39;, &amp;#39;filebeat_internal&amp;#39; and &amp;#39;heartbeat_internal&amp;#39; (custom)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># The users Beats use to connect and send data to Elasticsearch.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># https://www.elastic.co/guide/en/beats/metricbeat/current/feature-roles.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">METRICBEAT_INTERNAL_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">FILEBEAT_INTERNAL_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">HEARTBEAT_INTERNAL_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># User &amp;#39;monitoring_internal&amp;#39; (custom)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># The user Metricbeat uses to collect monitoring data from stack components.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># https://www.elastic.co/guide/en/elasticsearch/reference/current/how-monitoring-works.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">MONITORING_INTERNAL_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># User &amp;#39;beats_system&amp;#39; (built-in)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># The user the Beats use when storing monitoring information in Elasticsearch.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># https://www.elastic.co/guide/en/elasticsearch/reference/current/built-in-users.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">BEATS_SYSTEM_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="生成憑證">生成憑證&lt;/h3>
 &lt;p>&lt;strong>&lt;font color=red>選一台執行，再將生成憑證拷貝至其他主機&lt;/font>&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 編寫instances主機資訊，要用來產生憑證&lt;/span>

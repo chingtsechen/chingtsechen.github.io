@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>redis_exporter on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/redis_exporter/</link><description>Recent content in redis_exporter on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 15 Nov 2023 22:26:25 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/redis_exporter/index.xml" rel="self" type="application/rss+xml"/><item><title>Thanos部署Prometheus高可用(docker-compose) + redis_exporter(docker-compose)</title><link>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</link><pubDate>Wed, 15 Nov 2023 22:26:25 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</guid><description>&lt;h3 id="前情提要與架構規劃">前情提要與架構規劃&lt;/h3>
+&lt;p>官方Github: &lt;a class="link" href="https://github.com/thanos-io/thanos" target="_blank" rel="noopener"
+>https://github.com/thanos-io/thanos&lt;/a>&lt;/p>
 &lt;p>參考專案:  &lt;a class="link" href="https://github.com/thanos-community/thanos-docker-compose" target="_blank" rel="noopener"
 >https://github.com/thanos-community/thanos-docker-compose&lt;/a>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">由於此專案演示的，是將所有角色在單機上佈屬，
@@ -57,41 +59,44 @@ data-flex-grow="158"
 data-flex-basis="379px"
 >&lt;/p>
 &lt;h3 id="step0-整體專案目錄架構">step0 整體專案目錄架構&lt;/h3>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/thanos-docker-compose# tree
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/thanos-docker-compose# tree -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 目錄結構&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── alertmanager
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── conf
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   │   ├── alertmanager.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   │   └── email.tmpl
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── alertmanager.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── email.tmpl
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── .gitignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── template
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── docker-compose.yml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── etc
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── localtime
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── timezone
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── grafana
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── data
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── LICENSE
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Makefile
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── minio
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── config
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── timezone
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── prometheus
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── conf
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   │   ├── prometheus.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   │   ├── rules
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   │   │   └── alert.yml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   │   └── sd_config
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ ├── conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── prometheus.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ ├── rules
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── alert.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── sd_config
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── t1zone-redis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └── web-front.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── t2zone-redis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └── search.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── .gitignore
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── README.md
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── thanos
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── compact_data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ └── .gitignore
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── conf
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │   ├── bucket_config.yaml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │   ├── query.yaml
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │   └── store.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── bucket_config.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ ├── query.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ └── store.yaml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── rule_data
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── conf
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── .gitignore
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── rules
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="docker-composeyml">docker-compose.yml&lt;/h4>
 &lt;p>docker-compose.yml需依照環境修改部分：&lt;/p>
@@ -4157,15 +4162,26 @@ data-flex-grow="355"
 data-flex-basis="853px"
 >&lt;/p>
 &lt;h3 id="step6-redis_exporter">step6 redis_exporter&lt;/h3>
+&lt;h4 id="docker-compose方式安裝redis_exporter">docker-compose方式安裝redis_exporter:&lt;/h4>
+&lt;p>&lt;strong>images支援redis版本沒有到7.x版，採集資料會有些不足，後面會改用二進制的方式安裝。&lt;/strong>
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/media/IMG_0017.jpeg"
+width="2360"
+height="1514"
+srcset="https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/media/IMG_0017_hu3b73876e21d7aaa6adc0bd849f507d08_673661_480x0_resize_q75_box.jpeg 480w, https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/media/IMG_0017_hu3b73876e21d7aaa6adc0bd849f507d08_673661_1024x0_resize_q75_box.jpeg 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="155"
+data-flex-basis="374px"
+>&lt;/p>
 &lt;p>&lt;strong>主機: k8s-master71u (192.168.1.71)、k8s-master72u (192.168.1.72)、k8s-master73u (192.168.1.73)&lt;/strong>&lt;/p>
-&lt;h4 id="目錄架構">目錄架構&lt;/h4>
+&lt;h5 id="目錄架構">目錄架構&lt;/h5>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">.
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── .env
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── docker-compose.yml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── etc
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── localtime
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── timezone
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="docker-composeyml-1">docker-compose.yml&lt;/h4>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="docker-composeyml-1">docker-compose.yml&lt;/h5>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-YAML" data-lang="YAML">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;3.2&amp;#39;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="c"># 帶帳號密碼&lt;/span>&lt;span class="w">
@@ -4210,7 +4226,7 @@ data-flex-basis="853px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">REDIS_EXPORTER_IP&lt;/span>&lt;span class="o">=&lt;/span>192.168.1.71
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">REDIS_USER&lt;/span>&lt;span class="o">=&lt;/span>prometheus-user
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">REDIS_PASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1234&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="啟動redis_exporter">啟動redis_exporter&lt;/h4>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="啟動redis_exporter">啟動redis_exporter&lt;/h5>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/redis-exporter# docker-compose up -d redis_exporter_one
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/redis-exporter# docker-compose up -d redis_exporter_one
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/redis-exporter# docker-compose up -d redis_exporter_one
@@ -4239,7 +4255,7 @@ data-flex-basis="853px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">----------------------------------------------------------------------------------------------------------------
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redis_exporter_one /redis_exporter REDIS_ADDR ... Up 0.0.0.0:9121-&amp;gt;9121/tcp,:::9121-&amp;gt;9121/tcp
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redis_exporter_two /redis_exporter REDIS_ADDR ... Up 0.0.0.0:9122-&amp;gt;9121/tcp,:::9122-&amp;gt;9121/tcp, 9122/tcp
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="prometheus添加監控並重啟">prometheus添加監控，並重啟&lt;/h4>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="prometheus添加監控並重啟">prometheus添加監控，並重啟&lt;/h5>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/thanos-docker-compose# vim prometheus/conf/sd_config/t1zone-redis/web-front.json
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">{&lt;/span>
@@ -4287,7 +4303,7 @@ data-flex-basis="853px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replacement: 192.168.1.71:9122
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/thanos-docker-compose# docker-compose restart prometheus_one
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="測試-4">測試&lt;/h4>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h5 id="測試-4">測試&lt;/h5>
 &lt;p>&lt;a class="link" href="http://192.168.1.71:19192/targets" target="_blank" rel="noopener"
 >http://192.168.1.71:19192/targets&lt;/a>&lt;/p>
 &lt;p>Target有偵測到了&lt;/p>
@@ -4330,4 +4346,58 @@ loading="lazy"
 class="gallery-image"
 data-flex-grow="153"
 data-flex-basis="369px"
->&lt;/p></description></item></channel></rss>
+>&lt;/p>
+&lt;h4 id="二進制方式安裝redis_exporter">二進制方式安裝redis_exporter:&lt;/h4>
+&lt;blockquote>
+&lt;p>起兩個redis_exporter服務，因為&lt;/p>
+&lt;p>redis5.x版的，沒有acl可以設定帳號和密碼，用redis_exporter2來監控&lt;/p>
+&lt;p>redis6.x版的，有acl可以設定帳號和密碼，用redis_exporter來監控，帳號prometheus-user，-redis.password XXXX，XXXX依現況修改&lt;/p>
+&lt;p>redis所有主機，都要先新增prometheus-user帳號，權限，-@all +info +get +config|get +client +xinfo +xlen +scard +latency +llen +pfcount +strlen +type +cluster|info +memory +ping +scan +zcard +eval +slowlog +hlen +select&amp;quot;&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wget https://github.com/oliver006/redis_exporter/releases/download/v1.52.0/redis_exporter-v1.52.0.linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tar xzvf redis_exporter-v1.52.0.linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mv redis_exporter-v1.52.0.linux-amd64 /usr/local/redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# vim /etc/systemd/system/redis_exporter.service
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>Unit&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Description&lt;/span>&lt;span class="o">=&lt;/span>redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Documentation&lt;/span>&lt;span class="o">=&lt;/span>https://github.com/oliver006/redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">After&lt;/span>&lt;span class="o">=&lt;/span>network.target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>Service&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Type&lt;/span>&lt;span class="o">=&lt;/span>simple
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ExecStart&lt;/span>&lt;span class="o">=&lt;/span>/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6379 -redis.user prometheus-user -redis.password XXXX -web.listen-address&lt;span class="o">=&lt;/span>:9121
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Restart&lt;/span>&lt;span class="o">=&lt;/span>on-failure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>Install&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">WantedBy&lt;/span>&lt;span class="o">=&lt;/span>multi-user.target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# vim /etc/systemd/system/redis_exporter2.service
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>Unit&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Description&lt;/span>&lt;span class="o">=&lt;/span>redis_exporter2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Documentation&lt;/span>&lt;span class="o">=&lt;/span>https://github.com/oliver006/redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">After&lt;/span>&lt;span class="o">=&lt;/span>network.target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>Service&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Type&lt;/span>&lt;span class="o">=&lt;/span>simple
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ExecStart&lt;/span>&lt;span class="o">=&lt;/span>/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6380 -web.listen-address&lt;span class="o">=&lt;/span>:9122
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">Restart&lt;/span>&lt;span class="o">=&lt;/span>on-failure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>Install&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">WantedBy&lt;/span>&lt;span class="o">=&lt;/span>multi-user.target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl daemon-reload
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl start redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl start redis_exporter2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl &lt;span class="nb">enable&lt;/span> redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl &lt;span class="nb">enable&lt;/span> redis_exporter2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl status redis_exporter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data# systemctl status redis_exporter2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>ExecStart=/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6379 -redis.user prometheus-user -redis.password XXXX -web.listen-address=:9121 &lt;/p>
+&lt;h1 id="1090872406379-搭配--weblisten-address9121">10.90.87.240:6379 搭配 -web.listen-address=:9121 &lt;/h1>
+&lt;p>ExecStart=/usr/local/redis_exporter/redis_exporter -redis.addr 10.90.87.240:6380 -web.listen-address=:9122&lt;/p>
+&lt;h1 id="1090872406380-搭配--weblisten-address9122">10.90.87.240:6380 搭配 -web.listen-address=:9122&lt;/h1>
+&lt;/blockquote></description></item></channel></rss>
