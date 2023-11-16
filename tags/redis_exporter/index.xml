@@ -4352,7 +4352,7 @@ data-flex-basis="369px"
 &lt;p>起兩個redis_exporter服務，因為&lt;/p>
 &lt;p>redis5.x版的，沒有acl可以設定帳號和密碼，用redis_exporter2來監控&lt;/p>
 &lt;p>redis6.x版的，有acl可以設定帳號和密碼，用redis_exporter來監控，帳號prometheus-user，-redis.password XXXX，XXXX依現況修改&lt;/p>
-&lt;p>redis所有主機，都要先新增prometheus-user帳號，權限，-@all +info +get +config|get +client +xinfo +xlen +scard +latency +llen +pfcount +strlen +type +cluster|info +memory +ping +scan +zcard +eval +slowlog +hlen +select&amp;quot;&lt;/p>
+&lt;p>redis所有主機，都要先新增prometheus-user帳號，權限，-@all +info +get +config|get +client +xinfo +xlen +scard +latency +llen +pfcount +strlen +type +cluster|info +memory +ping +scan +zcard +eval +slowlog +hlen +select&lt;/p>
 &lt;/blockquote>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> ~
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wget https://github.com/oliver006/redis_exporter/releases/download/v1.52.0/redis_exporter-v1.52.0.linux-amd64.tar.gz
