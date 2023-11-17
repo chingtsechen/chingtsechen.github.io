@@ -1,4 +1,306 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/post/</link><description>Recent content in Posts on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 15 Nov 2023 22:26:25 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Thanos部署Prometheus高可用(docker-compose) + redis_exporter(docker-compose)</title><link>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</link><pubDate>Wed, 15 Nov 2023 22:26:25 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</guid><description>&lt;h3 id="前情提要與架構規劃">前情提要與架構規劃&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/post/</link><description>Recent content in Posts on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 18 Nov 2023 02:47:43 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Week0 - 用Google Bard規劃Python程式語言學習計畫，並在Google Colab中練習</title><link>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/</link><pubDate>Sat, 18 Nov 2023 02:47:43 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/media/Pasted-image-20231118031359.png" alt="Featured image of post Week0 - 用Google Bard規劃Python程式語言學習計畫，並在Google Colab中練習" />&lt;h2 id="課程目標">&lt;strong>課程目標&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>建立學生運算邏輯思維能力。&lt;/li>
+&lt;li>使學生具備程式設計之基礎能力。&lt;/li>
+&lt;li>培養學生學習新資訊技術之能力。&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程大綱">&lt;strong>課程大綱&lt;/strong>&lt;/h2>
+&lt;h3 id="第-1-週">&lt;strong>第 1 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Python 程式設計概論&lt;/li>
+&lt;li>安裝 Python 環境&lt;/li>
+&lt;li>Python 基本語法&lt;/li>
+&lt;li>變數、資料型態、運算子&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-2-週">&lt;strong>第 2 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>控制結構&lt;/li>
+&lt;li>迴圈、條件判斷&lt;/li>
+&lt;li>函數&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-3-週">&lt;strong>第 3 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>物件導向程式設計&lt;/li>
+&lt;li>類別、物件、繼承&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-4-週">&lt;strong>第 4 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>檔案處理&lt;/li>
+&lt;li>讀取、寫入檔案&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-5-週">&lt;strong>第 5 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>資料結構&lt;/li>
+&lt;li>串列、字典、集合&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-6-週">&lt;strong>第 6 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>例外處理&lt;/li>
+&lt;li>處理錯誤訊息&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-7-週">&lt;strong>第 7 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>模組、套件&lt;/li>
+&lt;li>使用外部函數&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-8-週">&lt;strong>第 8 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>測試&lt;/li>
+&lt;li>使用測試框架&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-9-週">&lt;strong>第 9 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>自動化測試&lt;/li>
+&lt;li>使用 CI/CD 工具&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-10-週">&lt;strong>第 10 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>程式碼品質&lt;/li>
+&lt;li>使用 lint 工具&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-11-週">&lt;strong>第 11 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>程式碼部署&lt;/li>
+&lt;li>使用 Heroku 部署程式&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-12-週">&lt;strong>第 12 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>程式設計實務&lt;/li>
+&lt;li>開發簡單的應用程式&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程教材">&lt;strong>課程教材&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>Python 官方文件&lt;/li>
+&lt;li>Python 教學書籍&lt;/li>
+&lt;li>Python 線上教學資源&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程作業">&lt;strong>課程作業&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週作業&lt;/li>
+&lt;li>期中考&lt;/li>
+&lt;li>期末考&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程評量">&lt;strong>課程評量&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週作業：佔總成績 20%&lt;/li>
+&lt;li>期中考：佔總成績 30%&lt;/li>
+&lt;li>期末考：佔總成績 50%&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程時間">&lt;strong>課程時間&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週 2 堂課，每堂 2 小時&lt;/li>
+&lt;li>總共 24 堂課&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程地點">&lt;strong>課程地點&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>線上教學&lt;/li>
+&lt;/ul>
+&lt;h2 id="學習建議">&lt;strong>學習建議&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週課程內容都需要預習，上課時才能更有效地吸收知識。&lt;/li>
+&lt;li>每週作業要按時完成，並請老師批改。&lt;/li>
+&lt;li>期中考、期末考要認真準備，才能取得好成績。&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程結語">&lt;strong>課程結語&lt;/strong>&lt;/h2>
+&lt;p>Python 是一門非常實用的程式語言，在各行各業都有廣泛的應用。透過本課程的學習，您將能夠掌握 Python 程式設計的基礎知識和技能，為未來的程式設計之路打下良好的基礎。&lt;/p>
+&lt;h2 id="額外建議">&lt;strong>額外建議&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>除了課程內容之外，您也可以多多閱讀 Python 相關的文章和書籍，以拓展自己的知識。&lt;/li>
+&lt;li>您也可以加入 Python 社群，與其他學習者交流，共同成長。&lt;/li>
+&lt;/ul></description></item><item><title>Week1 - Python 程式設計概論、安裝 Python 環境、Python 基本語法</title><link>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/</link><pubDate>Sat, 18 Nov 2023 02:41:54 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/media/Pasted-image-20231118031446.png" alt="Featured image of post Week1 - Python 程式設計概論、安裝 Python 環境、Python 基本語法" />&lt;p>&lt;font color=red>Google Colab連結：&lt;/font>
+&lt;a class="link" href="https://colab.research.google.com/drive/1TLMJ12Sn67r6Z01BLAe2sB3xRHhzjkXc?usp=sharing" target="_blank" rel="noopener"
+>https://colab.research.google.com/drive/1TLMJ12Sn67r6Z01BLAe2sB3xRHhzjkXc?usp=sharing&lt;/a>&lt;/p>
+&lt;h2 id="學習目標">&lt;strong>學習目標&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>了解 Python 程式設計的基礎概念。&lt;/li>
+&lt;li>安裝 Python 環境。&lt;/li>
+&lt;li>學習 Python 基本語法。&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程內容">&lt;strong>課程內容&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Python 程式設計概論&lt;/strong>
+&lt;ul>
+&lt;li>Python 簡介&lt;/li>
+&lt;li>程式設計概論&lt;/li>
+&lt;li>程式設計流程&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>安裝 Python 環境&lt;/strong>
+&lt;ul>
+&lt;li>Windows 安裝&lt;/li>
+&lt;li>macOS 安裝&lt;/li>
+&lt;li>Linux 安裝&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Python 基本語法&lt;/strong>
+&lt;ul>
+&lt;li>變數&lt;/li>
+&lt;li>資料型態&lt;/li>
+&lt;li>運算子&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="python-程式設計概論">&lt;strong>Python 程式設計概論&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>Python 簡介&lt;/strong>
+&lt;ul>
+&lt;li>Python 是一種通用的程式語言，具有簡潔、易學、可讀性強等特點。&lt;/li>
+&lt;li>Python 廣泛應用於各行各業，包括網頁開發、資料分析、資料科學、機器學習等。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>程式設計概論&lt;/strong>
+&lt;ul>
+&lt;li>程式設計是一種用電腦來解決問題的方法。&lt;/li>
+&lt;li>程式設計流程包括：需求分析、程式設計、編碼、測試、除錯、部署等。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>程式設計流程&lt;/strong>
+&lt;ul>
+&lt;li>需求分析：了解使用者的需求，並將需求轉換為程式設計的目標。&lt;/li>
+&lt;li>程式設計：設計程式架構，並撰寫程式碼。&lt;/li>
+&lt;li>編碼：將程式碼輸入電腦，並編譯或解譯成可執行的程式。&lt;/li>
+&lt;li>測試：測試程式是否符合需求，並找出錯誤。&lt;/li>
+&lt;li>除錯：修正程式中的錯誤。&lt;/li>
+&lt;li>部署：將程式部署到生產環境中。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="安裝-python-環境">&lt;strong>安裝 Python 環境&lt;/strong>&lt;/h2>
+&lt;p>在開始學習 Python 之前，我們需要先安裝 Python 環境。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Windows 安裝&lt;/strong>
+&lt;ul>
+&lt;li>下載 Python 安裝程式，並執行安裝程式。&lt;/li>
+&lt;li>安裝完成後，將 Python 路徑加入環境變數。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>macOS 安裝&lt;/strong>
+&lt;ul>
+&lt;li>使用 Homebrew 安裝 Python。&lt;/li>
+&lt;li>在終端機輸入以下命令：&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">brew install python
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>&lt;strong>Linux 安裝&lt;/strong>
+&lt;ul>
+&lt;li>使用包管理器安裝 Python。&lt;/li>
+&lt;li>例如，在 Ubuntu 中，使用以下命令：&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt-get install python3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="python-基本語法">&lt;strong>Python 基本語法&lt;/strong>&lt;/h2>
+&lt;h3 id="--變數">- &lt;strong>變數&lt;/strong>&lt;/h3>
+&lt;pre>&lt;code>- 變數是用來儲存資料的容器。
+- 在 Python 中，宣告變數時，只需要指定變數名稱即可。
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-Python" data-lang="Python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">20&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-Python" data-lang="Python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 宣告一個變數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 輸出變數的值&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="--資料型態">- &lt;strong>資料型態&lt;/strong>&lt;/h3>
+&lt;pre>&lt;code>- 資料型態是用來表示資料的類型。
+- Python 的基本資料型態包括：
+- 整數
+- 浮點數
+- 字串
+- 布林值
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-Python" data-lang="Python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span> &lt;span class="c1"># 整數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1.2&lt;/span> &lt;span class="c1"># 浮點數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">c&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Hello, world!&amp;#34;&lt;/span> &lt;span class="c1"># 字串&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">d&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span> &lt;span class="c1"># 布林值&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-Python" data-lang="Python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 宣告不同資料型態的變數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span> &lt;span class="c1"># 整數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1.2&lt;/span> &lt;span class="c1"># 浮點數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">c&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Hello, world!&amp;#34;&lt;/span> &lt;span class="c1"># 字串&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">d&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span> &lt;span class="c1"># 布林值&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 輸出變數的資料型態&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">b&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">c&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nb">type&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="p">))&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="--運算子">- &lt;strong>運算子&lt;/strong>&lt;/h3>
+&lt;pre>&lt;code>- 運算子是用來進行計算的符號。
+- Python 的運算子包括：
+- 算術運算子
+- 比較運算子
+- 邏輯運算子
+&lt;/code>&lt;/pre>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-Python" data-lang="Python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 算術運算子&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 30&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># -10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 200&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 0.5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">**&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 10000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 比較運算子&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># True&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># True&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># True&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 邏輯運算子&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># False&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># True&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="ow">not&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># False&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-Python" data-lang="Python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 加法&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">10&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mi">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 減法&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 乘法&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 除法&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">/&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 餘數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 指數&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">**&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 比較運算子&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;gt;=&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">&amp;lt;=&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 邏輯運算子&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="ow">not&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="作業">&lt;strong>作業&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>請寫一個程式，宣告一個整數變數，並輸出其值。&lt;/li>
+&lt;li>請寫一個程式，宣告一個浮點數變數，並輸出其值。&lt;/li>
+&lt;li>請寫一個程式，宣告一個字串變數，並輸出其值。&lt;/li>
+&lt;li>請寫一個程式，宣告一個布林值變數，並輸出其值。&lt;/li>
+&lt;li>請寫一個程式，計算兩個數字的加法、減法、乘法、除法、餘數、指數、比較運算子、邏輯運算子。&lt;/li>
+&lt;/ul>
+&lt;h2 id="建議">&lt;strong>建議&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>在學習 Python 之前，建議先了解程式設計的基本概念，例如程式設計流程、變數、資料型態、運算子等。&lt;/li>
+&lt;li>在學習 Python 語法時，可以先從簡單的語法開始學習，例如宣告變數、輸出輸入、運算子等。&lt;/li>
+&lt;li>在學習 Python 時，可以多多練習，以加深理解。&lt;/li>
+&lt;/ul></description></item><item><title>Thanos部署Prometheus高可用(docker-compose) + redis_exporter(docker-compose)</title><link>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</link><pubDate>Wed, 15 Nov 2023 22:26:25 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</guid><description>&lt;h3 id="前情提要與架構規劃">前情提要與架構規劃&lt;/h3>
 &lt;p>官方Github: &lt;a class="link" href="https://github.com/thanos-io/thanos" target="_blank" rel="noopener"
 >https://github.com/thanos-io/thanos&lt;/a>&lt;/p>
 &lt;p>參考專案:  &lt;a class="link" href="https://github.com/thanos-community/thanos-docker-compose" target="_blank" rel="noopener"
@@ -13565,4 +13867,4 @@ alt="media/Pasted-image-20230921031746.png"
 class="gallery-image"
 data-flex-grow="275"
 data-flex-basis="660px"
->&lt;/p></description></item></channel></rss>
+>&lt;/p></description></item><item><title/><link>https://blog.goldfishbrain-fighting.com/1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.goldfishbrain-fighting.com/1/</guid><description/></item></channel></rss>
