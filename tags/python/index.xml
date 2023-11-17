@@ -1,113 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>python on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/python/</link><description>Recent content in python on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 18 Nov 2023 02:47:43 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Week0 - 用Google Bard規劃Python程式語言學習計畫，並在Google Colab中練習</title><link>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/</link><pubDate>Sat, 18 Nov 2023 02:47:43 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/media/Pasted-image-20231118031359.png" alt="Featured image of post Week0 - 用Google Bard規劃Python程式語言學習計畫，並在Google Colab中練習" />&lt;h2 id="課程目標">&lt;strong>課程目標&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>建立學生運算邏輯思維能力。&lt;/li>
-&lt;li>使學生具備程式設計之基礎能力。&lt;/li>
-&lt;li>培養學生學習新資訊技術之能力。&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程大綱">&lt;strong>課程大綱&lt;/strong>&lt;/h2>
-&lt;h3 id="第-1-週">&lt;strong>第 1 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>Python 程式設計概論&lt;/li>
-&lt;li>安裝 Python 環境&lt;/li>
-&lt;li>Python 基本語法&lt;/li>
-&lt;li>變數、資料型態、運算子&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-2-週">&lt;strong>第 2 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>控制結構&lt;/li>
-&lt;li>迴圈、條件判斷&lt;/li>
-&lt;li>函數&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-3-週">&lt;strong>第 3 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>物件導向程式設計&lt;/li>
-&lt;li>類別、物件、繼承&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-4-週">&lt;strong>第 4 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>檔案處理&lt;/li>
-&lt;li>讀取、寫入檔案&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-5-週">&lt;strong>第 5 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>資料結構&lt;/li>
-&lt;li>串列、字典、集合&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-6-週">&lt;strong>第 6 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>例外處理&lt;/li>
-&lt;li>處理錯誤訊息&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-7-週">&lt;strong>第 7 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>模組、套件&lt;/li>
-&lt;li>使用外部函數&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-8-週">&lt;strong>第 8 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>測試&lt;/li>
-&lt;li>使用測試框架&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-9-週">&lt;strong>第 9 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>自動化測試&lt;/li>
-&lt;li>使用 CI/CD 工具&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-10-週">&lt;strong>第 10 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>程式碼品質&lt;/li>
-&lt;li>使用 lint 工具&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-11-週">&lt;strong>第 11 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>程式碼部署&lt;/li>
-&lt;li>使用 Heroku 部署程式&lt;/li>
-&lt;/ul>
-&lt;h3 id="第-12-週">&lt;strong>第 12 週&lt;/strong>&lt;/h3>
-&lt;ul>
-&lt;li>程式設計實務&lt;/li>
-&lt;li>開發簡單的應用程式&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程教材">&lt;strong>課程教材&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>Python 官方文件&lt;/li>
-&lt;li>Python 教學書籍&lt;/li>
-&lt;li>Python 線上教學資源&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程作業">&lt;strong>課程作業&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>每週作業&lt;/li>
-&lt;li>期中考&lt;/li>
-&lt;li>期末考&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程評量">&lt;strong>課程評量&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>每週作業：佔總成績 20%&lt;/li>
-&lt;li>期中考：佔總成績 30%&lt;/li>
-&lt;li>期末考：佔總成績 50%&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程時間">&lt;strong>課程時間&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>每週 2 堂課，每堂 2 小時&lt;/li>
-&lt;li>總共 24 堂課&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程地點">&lt;strong>課程地點&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>線上教學&lt;/li>
-&lt;/ul>
-&lt;h2 id="學習建議">&lt;strong>學習建議&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>每週課程內容都需要預習，上課時才能更有效地吸收知識。&lt;/li>
-&lt;li>每週作業要按時完成，並請老師批改。&lt;/li>
-&lt;li>期中考、期末考要認真準備，才能取得好成績。&lt;/li>
-&lt;/ul>
-&lt;h2 id="課程結語">&lt;strong>課程結語&lt;/strong>&lt;/h2>
-&lt;p>Python 是一門非常實用的程式語言，在各行各業都有廣泛的應用。透過本課程的學習，您將能夠掌握 Python 程式設計的基礎知識和技能，為未來的程式設計之路打下良好的基礎。&lt;/p>
-&lt;h2 id="額外建議">&lt;strong>額外建議&lt;/strong>&lt;/h2>
-&lt;ul>
-&lt;li>除了課程內容之外，您也可以多多閱讀 Python 相關的文章和書籍，以拓展自己的知識。&lt;/li>
-&lt;li>您也可以加入 Python 社群，與其他學習者交流，共同成長。&lt;/li>
-&lt;/ul></description></item><item><title>Week1 - Python 程式設計概論、安裝 Python 環境、Python 基本語法</title><link>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/</link><pubDate>Sat, 18 Nov 2023 02:41:54 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/media/Pasted-image-20231118031446.png" alt="Featured image of post Week1 - Python 程式設計概論、安裝 Python 環境、Python 基本語法" />&lt;p>&lt;font color=red>Google Colab連結：&lt;/font>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>python on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/python/</link><description>Recent content in python on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 18 Nov 2023 03:11:54 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Week1 - Python 程式設計概論、安裝 Python 環境、Python 基本語法</title><link>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/</link><pubDate>Sat, 18 Nov 2023 03:11:54 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week1/media/Pasted-image-20231118031446.png" alt="Featured image of post Week1 - Python 程式設計概論、安裝 Python 環境、Python 基本語法" />&lt;p>&lt;font color=red>Google Colab連結：&lt;/font>
 &lt;a class="link" href="https://colab.research.google.com/drive/1TLMJ12Sn67r6Z01BLAe2sB3xRHhzjkXc?usp=sharing" target="_blank" rel="noopener"
 >https://colab.research.google.com/drive/1TLMJ12Sn67r6Z01BLAe2sB3xRHhzjkXc?usp=sharing&lt;/a>&lt;/p>
 &lt;h2 id="學習目標">&lt;strong>學習目標&lt;/strong>&lt;/h2>
@@ -300,6 +191,115 @@
 &lt;li>在學習 Python 之前，建議先了解程式設計的基本概念，例如程式設計流程、變數、資料型態、運算子等。&lt;/li>
 &lt;li>在學習 Python 語法時，可以先從簡單的語法開始學習，例如宣告變數、輸出輸入、運算子等。&lt;/li>
 &lt;li>在學習 Python 時，可以多多練習，以加深理解。&lt;/li>
+&lt;/ul></description></item><item><title>Week0 - 用Google Bard規劃Python程式語言學習計畫，並在Google Colab中練習</title><link>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/</link><pubDate>Sat, 18 Nov 2023 02:47:43 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-bard-python-learning-week0/media/Pasted-image-20231118031359.png" alt="Featured image of post Week0 - 用Google Bard規劃Python程式語言學習計畫，並在Google Colab中練習" />&lt;h2 id="課程目標">&lt;strong>課程目標&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>建立學生運算邏輯思維能力。&lt;/li>
+&lt;li>使學生具備程式設計之基礎能力。&lt;/li>
+&lt;li>培養學生學習新資訊技術之能力。&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程大綱">&lt;strong>課程大綱&lt;/strong>&lt;/h2>
+&lt;h3 id="第-1-週">&lt;strong>第 1 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>Python 程式設計概論&lt;/li>
+&lt;li>安裝 Python 環境&lt;/li>
+&lt;li>Python 基本語法&lt;/li>
+&lt;li>變數、資料型態、運算子&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-2-週">&lt;strong>第 2 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>控制結構&lt;/li>
+&lt;li>迴圈、條件判斷&lt;/li>
+&lt;li>函數&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-3-週">&lt;strong>第 3 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>物件導向程式設計&lt;/li>
+&lt;li>類別、物件、繼承&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-4-週">&lt;strong>第 4 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>檔案處理&lt;/li>
+&lt;li>讀取、寫入檔案&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-5-週">&lt;strong>第 5 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>資料結構&lt;/li>
+&lt;li>串列、字典、集合&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-6-週">&lt;strong>第 6 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>例外處理&lt;/li>
+&lt;li>處理錯誤訊息&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-7-週">&lt;strong>第 7 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>模組、套件&lt;/li>
+&lt;li>使用外部函數&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-8-週">&lt;strong>第 8 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>測試&lt;/li>
+&lt;li>使用測試框架&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-9-週">&lt;strong>第 9 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>自動化測試&lt;/li>
+&lt;li>使用 CI/CD 工具&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-10-週">&lt;strong>第 10 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>程式碼品質&lt;/li>
+&lt;li>使用 lint 工具&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-11-週">&lt;strong>第 11 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>程式碼部署&lt;/li>
+&lt;li>使用 Heroku 部署程式&lt;/li>
+&lt;/ul>
+&lt;h3 id="第-12-週">&lt;strong>第 12 週&lt;/strong>&lt;/h3>
+&lt;ul>
+&lt;li>程式設計實務&lt;/li>
+&lt;li>開發簡單的應用程式&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程教材">&lt;strong>課程教材&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>Python 官方文件&lt;/li>
+&lt;li>Python 教學書籍&lt;/li>
+&lt;li>Python 線上教學資源&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程作業">&lt;strong>課程作業&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週作業&lt;/li>
+&lt;li>期中考&lt;/li>
+&lt;li>期末考&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程評量">&lt;strong>課程評量&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週作業：佔總成績 20%&lt;/li>
+&lt;li>期中考：佔總成績 30%&lt;/li>
+&lt;li>期末考：佔總成績 50%&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程時間">&lt;strong>課程時間&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週 2 堂課，每堂 2 小時&lt;/li>
+&lt;li>總共 24 堂課&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程地點">&lt;strong>課程地點&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>線上教學&lt;/li>
+&lt;/ul>
+&lt;h2 id="學習建議">&lt;strong>學習建議&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>每週課程內容都需要預習，上課時才能更有效地吸收知識。&lt;/li>
+&lt;li>每週作業要按時完成，並請老師批改。&lt;/li>
+&lt;li>期中考、期末考要認真準備，才能取得好成績。&lt;/li>
+&lt;/ul>
+&lt;h2 id="課程結語">&lt;strong>課程結語&lt;/strong>&lt;/h2>
+&lt;p>Python 是一門非常實用的程式語言，在各行各業都有廣泛的應用。透過本課程的學習，您將能夠掌握 Python 程式設計的基礎知識和技能，為未來的程式設計之路打下良好的基礎。&lt;/p>
+&lt;h2 id="額外建議">&lt;strong>額外建議&lt;/strong>&lt;/h2>
+&lt;ul>
+&lt;li>除了課程內容之外，您也可以多多閱讀 Python 相關的文章和書籍，以拓展自己的知識。&lt;/li>
+&lt;li>您也可以加入 Python 社群，與其他學習者交流，共同成長。&lt;/li>
 &lt;/ul></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 05 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">有一些語言 記憶體空間的申請和釋放都需要程式設計師自己寫程式碼才可以完成
