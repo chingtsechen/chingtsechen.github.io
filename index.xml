@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/</link><description>Recent content on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 19 Nov 2023 14:44:37 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構、循環結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 19 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/</link><description>Recent content on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 19 Nov 2023 18:11:15 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Github Gist將Google Colab嵌入網頁顯示</title><link>https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/</link><pubDate>Sun, 19 Nov 2023 18:11:15 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/</guid><description>&lt;h2 id="google雲端硬碟中創建colab">Google雲端硬碟中，創建Colab&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119181713.png"
+width="1115"
+height="705"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119181713_hu7b4c378e97cd6b9b0a6b6de4db3b2f82_137363_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119181713_hu7b4c378e97cd6b9b0a6b6de4db3b2f82_137363_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="158"
+data-flex-basis="379px"
+>&lt;/p>
+&lt;h2 id="更改檔名不要打中文">更改檔名，不要打中文&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231119182133.png"
+loading="lazy"
+>&lt;/p>
+&lt;h2 id="將副本另存為github-gist">將副本另存為GitHub Gist&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182302.png"
+width="658"
+height="627"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182302_hu4208548b043a2741a56f175c771abf85_65822_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182302_hu4208548b043a2741a56f175c771abf85_65822_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="251px"
+>&lt;/p>
+&lt;p>&lt;font color=red>圖像要顯示為GitHub&lt;/font>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182341.png"
+width="550"
+height="393"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182341_huf355b30da34502b95ca48721791e6ac3_36842_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182341_huf355b30da34502b95ca48721791e6ac3_36842_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="139"
+data-flex-basis="335px"
+>&lt;/p>
+&lt;h2 id="前往github-查看">前往GitHub 查看&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182524.png"
+width="581"
+height="614"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182524_hu6bf428ab3145bbcb20e3086f1697c946_67756_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182524_hu6bf428ab3145bbcb20e3086f1697c946_67756_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="94"
+data-flex-basis="227px"
+>&lt;/p>
+&lt;h2 id="複製embed-js">複製Embed Js&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182628.png"
+width="1337"
+height="812"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182628_hu07ce1abe2442f9535724419478f656f7_87807_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182628_hu07ce1abe2442f9535724419478f656f7_87807_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="164"
+data-flex-basis="395px"
+>&lt;/p>
+&lt;h2 id="貼至blog或網站html內">貼至Blog或網站html內&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182938.png"
+width="704"
+height="115"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182938_huda0fd293b1c53c3d9bb12ae570e80eb9_20913_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182938_huda0fd293b1c53c3d9bb12ae570e80eb9_20913_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="612"
+data-flex-basis="1469px"
+>&lt;/p>
+&lt;p>以下就是貼上js顯示的內容&lt;/p>
+&lt;script src="https://gist.github.com/chingtsechen/56410513abd31b9c080be807b139c159.js">&lt;/script>
+&lt;h2 id="blog查看內容">Blog查看內容&lt;/h2>
+&lt;h2 id="後續修改">後續修改&lt;/h2></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構、循環結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 19 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">有一些語言 記憶體空間的申請和釋放都需要程式設計師自己寫程式碼才可以完成
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">但是python卻不需要 通過垃圾回收機制自動管理
