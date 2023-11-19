@@ -65,7 +65,36 @@ data-flex-basis="1469px"
 &lt;p>以下就是貼上js顯示的內容&lt;/p>
 &lt;script src="https://gist.github.com/chingtsechen/56410513abd31b9c080be807b139c159.js">&lt;/script>
 &lt;h2 id="blog查看內容">Blog查看內容&lt;/h2>
-&lt;h2 id="後續修改">後續修改&lt;/h2></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構、循環結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 19 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119183939.png"
+width="1425"
+height="948"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119183939_huffb220bba4b14f28c7e7ef16c3a0cf0e_142487_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119183939_huffb220bba4b14f28c7e7ef16c3a0cf0e_142487_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+>&lt;/p>
+&lt;h2 id="後續修改">後續修改&lt;/h2>
+&lt;p>只要在Colab中繼續編輯(存在GitHub Gist的，不是在Google雲端硬碟中的喔)，存檔，網頁就會自動渲染出來內容&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119184219.png"
+width="758"
+height="525"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119184219_hu21b0babafa41cb72cc9e5a6402e5a4f6_53169_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119184219_hu21b0babafa41cb72cc9e5a6402e5a4f6_53169_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="144"
+data-flex-basis="346px"
+>&lt;/p>
+&lt;h2 id="blog查看修改後內容">Blog查看修改後內容&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119184609.png"
+width="1359"
+height="934"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119184609_hu67b700b526d54a81de21893589d85b57_145233_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119184609_hu67b700b526d54a81de21893589d85b57_145233_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="145"
+data-flex-basis="349px"
+>&lt;/p></description></item><item><title>Day05 - 垃圾回收機制、流程控制理論、流程控制必備知識、分支結構、循環結構</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</link><pubDate>Sun, 19 Nov 2023 14:44:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/</guid><description>&lt;h2 id="垃圾回收機制">垃圾回收機制&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">有一些語言 記憶體空間的申請和釋放都需要程式設計師自己寫程式碼才可以完成
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">但是python卻不需要 通過垃圾回收機制自動管理
