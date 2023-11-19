@@ -24,29 +24,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">3.&lt;/span>&lt;span class="n">分代回收&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">垃圾回收機制的頻繁運行也會損耗各項資源&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">新生代&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">青春代&lt;/span>&lt;span class="err">、&lt;/span>&lt;span class="n">老年代&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">越往下檢測頻率越低&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>2.標記清除&lt;/code>&lt;/p>
-&lt;p>圖解：
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930215924.png"
-width="2036"
-height="646"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930215924_hu6629753b87d23a7484698b604805afc6_356554_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930215924_hu6629753b87d23a7484698b604805afc6_356554_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="315"
-data-flex-basis="756px"
->&lt;/p>
-&lt;p>&lt;code>3.分代回收&lt;/code>&lt;/p>
-&lt;p>圖解：
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930220512.png"
-width="1089"
-height="584"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930220512_hua57f62626f3b5de5bf54e5818681f256_211794_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930220512_hua57f62626f3b5de5bf54e5818681f256_211794_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="186"
-data-flex-basis="447px"
->&lt;/p>
-&lt;h2 id="流程控制理論">流程控制理論&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="流程控制理論">流程控制理論&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="n">流程控制&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">控制事物的執行流程&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">事物執行流程總共可以分為三種&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">1.&lt;/span>&lt;span class="n">順序結構&lt;/span>
@@ -57,17 +35,7 @@ data-flex-basis="447px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">事物的執行會根據某個條件出現重複&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">在代碼的世界裡&lt;/span> &lt;span class="n">很多時候可能會出現三者混合&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">提示&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">作為小白&lt;/span> &lt;span class="n">在學習流程控制的時候&lt;/span> &lt;span class="n">建議做到代碼和圖形的結合&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>圖解：
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930221247.png"
-width="2132"
-height="2063"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930221247_hube2eeadec7df22216b2bbd6fb7a6e04c_344301_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930221247_hube2eeadec7df22216b2bbd6fb7a6e04c_344301_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="103"
-data-flex-basis="248px"
->&lt;/p>
-&lt;h2 id="流程控制必備知識">流程控制必備知識&lt;/h2>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="流程控制必備知識">流程控制必備知識&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">python中使用代碼的縮進來表示代碼的從屬關係&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">從屬關係&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">縮進的代碼&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">子代碼&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="n">是否執行取決於上面沒有縮進的&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">並不是所有的代碼都可以擁有縮進的代碼&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">子代碼&lt;/span>&lt;span class="p">)&lt;/span>
@@ -141,112 +109,7 @@ data-flex-basis="248px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;不好意思 認錯人了&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;不是tony做不出來這件事&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>1.單if分支結構&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222324.png"
-width="519"
-height="160"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222324_hudd0fb0097f0f54af7a0d597efb3baf5d_25383_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222324_hudd0fb0097f0f54af7a0d597efb3baf5d_25383_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="324"
-data-flex-basis="778px"
->&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222334.png"
-width="357"
-height="104"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222334_hub62593918b244fa279169bbdc728fbb6_12031_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222334_hub62593918b244fa279169bbdc728fbb6_12031_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="343"
-data-flex-basis="823px"
->&lt;/p>
-&lt;p>&lt;code>if的嵌套使用&lt;/code>
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222636.png"
-width="544"
-height="330"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222636_hu395231ded5ccc8c2271acd028636e98b_38181_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222636_hu395231ded5ccc8c2271acd028636e98b_38181_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="164"
-data-flex-basis="395px"
->&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222649.png"
-width="308"
-height="161"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222649_hubc521ab9865685258575750153af35a1_14654_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222649_hubc521ab9865685258575750153af35a1_14654_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="191"
-data-flex-basis="459px"
->&lt;/p>
-&lt;p>&lt;code>2.if...else...分支結構&lt;/code>&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222951.png"
-width="779"
-height="255"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222951_hu353e31fb0ef8b9a0c3a75cc8a781b59e_35801_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222951_hu353e31fb0ef8b9a0c3a75cc8a781b59e_35801_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="305"
-data-flex-basis="733px"
->&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222920.png"
-width="411"
-height="126"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222920_hu294e9cdb7df18c76aec4b3f8d82180ae_14797_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222920_hu294e9cdb7df18c76aec4b3f8d82180ae_14797_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="326"
-data-flex-basis="782px"
->&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222937.png"
-width="297"
-height="137"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222937_hu20ed577fef4b6e85c3d1349ee9618b42_12711_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930222937_hu20ed577fef4b6e85c3d1349ee9618b42_12711_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="216"
-data-flex-basis="520px"
->&lt;/p>
-&lt;p>&lt;code>3.if...elif...else分支結構&lt;/code>&lt;/p>
-&lt;p>圖解：
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223455.png"
-width="1941"
-height="859"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223455_huc2136e2b2ec67a94968e54a7018ce7f8_255398_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223455_huc2136e2b2ec67a94968e54a7018ce7f8_255398_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="225"
-data-flex-basis="542px"
->&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223641.png"
-width="430"
-height="400"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223641_hu4d9b478157d7c02031b11872cd0ad0eb_39832_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223641_hu4d9b478157d7c02031b11872cd0ad0eb_39832_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="107"
-data-flex-basis="258px"
->&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223650.png"
-width="294"
-height="117"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223650_hu60785ba8810114af4198797bc7659ae9_11824_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930223650_hu60785ba8810114af4198797bc7659ae9_11824_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="251"
-data-flex-basis="603px"
->&lt;/p>
-&lt;p>問題：字串判斷大小
-&lt;img src="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930224041.png"
-width="687"
-height="504"
-srcset="https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930224041_hu4c28cdd34e7432b43c37a64e791cd980_36471_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day05/media/Pasted-image-20230930224041_hu4c28cdd34e7432b43c37a64e791cd980_36471_1024x0_resize_box_3.png 1024w"
-loading="lazy"
-class="gallery-image"
-data-flex-grow="136"
-data-flex-basis="327px"
->&lt;/p>
-&lt;p>&lt;code>4.if的嵌套使用(有點難)&lt;/code>&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="colab代碼演示">Colab代碼演示&lt;/h2>
 &lt;script src="https://gist.github.com/chingtsechen/8b449d1f58e25004c69bfef9c1515d43.js">&lt;/script></description></item><item><title>Day04 - 基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</link><pubDate>Sat, 07 Oct 2023 03:02:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</guid><description>&lt;h2 id="基本數據類型之布爾值bool">基本數據類型之布爾值bool&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">用來判斷事物的對錯&lt;/span> &lt;span class="n">是否可行&lt;/span> &lt;span class="n">只要用於流程控制中&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">只有兩種狀態&lt;/span>
