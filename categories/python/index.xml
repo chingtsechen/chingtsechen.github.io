@@ -246,7 +246,8 @@ class="gallery-image"
 data-flex-grow="136"
 data-flex-basis="327px"
 >&lt;/p>
-&lt;p>&lt;code>4.if的嵌套使用(有點難)&lt;/code>&lt;/p></description></item><item><title>Day04 - 基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</link><pubDate>Sat, 07 Oct 2023 03:02:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</guid><description>&lt;h2 id="基本數據類型之布爾值bool">基本數據類型之布爾值bool&lt;/h2>
+&lt;p>&lt;code>4.if的嵌套使用(有點難)&lt;/code>&lt;/p>
+&lt;script src="https://gist.github.com/chingtsechen/8b449d1f58e25004c69bfef9c1515d43.js">&lt;/script></description></item><item><title>Day04 - 基本數據類型(bool、tuple、set)，與使用者交互，格式化輸出，基本運算符，常用賦值符，邏輯運算符，成員運算符，身份運算符，練習題</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</link><pubDate>Sat, 07 Oct 2023 03:02:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day04/</guid><description>&lt;h2 id="基本數據類型之布爾值bool">基本數據類型之布爾值bool&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">用來判斷事物的對錯&lt;/span> &lt;span class="n">是否可行&lt;/span> &lt;span class="n">只要用於流程控制中&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="mf">2.&lt;/span>&lt;span class="n">只有兩種狀態&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kc">True&lt;/span> &lt;span class="n">對的&lt;/span> &lt;span class="n">真的&lt;/span> &lt;span class="n">可行的&lt;/span>
