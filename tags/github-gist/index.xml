@@ -9,8 +9,14 @@ data-flex-grow="158"
 data-flex-basis="379px"
 >&lt;/p>
 &lt;h2 id="更改檔名不要打中文">更改檔名，不要打中文&lt;/h2>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231119182133.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182133.png"
+width="875"
+height="506"
+srcset="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182133_hu8c58aaa774c32e83cdca5b41f304955e_50886_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182133_hu8c58aaa774c32e83cdca5b41f304955e_50886_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="172"
+data-flex-basis="415px"
 >&lt;/p>
 &lt;h2 id="將副本另存為github-gist">將副本另存為GitHub Gist&lt;/h2>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119182302.png"
