@@ -1,0 +1,962 @@
+<!doctype html><html lang=en-us dir=ltr><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-QB4H991E1G"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-QB4H991E1G")</script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統"><meta name=keywords content="翻轉吧金魚腦,使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統,kubernetes,rook,rook-ceph"><title>使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統</title>
+<link rel=canonical href=https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/><link rel=stylesheet href=/scss/style.min.7fb7f5621081d8ecec310edc2d95cc0b431358ce9c30c3ee8601b16732dbef57.css><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><meta name=referrer content="no-referrer-when-downgrade"><script src=//cdn.bootcss.com/jquery/3.2.1/jquery.min.js></script><script>$(document).ready(function(){var e=setInterval(s,100),t=100,n=50;function s(){$("#busuanzi_container_site_pv").css("display")!="none"&&(clearInterval(e),$("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html())+t),$("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html())+n))}})</script><meta property="og:title" content="使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統"><meta property="og:description" content="使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統"><meta property="og:url" content="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/"><meta property="og:site_name" content="翻轉吧金魚腦"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="kubernetes"><meta property="article:tag" content="ceph"><meta property="article:tag" content="rook-ceph"><meta property="article:published_time" content="2023-11-27T21:13:16+08:00"><meta property="article:modified_time" content="2023-11-27T21:13:16+08:00"><meta name=twitter:title content="使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統"><meta name=twitter:description content="使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統"><link rel="shortcut icon" href=/favicon.png><script async src="https://www.googletagmanager.com/gtag/js?id=G-QB4H991E1G"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-QB4H991E1G")</script><meta name=google-site-verification content="EkUcMLTrO3RDZzjREX9Dffy2lcjWCR-2Qtu8VF4b8sQ"><meta content="翻轉吧金魚腦,使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統,kubernetes,rook,rook-ceph" name=keywords></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切換選單>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu588fc841b804da1dba8ddee14baf6523_40309_300x0_resize_box_3.png width=300 height=169 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>翻轉吧金魚腦</a></h1><h2 class=site-description>技術開源，分享生活 by 翻轉吧金魚腦</h2></div></header><ol class=social-menu><li><a href=https://www.instagram.com/goldfishbrain_fighting/ target=_blank title=Instagram rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 4a4 4 0 014-4h8a4 4 0 014 4v8a4 4 0 01-4 4H8a4 4 0 01-4-4z"/><path d="M12 12m-3 0a3 3 0 106 0 3 3 0 10-6 0"/><path d="M16.5 7.5v.01"/></svg></a></li><li><a href=https://ithelp.ithome.com.tw/users/20132481/articles target=_blank title=ithelp-ithome rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-world-www" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 7A9 9 0 0012 3 8.991 8.991.0 004.516 7"/><path d="M11.5 3A16.989 16.989.0 009.674 7"/><path d="M12.5 3a16.989 16.989.0 011.828 4"/><path d="M19.5 17A9 9 0 0112 21a8.991 8.991.0 01-7.484-4"/><path d="M11.5 21a16.989 16.989.0 01-1.826-4"/><path d="M12.5 21a16.989 16.989.0 001.828-4"/><path d="M2 10l1 4 1.5-4L6 14l1-4"/><path d="M17 10l1 4 1.5-4 1.5 4 1-4"/><path d="M9.5 10l1 4 1.5-4 1.5 4 1-4"/></svg></a></li><li><a href=https://www.youtube.com/@goldfishbrain_fighting target=_blank title=Youtube rel=me><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-youtube-kids" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.608 17.75l-3.9.268h-.027a13.83 13.83.0 00-3.722.828l-2.511.908a4.111 4.111.0 01-3.287-.216 3.82 3.82.0 01-1.98-2.527l-1.376-6.05a3.669 3.669.0 01.536-2.86A3.964 3.964.0 014.83 6.44l11.25-2.354c2.137-.448 4.247.85 4.713 2.9l1.403 6.162a3.677 3.677.0 01-.697 3.086 4.007 4.007.0 01-2.89 1.512v.002z"/><path d="M9 10l1.208 5 4.292-4z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>首頁</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>歸檔</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>搜尋</span></a></li><li><a href=/links-to/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>連結</span></a></li><li><a href=/about-me/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-square-rounded" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/><path d="M12 3c7.2.0 9 1.8 9 9s-1.8 9-9 9-9-1.8-9-9 1.8-9 9-9z"/></svg><span>關於我</span></a></li><div class=menu-bottom-section><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>夜晚模式</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/kubernetes/ style=background-color:#0000e3;color:#fff>kubernetes</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/2023/kubernetes-rook-ceph/>使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統</a></h2><h3 class=article-subtitle>使用Rook在Kubernetes安裝與管理Ceph分布式存儲系統</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>2023/11/27</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>閱讀時間: 14 分鐘</time></div></footer></div></header><section class=article-content><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# lsblk
+</span></span><span class=line><span class=cl>NAME             MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+</span></span><span class=line><span class=cl>loop0              7:0    <span class=m>0</span>  63.4M  <span class=m>1</span> loop /snap/core20/1974
+</span></span><span class=line><span class=cl>loop1              7:1    <span class=m>0</span>  63.5M  <span class=m>1</span> loop /snap/core20/2015
+</span></span><span class=line><span class=cl>loop2              7:2    <span class=m>0</span> 111.9M  <span class=m>1</span> loop /snap/lxd/24322
+</span></span><span class=line><span class=cl>loop3              7:3    <span class=m>0</span>  40.8M  <span class=m>1</span> loop /snap/snapd/20092
+</span></span><span class=line><span class=cl>loop4              7:4    <span class=m>0</span>  40.9M  <span class=m>1</span> loop /snap/snapd/20290
+</span></span><span class=line><span class=cl>sda                8:0    <span class=m>0</span>    50G  <span class=m>0</span> disk
+</span></span><span class=line><span class=cl>├─sda1             8:1    <span class=m>0</span>     1M  <span class=m>0</span> part
+</span></span><span class=line><span class=cl>├─sda2             8:2    <span class=m>0</span>     2G  <span class=m>0</span> part /boot
+</span></span><span class=line><span class=cl>└─sda3             8:3    <span class=m>0</span>    48G  <span class=m>0</span> part
+</span></span><span class=line><span class=cl>  └─ubuntu--vg-root
+</span></span><span class=line><span class=cl>                 253:0    <span class=m>0</span>    48G  <span class=m>0</span> lvm  /var/lib/kubelet/pods/ce7174f8-ad8f-4f42-8e58-2abca8c91424/volume-subpaths/tigera-ca-bundle/calico-node/1
+</span></span><span class=line><span class=cl>                                           /
+</span></span><span class=line><span class=cl>sdb                8:16   <span class=m>0</span>    16G  <span class=m>0</span> disk
+</span></span><span class=line><span class=cl>sr0               11:0    <span class=m>1</span>  1024M  <span class=m>0</span> rom
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# lsblk -f
+</span></span><span class=line><span class=cl>NAME FSTYPE FSVER LABEL UUID                                   FSAVAIL FSUSE% MOUNTPOINTS
+</span></span><span class=line><span class=cl>loop0
+</span></span><span class=line><span class=cl>     squash 4.0                                                      <span class=m>0</span>   100% /snap/core20/1974
+</span></span><span class=line><span class=cl>loop1
+</span></span><span class=line><span class=cl>     squash 4.0                                                      <span class=m>0</span>   100% /snap/core20/2015
+</span></span><span class=line><span class=cl>loop2
+</span></span><span class=line><span class=cl>     squash 4.0                                                      <span class=m>0</span>   100% /snap/lxd/24322
+</span></span><span class=line><span class=cl>loop3
+</span></span><span class=line><span class=cl>     squash 4.0                                                      <span class=m>0</span>   100% /snap/snapd/20092
+</span></span><span class=line><span class=cl>loop4
+</span></span><span class=line><span class=cl>     squash 4.0                                                      <span class=m>0</span>   100% /snap/snapd/20290
+</span></span><span class=line><span class=cl>sda
+</span></span><span class=line><span class=cl>├─sda1
+</span></span><span class=line><span class=cl>│
+</span></span><span class=line><span class=cl>├─sda2
+</span></span><span class=line><span class=cl>│    xfs                f681192a-1cf2-4362-a74c-745374011700      1.8G     9% /boot
+</span></span><span class=line><span class=cl>└─sda3
+</span></span><span class=line><span class=cl>     LVM2_m LVM2        JEduSv-mV9g-tzdJ-sYEc-6piR-6nAo-48Srdh
+</span></span><span class=line><span class=cl>  └─ubuntu--vg-root
+</span></span><span class=line><span class=cl>     xfs                19cd87ec-9741-4295-9762-e87fb4f472c8     37.9G    21% /var/lib/kubelet/pods/ce7174f8-ad8f-4f42-8e58-2abca8c91424/volume-subpaths/tigera-ca-bundle/calico-node/1
+</span></span><span class=line><span class=cl>                                                                              /
+</span></span><span class=line><span class=cl>sdb
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# lsblk
+</span></span><span class=line><span class=cl>NAME             MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+</span></span><span class=line><span class=cl>loop0              7:0    <span class=m>0</span>  63.4M  <span class=m>1</span> loop /snap/core20/1974
+</span></span><span class=line><span class=cl>loop1              7:1    <span class=m>0</span>  63.5M  <span class=m>1</span> loop /snap/core20/2015
+</span></span><span class=line><span class=cl>loop2              7:2    <span class=m>0</span> 111.9M  <span class=m>1</span> loop /snap/lxd/24322
+</span></span><span class=line><span class=cl>loop3              7:3    <span class=m>0</span>  40.8M  <span class=m>1</span> loop /snap/snapd/20092
+</span></span><span class=line><span class=cl>loop4              7:4    <span class=m>0</span>  40.9M  <span class=m>1</span> loop /snap/snapd/20290
+</span></span><span class=line><span class=cl>sda                8:0    <span class=m>0</span>    50G  <span class=m>0</span> disk
+</span></span><span class=line><span class=cl>├─sda1             8:1    <span class=m>0</span>     1M  <span class=m>0</span> part
+</span></span><span class=line><span class=cl>├─sda2             8:2    <span class=m>0</span>     2G  <span class=m>0</span> part /boot
+</span></span><span class=line><span class=cl>└─sda3             8:3    <span class=m>0</span>    48G  <span class=m>0</span> part
+</span></span><span class=line><span class=cl>  └─ubuntu--vg-root
+</span></span><span class=line><span class=cl>                 253:0    <span class=m>0</span>    48G  <span class=m>0</span> lvm  /var/lib/kubelet/pods/ce7174f8-ad8f-4f42-8e58-2abca8c91424/volume-subpaths/tigera-ca-bundle/calico-node/1
+</span></span><span class=line><span class=cl>                                           /
+</span></span><span class=line><span class=cl>sdb                8:16   <span class=m>0</span>    16G  <span class=m>0</span> disk
+</span></span><span class=line><span class=cl>sr0               11:0    <span class=m>1</span>  1024M  <span class=m>0</span> rom
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# git clone --single-branch --branch v1.12.8 https://github.com/rook/rook.git
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# <span class=nb>cd</span> rook/deploy/examples
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f crds.yaml
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephblockpoolradosnamespaces.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephblockpools.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephbucketnotifications.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephbuckettopics.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephclients.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephclusters.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephcosidrivers.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephfilesystemmirrors.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephfilesystems.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephfilesystemsubvolumegroups.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephnfses.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephobjectrealms.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephobjectstores.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephobjectstoreusers.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephobjectzonegroups.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephobjectzones.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/cephrbdmirrors.ceph.rook.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/objectbucketclaims.objectbucket.io created
+</span></span><span class=line><span class=cl>customresourcedefinition.apiextensions.k8s.io/objectbuckets.objectbucket.io created
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f common.yaml
+</span></span><span class=line><span class=cl>namespace/rook-ceph created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/cephfs-csi-nodeplugin created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/cephfs-external-provisioner-runner created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/objectstorage-provisioner-role created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rbd-csi-nodeplugin created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rbd-external-provisioner-runner created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-cluster-mgmt created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-global created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-mgr-cluster created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-mgr-system created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-object-bucket created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-osd created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/rook-ceph-system created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/cephfs-csi-nodeplugin-role created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/cephfs-csi-provisioner-role created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/objectstorage-provisioner-role-binding created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rbd-csi-nodeplugin created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rbd-csi-provisioner-role created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rook-ceph-global created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rook-ceph-mgr-cluster created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rook-ceph-object-bucket created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rook-ceph-osd created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/rook-ceph-system created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/cephfs-external-provisioner-cfg created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rbd-csi-nodeplugin created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rbd-external-provisioner-cfg created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rook-ceph-cmd-reporter created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rook-ceph-mgr created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rook-ceph-osd created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rook-ceph-purge-osd created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rook-ceph-rgw created
+</span></span><span class=line><span class=cl>role.rbac.authorization.k8s.io/rook-ceph-system created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/cephfs-csi-provisioner-role-cfg created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rbd-csi-nodeplugin-role-cfg created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rbd-csi-provisioner-role-cfg created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-cluster-mgmt created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-cmd-reporter created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-mgr created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-mgr-system created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-osd created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-purge-osd created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-rgw created
+</span></span><span class=line><span class=cl>rolebinding.rbac.authorization.k8s.io/rook-ceph-system created
+</span></span><span class=line><span class=cl>serviceaccount/objectstorage-provisioner created
+</span></span><span class=line><span class=cl>serviceaccount/rook-ceph-cmd-reporter created
+</span></span><span class=line><span class=cl>serviceaccount/rook-ceph-mgr created
+</span></span><span class=line><span class=cl>serviceaccount/rook-ceph-osd created
+</span></span><span class=line><span class=cl>serviceaccount/rook-ceph-purge-osd created
+</span></span><span class=line><span class=cl>serviceaccount/rook-ceph-rgw created
+</span></span><span class=line><span class=cl>serviceaccount/rook-ceph-system created
+</span></span><span class=line><span class=cl>serviceaccount/rook-csi-cephfs-plugin-sa created
+</span></span><span class=line><span class=cl>serviceaccount/rook-csi-cephfs-provisioner-sa created
+</span></span><span class=line><span class=cl>serviceaccount/rook-csi-rbd-plugin-sa created
+</span></span><span class=line><span class=cl>serviceaccount/rook-csi-rbd-provisioner-sa created
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f operator.yaml
+</span></span><span class=line><span class=cl>configmap/rook-ceph-operator-config created
+</span></span><span class=line><span class=cl>deployment.apps/rook-ceph-operator created
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get deployments.apps -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                 READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span class=line><span class=cl>rook-ceph-operator   1/1     <span class=m>1</span>            <span class=m>1</span>           22s
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get pod -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                  READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>rook-ceph-operator-58775c8bdf-vmdkn   1/1     Running   <span class=m>0</span>          39s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# vim cluster.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 角色調度</span>
+</span></span><span class=line><span class=cl>  placement:
+</span></span><span class=line><span class=cl>    mon:
+</span></span><span class=line><span class=cl>      nodeAffinity:
+</span></span><span class=line><span class=cl>        requiredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          nodeSelectorTerms:
+</span></span><span class=line><span class=cl>          - matchExpressions:
+</span></span><span class=line><span class=cl>            - key: ceph-mon
+</span></span><span class=line><span class=cl>              operator: In
+</span></span><span class=line><span class=cl>              values:
+</span></span><span class=line><span class=cl>              - enabled
+</span></span><span class=line><span class=cl>      tolerations:
+</span></span><span class=line><span class=cl>      - effect: NoSchedule
+</span></span><span class=line><span class=cl>        operator: Exists
+</span></span><span class=line><span class=cl>    mgr:
+</span></span><span class=line><span class=cl>      nodeAffinity:
+</span></span><span class=line><span class=cl>        requiredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          nodeSelectorTerms:
+</span></span><span class=line><span class=cl>          - matchExpressions:
+</span></span><span class=line><span class=cl>            - key: ceph-mgr
+</span></span><span class=line><span class=cl>              operator: In
+</span></span><span class=line><span class=cl>              values:
+</span></span><span class=line><span class=cl>              - enabled
+</span></span><span class=line><span class=cl>      tolerations:
+</span></span><span class=line><span class=cl>      - effect: NoSchedule
+</span></span><span class=line><span class=cl>        operator: Exists
+</span></span><span class=line><span class=cl>    osd:
+</span></span><span class=line><span class=cl>      nodeAffinity:
+</span></span><span class=line><span class=cl>        requiredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          nodeSelectorTerms:
+</span></span><span class=line><span class=cl>          - matchExpressions:
+</span></span><span class=line><span class=cl>            - key: ceph-osd
+</span></span><span class=line><span class=cl>              operator: In
+</span></span><span class=line><span class=cl>              values:
+</span></span><span class=line><span class=cl>              - enabled
+</span></span><span class=line><span class=cl>      tolerations:
+</span></span><span class=line><span class=cl>      - effect: NoSchedule
+</span></span><span class=line><span class=cl>        operator: Exists
+</span></span><span class=line><span class=cl>    prepareosd:
+</span></span><span class=line><span class=cl>      nodeAffinity:
+</span></span><span class=line><span class=cl>        requiredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          nodeSelectorTerms:
+</span></span><span class=line><span class=cl>          - matchExpressions:
+</span></span><span class=line><span class=cl>            - key: ceph-osd
+</span></span><span class=line><span class=cl>              operator: In
+</span></span><span class=line><span class=cl>              values:
+</span></span><span class=line><span class=cl>              - enabled
+</span></span><span class=line><span class=cl>      tolerations:
+</span></span><span class=line><span class=cl>      - effect: NoSchedule
+</span></span><span class=line><span class=cl>        operator: Exists
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 角色資源</span>
+</span></span><span class=line><span class=cl>  resources:
+</span></span><span class=line><span class=cl>    mon:
+</span></span><span class=line><span class=cl>      limits:
+</span></span><span class=line><span class=cl>        cpu: <span class=s2>&#34;1000m&#34;</span>
+</span></span><span class=line><span class=cl>        memory: <span class=s2>&#34;2048Mi&#34;</span>
+</span></span><span class=line><span class=cl>      requests:
+</span></span><span class=line><span class=cl>        cpu: <span class=s2>&#34;1000m&#34;</span>
+</span></span><span class=line><span class=cl>        memory: <span class=s2>&#34;2048Mi&#34;</span>
+</span></span><span class=line><span class=cl>    mgr:
+</span></span><span class=line><span class=cl>      limits:
+</span></span><span class=line><span class=cl>        cpu: <span class=s2>&#34;1000m&#34;</span>
+</span></span><span class=line><span class=cl>        memory: <span class=s2>&#34;1024Mi&#34;</span>
+</span></span><span class=line><span class=cl>      requests:
+</span></span><span class=line><span class=cl>        cpu: <span class=s2>&#34;1000m&#34;</span>
+</span></span><span class=line><span class=cl>        memory: <span class=s2>&#34;1024Mi&#34;</span>
+</span></span><span class=line><span class=cl>    osd:
+</span></span><span class=line><span class=cl>      limits:
+</span></span><span class=line><span class=cl>        cpu: <span class=s2>&#34;1000m&#34;</span>
+</span></span><span class=line><span class=cl>        memory: <span class=s2>&#34;2048Mi&#34;</span>
+</span></span><span class=line><span class=cl>      requests:
+</span></span><span class=line><span class=cl>        cpu: <span class=s2>&#34;1000m&#34;</span>
+</span></span><span class=line><span class=cl>        memory: <span class=s2>&#34;2048Mi&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 磁碟調度</span>
+</span></span><span class=line><span class=cl>    nodes:
+</span></span><span class=line><span class=cl>    - name: <span class=s2>&#34;k8s-master71u&#34;</span>
+</span></span><span class=line><span class=cl>      devices:
+</span></span><span class=line><span class=cl>      - name: <span class=s2>&#34;sdb&#34;</span>
+</span></span><span class=line><span class=cl>        config:
+</span></span><span class=line><span class=cl>          storeType: bluestore
+</span></span><span class=line><span class=cl>          journalSizeMB: <span class=s2>&#34;4096&#34;</span>
+</span></span><span class=line><span class=cl>    - name: <span class=s2>&#34;k8s-master72u&#34;</span>
+</span></span><span class=line><span class=cl>      devices:
+</span></span><span class=line><span class=cl>      - name: <span class=s2>&#34;sdb&#34;</span>
+</span></span><span class=line><span class=cl>        config:
+</span></span><span class=line><span class=cl>          storeType: bluestore
+</span></span><span class=line><span class=cl>          journalSizeMB: <span class=s2>&#34;4096&#34;</span>
+</span></span><span class=line><span class=cl>    - name: <span class=s2>&#34;k8s-master73u&#34;</span>
+</span></span><span class=line><span class=cl>      devices:
+</span></span><span class=line><span class=cl>      - name: <span class=s2>&#34;sdb&#34;</span>
+</span></span><span class=line><span class=cl>        config:
+</span></span><span class=line><span class=cl>          storeType: bluestore
+</span></span><span class=line><span class=cl>          journalSizeMB: <span class=s2>&#34;4096&#34;</span>
+</span></span><span class=line><span class=cl>    - name: <span class=s2>&#34;k8s-node75u&#34;</span>
+</span></span><span class=line><span class=cl>      devices:
+</span></span><span class=line><span class=cl>      - name: <span class=s2>&#34;sdb&#34;</span>
+</span></span><span class=line><span class=cl>        config:
+</span></span><span class=line><span class=cl>          storeType: bluestore
+</span></span><span class=line><span class=cl>          journalSizeMB: <span class=s2>&#34;4096&#34;</span>
+</span></span><span class=line><span class=cl>    - name: <span class=s2>&#34;k8s-node76u&#34;</span>
+</span></span><span class=line><span class=cl>      devices:
+</span></span><span class=line><span class=cl>      - name: <span class=s2>&#34;sdb&#34;</span>
+</span></span><span class=line><span class=cl>        config:
+</span></span><span class=line><span class=cl>          storeType: bluestore
+</span></span><span class=line><span class=cl>          journalSizeMB: <span class=s2>&#34;4096&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 關閉磁碟自動全部調度</span>
+</span></span><span class=line><span class=cl>  storage: <span class=c1># cluster level storage configuration and selection</span>
+</span></span><span class=line><span class=cl>    <span class=c1>#設置磁碟的參數，調整為false，方便後面訂製</span>
+</span></span><span class=line><span class=cl>    useAllNodes: <span class=nb>false</span>
+</span></span><span class=line><span class=cl>    useAllDevices: <span class=nb>false</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master71u ceph-mon<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master71u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master72u ceph-mon<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master72u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master73u ceph-mon<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master73u labeled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master71u ceph-mgr<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master71u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master72u ceph-mgr<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master72u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master73u ceph-mgr<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master73u labeled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master71u ceph-osd<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master71u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master72u ceph-osd<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master72u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master73u ceph-osd<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-master73u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-node75u ceph-osd<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-node75u labeled
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-node76u ceph-osd<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>node/k8s-node76u labeled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f cluster.yaml
+</span></span><span class=line><span class=cl>cephcluster.ceph.rook.io/rook-ceph created
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl taint node k8s-master71u node-role.kubernetes.io/master:NoSchedule-
+</span></span><span class=line><span class=cl>node/k8s-master71u untainted
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl taint node k8s-master72u node-role.kubernetes.io/control-plane:NoSchedule-
+</span></span><span class=line><span class=cl>node/k8s-master72u untainted
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl taint node k8s-master73u node-role.kubernetes.io/control-plane:NoSchedule-
+</span></span><span class=line><span class=cl>node/k8s-master73u untainted
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get pod -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                            READY   STATUS      RESTARTS   AGE
+</span></span><span class=line><span class=cl>csi-cephfsplugin-dfz59                          2/2     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-cephfsplugin-provisioner-668dfcf95b-dgs5l   5/5     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-cephfsplugin-provisioner-668dfcf95b-wlz6r   5/5     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-cephfsplugin-xqdvc                          2/2     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-rbdplugin-l294v                             2/2     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-rbdplugin-lts27                             2/2     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-rbdplugin-provisioner-5b78f67bbb-7gz4x      5/5     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>csi-rbdplugin-provisioner-5b78f67bbb-8w47k      5/5     Running     <span class=m>0</span>          17s
+</span></span><span class=line><span class=cl>rook-ceph-csi-detect-version-tg598              0/1     Completed   <span class=m>0</span>          20s
+</span></span><span class=line><span class=cl>rook-ceph-detect-version-z52cj                  0/1     Completed   <span class=m>0</span>          20s
+</span></span><span class=line><span class=cl>rook-ceph-mon-a-6b8f546466-h5rp2                0/2     Pending     <span class=m>0</span>          9s
+</span></span><span class=line><span class=cl>rook-ceph-mon-a-canary-5554b85b75-wf78h         2/2     Running     <span class=m>0</span>          12s
+</span></span><span class=line><span class=cl>rook-ceph-mon-b-canary-7569748cf6-cr59z         2/2     Running     <span class=m>0</span>          12s
+</span></span><span class=line><span class=cl>rook-ceph-mon-c-canary-85d88b48d5-649pv         2/2     Running     <span class=m>0</span>          12s
+</span></span><span class=line><span class=cl>rook-ceph-operator-6bfb456b57-297f8             1/1     Running     <span class=m>0</span>          31s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl describe pod rook-ceph-mon-a-6b8f546466-h5rp2 -n rook-ceph
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Node-Selectors:              kubernetes.io/hostname<span class=o>=</span>k8s-master71u
+</span></span><span class=line><span class=cl>Tolerations:                 :NoSchedule <span class=nv>op</span><span class=o>=</span>Exists
+</span></span><span class=line><span class=cl>                             node.kubernetes.io/not-ready:NoExecute <span class=nv>op</span><span class=o>=</span>Exists <span class=k>for</span> 300s
+</span></span><span class=line><span class=cl>                             node.kubernetes.io/unreachable:NoExecute <span class=nv>op</span><span class=o>=</span>Exists <span class=k>for</span> 300s
+</span></span><span class=line><span class=cl>Events:
+</span></span><span class=line><span class=cl>  Type     Reason            Age   From               Message
+</span></span><span class=line><span class=cl>  ----     ------            ----  ----               -------
+</span></span><span class=line><span class=cl>  Warning  FailedScheduling  81s   default-scheduler  0/5 nodes are available: <span class=m>1</span> node<span class=o>(</span>s<span class=o>)</span> didn<span class=s1>&#39;t satisfy existing pods anti-affinity rules, 4 node(s) didn&#39;</span>t match Pod<span class=err>&#39;</span>s node affinity/selector. preemption: 0/5 nodes are available: <span class=m>1</span> No preemption victims found <span class=k>for</span> incoming pod, <span class=m>4</span> Preemption is not helpful <span class=k>for</span> scheduling..
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# calicoctl get ippool -o wide
+</span></span><span class=line><span class=cl>NAME                  CIDR            NAT    IPIPMODE   VXLANMODE     DISABLED   DISABLEBGPEXPORT   SELECTOR
+</span></span><span class=line><span class=cl>default-ipv4-ippool   10.244.0.0/16   <span class=nb>true</span>   Never      CrossSubnet   <span class=nb>false</span>      <span class=nb>false</span>              all<span class=o>()</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# calicoctl get ippool -o yaml &gt; ipip.yaml
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# vim ipip.yaml
+</span></span><span class=line><span class=cl>apiVersion: projectcalico.org/v3
+</span></span><span class=line><span class=cl>items:
+</span></span><span class=line><span class=cl>- apiVersion: projectcalico.org/v3
+</span></span><span class=line><span class=cl>  kind: IPPool
+</span></span><span class=line><span class=cl>  metadata:
+</span></span><span class=line><span class=cl>    creationTimestamp: <span class=s2>&#34;2023-09-20T04:58:06Z&#34;</span>
+</span></span><span class=line><span class=cl>    name: default-ipv4-ippool
+</span></span><span class=line><span class=cl>    resourceVersion: <span class=s2>&#34;2693&#34;</span>
+</span></span><span class=line><span class=cl>    uid: 8802be36-473e-45a1-a4da-b79532215b54
+</span></span><span class=line><span class=cl>  spec:
+</span></span><span class=line><span class=cl>    allowedUses:
+</span></span><span class=line><span class=cl>    - Workload
+</span></span><span class=line><span class=cl>    - Tunnel
+</span></span><span class=line><span class=cl>    blockSize: <span class=m>26</span>
+</span></span><span class=line><span class=cl>    cidr: 10.244.0.0/16
+</span></span><span class=line><span class=cl>    ipipMode: Never
+</span></span><span class=line><span class=cl>    natOutgoing: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>    nodeSelector: all<span class=o>()</span>
+</span></span><span class=line><span class=cl>    vxlanMode: Never
+</span></span><span class=line><span class=cl>kind: IPPoolList
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  resourceVersion: <span class=s2>&#34;953292&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# calicoctl apply -f ipip.yaml
+</span></span><span class=line><span class=cl>Successfully applied <span class=m>1</span> <span class=s1>&#39;IPPool&#39;</span> resource<span class=o>(</span>s<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# calicoctl get ippool -o wide
+</span></span><span class=line><span class=cl>NAME                  CIDR            NAT    IPIPMODE   VXLANMODE   DISABLED   DISABLEBGPEXPORT   SELECTOR
+</span></span><span class=line><span class=cl>default-ipv4-ippool   10.244.0.0/16   <span class=nb>true</span>   Never      Never       <span class=nb>false</span>      <span class=nb>false</span>              all<span class=o>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# reboot
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get nodes
+</span></span><span class=line><span class=cl>NAME            STATUS   ROLES           AGE   VERSION
+</span></span><span class=line><span class=cl>k8s-master71u   Ready    control-plane   69d   v1.26.3
+</span></span><span class=line><span class=cl>k8s-master72u   Ready    control-plane   69d   v1.26.3
+</span></span><span class=line><span class=cl>k8s-master73u   Ready    control-plane   69d   v1.26.3
+</span></span><span class=line><span class=cl>k8s-node75u     Ready    &lt;none&gt;          69d   v1.26.3
+</span></span><span class=line><span class=cl>k8s-node76u     Ready    &lt;none&gt;          69d   v1.26.3
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                                      READY   STATUS      RESTARTS         AGE
+</span></span><span class=line><span class=cl>csi-cephfsplugin-bk8gt                                    2/2     Running     <span class=m>4</span> <span class=o>(</span>5m36s ago<span class=o>)</span>    18m
+</span></span><span class=line><span class=cl>csi-cephfsplugin-provisioner-668dfcf95b-858rd             5/5     Running     <span class=m>10</span> <span class=o>(</span>5m37s ago<span class=o>)</span>   18m
+</span></span><span class=line><span class=cl>csi-cephfsplugin-provisioner-668dfcf95b-n4wdx             5/5     Running     <span class=m>10</span> <span class=o>(</span>5m36s ago<span class=o>)</span>   18m
+</span></span><span class=line><span class=cl>csi-cephfsplugin-rp5nh                                    2/2     Running     <span class=m>4</span> <span class=o>(</span>5m37s ago<span class=o>)</span>    18m
+</span></span><span class=line><span class=cl>csi-rbdplugin-provisioner-5b78f67bbb-4vrtb                5/5     Running     <span class=m>10</span> <span class=o>(</span>5m36s ago<span class=o>)</span>   18m
+</span></span><span class=line><span class=cl>csi-rbdplugin-provisioner-5b78f67bbb-m5789                5/5     Running     <span class=m>10</span> <span class=o>(</span>5m36s ago<span class=o>)</span>   18m
+</span></span><span class=line><span class=cl>csi-rbdplugin-qfrtk                                       2/2     Running     <span class=m>4</span> <span class=o>(</span>5m36s ago<span class=o>)</span>    18m
+</span></span><span class=line><span class=cl>csi-rbdplugin-z68hx                                       2/2     Running     <span class=m>4</span> <span class=o>(</span>5m36s ago<span class=o>)</span>    18m
+</span></span><span class=line><span class=cl>rook-ceph-crashcollector-k8s-master71u-55fcdbd66c-k6pkj   1/1     Running     <span class=m>0</span>                2m13s
+</span></span><span class=line><span class=cl>rook-ceph-crashcollector-k8s-master72u-675646bf64-hnpw9   1/1     Running     <span class=m>0</span>                2m12s
+</span></span><span class=line><span class=cl>rook-ceph-crashcollector-k8s-master73u-84fdc469f7-6khkr   1/1     Running     <span class=m>0</span>                2m42s
+</span></span><span class=line><span class=cl>rook-ceph-crashcollector-k8s-node75u-bbc794dd9-5zbhs      1/1     Running     <span class=m>0</span>                15s
+</span></span><span class=line><span class=cl>rook-ceph-crashcollector-k8s-node76u-5fd59cd68b-b9pxq     1/1     Running     <span class=m>0</span>                24s
+</span></span><span class=line><span class=cl>rook-ceph-csi-detect-version-pqgj7                        0/1     Completed   <span class=m>0</span>                3m52s
+</span></span><span class=line><span class=cl>rook-ceph-detect-version-rtgsq                            0/1     Completed   <span class=m>0</span>                13s
+</span></span><span class=line><span class=cl>rook-ceph-mgr-a-767b9fc956-xm4ns                          3/3     Running     <span class=m>0</span>                2m49s
+</span></span><span class=line><span class=cl>rook-ceph-mgr-b-8956fb9c-rvjff                            3/3     Running     <span class=m>0</span>                2m48s
+</span></span><span class=line><span class=cl>rook-ceph-mon-a-769fd77b5b-trw4f                          2/2     Running     <span class=m>0</span>                9m7s
+</span></span><span class=line><span class=cl>rook-ceph-mon-b-65cf769696-7dncd                          2/2     Running     <span class=m>0</span>                3m14s
+</span></span><span class=line><span class=cl>rook-ceph-mon-c-58664986b-vqrzw                           2/2     Running     <span class=m>0</span>                3m2s
+</span></span><span class=line><span class=cl>rook-ceph-operator-58775c8bdf-mfp6n                       1/1     Running     <span class=m>2</span> <span class=o>(</span>5m36s ago<span class=o>)</span>    23m
+</span></span><span class=line><span class=cl>rook-ceph-osd-0-55f6d9b-xrjb6                             2/2     Running     <span class=m>0</span>                2m13s
+</span></span><span class=line><span class=cl>rook-ceph-osd-1-7db86764b-2fn48                           2/2     Running     <span class=m>0</span>                2m12s
+</span></span><span class=line><span class=cl>rook-ceph-osd-2-84cd64ffcb-nxrkx                          2/2     Running     <span class=m>0</span>                2m10s
+</span></span><span class=line><span class=cl>rook-ceph-osd-3-748c78f4dd-whsxk                          2/2     Running     <span class=m>0</span>                24s
+</span></span><span class=line><span class=cl>rook-ceph-osd-4-65c79df6dd-2w7z9                          1/2     Running     <span class=m>0</span>                15s
+</span></span><span class=line><span class=cl>rook-ceph-osd-prepare-k8s-master71u-shwfs                 0/1     Completed   <span class=m>0</span>                2m26s
+</span></span><span class=line><span class=cl>rook-ceph-osd-prepare-k8s-master72u-z4vbt                 0/1     Completed   <span class=m>0</span>                2m26s
+</span></span><span class=line><span class=cl>rook-ceph-osd-prepare-k8s-master73u-rgxtn                 0/1     Completed   <span class=m>0</span>                2m25s
+</span></span><span class=line><span class=cl>rook-ceph-osd-prepare-k8s-node75u-sdm5n                   0/1     Completed   <span class=m>0</span>                2m24s
+</span></span><span class=line><span class=cl>rook-ceph-osd-prepare-k8s-node76u-l8dlp                   0/1     Completed   <span class=m>0</span>                2m23s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f toolbox.yaml
+</span></span><span class=line><span class=cl>deployment.apps/rook-ceph-tools created
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl <span class=nb>exec</span> -it rook-ceph-tools-7cd4cd9c9c-kd8pf -n rook-ceph -- /bin/bash
+</span></span><span class=line><span class=cl>bash-4.4$ ceph -s
+</span></span><span class=line><span class=cl>  cluster:
+</span></span><span class=line><span class=cl>    id:     b5e028e3-725d-4a26-8a14-17fe4dead850
+</span></span><span class=line><span class=cl>    health: HEALTH_OK
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  services:
+</span></span><span class=line><span class=cl>    mon: <span class=m>3</span> daemons, quorum a,b,c <span class=o>(</span>age 5m<span class=o>)</span>
+</span></span><span class=line><span class=cl>    mgr: a<span class=o>(</span>active, since 86s<span class=o>)</span>, standbys: b
+</span></span><span class=line><span class=cl>    osd: <span class=m>5</span> osds: <span class=m>5</span> up <span class=o>(</span>since 2m<span class=o>)</span>, <span class=m>5</span> in <span class=o>(</span>since 3m<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  data:
+</span></span><span class=line><span class=cl>    pools:   <span class=m>1</span> pools, <span class=m>1</span> pgs
+</span></span><span class=line><span class=cl>    objects: <span class=m>2</span> objects, <span class=m>449</span> KiB
+</span></span><span class=line><span class=cl>    usage:   <span class=m>41</span> MiB used, <span class=m>80</span> GiB / <span class=m>80</span> GiB avail
+</span></span><span class=line><span class=cl>    pgs:     <span class=m>1</span> active+clean
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>bash-4.4$ ceph status
+</span></span><span class=line><span class=cl>  cluster:
+</span></span><span class=line><span class=cl>    id:     b5e028e3-725d-4a26-8a14-17fe4dead850
+</span></span><span class=line><span class=cl>    health: HEALTH_OK
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  services:
+</span></span><span class=line><span class=cl>    mon: <span class=m>3</span> daemons, quorum a,b,c <span class=o>(</span>age 6m<span class=o>)</span>
+</span></span><span class=line><span class=cl>    mgr: a<span class=o>(</span>active, since 116s<span class=o>)</span>, standbys: b
+</span></span><span class=line><span class=cl>    osd: <span class=m>5</span> osds: <span class=m>5</span> up <span class=o>(</span>since 3m<span class=o>)</span>, <span class=m>5</span> in <span class=o>(</span>since 3m<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  data:
+</span></span><span class=line><span class=cl>    pools:   <span class=m>1</span> pools, <span class=m>1</span> pgs
+</span></span><span class=line><span class=cl>    objects: <span class=m>2</span> objects, <span class=m>449</span> KiB
+</span></span><span class=line><span class=cl>    usage:   <span class=m>41</span> MiB used, <span class=m>80</span> GiB / <span class=m>80</span> GiB avail
+</span></span><span class=line><span class=cl>    pgs:     <span class=m>1</span> active+clean
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>bash-4.4$ ceph osd status
+</span></span><span class=line><span class=cl>ID  HOST            USED  AVAIL  WR OPS  WR DATA  RD OPS  RD DATA  STATE
+</span></span><span class=line><span class=cl> <span class=m>0</span>  k8s-master71u  8368k  15.9G      <span class=m>0</span>        <span class=m>0</span>       <span class=m>0</span>        <span class=m>0</span>   exists,up
+</span></span><span class=line><span class=cl> <span class=m>1</span>  k8s-master72u  8820k  15.9G      <span class=m>0</span>        <span class=m>0</span>       <span class=m>0</span>        <span class=m>0</span>   exists,up
+</span></span><span class=line><span class=cl> <span class=m>2</span>  k8s-master73u  8820k  15.9G      <span class=m>0</span>        <span class=m>0</span>       <span class=m>0</span>        <span class=m>0</span>   exists,up
+</span></span><span class=line><span class=cl> <span class=m>3</span>  k8s-node76u    8432k  15.9G      <span class=m>0</span>        <span class=m>0</span>       <span class=m>0</span>        <span class=m>0</span>   exists,up
+</span></span><span class=line><span class=cl> <span class=m>4</span>  k8s-node75u    7920k  15.9G      <span class=m>0</span>        <span class=m>0</span>       <span class=m>0</span>        <span class=m>0</span>   exists,up
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>bash-4.4$ ceph df
+</span></span><span class=line><span class=cl>--- RAW STORAGE ---
+</span></span><span class=line><span class=cl>CLASS    SIZE   AVAIL    USED  RAW USED  %RAW USED
+</span></span><span class=line><span class=cl>ssd    <span class=m>80</span> GiB  <span class=m>80</span> GiB  <span class=m>41</span> MiB    <span class=m>41</span> MiB       0.05
+</span></span><span class=line><span class=cl>TOTAL  <span class=m>80</span> GiB  <span class=m>80</span> GiB  <span class=m>41</span> MiB    <span class=m>41</span> MiB       0.05
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>--- POOLS ---
+</span></span><span class=line><span class=cl>POOL  ID  PGS   STORED  OBJECTS     USED  %USED  MAX AVAIL
+</span></span><span class=line><span class=cl>.mgr   <span class=m>1</span>    <span class=m>1</span>  <span class=m>449</span> KiB        <span class=m>2</span>  <span class=m>449</span> KiB      <span class=m>0</span>     <span class=m>25</span> GiB
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>bash-4.4$ rados df
+</span></span><span class=line><span class=cl>POOL_NAME     USED  OBJECTS  CLONES  COPIES  MISSING_ON_PRIMARY  UNFOUND  DEGRADED  RD_OPS       RD  WR_OPS       WR  USED COMPR  UNDER COMPR
+</span></span><span class=line><span class=cl>.mgr       <span class=m>449</span> KiB        <span class=m>2</span>       <span class=m>0</span>       <span class=m>6</span>                   <span class=m>0</span>        <span class=m>0</span>         <span class=m>0</span>     <span class=m>288</span>  <span class=m>494</span> KiB     <span class=m>153</span>  1.3 MiB         <span class=m>0</span> B          <span class=m>0</span> B
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>total_objects    <span class=m>2</span>
+</span></span><span class=line><span class=cl>total_used       <span class=m>41</span> MiB
+</span></span><span class=line><span class=cl>total_avail      <span class=m>80</span> GiB
+</span></span><span class=line><span class=cl>total_space      <span class=m>80</span> GiB
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# apt update
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# apt install ceph-common
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl <span class=nb>exec</span> -it rook-ceph-tools-7cd4cd9c9c-kd8pf -n rook-ceph -- /bin/bash
+</span></span><span class=line><span class=cl>bash-4.4$ cat /etc/ceph/ceph.conf
+</span></span><span class=line><span class=cl><span class=o>[</span>global<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>mon_host</span> <span class=o>=</span> 10.245.146.85:6789,10.245.203.29:6789,10.245.216.126:6789
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>client.admin<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>keyring</span> <span class=o>=</span> /etc/ceph/keyring
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>bash-4.4$ cat /etc/ceph/keyring
+</span></span><span class=line><span class=cl><span class=o>[</span>client.admin<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>key</span> <span class=o>=</span> <span class=nv>AQA8LmZlDA21GhAAvgMoEOkXur9olDYtGkF8kQ</span><span class=o>==</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# vim /etc/ceph/ceph.conf
+</span></span><span class=line><span class=cl><span class=o>[</span>global<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>mon_host</span> <span class=o>=</span> 10.245.146.85:6789,10.245.203.29:6789,10.245.216.126:6789
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>client.admin<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>keyring</span> <span class=o>=</span> /etc/ceph/keyring
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# vim /etc/ceph/keyring
+</span></span><span class=line><span class=cl><span class=o>[</span>client.admin<span class=o>]</span>
+</span></span><span class=line><span class=cl><span class=nv>key</span> <span class=o>=</span> <span class=nv>AQA8LmZlDA21GhAAvgMoEOkXur9olDYtGkF8kQ</span><span class=o>==</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# ceph -s
+</span></span><span class=line><span class=cl>  cluster:
+</span></span><span class=line><span class=cl>    id:     b5e028e3-725d-4a26-8a14-17fe4dead850
+</span></span><span class=line><span class=cl>    health: HEALTH_OK
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  services:
+</span></span><span class=line><span class=cl>    mon: <span class=m>3</span> daemons, quorum a,b,c <span class=o>(</span>age 2m<span class=o>)</span>
+</span></span><span class=line><span class=cl>    mgr: a<span class=o>(</span>active, since 2m<span class=o>)</span>, standbys: b
+</span></span><span class=line><span class=cl>    osd: <span class=m>5</span> osds: <span class=m>5</span> up <span class=o>(</span>since 2m<span class=o>)</span>, <span class=m>5</span> in <span class=o>(</span>since 10m<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  data:
+</span></span><span class=line><span class=cl>    pools:   <span class=m>1</span> pools, <span class=m>1</span> pgs
+</span></span><span class=line><span class=cl>    objects: <span class=m>2</span> objects, <span class=m>449</span> KiB
+</span></span><span class=line><span class=cl>    usage:   <span class=m>39</span> MiB used, <span class=m>80</span> GiB / <span class=m>80</span> GiB avail
+</span></span><span class=line><span class=cl>    pgs:     <span class=m>1</span> active+clean
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master71u ceph-mds<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master72u ceph-mds<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-master73u ceph-mds<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-node75u ceph-mds<span class=o>=</span>enabled
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl label node k8s-node76u ceph-mds<span class=o>=</span>enabled
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# vim filesystem.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    activeCount: <span class=m>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    placement:
+</span></span><span class=line><span class=cl>      nodeAffinity:
+</span></span><span class=line><span class=cl>        requiredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          nodeSelectorTerms:
+</span></span><span class=line><span class=cl>          - matchExpressions:
+</span></span><span class=line><span class=cl>            - key: ceph-mds
+</span></span><span class=line><span class=cl>              operator: In
+</span></span><span class=line><span class=cl>              values:
+</span></span><span class=line><span class=cl>              - enabled
+</span></span><span class=line><span class=cl>      tolerations:
+</span></span><span class=line><span class=cl>      - effect: NoSchedule
+</span></span><span class=line><span class=cl>        operator: Exists
+</span></span><span class=line><span class=cl>      podAntiAffinity:
+</span></span><span class=line><span class=cl>        requiredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          - labelSelector:
+</span></span><span class=line><span class=cl>              matchExpressions:
+</span></span><span class=line><span class=cl>                - key: app
+</span></span><span class=line><span class=cl>                  operator: In
+</span></span><span class=line><span class=cl>                  values:
+</span></span><span class=line><span class=cl>                    - rook-ceph-mds
+</span></span><span class=line><span class=cl>            topologyKey: kubernetes.io/hostname
+</span></span><span class=line><span class=cl>        preferredDuringSchedulingIgnoredDuringExecution:
+</span></span><span class=line><span class=cl>          - weight: <span class=m>100</span>
+</span></span><span class=line><span class=cl>            podAffinityTerm:
+</span></span><span class=line><span class=cl>              labelSelector:
+</span></span><span class=line><span class=cl>                matchExpressions:
+</span></span><span class=line><span class=cl>                  - key: app
+</span></span><span class=line><span class=cl>                    operator: In
+</span></span><span class=line><span class=cl>                    values:
+</span></span><span class=line><span class=cl>                      - rook-ceph-mds
+</span></span><span class=line><span class=cl>              topologyKey: topology.kubernetes.io/zone
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f filesystem.yaml
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get pod -n rook-ceph -o wide <span class=p>|</span> grep -i rook-ceph-mds
+</span></span><span class=line><span class=cl>rook-ceph-mds-myfs-a-656c99cf6b-mp7bq                     2/2     Running     <span class=m>0</span>              2m37s   10.244.96.33     k8s-master73u   &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>rook-ceph-mds-myfs-b-65bf4fdbcd-j9gzt                     2/2     Running     <span class=m>0</span>              2m36s   10.244.14.186    k8s-node75u     &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>rook-ceph-mds-myfs-c-b7bd7658-tt845                       2/2     Running     <span class=m>0</span>              2m34s   10.244.255.213   k8s-node76u     &lt;none&gt;           &lt;none&gt;
+</span></span><span class=line><span class=cl>rook-ceph-mds-myfs-d-dff64fb98-zb4rv                      2/2     Running     <span class=m>0</span>              2m31s   10.244.133.17    k8s-master71u   &lt;none&gt;           &lt;none&gt;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph -s
+</span></span><span class=line><span class=cl>  cluster:
+</span></span><span class=line><span class=cl>    id:     b5e028e3-725d-4a26-8a14-17fe4dead850
+</span></span><span class=line><span class=cl>    health: HEALTH_OK
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  services:
+</span></span><span class=line><span class=cl>    mon: <span class=m>3</span> daemons, quorum a,b,c <span class=o>(</span>age 11m<span class=o>)</span>
+</span></span><span class=line><span class=cl>    mgr: a<span class=o>(</span>active, since 12m<span class=o>)</span>, standbys: b
+</span></span><span class=line><span class=cl>    mds: 2/2 daemons up, <span class=m>2</span> hot standby
+</span></span><span class=line><span class=cl>    osd: <span class=m>5</span> osds: <span class=m>5</span> up <span class=o>(</span>since 12m<span class=o>)</span>, <span class=m>5</span> in <span class=o>(</span>since 19m<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  data:
+</span></span><span class=line><span class=cl>    volumes: 1/1 healthy
+</span></span><span class=line><span class=cl>    pools:   <span class=m>3</span> pools, <span class=m>49</span> pgs
+</span></span><span class=line><span class=cl>    objects: <span class=m>45</span> objects, <span class=m>452</span> KiB
+</span></span><span class=line><span class=cl>    usage:   <span class=m>46</span> MiB used, <span class=m>80</span> GiB / <span class=m>80</span> GiB avail
+</span></span><span class=line><span class=cl>    pgs:     2.041% pgs not active
+</span></span><span class=line><span class=cl>             <span class=m>48</span> active+clean
+</span></span><span class=line><span class=cl>             <span class=m>1</span>  peering
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  io:
+</span></span><span class=line><span class=cl>    client:   1.5 KiB/s rd, <span class=m>3</span> op/s rd, <span class=m>0</span> op/s wr
+</span></span><span class=line><span class=cl>    recovery: <span class=m>95</span> B/s, <span class=m>0</span> objects/s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/csi/cephfs# kubectl create -f storageclass.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/csi/cephfs# kubectl get storageclasses.storage.k8s.io
+</span></span><span class=line><span class=cl>NAME          PROVISIONER                     RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+</span></span><span class=line><span class=cl>rook-cephfs   rook-ceph.cephfs.csi.ceph.com   Delete          Immediate           <span class=nb>true</span>                   8s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/csi/cephfs# ceph fs ls
+</span></span><span class=line><span class=cl>name: myfs, metadata pool: myfs-metadata, data pools: <span class=o>[</span>myfs-replicated <span class=o>]</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# cat sc.yaml
+</span></span><span class=line><span class=cl>apiVersion: apps/v1
+</span></span><span class=line><span class=cl>kind: Deployment
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: web-sc
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  selector:
+</span></span><span class=line><span class=cl>    matchLabels:
+</span></span><span class=line><span class=cl>      app: nginx
+</span></span><span class=line><span class=cl>  replicas: <span class=m>3</span>
+</span></span><span class=line><span class=cl>  template:
+</span></span><span class=line><span class=cl>    metadata:
+</span></span><span class=line><span class=cl>      labels:
+</span></span><span class=line><span class=cl>        app: nginx
+</span></span><span class=line><span class=cl>    spec:
+</span></span><span class=line><span class=cl>      containers:
+</span></span><span class=line><span class=cl>      - name: nginx
+</span></span><span class=line><span class=cl>        image: nginx
+</span></span><span class=line><span class=cl>        volumeMounts:
+</span></span><span class=line><span class=cl>          - name: wwwroot
+</span></span><span class=line><span class=cl>            mountPath: /usr/share/nginx/html
+</span></span><span class=line><span class=cl>      volumes:
+</span></span><span class=line><span class=cl>      - name: wwwroot
+</span></span><span class=line><span class=cl>        persistentVolumeClaim:
+</span></span><span class=line><span class=cl>          claimName: web-sc
+</span></span><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>apiVersion: v1
+</span></span><span class=line><span class=cl>kind: PersistentVolumeClaim
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: web-sc
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  storageClassName: <span class=s2>&#34;rook-cephfs&#34;</span>
+</span></span><span class=line><span class=cl>  accessModes:
+</span></span><span class=line><span class=cl>    - ReadWriteMany
+</span></span><span class=line><span class=cl>  resources:
+</span></span><span class=line><span class=cl>    requests:
+</span></span><span class=line><span class=cl>      storage: 5Gi
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl create -f sc.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod
+</span></span><span class=line><span class=cl>NAME                      READY   STATUS    RESTARTS      AGE
+</span></span><span class=line><span class=cl>test-nginx                1/1     Running   <span class=m>5</span> <span class=o>(</span>33m ago<span class=o>)</span>   69d
+</span></span><span class=line><span class=cl>web-sc-7b6c54fbb9-8q254   1/1     Running   <span class=m>0</span>             46s
+</span></span><span class=line><span class=cl>web-sc-7b6c54fbb9-hkw2z   1/1     Running   <span class=m>0</span>             46s
+</span></span><span class=line><span class=cl>web-sc-7b6c54fbb9-m4qlf   1/1     Running   <span class=m>0</span>             46s
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pv
+</span></span><span class=line><span class=cl>NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM            STORAGECLASS   REASON   AGE
+</span></span><span class=line><span class=cl>pvc-ea9ac011-5fd5-4436-ad61-468e9ce95239   5Gi        RWX            Delete           Bound    default/web-sc   rook-cephfs             51s
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pvc
+</span></span><span class=line><span class=cl>NAME     STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+</span></span><span class=line><span class=cl>web-sc   Bound    pvc-ea9ac011-5fd5-4436-ad61-468e9ce95239   5Gi        RWX            rook-cephfs    54s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl <span class=nb>exec</span> -ti web-sc-7b6c54fbb9-8q254 -- /bin/bash
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-8q254:/#
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-8q254:/# df -h
+</span></span><span class=line><span class=cl>Filesystem                                                                                                                                                Size  Used Avail Use% Mounted on
+</span></span><span class=line><span class=cl>10.245.146.85:6789,10.245.203.29:6789,10.245.216.126:6789:/volumes/csi/csi-vol-d7642fd0-5da4-4599-b69e-bc0c1b948ded/dccf324f-8ad6-40f3-9e99-6186a32d3faf  5.0G     <span class=m>0</span>  5.0G   0% /usr/share/nginx/html
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-8q254:/# <span class=nb>cd</span> /usr/share/nginx/html/
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-8q254:/usr/share/nginx/html# touch <span class=m>123</span>
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-8q254:/usr/share/nginx/html# ls
+</span></span><span class=line><span class=cl><span class=m>123</span>
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-8q254:/usr/share/nginx/html# <span class=nb>exit</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl <span class=nb>exec</span> -ti web-sc-7b6c54fbb9-hkw2z -- /bin/bash
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-hkw2z:/# df -h
+</span></span><span class=line><span class=cl>Filesystem                                                                                                                                                Size  Used Avail Use% Mounted on
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>10.245.146.85:6789,10.245.203.29:6789,10.245.216.126:6789:/volumes/csi/csi-vol-d7642fd0-5da4-4599-b69e-bc0c1b948ded/dccf324f-8ad6-40f3-9e99-6186a32d3faf  5.0G     <span class=m>0</span>  5.0G   0% /usr/share/nginx/html
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-hkw2z:/# <span class=nb>cd</span> /usr/share/nginx/html/
+</span></span><span class=line><span class=cl>root@web-sc-7b6c54fbb9-hkw2z:/usr/share/nginx/html# ls
+</span></span><span class=line><span class=cl><span class=m>123</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get services -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>             AGE
+</span></span><span class=line><span class=cl>rook-ceph-mgr             ClusterIP   10.245.33.129    &lt;none&gt;        9283/TCP            34m
+</span></span><span class=line><span class=cl>rook-ceph-mgr-dashboard   ClusterIP   10.245.17.131    &lt;none&gt;        7000/TCP            34m
+</span></span><span class=line><span class=cl>rook-ceph-mon-a           ClusterIP   10.245.146.85    &lt;none&gt;        6789/TCP,3300/TCP   41m
+</span></span><span class=line><span class=cl>rook-ceph-mon-b           ClusterIP   10.245.203.29    &lt;none&gt;        6789/TCP,3300/TCP   35m
+</span></span><span class=line><span class=cl>rook-ceph-mon-c           ClusterIP   10.245.216.126   &lt;none&gt;        6789/TCP,3300/TCP   35m
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl create -f dashboard-external-https.yaml
+</span></span><span class=line><span class=cl>service/rook-ceph-mgr-dashboard-external-https created
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get services -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>             AGE
+</span></span><span class=line><span class=cl>rook-ceph-mgr                            ClusterIP   10.245.33.129    &lt;none&gt;        9283/TCP            36m
+</span></span><span class=line><span class=cl>rook-ceph-mgr-dashboard                  ClusterIP   10.245.17.131    &lt;none&gt;        7000/TCP            36m
+</span></span><span class=line><span class=cl>rook-ceph-mgr-dashboard-external-https   NodePort    10.245.106.246   &lt;none&gt;        8443:30901/TCP      10s
+</span></span><span class=line><span class=cl>rook-ceph-mon-a                          ClusterIP   10.245.146.85    &lt;none&gt;        6789/TCP,3300/TCP   43m
+</span></span><span class=line><span class=cl>rook-ceph-mon-b                          ClusterIP   10.245.203.29    &lt;none&gt;        6789/TCP,3300/TCP   37m
+</span></span><span class=line><span class=cl>rook-ceph-mon-c                          ClusterIP   10.245.216.126   &lt;none&gt;        6789/TCP,3300/TCP   37m
+</span></span></code></pre></div><p>https://192.168.1.75:30901/#/login?returnUrl=%2Fdashboard</p><p><img src=/media/Pasted%20image%2020231129030025.png loading=lazy></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# kubectl get secrets -n rook-ceph rook-ceph-dashboard-password -o yaml
+</span></span><span class=line><span class=cl>apiVersion: v1
+</span></span><span class=line><span class=cl>data:
+</span></span><span class=line><span class=cl>  password: <span class=nv>Y0w5bG1Vb0QlTCpQViM2RFB3U3k</span><span class=o>=</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# <span class=nb>echo</span> <span class=s2>&#34;Y0w5bG1Vb0QlTCpQViM2RFB3U3k=&#34;</span> <span class=p>|</span> base64 -d
+</span></span><span class=line><span class=cl>cL9lmUoD%L*PV#6DPwSy
+</span></span></code></pre></div><p><img src=/media/Pasted%20image%2020231129030211.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129035101.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231130001900.png loading=lazy></p><p>一直報這個錯誤，導致集群檢查不健康
+<img src=/media/Pasted%20image%2020231130010912.png loading=lazy></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>overall HEALTH_WARN <span class=m>1</span> mgr modules have recently crashed
+</span></span></code></pre></div><p>查看報錯</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph crash ls
+</span></span><span class=line><span class=cl>ID                                                                ENTITY  NEW
+</span></span><span class=line><span class=cl>2023-11-28T19:02:15.741903Z_cff323ca-e2d5-415c-b5e6-e518a4a2e892  mgr.a    *
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph crash info 2023-11-28T19:02:15.741903Z_cff323ca-e2d5-415c-b5e6-e518a4a2e892
+</span></span><span class=line><span class=cl><span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;backtrace&#34;</span>: <span class=o>[</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;  File \&#34;/usr/share/ceph/mgr/nfs/module.py\&#34;, line 169, in cluster_ls\n    return available_clusters(self)&#34;</span>,
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;  File \&#34;/usr/share/ceph/mgr/nfs/utils.py\&#34;, line 38, in available_clusters\n    completion = mgr.describe_service(service_type=&#39;nfs&#39;)&#34;</span>,
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;  File \&#34;/usr/share/ceph/mgr/orchestrator/_interface.py\&#34;, line 1488, in inner\n    completion = self._oremote(method_name, args, kwargs)&#34;</span>,
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;  File \&#34;/usr/share/ceph/mgr/orchestrator/_interface.py\&#34;, line 1555, in _oremote\n    raise NoOrchestrator()&#34;</span>,
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;orchestrator._interface.NoOrchestrator: No orchestrator configured (try `ceph orch set backend`)&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=o>]</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;ceph_version&#34;</span>: <span class=s2>&#34;17.2.6&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;crash_id&#34;</span>: <span class=s2>&#34;2023-11-28T19:02:15.741903Z_cff323ca-e2d5-415c-b5e6-e518a4a2e892&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;entity_name&#34;</span>: <span class=s2>&#34;mgr.a&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;mgr_module&#34;</span>: <span class=s2>&#34;nfs&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;mgr_module_caller&#34;</span>: <span class=s2>&#34;ActivePyModule::dispatch_remote cluster_ls&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;mgr_python_exception&#34;</span>: <span class=s2>&#34;NoOrchestrator&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;os_id&#34;</span>: <span class=s2>&#34;centos&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;os_name&#34;</span>: <span class=s2>&#34;CentOS Stream&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;os_version&#34;</span>: <span class=s2>&#34;8&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;os_version_id&#34;</span>: <span class=s2>&#34;8&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;process_name&#34;</span>: <span class=s2>&#34;ceph-mgr&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;stack_sig&#34;</span>: <span class=s2>&#34;b01db59d356dd52f69bfb0b128a216e7606f54a60674c3c82711c23cf64832ce&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;timestamp&#34;</span>: <span class=s2>&#34;2023-11-28T19:02:15.741903Z&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;utsname_hostname&#34;</span>: <span class=s2>&#34;rook-ceph-mgr-a-767b9fc956-xm4ns&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;utsname_machine&#34;</span>: <span class=s2>&#34;x86_64&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;utsname_release&#34;</span>: <span class=s2>&#34;5.15.0-84-generic&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;utsname_sysname&#34;</span>: <span class=s2>&#34;Linux&#34;</span>,
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;utsname_version&#34;</span>: <span class=s2>&#34;#93-Ubuntu SMP Tue Sep 5 17:16:10 UTC 2023&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>需啟用mgr rook的modules</p><p>參考網址： <a class=link href=https://github.com/rook/rook/issues/11316 target=_blank rel=noopener>https://github.com/rook/rook/issues/11316</a></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 預設rook沒有啟用</span>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph mgr module ls
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph mgr module <span class=nb>enable</span> rook
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph mgr module ls
+</span></span><span class=line><span class=cl>MODULE
+</span></span><span class=line><span class=cl>balancer              on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>crash                 on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>devicehealth          on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>orchestrator          on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>pg_autoscaler         on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>progress              on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>rbd_support           on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>status                on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>telemetry             on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>volumes               on <span class=o>(</span>always on<span class=o>)</span>
+</span></span><span class=line><span class=cl>dashboard             on
+</span></span><span class=line><span class=cl>iostat                on
+</span></span><span class=line><span class=cl>nfs                   on
+</span></span><span class=line><span class=cl>prometheus            on
+</span></span><span class=line><span class=cl>restful               on
+</span></span><span class=line><span class=cl>rook                  on
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples# ceph crash archive 2023-11-28T19:02:15.741903Z_cff323ca-e2d5-415c-b5e6-e518a4a2e892
+</span></span></code></pre></div><p>這樣集群檢查就會顯示健康</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl edit services rook-ceph-mgr -n rook-ceph
+</span></span><span class=line><span class=cl>  type: NodePort
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get svc -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>             AGE
+</span></span><span class=line><span class=cl>rook-ceph-mgr                            NodePort    10.245.33.129    &lt;none&gt;        9283:30602/TCP      48m
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# curl http://10.245.33.129:9283/metrics
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># HELP ceph_purge_queue_pq_item_in_journal Purge item left in journal</span>
+</span></span><span class=line><span class=cl><span class=c1># TYPE ceph_purge_queue_pq_item_in_journal gauge</span>
+</span></span><span class=line><span class=cl>ceph_purge_queue_pq_item_in_journal<span class=o>{</span><span class=nv>ceph_daemon</span><span class=o>=</span><span class=s2>&#34;mds.myfs-d&#34;</span><span class=o>}</span> 0.0
+</span></span><span class=line><span class=cl>ceph_purge_queue_pq_item_in_journal<span class=o>{</span><span class=nv>ceph_daemon</span><span class=o>=</span><span class=s2>&#34;mds.myfs-a&#34;</span><span class=o>}</span> 0.0
+</span></span><span class=line><span class=cl>ceph_purge_queue_pq_item_in_journal<span class=o>{</span><span class=nv>ceph_daemon</span><span class=o>=</span><span class=s2>&#34;mds.myfs-b&#34;</span><span class=o>}</span> 0.0
+</span></span><span class=line><span class=cl>ceph_purge_queue_pq_item_in_journal<span class=o>{</span><span class=nv>ceph_daemon</span><span class=o>=</span><span class=s2>&#34;mds.myfs-c&#34;</span><span class=o>}</span> 0.0
+</span></span></code></pre></div><p>http://192.168.1.75:30602/metrics</p><p><img src=/media/Pasted%20image%2020231129031249.png loading=lazy></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# wget https://raw.githubusercontent.com/coreos/prometheus-operator/v0.69.1/bundle.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f bundle.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get pod
+</span></span><span class=line><span class=cl>NAME                                   READY   STATUS    RESTARTS      AGE
+</span></span><span class=line><span class=cl>prometheus-operator-754cf6c978-wgn4w   1/1     Running   <span class=m>0</span>             23s
+</span></span><span class=line><span class=cl>prometheus-operator-847b56864c-6gp95   1/1     Running   <span class=m>0</span>             5m55s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f prometheus.yaml
+</span></span><span class=line><span class=cl>serviceaccount/prometheus created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/prometheus created
+</span></span><span class=line><span class=cl>clusterrole.rbac.authorization.k8s.io/prometheus-rules created
+</span></span><span class=line><span class=cl>clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+</span></span><span class=line><span class=cl>prometheus.monitoring.coreos.com/rook-prometheus created
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f prometheus-service.yaml
+</span></span><span class=line><span class=cl>service/rook-prometheus created
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f service-monitor.yaml
+</span></span><span class=line><span class=cl>servicemonitor.monitoring.coreos.com/rook-ceph-mgr created
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get pod -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                                      READY   STATUS      RESTARTS       AGE
+</span></span><span class=line><span class=cl>prometheus-rook-prometheus-0                              2/2     Running     <span class=m>0</span>              63s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get services -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>             AGE
+</span></span><span class=line><span class=cl>prometheus-operated                      ClusterIP   None             &lt;none&gt;        9090/TCP            88s
+</span></span><span class=line><span class=cl>rook-ceph-mgr                            NodePort    10.245.33.129    &lt;none&gt;        9283:30602/TCP      53m
+</span></span><span class=line><span class=cl>rook-ceph-mgr-dashboard                  ClusterIP   10.245.17.131    &lt;none&gt;        7000/TCP            53m
+</span></span><span class=line><span class=cl>rook-ceph-mgr-dashboard-external-https   NodePort    10.245.106.246   &lt;none&gt;        8443:30901/TCP      17m
+</span></span><span class=line><span class=cl>rook-ceph-mon-a                          ClusterIP   10.245.146.85    &lt;none&gt;        6789/TCP,3300/TCP   60m
+</span></span><span class=line><span class=cl>rook-ceph-mon-b                          ClusterIP   10.245.203.29    &lt;none&gt;        6789/TCP,3300/TCP   54m
+</span></span><span class=line><span class=cl>rook-ceph-mon-c                          ClusterIP   10.245.216.126   &lt;none&gt;        6789/TCP,3300/TCP   54m
+</span></span><span class=line><span class=cl>rook-prometheus                          NodePort    10.245.174.189   &lt;none&gt;        9090:30900/TCP      77s
+</span></span></code></pre></div><p>http://192.168.1.75:30900/graph</p><p><img src=/media/Pasted%20image%2020231129031704.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129031715.png loading=lazy></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# vim grafana-all.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kind: PersistentVolumeClaim
+</span></span><span class=line><span class=cl>apiVersion: v1
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: grafana
+</span></span><span class=line><span class=cl>  namespace: rook-ceph
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  accessModes:
+</span></span><span class=line><span class=cl>    - ReadWriteOnce
+</span></span><span class=line><span class=cl>  storageClassName: rook-cephfs
+</span></span><span class=line><span class=cl>  resources:
+</span></span><span class=line><span class=cl>    requests:
+</span></span><span class=line><span class=cl>      storage: 100Gi
+</span></span><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>apiVersion: apps/v1
+</span></span><span class=line><span class=cl>kind: Deployment
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  name: grafana
+</span></span><span class=line><span class=cl>  namespace: rook-ceph
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  selector:
+</span></span><span class=line><span class=cl>    matchLabels:
+</span></span><span class=line><span class=cl>      app: grafana
+</span></span><span class=line><span class=cl>  template:
+</span></span><span class=line><span class=cl>    metadata:
+</span></span><span class=line><span class=cl>      labels:
+</span></span><span class=line><span class=cl>        app: grafana
+</span></span><span class=line><span class=cl>    spec:
+</span></span><span class=line><span class=cl>      volumes:
+</span></span><span class=line><span class=cl>      - name: storage
+</span></span><span class=line><span class=cl>        persistentVolumeClaim:
+</span></span><span class=line><span class=cl>          claimName: grafana
+</span></span><span class=line><span class=cl>      securityContext:
+</span></span><span class=line><span class=cl>        runAsUser: <span class=m>0</span>
+</span></span><span class=line><span class=cl>      containers:
+</span></span><span class=line><span class=cl>      - name: grafana
+</span></span><span class=line><span class=cl>        image: grafana/grafana:9.5.14
+</span></span><span class=line><span class=cl>        imagePullPolicy: IfNotPresent
+</span></span><span class=line><span class=cl>        ports:
+</span></span><span class=line><span class=cl>        - containerPort: <span class=m>3000</span>
+</span></span><span class=line><span class=cl>          name: grafana
+</span></span><span class=line><span class=cl>        env:
+</span></span><span class=line><span class=cl>        - name: GF_SECURITY_ADMIN_USER
+</span></span><span class=line><span class=cl>          value: admin
+</span></span><span class=line><span class=cl>        - name: GF_SECURITY_ADMIN_PASSWORD
+</span></span><span class=line><span class=cl>          value: admin
+</span></span><span class=line><span class=cl>        readinessProbe:
+</span></span><span class=line><span class=cl>          failureThreshold: <span class=m>10</span>
+</span></span><span class=line><span class=cl>          httpGet:
+</span></span><span class=line><span class=cl>            path: /api/health
+</span></span><span class=line><span class=cl>            port: <span class=m>3000</span>
+</span></span><span class=line><span class=cl>            scheme: HTTP
+</span></span><span class=line><span class=cl>          initialDelaySeconds: <span class=m>60</span>
+</span></span><span class=line><span class=cl>          periodSeconds: <span class=m>10</span>
+</span></span><span class=line><span class=cl>          successThreshold: <span class=m>1</span>
+</span></span><span class=line><span class=cl>          timeoutSeconds: <span class=m>30</span>
+</span></span><span class=line><span class=cl>        livenessProbe:
+</span></span><span class=line><span class=cl>          failureThreshold: <span class=m>3</span>
+</span></span><span class=line><span class=cl>          httpGet:
+</span></span><span class=line><span class=cl>            path: /api/health
+</span></span><span class=line><span class=cl>            port: <span class=m>3000</span>
+</span></span><span class=line><span class=cl>            scheme: HTTP
+</span></span><span class=line><span class=cl>          periodSeconds: <span class=m>10</span>
+</span></span><span class=line><span class=cl>          successThreshold: <span class=m>1</span>
+</span></span><span class=line><span class=cl>          timeoutSeconds: <span class=m>1</span>
+</span></span><span class=line><span class=cl>        resources:
+</span></span><span class=line><span class=cl>          limits:
+</span></span><span class=line><span class=cl>            cpu: 150m
+</span></span><span class=line><span class=cl>            memory: 512Mi
+</span></span><span class=line><span class=cl>          requests:
+</span></span><span class=line><span class=cl>            cpu: 150m
+</span></span><span class=line><span class=cl>            memory: 512Mi
+</span></span><span class=line><span class=cl>        volumeMounts:
+</span></span><span class=line><span class=cl>        - mountPath: /var/lib/grafana
+</span></span><span class=line><span class=cl>          name: storage
+</span></span><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>apiVersion: v1
+</span></span><span class=line><span class=cl>kind: Service
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: grafana
+</span></span><span class=line><span class=cl>  namespace: rook-ceph
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  type: NodePort
+</span></span><span class=line><span class=cl>  ports:
+</span></span><span class=line><span class=cl>    - port: <span class=m>3000</span>
+</span></span><span class=line><span class=cl>  selector:
+</span></span><span class=line><span class=cl>    app: grafana
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>apiVersion: networking.k8s.io/v1
+</span></span><span class=line><span class=cl>kind: Ingress
+</span></span><span class=line><span class=cl>metadata:
+</span></span><span class=line><span class=cl>  name: grafana
+</span></span><span class=line><span class=cl>  namespace: rook-ceph
+</span></span><span class=line><span class=cl>spec:
+</span></span><span class=line><span class=cl>  ingressClassName: nginx
+</span></span><span class=line><span class=cl>  rules:
+</span></span><span class=line><span class=cl>  - host: grafana.jimmyhome.tw
+</span></span><span class=line><span class=cl>    http:
+</span></span><span class=line><span class=cl>      paths:
+</span></span><span class=line><span class=cl>      - path: /
+</span></span><span class=line><span class=cl>        pathType: Prefix
+</span></span><span class=line><span class=cl>        backend:
+</span></span><span class=line><span class=cl>          service:
+</span></span><span class=line><span class=cl>            name: grafana
+</span></span><span class=line><span class=cl>            port:
+</span></span><span class=line><span class=cl>              number: <span class=m>3000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f grafana-all.yaml
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get pod -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                                      READY   STATUS      RESTARTS       AGE
+</span></span><span class=line><span class=cl>grafana-654886fbff-wzx9n                                  0/1     Running     <span class=m>0</span>              42s
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get svc,pvc -n rook-ceph
+</span></span><span class=line><span class=cl>NAME                                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>             AGE
+</span></span><span class=line><span class=cl>service/grafana                                  NodePort    10.245.92.95     &lt;none&gt;        3000:31348/TCP      68s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>NAME                            STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+</span></span><span class=line><span class=cl>persistentvolumeclaim/grafana   Bound    pvc-75e0cc6e-5130-4ab6-b447-0d19d95880f3   200Gi      RWO            rook-cephfs    69s
+</span></span></code></pre></div><p>http://192.168.1.75:31348/login</p><p><img src=/media/Pasted%20image%2020231129032738.png loading=lazy></p><p>改密碼：38</p><p><img src=/media/Pasted%20image%2020231129032828.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129032923.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129032945.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033201.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033216.png loading=lazy></p><p><a class=link href=https://grafana.com/grafana/dashboards/2842-ceph-cluster/ target=_blank rel=noopener>https://grafana.com/grafana/dashboards/2842-ceph-cluster/</a>
+<a class=link href=https://grafana.com/grafana/dashboards/5336-ceph-osd-single/ target=_blank rel=noopener>https://grafana.com/grafana/dashboards/5336-ceph-osd-single/</a>
+<a class=link href=https://grafana.com/grafana/dashboards/5342-ceph-pools/ target=_blank rel=noopener>https://grafana.com/grafana/dashboards/5342-ceph-pools/</a></p><p><img src=/media/Pasted%20image%2020231129033454.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033528.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033556.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033610.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033640.png loading=lazy></p><p><img src=/media/Pasted%20image%2020231129033654.png loading=lazy></p></section><footer class=article-footer><section class=article-tags><a href=/tags/kubernetes/>kubernetes</a>
+<a href=/tags/ceph/>ceph</a>
+<a href=/tags/rook-ceph/>rook-ceph</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相關文章</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/2023/kubernetes-summit-2023/><div class=article-image><img src=/2023/kubernetes-summit-2023/media/_hub7b044231ef4aeecfc91c4975bdc3f98_300198_549732b0a870c59377d4ec865acd8eb7.png width=250 height=150 loading=lazy alt="Featured image of post Kubernetes Summit 2023" data-key=kubernetes-summit-2023 data-hash="md5-l3szp9B4JNVqHi1UN38u6w=="></div><div class=article-details><h2 class=article-title>Kubernetes Summit 2023</h2></div></a></article><article><a href=/2023/kubernetes-install/><div class=article-details><h2 class=article-title>kubeadm安裝 高可用版(ubuntu2204+k8s版本1.26.3+docker+cri-docker)</h2></div></a></article><article><a href=/2023/kubernetes-docker/><div class=article-details><h2 class=article-title>使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)</h2></div></a></article><article><a href=/2023/kubernetes-helm/><div class=article-details><h2 class=article-title>使用Helm安裝Rancher管理平台，納管現有k8s集群(高可用)</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//blog-goldfishbrain-fighting-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2022 -
+2023 翻轉吧金魚腦</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 建立<br>主題 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.20.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 設計</section><section class=totalcount>發表了80篇文章 ·
+總計29.17k字</section><section class=running-time>本站已運行
+<span id=runningdays class=running-days></span></section><section class=visit-count><span id=busuanzi_container_site_pv style=display:none>本站總訪問量 <span id=busuanzi_value_site_pv></span> 次 </span>·
+<span id=busuanzi_container_site_uv style=display:none>總訪客數 <span id=busuanzi_value_site_uv></span> 人</span></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><a href=# id=back-to-top title=返回顶部></a><style>#back-to-top{display:none;position:fixed;bottom:20px;right:55px;width:55px;height:55px;border-radius:7px;background-color:rgba(64,158,255,.5);box-shadow:var(--shadow-l2);font-size:30px;text-align:center;line-height:50px;cursor:pointer}#back-to-top:before{content:' ';display:inline-block;position:relative;top:0;transform:rotate(135deg);height:10px;width:10px;border-width:0 0 2px 2px;border-color:var(--back-to-top-color);border-style:solid}#back-to-top:hover:before{border-color:#2674e0}@media screen and (max-width:768px){#back-to-top{bottom:20px;right:20px;width:40px;height:40px;font-size:10px}}@media screen and (min-width:1024px){#back-to-top{bottom:20px;right:40px}}@media screen and (min-width:1280px){#back-to-top{bottom:20px;right:55px}}@media screen and (min-width:1536px){#back-to-top{visibility:hidden}}</style><script>function backToTop(){document.documentElement.scrollIntoView({behavior:"smooth"})}window.onload=function(){let t=this.document.documentElement.scrollTop||this.document.body.scrollTop,e=this.document.getElementById("back-to-top");t>0?e.style.display="inline":e.style.display="none"},window.onscroll=function(){let t=this.document.documentElement.scrollTop||this.document.body.scrollTop,e=this.document.getElementById("back-to-top");t<200?e.style.display="none":(e.style.display="inline",e.addEventListener("click",backToTop,!1))}</script><script>(function(){var t,e=window;if(e.ChannelIO)return e.console.error("ChannelIO script included twice.");t=function(){t.c(arguments)},t.q=[],t.c=function(e){t.q.push(e)},e.ChannelIO=t;function n(){if(e.ChannelIOInitialized)return;e.ChannelIOInitialized=!0;var n,t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://cdn.channel.io/plugin/ch-plugin-web.js",n=document.getElementsByTagName("script")[0],n.parentNode&&n.parentNode.insertBefore(t,n)}document.readyState==="complete"?n():(e.addEventListener("DOMContentLoaded",n),e.addEventListener("load",n))})(),ChannelIO("boot",{pluginKey:"ad479103-2d28-421a-a916-ae09e72ce014"})</script><script>let s1="2023-10-7";s1=new Date(s1.replace(/-/g,"/"));let s2=new Date,timeDifference=s2.getTime()-s1.getTime(),days=Math.floor(timeDifference/(1e3*60*60*24)),hours=Math.floor(timeDifference%(1e3*60*60*24)/(1e3*60*60)),minutes=Math.floor(timeDifference%(1e3*60*60)/(1e3*60)),result=days+"天"+hours+"小時"+minutes+"分鐘";document.getElementById("runningdays").innerHTML=result</script></body></html>
