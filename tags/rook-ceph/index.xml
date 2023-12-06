@@ -676,8 +676,14 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rook-ceph-mon-b ClusterIP 10.245.203.29 &amp;lt;none&amp;gt; 6789/TCP,3300/TCP 37m
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rook-ceph-mon-c ClusterIP 10.245.216.126 &amp;lt;none&amp;gt; 6789/TCP,3300/TCP 37m
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>https://192.168.1.75:30901/#/login?returnUrl=%2Fdashboard&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129030025.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129030025.png"
+width="895"
+height="556"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129030025_hufe507121e66ab48a7e7cb9da2387980a_27937_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129030025_hufe507121e66ab48a7e7cb9da2387980a_27937_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="160"
+data-flex-basis="386px"
 >&lt;/p>
 &lt;p>獲取密碼&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# kubectl get secrets -n rook-ceph rook-ceph-dashboard-password -o yaml
@@ -687,19 +693,43 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Y0w5bG1Vb0QlTCpQViM2RFB3U3k=&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> base64 -d
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cL9lmUoD%L*PV#6DPwSy
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129030211.png"
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129030211.png"
+width="770"
+height="579"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129030211_hu5cc736b502bda6979ebd445587d015ee_25678_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129030211_hu5cc736b502bda6979ebd445587d015ee_25678_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="132"
+data-flex-basis="319px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129035101.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129035101.png"
+width="1448"
+height="551"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129035101_hu902dc51f2cb745e9a49fdfbb29fe9200_92494_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129035101_hu902dc51f2cb745e9a49fdfbb29fe9200_92494_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="262"
+data-flex-basis="630px"
 >&lt;/p>
 &lt;p>更改密碼
-&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231130001900.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231130001900.png"
+width="840"
+height="484"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231130001900_hu1ffbcc6acbf3c769c46025e1fc48d4c4_60177_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231130001900_hu1ffbcc6acbf3c769c46025e1fc48d4c4_60177_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="173"
+data-flex-basis="416px"
 >&lt;/p>
 &lt;p>一直報這個錯誤，導致集群檢查不健康
-&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231130010912.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231130010912.png"
+width="1112"
+height="261"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231130010912_huca94f267da5be9db3bd5e717b7a2fdc1_41768_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231130010912_huca94f267da5be9db3bd5e717b7a2fdc1_41768_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="426"
+data-flex-basis="1022px"
 >&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">overall HEALTH_WARN &lt;span class="m">1&lt;/span> mgr modules have recently crashed
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>查看報錯&lt;/p>
@@ -786,8 +816,14 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ceph_purge_queue_pq_item_in_journal&lt;span class="o">{&lt;/span>&lt;span class="nv">ceph_daemon&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;mds.myfs-b&amp;#34;&lt;/span>&lt;span class="o">}&lt;/span> 0.0
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ceph_purge_queue_pq_item_in_journal&lt;span class="o">{&lt;/span>&lt;span class="nv">ceph_daemon&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;mds.myfs-c&amp;#34;&lt;/span>&lt;span class="o">}&lt;/span> 0.0
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>http://192.168.1.75:30602/metrics&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129031249.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031249.png"
+width="1442"
+height="674"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031249_hu5e187ea5f63f89641c7771755bc26dad_274456_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031249_hu5e187ea5f63f89641c7771755bc26dad_274456_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="213"
+data-flex-basis="513px"
 >&lt;/p>
 &lt;h2 id="安裝prometheus收集指標">安裝Prometheus收集指標&lt;/h2>
 &lt;h4 id="安裝prometheus-operator">安裝prometheus-operator&lt;/h4>
@@ -824,11 +860,23 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rook-ceph-mon-c ClusterIP 10.245.216.126 &amp;lt;none&amp;gt; 6789/TCP,3300/TCP 54m
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rook-prometheus NodePort 10.245.174.189 &amp;lt;none&amp;gt; 9090:30900/TCP 77s
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>http://192.168.1.75:30900/graph&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129031704.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031704.png"
+width="737"
+height="504"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031704_hu3d3d66b2b74cd2c013d9b7d93aea72d6_46635_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031704_hu3d3d66b2b74cd2c013d9b7d93aea72d6_46635_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="146"
+data-flex-basis="350px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129031715.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031715.png"
+width="1092"
+height="538"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031715_hu6e6c777882a0e2051f1fc5a866fb2514_82515_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129031715_hu6e6c777882a0e2051f1fc5a866fb2514_82515_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="202"
+data-flex-basis="487px"
 >&lt;/p>
 &lt;h2 id="安裝grafana展示圖表">安裝Grafana展示圖表&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples/monitoring# vim grafana-all.yaml
@@ -954,25 +1002,61 @@ loading="lazy"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME STATUS VOLUME CAPACITY ACCESS MODES STORAGECLASS AGE
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">persistentvolumeclaim/grafana Bound pvc-75e0cc6e-5130-4ab6-b447-0d19d95880f3 200Gi RWO rook-cephfs 69s
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>http://192.168.1.75:31348/login&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129032738.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032738.png"
+width="1043"
+height="755"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032738_hudda5a2b7780cac5e07b36804ae763151_429646_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032738_hudda5a2b7780cac5e07b36804ae763151_429646_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="138"
+data-flex-basis="331px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129032828.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032828.png"
+width="1041"
+height="815"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032828_hu3e30c24a2138532c17c5d5d206eeb5f9_106197_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032828_hu3e30c24a2138532c17c5d5d206eeb5f9_106197_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="127"
+data-flex-basis="306px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129032923.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032923.png"
+width="1054"
+height="646"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032923_hu120378f266eaff630516552849427be9_66205_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032923_hu120378f266eaff630516552849427be9_66205_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="391px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129032945.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032945.png"
+width="1442"
+height="669"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032945_hu5d0c8a00be6c0591a620efba06e3e206_110994_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129032945_hu5d0c8a00be6c0591a620efba06e3e206_110994_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="215"
+data-flex-basis="517px"
 >&lt;/p>
 &lt;p>填寫Prometheus service ip
-&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033201.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033201.png"
+width="977"
+height="933"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033201_hu5e056007209b8a60982c4deeb9023e90_114179_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033201_hu5e056007209b8a60982c4deeb9023e90_114179_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="104"
+data-flex-basis="251px"
 >&lt;/p>
 &lt;p>連線成功
-&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033216.png"
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033216.png"
+width="965"
+height="931"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033216_hu68e031f3409d496c5c0e74e866f39174_98080_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033216_hu68e031f3409d496c5c0e74e866f39174_98080_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="103"
+data-flex-basis="248px"
 >&lt;/p>
 &lt;p>Dashboard導入&lt;/p>
 &lt;p>&lt;a class="link" href="https://grafana.com/grafana/dashboards/2842-ceph-cluster/" target="_blank" rel="noopener"
@@ -981,21 +1065,57 @@ loading="lazy"
 >https://grafana.com/grafana/dashboards/5336-ceph-osd-single/&lt;/a>
 &lt;a class="link" href="https://grafana.com/grafana/dashboards/5342-ceph-pools/" target="_blank" rel="noopener"
 >https://grafana.com/grafana/dashboards/5342-ceph-pools/&lt;/a>&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033454.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033454.png"
+width="944"
+height="662"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033454_hufc14a3eb5fdd28879fee795a8c8a1ae4_84558_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033454_hufc14a3eb5fdd28879fee795a8c8a1ae4_84558_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="142"
+data-flex-basis="342px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033528.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033528.png"
+width="1444"
+height="952"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033528_huc2735031242b707af4c1b9b365618eef_238113_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033528_huc2735031242b707af4c1b9b365618eef_238113_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="151"
+data-flex-basis="364px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033556.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033556.png"
+width="938"
+height="692"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033556_hu3753b8992440733a08d09a641a826f9d_85471_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033556_hu3753b8992440733a08d09a641a826f9d_85471_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="135"
+data-flex-basis="325px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033610.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033610.png"
+width="1445"
+height="935"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033610_hu1758e4ffe16c9e0a29ee87f12fcf0052_147630_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033610_hu1758e4ffe16c9e0a29ee87f12fcf0052_147630_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="154"
+data-flex-basis="370px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033640.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033640.png"
+width="918"
+height="683"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033640_hu9ef17ef25dce363feba9835b84028665_84160_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033640_hu9ef17ef25dce363feba9835b84028665_84160_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="134"
+data-flex-basis="322px"
 >&lt;/p>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/media/Pasted%20image%2020231129033654.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033654.png"
+width="1443"
+height="944"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033654_hu0975ae701899ae8815b97f0fddb79516_161344_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rook-ceph/media/Pasted-image-20231129033654_hu0975ae701899ae8815b97f0fddb79516_161344_1024x0_resize_box_3.png 1024w"
 loading="lazy"
+class="gallery-image"
+data-flex-grow="152"
+data-flex-basis="366px"
 >&lt;/p></description></item></channel></rss>
