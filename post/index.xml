@@ -1,4 +1,551 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/post/</link><description>Recent content in Posts on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 02 Dec 2023 17:34:57 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>使用kubespray專案，用ansible批量佈屬生產環境高可用kubernetes集群(haproxy、keepalived)</title><link>https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/</link><pubDate>Sat, 02 Dec 2023 17:34:57 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/media/Pasted-image-20231205222815.png" alt="Featured image of post 使用kubespray專案，用ansible批量佈屬生產環境高可用kubernetes集群(haproxy、keepalived)" />&lt;h1 id="架構圖">架構圖&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/post/</link><description>Recent content in Posts on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Dec 2023 16:22:34 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>無人島的Diva</title><link>https://blog.goldfishbrain-fighting.com/2023/castaway-diva/</link><pubDate>Fri, 08 Dec 2023 16:22:34 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/castaway-diva/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208163037.png" alt="Featured image of post 無人島的Diva" />&lt;h2 id="據述">據述&lt;/h2>
+&lt;p>來源：Google Bard&lt;/p>
+&lt;p>該劇講述了時隔15年在無人島獲救的歌手志願生“徐木河”（朴恩斌 飾）挑戰Diva的成長之路。&lt;/p>
+&lt;p>木河是一名歌手志願生，在一次海上旅行中遭遇事故，被困在無人島上長達15年。她在無人島上學會了生存技能，也找到了唱歌的樂趣。&lt;/p>
+&lt;p>15年後，木河被救回了人類社會。她決心實現自己的夢想，成為一名真正的歌手。然而，她在社會上卻面臨著種種挑戰。她必須克服自己的恐懼和自卑，才能成為一名真正的Diva。&lt;/p>
+&lt;h2 id="經典話">經典話&lt;/h2>
+&lt;p>來源：Google Bard&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「期盼，總有一天會以從未想過的方式實現。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是劇中木河的經典台詞。她在無人島上度過了15年，在那裡她學會了堅強和勇敢。她相信，只要她一直期盼著回家，總有一天會以她意想不到的方式實現。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「如果一直擔心接下來的事，那到最後，反而會有更多的後悔，所以我從現在開始，一定會做我當下想做的事。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是木河在回歸社會後的心境轉變。她意識到，如果一直擔心未來，只會讓自己失去當下的幸福。因此，她決定要勇敢地追求自己的夢想。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「我們不是單純的逃家，那時候我們是為了活下來。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是木河和她的好朋友蘭珠在無人島上時的對話。她們兩個都是出身貧寒的少女，為了逃避不幸的生活而逃家。然而，她們在無人島上經歷了種種磨難，才真正明白了生存的意義。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「你是世界上最美麗的女人，因為你有著最堅強的心。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是木河的經紀人保傑對她說的話。保傑是木河在無人島上遇見的第一個人，也是她最堅強的後盾。他相信，木河的堅強和勇敢，讓她成為了世界上最美麗的女人。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「我不是沒有恐懼，但我知道，恐懼不是我的對手。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是木河在克服恐懼時說的話。她在無人島上學會了如何克服恐懼，也明白了恐懼不是她的對手。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「我不是完美的，但我會努力成為更好的自己。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是木河在追求夢想時說的話。她知道自己不是完美的，但她會努力成為更好的自己，才能實現自己的夢想。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「我不是為了別人而唱歌，我是為了自己而唱歌。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這是木河在找到自己的歌聲之路時說的話。她明白，歌唱是她自己的夢想，她要為自己而唱歌。&lt;/p>
+&lt;p>這些台詞都反映了劇中人物的成長和蛻變。它們不僅是劇中的經典台詞，也能給觀眾帶來思考和啟發。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「你是世界上最美麗的女人，因為你有著最堅強的心。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話不僅是劇中的經典台詞，也是我一直很喜歡的一句話。它告訴我們，一個人真正的美麗，不僅在於外表，更在於內心。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「我不是為了別人而唱歌，我是為了自己而唱歌。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話讓我明白，追求夢想，最重要的是要為自己而做。只有這樣，我們才能真正地享受到追求夢想的過程。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>「我不是沒有恐懼，但我知道，恐懼不是我的對手。」&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話給了我很大的鼓勵。它讓我明白，即使有恐懼，也不要害怕。只要我們勇敢地面對，恐懼就不會成為我們的阻礙。&lt;/p>
+&lt;h2 id="劇照">劇照&lt;/h2>
+&lt;p>來源：
+&lt;a class="link" href="https://www.storm.mg/lifestyle/4928978?mode=whole" target="_blank" rel="noopener"
+>https://www.storm.mg/lifestyle/4928978?mode=whole&lt;/a>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162712.png"
+width="800"
+height="533"
+srcset="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162712_hu8f07278d7569092d83f05dbc4f7ff8b7_594369_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162712_hu8f07278d7569092d83f05dbc4f7ff8b7_594369_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162819.png"
+width="1200"
+height="800"
+srcset="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162819_hu92deac2a7a166e9554c3b114fb115a82_1383555_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162819_hu92deac2a7a166e9554c3b114fb115a82_1383555_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="360px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162858.png"
+width="1200"
+height="542"
+srcset="https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162858_hub1a3302237ef4942d4a78ae9ddf7d2c2_383596_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/castaway-diva/media/Pasted-image-20231208162858_hub1a3302237ef4942d4a78ae9ddf7d2c2_383596_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="221"
+data-flex-basis="531px"
+>&lt;/p></description></item><item><title>精神病房也會迎來清晨</title><link>https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/</link><pubDate>Fri, 08 Dec 2023 16:10:10 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161857.png" alt="Featured image of post 精神病房也會迎來清晨" />&lt;h2 id="據述">據述&lt;/h2>
+&lt;p>來源：Google Bard&lt;/p>
+&lt;p>劇情講述第一次來到精神健康醫學科的護士多恩，在精神病房裡看到的世界和心灰意冷的病人們的故事。&lt;/p>
+&lt;p>這部劇獲得了不少好評，被稱為“溫暖治癒的韓劇”。多恩的善良和溫暖，讓她逐漸融入了精神病房的生活，也讓病人們感受到了希望。劇中對精神疾病的描寫也十分真實，讓觀眾們對精神病患者有了更多的理解和同情。&lt;/p>
+&lt;h2 id="經典話">經典話&lt;/h2>
+&lt;p>來源：Google Bard&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“心理的免疫力下降時，就要來精神科，就像骨折要去看骨科，感冒的話就去內科，因為任何人隨時都有可能變得軟弱，生活應有盡有的話，就不會罹患精神疾病嗎？ 反過來說，缺乏什麼的話就會生病嗎？”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話告訴我們，精神疾病就像其他疾病一樣，是一種需要治療的疾病。任何人都有患上精神疾病的可能，因此我們要學會正視和接受精神疾病。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“幸福哪有這麼複雜，可以隨心所慾做喜歡的事，就是幸福。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話告訴我們，幸福是一種簡單而美好的感受。只要我們能做自己喜歡的事，就會感到幸福。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“與其花力氣讓別人喜歡你，請先多多珍惜自己吧。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話告訴我們，要先學會愛自己，才能得到他人的愛。如果我們一味地討好他人，只會讓自己感到疲憊和失落。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“試試看自私一點過日子，怎麼樣？ 不要先顧慮對方感受如何，而是先照自己的意願去做，就這樣嘗試看吧，也來寫寫讚美日記，就只是稱讚妳自己，那怕是微不足道的事也好，想到什麼就儘管寫出來。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話告訴我們，有時候我們需要學會自私一點，才能照顧好自己。我們也要學會讚美自己，才能建立自信。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“死亡這回事，是經歷千萬遍都不會習慣的事。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話告訴我們，死亡是人生的必經之路，我們要學會接受它。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“我們都會犯錯，但重要的是，我們要從錯誤中學習，然後繼續前進。”&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>“不要害怕表達自己的感受，即使是負面的情緒也要允許自己去感受。”&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>“不要把自己和別人比較，每個人都是獨一無二的。”&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>“要相信自己，相信自己能克服任何困難。”&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>“要學會原諒自己和他人，才能真正地放下過去。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這些話都很有啟發性，可以幫助我們更好地理解自己和他人，也能讓我們在人生的道路上走得更加順利。&lt;/p>
+&lt;p>以下是一些具體的劇情中的經典台詞：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“我覺得自己好像哪裡故障了，連自己漸漸枯萎都不知道，人生全部變成了黃色，黃燈在眼前閃爍你都看不見，為了孩子的幸福，對於自己的幸福睜一隻眼閉一隻眼，你都不幸福了，其他人會幸福嗎？”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話是多恩在照顧病人時聽到的，它告訴我們，不要為了他人而犧牲自己的幸福。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“我以為時機點才是癥結點，我以為錯過了時機，但問題不是時機，其實只是有的人勇敢，有的人不勇敢而已。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話是多恩在和病人交談時說的，它告訴我們，只要我們勇敢地去做，就沒有什麼是不可能的。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>“每個人都會遇到挫折，但重要的是，我們要從挫折中學習，然後繼續前進。”&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>這句話是多恩在面對自己的困難時說的，它告訴我們，挫折是人生的必經之路，我們要學會勇敢地面對它。&lt;/p>
+&lt;h2 id="劇照">劇照&lt;/h2>
+&lt;p>來源：
+&lt;a class="link" href="https://hk.news.yahoo.com/netflix%E3%80%8A%E7%B2%BE%E7%A5%9E%E7%97%85%E6%88%BF%E4%B9%9F%E6%9C%83%E8%BF%8E%E4%BE%86%E6%B8%85%E6%99%A8%E3%80%8B8%E5%A4%A7%E7%9C%8B%E9%BB%9E%EF%BC%9A%E6%9C%B4%E5%AF%B6%E8%8B%B1%E5%A4%A7%E5%B1%95%E6%8F%AA%E5%BF%83%E3%80%8C%E5%B4%A9%E6%BD%B0%E6%BC%94%E6%8A%80%E3%80%8D%E5%85%B1%E9%B3%B4%E5%82%AC%E6%B7%9A%E5%8A%87%E6%83%85%EF%BC%8C%E5%BC%95%E7%88%86%E8%A7%80%E7%9C%BE%E6%B7%9A%E6%B5%B7%EF%BC%81-071442362.html" target="_blank" rel="noopener"
+>https://hk.news.yahoo.com/netflix%E3%80%8A%E7%B2%BE%E7%A5%9E%E7%97%85%E6%88%BF%E4%B9%9F%E6%9C%83%E8%BF%8E%E4%BE%86%E6%B8%85%E6%99%A8%E3%80%8B8%E5%A4%A7%E7%9C%8B%E9%BB%9E%EF%BC%9A%E6%9C%B4%E5%AF%B6%E8%8B%B1%E5%A4%A7%E5%B1%95%E6%8F%AA%E5%BF%83%E3%80%8C%E5%B4%A9%E6%BD%B0%E6%BC%94%E6%8A%80%E3%80%8D%E5%85%B1%E9%B3%B4%E5%82%AC%E6%B7%9A%E5%8A%87%E6%83%85%EF%BC%8C%E5%BC%95%E7%88%86%E8%A7%80%E7%9C%BE%E6%B7%9A%E6%B5%B7%EF%BC%81-071442362.html&lt;/a>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161610.png"
+width="960"
+height="540"
+srcset="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161610_hu3e4e35d8f051552846a0357b159ecb8a_680627_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161610_hu3e4e35d8f051552846a0357b159ecb8a_680627_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161645.png"
+width="960"
+height="540"
+srcset="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161645_hu78ed51022d04fca39cd0aaa461accf8b_704759_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161645_hu78ed51022d04fca39cd0aaa461accf8b_704759_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161714.png"
+width="960"
+height="540"
+srcset="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161714_hu45005bb4665a95d6cfb5a11014c348e8_507944_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161714_hu45005bb4665a95d6cfb5a11014c348e8_507944_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161733.png"
+width="960"
+height="540"
+srcset="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161733_hu9895222b3b8b7de9a9f4a51847538678_720756_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161733_hu9895222b3b8b7de9a9f4a51847538678_720756_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161806.png"
+width="960"
+height="540"
+srcset="https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161806_hue16ea938341f784233ad0025682799ab_692189_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/daily-dose-of-sunshine/media/Pasted-image-20231208161806_hue16ea938341f784233ad0025682799ab_692189_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="177"
+data-flex-basis="426px"
+>&lt;/p></description></item><item><title>Lesson033 - 別跟你的胃過不去！空腹喝酒的後果？</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson033/</link><pubDate>Fri, 08 Dec 2023 16:04:21 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson033/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson033/media/Pasted-image-20231208160527.png" alt="Featured image of post Lesson033 - 別跟你的胃過不去！空腹喝酒的後果？" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/JLMV_A-1aaE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">underage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 未成年的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">correlation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 相關
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">debate
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 爭論
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">requirement
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 規定
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">intestine
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 腸
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">digest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 消化
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">valve
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 瓣膜
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">protein
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 蛋白質
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wasted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 喝醉的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">contrary
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 相反的
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>轉述句&lt;/p>
+&lt;p>Reported Speech&lt;/p>
+&lt;/blockquote>
+&lt;p>轉述句就是幫忙表達了別人的想法或意見，常由「第三人稱」起首。在直述句改為轉述句時，一般要將直述句的時態「往前推」。例如本部影片中，有一句 &amp;ldquo;Some say raising the age to 21 was a success.&amp;rdquo; 就是由直述句 &amp;ldquo;Some (people) say, &amp;rsquo; raising the age to 21 is a success.&amp;rsquo;&amp;rdquo; 所衍伸出來的。若原本直述句中的動詞是現在式，則轉述句中就會是過去式，依此類推。如果直述句的內容對現在來說依然是如此，就不改變時態。以下例句中，第一個為直述句，對應的第二個則為轉述句。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- &amp;#34;I am playing with my cats&amp;#34;, he said. vs. He said (that) he was playing with his cats.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">他說：「我當時正在和我的貓玩」。與 他說他當時正在跟他的貓玩。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- They complained, &amp;#34;We&amp;#39;re not happy with the services.&amp;#34; vs. They complained (that) they were not happy with the services.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">他們抱怨道：「我們對服務不是很滿意」。與 他們抱怨他們對服務不是很滿意。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- She told me, &amp;#34;I was living in London.&amp;#34; vs. She told me (that) she had been living in London.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">她曾告訴我說：「我以前住在倫敦一陣子過」。與 她曾告訴我她以前住在倫敦一陣子過。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson032 - 從科學角度看蜘蛛人！</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson032/</link><pubDate>Fri, 08 Dec 2023 16:01:29 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson032/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson032/media/Pasted-image-20231208160209.png" alt="Featured image of post Lesson032 - 從科學角度看蜘蛛人！" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/o40wD7Nf9oY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">scientific
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 科學的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">insert
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 插入
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">thick
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 厚的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">affect
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 影響
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stick
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 黏住
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">extremely
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adv. 極度地；非常
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">permanently
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adv. 永久地
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>分詞構句與關係代子句簡化為分詞片語&lt;/p>
+&lt;p>Participle Clauses and Reduced Relative Clauses&lt;/p>
+&lt;/blockquote>
+&lt;p>因為分詞構句與關係代子句簡化為分詞片語都以現在或過去分詞的方式呈現，所以很多人會把兩者搞混。關係代子句簡化為分詞片語通常出現於名詞（先行詞）後，是省略關係代名詞後形成的分詞片語。例如影片例句：Spider webs, one-tenth the size of a piece of hair, are able to catch insects flying upwards of 15 miles an hour. 這裡的 flying 修飾先行詞 insects，可以將句子還原成：able to catch insects that fly upwards of 15 miles an hour. 分詞構句目的在「簡化」句子，當兩句主詞相同時，會省略「表示原因、條件、時間等」那句的主詞，而動詞改為分詞。例如影片例句：This creates electrostatic forces, allowing them to stick with a strength of 170 times their own weight. 這裡可以將句子寫成：This creates electrostatic forces and allows them to stick with a strength of 170 times their own weight. 至於是要變成現在分詞（Ving）還是過去分詞（V.pp），就要看該動詞是否是被動態。如果不是被動的話，該動詞改為Ving；如果是被動，則保留Vpp的型態。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- The window broken by Johan is being fixed.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">那扇被Johan打破的窗現在正在被修復。（分詞片語broken by Johan修飾某扇特定的窗戶。）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- Having a fever, I didn&amp;#39;t go to work today.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">因為發燒，所以我今天沒去上班。（分詞構句表示原因Because I have a fever簡化成Having a fever）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- Shocked by the news, my sister hasn&amp;#39;t spoken for a while.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">因為我姊被那則新聞所震驚，這幾天半句話也不說。（分詞構句表示原因Because my sister was shocked by the news簡化成Shocked by the news）
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson031 - 如果地球上的重力突然減半？</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson031/</link><pubDate>Fri, 08 Dec 2023 15:58:28 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson031/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson031/media/Pasted-image-20231208155908.png" alt="Featured image of post Lesson031 - 如果地球上的重力突然減半？" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/z0rEhNKl-zo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">float
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 飄移
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">slightly
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adv. 稍微
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">universe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 宇宙
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">weigh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 有…多重
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">consequence
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 後果
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">relatively
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adv. 相對地
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pump
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 輸送
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">astronaut
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 太空人
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">extent
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 程度
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gravity
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 重力
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>第二類條件句&lt;/p>
+&lt;p>The Second Conditional&lt;/p>
+&lt;/blockquote>
+&lt;p>第二類條件句用於敘述一個對現況的假設，以及這個假設可能帶來的結果，所描述的假設是與當下情況相反或不符的，if 開頭的子句為假設，以過去簡單式敘述，而主要子句是可能的結果，以「would/could + 原形動詞」敘述。 如課程提到 If you survived, and everything on Earth seemed to carry on about the same but just with half gravity, there would likely be health consequences. （如果你存活下來，地球上的一切萬物似乎都會保持不變，只是重力減半，可能對身體狀況造成影響。 ）句中的假設情況有違現在事實，所以動詞為過去簡單式 survived 和 seemed to。 另外一句 What would happen if the gravity here on Earth was suddenly cut in half?（如果地球上的重力突然減半，會發生什麼事？）句中的假設情況 if the gravity here on Earth was suddenly cut in half 一樣與現實不符，所以用過去簡單式敘述。這裡同學可以注意，以正式用法來說，be 動詞在假設語氣中一律為 were，也就是說不管主詞的人稱或是單複數，對應的 be 動詞都應該要用 were，如例句一 if I were you 而非 if I was you。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- I would accept that job offer if I were you.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">如果我是你，我會接受那份工作邀約。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- If they didn’t like Joe, they wouldn’t invite him to the party.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">如果他們不喜歡 Joe 就不會邀請他來派對了。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- I would weigh so much less if I lived on the moon.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">如果我住在月球上，我會變輕許多。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson030 -【國際時事】脫歐是什麼？看看這支短片簡單弄清何謂脫歐！</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson030/</link><pubDate>Fri, 08 Dec 2023 15:55:24 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson030/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson030/media/Pasted-image-20231208155621.png" alt="Featured image of post Lesson030 -【國際時事】脫歐是什麼？看看這支短片簡單弄清何謂脫歐！" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/VKIOBefut5Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">lately
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adv. 最近
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">commercial
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 廣告
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">unorganized
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 雜亂的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">prime minister
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 首相; 總理
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">framework
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 架構
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">citizen
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 公民
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">parliament
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 國會
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>副詞&lt;/p>
+&lt;p>Adverbs&lt;/p>
+&lt;/blockquote>
+&lt;p>按意義來分，副詞可分為情狀（一般）副詞、程度副詞、地方副詞、時間副詞、頻率副詞等。程度副詞用於修飾形容詞、動詞的「程度」。如 fully 有「完全地」的意思。其餘常見的程度副詞還包括fairly、pretty、rather、quite、greatly、almost、nearly、highly、awfully、deeply、partly、perfectly 等。而 initially 則是屬於「時間副詞」的一種，它標明了事物在時間上發生的先後，其他時間副詞還包括 eventually、finally、later、tomorrow 等。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- I am fully aware of the dangers of meeting that person.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">我完全清楚跟那個人碰面的危險性。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- Frankly, I&amp;#39;m not quite clear what to do next.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">老實說，我不是很清楚接下來要怎麼做。（這邊的 quite 是「完全地」）
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- Today is quite a lovely day, isn&amp;#39;t it?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">今天算是個相當愉快的一天，不是嗎？ （在此 quite 表示「相當」之意）
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson029 - 特勤局如何使用墨水破案？</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson029/</link><pubDate>Fri, 08 Dec 2023 15:51:59 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson029/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson029/media/Pasted-image-20231208155256.png" alt="Featured image of post Lesson029 - 特勤局如何使用墨水破案？" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/kCKM_ICjDtc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">crime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 違法行爲，犯罪活動
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">investigation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. (對罪案、問題、陳述等的) 調查
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">complicated
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 複雜的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">handwriting
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 字跡，筆跡
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">collection
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 收藏
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ink
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 墨水；油墨
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">currency
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 貨幣
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">glance
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 一瞥；掃視
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">solve
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 解決，偵破
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">shot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 照片，快照
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>關係子句簡化為分詞片語&lt;/p>
+&lt;p>Reduced Relative Clauses&lt;/p>
+&lt;/blockquote>
+&lt;p>今天要跟大家介紹關係代名詞省略時要注意的事情。我們來看看影片裡的句子： They&amp;rsquo;re also an elite team of investigators solving some of the nation&amp;rsquo;s biggest crimes. 這裡 solving 是用於修飾前面的 an elite team of investigators，此句是省略了關係代名詞，可以將句子還原成：They&amp;rsquo;re also an elite team of investigators who solve some of the nation&amp;rsquo;s biggest crimes. 當關係代名詞作為關係子句中的主詞，關係代名詞省略後，其後的動詞型態也要有所變化，變成分詞。至於是要變成現在分詞（Ving）還是過去分詞（V.pp），就要看該動詞是否是被動態。如果不是被動的話，該動詞改為Ving；如果是被動，則保留Vpp的型態。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- The boy sleeping soundly didn&amp;#39;t hear the door bell ringing.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">那個睡得很香的男孩沒有聽到門鈴聲。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- The roads covered by snow made our journey impossible.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">被雪所覆蓋的道路使我們無法進行我們的旅程。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- The new computer bought by Amy works very well.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Amy買的新電腦非常好用。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson028 - 不想下床？來看看賴床對身體的影響！</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson028/</link><pubDate>Fri, 08 Dec 2023 15:48:37 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson028/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson028/media/Pasted-image-20231208154938.png" alt="Featured image of post Lesson028 - 不想下床？來看看賴床對身體的影響！" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/zj4zvXpQW1Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">lung
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 肺
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gravity
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. （尤指地球的）重力，引力，地心引力
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pneumonia
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 肺炎
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">muscle
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 肌肉
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">thigh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 大腿；股
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">suck
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 吸
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ankle
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 腳踝
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">oxygen
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 氧氣
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">opposite
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 全然不同的，迥異的，截然相反的
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>片語動詞&lt;/p>
+&lt;p>Phrasal Verbs&lt;/p>
+&lt;/blockquote>
+&lt;p>這堂課中我們學到了兩個「可分片語動詞」：crumple up 與 rip through。判斷可分或不可分大致上由動詞後是介系詞或是副詞來決定。兩者都使在動詞後接上方位副詞 (up) 與方向副詞 (through)，所以大致可以判斷是可分片語動詞唷！以下我們就介紹幾組與 &amp;ldquo;up&amp;quot;有關的片語動詞吧～&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- Can you go tidy up the kitchen? The guests will be arriving in ten minutes.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">你可以去整理一下廚房嗎？客人在十分鐘內就要到了。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- I&amp;#39;ll go pick them up at the airport. When did you say they will arrive again?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">我會到機場接他們。你再說一次他們幾點會到？
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- I&amp;#39;m totally fed up with the stories you made up by yourself.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">我受夠了你自己編造的這些故事。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson027 - 你有多自律，就有多自由！</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson027/</link><pubDate>Fri, 08 Dec 2023 15:43:09 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson027/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson027/media/Pasted-image-20231208154617.png" alt="Featured image of post Lesson027 - 你有多自律，就有多自由！" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/Ky7ARprxpNM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">disciplined
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 自律的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ability
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 能力
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sting
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 蜇
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">seek out
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">phrasal v. （尤指費時地）找出，尋找
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">social media
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 社交媒體
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">wisdom
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 智慧
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">advantage
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 優勢
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">target
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 以…為目標
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>被動語態&lt;/p>
+&lt;p>The Passive Voice&lt;/p>
+&lt;/blockquote>
+&lt;p>被動語態，隨著時態（tense）以及語體（aspect）的不同，而有多種變化型態。例如有過去被動式（had been P.P.）、過去進行被動式（was being P.P.）等。每種形式所強調的「目的」不同。例如本堂課中我們所學會兩種： 現在完成被動 - The internet has been designed to take advantage of this desire for novelty by showing you more novelty than you can ever dream of.，強調某事項已經被完成。 現在進行被動 - We are being targeted by corporations seeking to take advantage of us and make a profit.，強調某事項正在被執行中。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- The mischievous boy is being told by his mum not to make fun of his sister.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">那個頑皮男孩正被他媽媽告誡不要嘲笑他的妹妹。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- These lands have been cultivated by farmers for as long as we know it.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">在我們有認知以來，這些土地就已被農夫們耕作了。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- The computer is being repaired.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">那台電腦在被維修中。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Lesson026 - 為什麼泡麵在獄中那麼有價值？</title><link>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson026/</link><pubDate>Fri, 08 Dec 2023 15:37:28 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson026/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/voicetube-hero-learn-english-lesson026/media/Pasted-image-20231208154238.png" alt="Featured image of post Lesson026 - 為什麼泡麵在獄中那麼有價值？" />&lt;h2 id="學習影片">學習影片&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/PLt9fRYT92M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;h2 id="單字">單字&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">inmate
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 囚犯
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">staple
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 主食
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">durable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 耐久的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tobacco
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 煙草
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">informal
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 非正規的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">overwhelming
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 極大的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">starve
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 挨餓
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">federal
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">adj. 聯邦政府的
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">taint
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">v. 污染
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nutrition
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">n. 營養
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="文法">文法&lt;/h2>
+&lt;blockquote>
+&lt;p>過去完成式&lt;/p>
+&lt;p>The Past Perfect&lt;/p>
+&lt;/blockquote>
+&lt;p>過去完成式的句型為「had + 過去分詞」，表示在過去某一時間點之前，就已經完成的事件。若我們用過去完成式來敘述某個事件，通常會與另一個發生於過去但較晚發生的事件比較。因此，這個時態可以幫助我們判斷兩個過去事件的先後順序。 如本課例句 The Marshall Project reported one prison that had whittled down costs to as low as $.56 a meal. 以過去完成式來敘述的事件為 had whittled down costs，以過去簡單式敘述的事件是 reported。我們可以從這兩種不同的時態得知，是監獄內已經餐費縮減，這個組織才指出有這種狀況。 我們來看更多過去完成式的例句：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">### 例句
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- We already had dinner when my sister came back home at 9.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">我姐姐九點回到家時，我們早就吃過晚餐了。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- My neighbor just complained that my friend and I had been noisy last night.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">我的鄰居剛抱怨說我和我朋友昨晚很吵。
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">- I had read that novel which you recommended a while ago.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">我已經讀過你之前推薦的那本小說了。
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用kubespray專案，用ansible批量佈屬生產環境高可用kubernetes集群(haproxy、keepalived)</title><link>https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/</link><pubDate>Sat, 02 Dec 2023 17:34:57 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/media/Pasted-image-20231205222815.png" alt="Featured image of post 使用kubespray專案，用ansible批量佈屬生產環境高可用kubernetes集群(haproxy、keepalived)" />&lt;h1 id="架構圖">架構圖&lt;/h1>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/media/Pasted-image-20231205214821.png"
 width="1276"
 height="728"
