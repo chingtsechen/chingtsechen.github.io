@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pycharm on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/pycharm/</link><description>Recent content in Pycharm on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 08 Dec 2023 18:42:56 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/pycharm/index.xml" rel="self" type="application/rss+xml"/><item><title>Pycharm 常用快捷鍵</title><link>https://blog.goldfishbrain-fighting.com/2023/pycharm-command/</link><pubDate>Fri, 08 Dec 2023 18:42:56 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/pycharm-command/</guid><description>&lt;ol>
 &lt;li>&lt;code>ctrl+N&lt;/code> &lt;strong>新建文件&lt;/strong>&lt;/li>
-&lt;li>&lt;code>command+R&lt;/code> Replace, 替换&lt;/li>
+&lt;li>&lt;code>command+R&lt;/code> Replace, 替換&lt;/li>
 &lt;li>&lt;code>command+F&lt;/code> Find, 查找&lt;/li>
-&lt;li>&lt;code>command+/&lt;/code> 注释&lt;/li>
-&lt;li>&lt;code>command&lt;/code>+&amp;lt;/&amp;gt; 跳转到行首 / 行尾&lt;/li>
-&lt;li>&lt;code>command+Y&lt;/code> 删除整行&lt;/li>
+&lt;li>&lt;code>command+/&lt;/code> 注釋&lt;/li>
+&lt;li>&lt;code>command&lt;/code>+&amp;lt;/&amp;gt; 跳轉到行首 / 行尾&lt;/li>
+&lt;li>&lt;code>command+Y&lt;/code> 刪除整行&lt;/li>
 &lt;li>&lt;code>command+Z&lt;/code> 撤回修改&lt;/li>
-&lt;li>&lt;code>command+Alt+L&lt;/code> &lt;strong>格式化代码&lt;/strong>&lt;/li>
+&lt;li>&lt;code>command+Alt+L&lt;/code> &lt;strong>格式化程式碼&lt;/strong>&lt;/li>
 &lt;/ol></description></item><item><title>Day06 - while循環、for循環、range方法</title><link>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day06/</link><pubDate>Fri, 08 Dec 2023 17:03:54 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/python-self-learning-day06/</guid><description>&lt;h3 id="while循環補充說明">while循環補充說明&lt;/h3>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="mf">1.&lt;/span>&lt;span class="n">死循環&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">真正的死循環是一旦執行&lt;/span> &lt;span class="n">CPU功耗會急速上升&lt;/span> &lt;span class="n">直到系統採取緊急措施&lt;/span>
@@ -132,9 +132,9 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/# p2
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/# p3
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/# p4
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/#p2
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/#p3
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">https://www.cnblogs.com/#p4
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1.先定義網址的模版 &lt;/span>
