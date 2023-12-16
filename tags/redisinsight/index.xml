@@ -336,8 +336,8 @@ data-flex-grow="253"
 data-flex-basis="607px"
 >&lt;/p>
 &lt;h3 id="analysememory-analysis">ANALYSE(Memory Analysis)&lt;/h3>
-&lt;p>可以選擇使用離線分析，也就是提供他rdb file，
-或者線上分析，他會對所有redis下bgsave指令，在遠端的redis就會存下目前所有的key資訊為dump.rdb檔。&lt;/p>
+&lt;p>可以選擇使用離線分析，也就是提供他rdb file，&lt;/p>
+&lt;p>或者線上分析，他會對所有redis下bgsave指令，在遠端的redis就會存下目前所有的key資訊為dump.rdb檔。&lt;/p>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-redisinsight/media/Pasted-image-20231217001720.png"
 width="1354"
 height="794"

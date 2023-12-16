@@ -123,8 +123,7 @@
 </span></span><span class=line><span class=cl><span class=o>[</span>OK<span class=o>]</span> All <span class=m>16384</span> slots covered.
 </span></span></code></pre></div><h2 id=load來源dumprdb檔重啟redis服務>Load來源dump.rdb檔，重啟Redis服務</h2><h3 id=第一台redis011921681116379>第一台redis01(192.168.1.11:6379)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># systemctl restart redis</span>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># systemctl status redis</span>
-</span></span></code></pre></div><p>執行&ndash;cluster fix，
-執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.11:6379</span>
+</span></span></code></pre></div><p>執行&ndash;cluster fix，</p><p>執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.11:6379</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
@@ -175,8 +174,7 @@
 </span></span><span class=line><span class=cl><span class=o>[</span>OK<span class=o>]</span> All <span class=m>16384</span> slots covered.
 </span></span></code></pre></div><h3 id=第二台redis021921681126379>第二台redis02(192.168.1.12:6379)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis02 redis<span class=o>]</span><span class=c1># systemctl restart redis</span>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis02 redis<span class=o>]</span><span class=c1># systemctl status redis</span>
-</span></span></code></pre></div><p>執行&ndash;cluster fix，
-執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.12:6379</span>
+</span></span></code></pre></div><p>執行&ndash;cluster fix，</p><p>執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.12:6379</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
@@ -227,8 +225,7 @@
 </span></span><span class=line><span class=cl><span class=o>[</span>OK<span class=o>]</span> All <span class=m>16384</span> slots covered.
 </span></span></code></pre></div><h3 id=第三台redis031921681136379>第三台redis03(192.168.1.13:6379)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis03 redis<span class=o>]</span><span class=c1># systemctl restart redis</span>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis03 redis<span class=o>]</span><span class=c1># systemctl status redis</span>
-</span></span></code></pre></div><p>執行&ndash;cluster fix，
-執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.13:6379</span>
+</span></span></code></pre></div><p>執行&ndash;cluster fix，</p><p>執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.13:6379</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
@@ -279,8 +276,7 @@
 </span></span><span class=line><span class=cl><span class=o>[</span>OK<span class=o>]</span> All <span class=m>16384</span> slots covered.
 </span></span></code></pre></div><h3 id=第四台redis041921681146379>第四台redis04(192.168.1.14:6379)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis04 redis<span class=o>]</span><span class=c1># systemctl restart redis</span>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis04 redis<span class=o>]</span><span class=c1># systemctl status redis</span>
-</span></span></code></pre></div><p>執行&ndash;cluster fix，
-執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.14:6379</span>
+</span></span></code></pre></div><p>執行&ndash;cluster fix，</p><p>執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.14:6379</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
@@ -331,8 +327,7 @@
 </span></span><span class=line><span class=cl><span class=o>[</span>OK<span class=o>]</span> All <span class=m>16384</span> slots covered.
 </span></span></code></pre></div><h3 id=第五台redis051921681186379>第五台redis05(192.168.1.18:6379)</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis05 redis<span class=o>]</span><span class=c1># systemctl restart redis</span>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis05 redis<span class=o>]</span><span class=c1># systemctl status redis</span>
-</span></span></code></pre></div><p>執行&ndash;cluster fix，
-執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
+</span></span></code></pre></div><p>執行&ndash;cluster fix，</p><p>執行&ndash;cluster check，最後面要沒報錯才OK</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 --cluster fix 192.168.1.18:6379</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>
@@ -383,9 +378,7 @@
 </span></span><span class=line><span class=cl>&gt;&gt;&gt; Check <span class=k>for</span> open slots...
 </span></span><span class=line><span class=cl>&gt;&gt;&gt; Check slots coverage...
 </span></span><span class=line><span class=cl><span class=o>[</span>OK<span class=o>]</span> All <span class=m>16384</span> slots covered.
-</span></span></code></pre></div><h2 id=測試key與value是否正常>測試key與value是否正常</h2><p>藉由type key方式，確認是否有查到key的type，
-並確認是否針對key所在slot的位置，有Redirected過去key所在的主機，
-並查看key是否有取到正確的值。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
+</span></span></code></pre></div><h2 id=測試key與value是否正常>測試key與value是否正常</h2><p>藉由type key方式，確認是否有查到key的type，</p><p>並確認是否針對key所在slot的位置，有Redirected過去key所在的主機，</p><p>並查看key是否有取到正確的值。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># redis-cli --user 帳號 --pass 密碼 -c</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=c1># 查看key type，此key剛好就在redis01主機上，所以執行直接顯示type</span>
@@ -436,13 +429,7 @@
 </span></span><span class=line><span class=cl>192.168.1.12:6379&gt; hgetall BOOK_CASE_LIST_U_39048951
 </span></span><span class=line><span class=cl>1<span class=o>)</span> <span class=s2>&#34;0_5&#34;</span>
 </span></span><span class=line><span class=cl>2<span class=o>)</span> <span class=s2>&#34;{\&#34;result\&#34;:\&#34;00\&#34;,\&#34;syncTime\&#34;:\&#34;20231202164546\&#34;,\&#34;ebooks\&#34;:[{\&#34;deliverId\&#34;:\&#34;SON03001000560201\&#34;,\&#34;contentId\&#34;:\&#34;SON03001000560\&#34;,\&#34;title\&#34;:\&#34;\xe6\x8a\x95\xe8\xb3\x875\xe5\xb9\xb4\xef\xbc\x8c\xe6\x9c\xac\xe9\x87\x91\xe5\xbe\x9e4\xe8\x90\xac\xe5\x88\xb01\xe5\x84\x84\xe7\x9a\x84\xe5\xa5\xb3\xe4\xba\xba\xef\xbc\x9a\xe5\xbe\x9e\xe7\x9c\x81\xe9\x8c\xa2\xe3\x80\x81\xe5\xae\x9a\xe5\xad\x98\xe5\x88\xb0\xe8\x82\xa1\xe7\xa5\xa8\xef\xbc\x8c\xe5\xb0\x88\xe5\xb1\xac\xe5\xb0\x8f\xe8\xb3\x87\xe5\xa5\xb3\xe7\x9a\x84\xe8\xb3\xaa\xe6\x84\x9f\xe7\x90\x86\xe8\xb2\xa1\xe6\x8f\x90\xe6\xa1\x88\&#34;,\&#34;publisher\&#34;:\&#34;\xe5\xb4\xa7\xe7\x87\x81\xe6\x96\x87\xe5\x8c\x96\&#34;,\&#34;author\&#34;:\&#34;\xe6\xb7\x98\xe6\xb7\x98\&#34;,\&#34;bodyTypeCode\&#34;:\&#34;201\&#34;,\&#34;ebookType\&#34;:\&#34;\xe6\x9b\xb8\xe7\xb1\x8d\&#34;,\&#34;categories\&#34;:[\&#34;\xe9\x87\x91\xe8\x9e\x8d\xe7\x90\x86\xe8\xb2\xa1\&#34;],
-</span></span></span></code></pre></div><h2 id=redis工作目錄檔案>redis工作目錄檔案</h2><p>dump.rdb：是來源的檔案，覆蓋成dump6379.rdb，讓redis 6379 PORT使用這個檔案恢復數據
-dump6380.rdb：是redis 6380 PORT使用的rdb檔
-nodes-6379.conf：是redis 6379 PORT Cluster建置後產生的node資訊檔
-nodes-6380.conf：是redis 6380 PORT Cluster建置後產生的node資訊檔
-redis6380.conf：是redis 6380 PORT Cluster的設定檔
-redis.conf：是redis 6379 PORT Cluster的設定檔
-users.acl：是redis 6379、6380 PORT共用的acl檔</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 ~<span class=o>]</span><span class=c1># cd /usr/local/redis/</span>
+</span></span></span></code></pre></div><h2 id=redis工作目錄檔案>redis工作目錄檔案</h2><p>dump.rdb：是來源的檔案，覆蓋成dump6379.rdb，讓redis 6379 PORT使用這個檔案恢復數據</p><p>dump6380.rdb：是redis 6380 PORT使用的rdb檔</p><p>nodes-6379.conf：是redis 6379 PORT Cluster建置後產生的node資訊檔</p><p>nodes-6380.conf：是redis 6380 PORT Cluster建置後產生的node資訊檔</p><p>redis6380.conf：是redis 6380 PORT Cluster的設定檔</p><p>redis.conf：是redis 6379 PORT Cluster的設定檔</p><p>users.acl：是redis 6379、6380 PORT共用的acl檔</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@redis01 ~<span class=o>]</span><span class=c1># cd /usr/local/redis/</span>
 </span></span><span class=line><span class=cl><span class=o>[</span>root@redis01 redis<span class=o>]</span><span class=c1># ll</span>
 </span></span><span class=line><span class=cl>總計 <span class=m>1443640</span>
 </span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> redis redis <span class=m>553867150</span> 12月 <span class=m>16</span> 23:27 dump6379.rdb
