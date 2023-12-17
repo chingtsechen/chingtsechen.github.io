@@ -1,4 +1,674 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>redis-cluster on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/redis-cluster/</link><description>Recent content in redis-cluster on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 18:49:32 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/redis-cluster/index.xml" rel="self" type="application/rss+xml"/><item><title>使用RedisInsight 1.x版，BULK ACTIONS功能，還原數據，從一個cluster遷移所有分片數據到另一個cluster，結果->有些數據Key Name被修改了，此方式不可行</title><link>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/</link><pubDate>Sun, 17 Dec 2023 17:05:34 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/</guid><description>&lt;h2 id="redis-cluster主機ip表">Redis Cluster主機IP表&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>redis-cluster on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/redis-cluster/</link><description>Recent content in redis-cluster on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 18:49:32 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/redis-cluster/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Redis-Shake，還原數據，從一個cluster遷移所有分片數據到另一個cluster，結果->可行，恢復數據非常快</title><link>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/</link><pubDate>Sun, 17 Dec 2023 18:49:32 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/</guid><description>&lt;p>專案GitHub網址：
+&lt;a class="link" href="https://github.com/tair-opensource/RedisShake" target="_blank" rel="noopener"
+>https://github.com/tair-opensource/RedisShake&lt;/a>&lt;/p>
+&lt;h2 id="redis-cluster主機ip表">Redis Cluster主機IP表&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217182757.png"
+width="668"
+height="1011"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217182757_hu958cbfd0a734f396244b4db5ea229923_132015_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217182757_hu958cbfd0a734f396244b4db5ea229923_132015_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="66"
+data-flex-basis="158px"
+>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>主機名稱&lt;/td>
+&lt;td>主機IP&lt;/td>
+&lt;td>角色&lt;/td>
+&lt;td>主機IP&lt;/td>
+&lt;td>角色&lt;/td>
+&lt;td>跟隨&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis91&lt;/td>
+&lt;td>192.168.1.91:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.91:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.92:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis92&lt;/td>
+&lt;td>192.168.1.92:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.92:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.93:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis93&lt;/td>
+&lt;td>192.168.1.93:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.93:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.91:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis94&lt;/td>
+&lt;td>192.168.1.94:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.94:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.98:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis98&lt;/td>
+&lt;td>192.168.1.98:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.98:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.94:6380&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="golang安裝">Golang安裝&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># sudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># sudo vim /etc/profile&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 加到最後面&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$PATH&lt;/span>:/usr/local/go/bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># source /etc/profile&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># go version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">go version go1.21.5 linux/amd64
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="redis-shake設定">Redis-Shake設定&lt;/h2>
+&lt;p>創建工作目錄，解壓redis-shake包&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 創建工作目錄&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># mkdir redis-shake&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># sudo tar -C ./redis-shake -xzvf redis-shake-linux-amd64.tar.gz&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./redis-shake
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># cd redis-shake&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ls -l&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">總計 &lt;span class="m">11212&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxr-xr-x &lt;span class="m">1&lt;/span> &lt;span class="m">1001&lt;/span> &lt;span class="m">127&lt;/span> &lt;span class="m">11473016&lt;/span> 10月 &lt;span class="m">11&lt;/span> 19:52 redis-shake
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> &lt;span class="m">1001&lt;/span> &lt;span class="m">127&lt;/span> &lt;span class="m">2927&lt;/span> 10月 &lt;span class="m">11&lt;/span> 19:52 shake.toml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>創建dumprdbfile目錄，解壓要恢復數據的dump.rdb包，總共五個dump-master1.rdb、dump-master2.rdb、dump-master3.rdb、dump-master4.rdb、dump-master5.rdb&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># mkdir dumprdbfile&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ll&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">總計 &lt;span class="m">11212&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">2&lt;/span> root root &lt;span class="m">6&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:55 dumprdbfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwxr-xr-x &lt;span class="m">1&lt;/span> &lt;span class="m">1001&lt;/span> &lt;span class="m">127&lt;/span> &lt;span class="m">11473016&lt;/span> 10月 &lt;span class="m">11&lt;/span> 19:52 redis-shake
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> &lt;span class="m">1001&lt;/span> &lt;span class="m">127&lt;/span> &lt;span class="m">2927&lt;/span> 10月 &lt;span class="m">11&lt;/span> 19:52 shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># cd dumprdbfile/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># ls -l&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">總計 &lt;span class="m">1256064&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">255824392&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master1_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">253817683&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master2_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">254657334&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master3_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">254929776&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master4_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">266967631&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master5_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># tar -xzvf redis-master1_dump_rdb.tar.gz -O dump.rdb &amp;gt; dump-master1.rdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># tar -xzvf redis-master2_dump_rdb.tar.gz -O dump.rdb &amp;gt; dump-master2.rdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># tar -xzvf redis-master3_dump_rdb.tar.gz -O dump.rdb &amp;gt; dump-master3.rdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># tar -xzvf redis-master4_dump_rdb.tar.gz -O dump.rdb &amp;gt; dump-master4.rdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># tar -xzvf redis-master5_dump_rdb.tar.gz -O dump.rdb &amp;gt; dump-master5.rdb&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 dumprdbfile&lt;span class="o">]&lt;/span>&lt;span class="c1"># ls -l&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">總計 &lt;span class="m">3014796&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">343630318&lt;/span> 12月 &lt;span class="m">17&lt;/span> 20:03 dump-master1.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">348759548&lt;/span> 12月 &lt;span class="m">17&lt;/span> 20:04 dump-master2.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">349938872&lt;/span> 12月 &lt;span class="m">17&lt;/span> 20:04 dump-master3.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">402484559&lt;/span> 12月 &lt;span class="m">17&lt;/span> 20:04 dump-master4.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">356118026&lt;/span> 12月 &lt;span class="m">17&lt;/span> 20:04 dump-master5.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">255824392&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master1_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">253817683&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master2_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">254657334&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master3_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">254929776&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master4_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">266967631&lt;/span> 12月 &lt;span class="m">17&lt;/span> 19:56 redis-master5_dump_rdb.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>編輯redis-shake設定檔&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># vim shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 填寫要恢復數據的rdb檔案位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">filepath&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/root/redis-shake/dumprdbfile/dump-master1.rdb&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 填寫cluster其中一台master的ip，連接redis有帳號密碼，也要填上&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>redis_writer&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">cluster&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">true&lt;/span> &lt;span class="c1"># set to true if target is a redis cluster&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">address&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;192.168.1.91:6379&amp;#34;&lt;/span> &lt;span class="c1"># when cluster is true, set address to one of the cluster node&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">username&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;帳號&amp;#34;&lt;/span> &lt;span class="c1"># keep empty if not using ACL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">password&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;密碼&amp;#34;&lt;/span> &lt;span class="c1"># keep empty if no authentication is required&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">tls&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nb">false&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="redis-shake開始恢復數據">Redis-Shake開始恢復數據&lt;/h2>
+&lt;h3 id="恢復dump-master1rdb數據">恢復dump-master1，rdb數據&lt;/h3>
+&lt;p>開始恢復dump-master1.rdb數據至cluster&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ./redis-shake shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Usage: redis-shake &lt;span class="o">[&lt;/span>config file&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Example:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> redis-shake sync.toml &lt;span class="c1"># load config from sync.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> redis-shake &lt;span class="c1"># load config from environment variables&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ./redis-shake shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF load config from file: shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF log_level: &lt;span class="o">[&lt;/span>info&lt;span class="o">]&lt;/span>, log_file: &lt;span class="o">[&lt;/span>/root/redis-shake/data/shake.log&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF changed work dir to &lt;span class="o">[&lt;/span>/root/redis-shake/data&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF GOMAXPROCS defaults to the value of runtime.NumCPU &lt;span class="o">[&lt;/span>8&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF not &lt;span class="nb">set&lt;/span> pprof port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF no &lt;span class="k">function&lt;/span> script
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF create RdbReader: /root/redis-shake/dumprdbfile/dump-master1.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379@16379 myself,master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815406000&lt;/span> &lt;span class="m">1&lt;/span> connected 0-3276
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815406361&lt;/span> &lt;span class="m">5&lt;/span> connected 13107-16383
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815405000&lt;/span> &lt;span class="m">2&lt;/span> connected 3277-6553
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815403000&lt;/span> &lt;span class="m">3&lt;/span> connected 6554-9829
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815405357&lt;/span> &lt;span class="m">4&lt;/span> connected 9830-13106
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF redisClusterWriter connected to redis cluster successful. &lt;span class="nv">addresses&lt;/span>&lt;span class="o">=[&lt;/span>192.168.1.91:6379 192.168.1.98:6379 192.168.1.92:6379 192.168.1.93:6379 192.168.1.94:6379&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF create RedisClusterWriter: 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF not &lt;span class="nb">set&lt;/span> status port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF start syncing...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:47 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> start &lt;span class="nb">read&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:52 INF &lt;span class="nv">read_count&lt;/span>&lt;span class="o">=[&lt;/span>298147&lt;span class="o">]&lt;/span>, &lt;span class="nv">read_ops&lt;/span>&lt;span class="o">=[&lt;/span>62121.63&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_count&lt;/span>&lt;span class="o">=[&lt;/span>298146&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_ops&lt;/span>&lt;span class="o">=[&lt;/span>62121.63&lt;span class="o">]&lt;/span>, &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file synced: 51.78%
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:54 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file parse &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:16:54 INF all &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>檢查一下，恢復數據後，數據分布和集群slot狀況&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">327164&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">0&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">108611&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">0&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">0&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">435775&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">26.60 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="恢復dump-master2rdb數據">恢復dump-master2，rdb數據&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改要恢復數據的rdb檔案位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># vim shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">filepath&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/root/redis-shake/dumprdbfile/dump-master2.rdb&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>開始恢復dump-master2.rdb數據至cluster&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ./redis-shake shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF load config from file: shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF log_level: &lt;span class="o">[&lt;/span>info&lt;span class="o">]&lt;/span>, log_file: &lt;span class="o">[&lt;/span>/root/redis-shake/data/shake.log&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF changed work dir to &lt;span class="o">[&lt;/span>/root/redis-shake/data&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF GOMAXPROCS defaults to the value of runtime.NumCPU &lt;span class="o">[&lt;/span>8&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF not &lt;span class="nb">set&lt;/span> pprof port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF no &lt;span class="k">function&lt;/span> script
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF create RdbReader: /root/redis-shake/dumprdbfile/dump-master2.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379@16379 myself,master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815523000&lt;/span> &lt;span class="m">1&lt;/span> connected 0-3276
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815524860&lt;/span> &lt;span class="m">5&lt;/span> connected 13107-16383
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815521000&lt;/span> &lt;span class="m">2&lt;/span> connected 3277-6553
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815523000&lt;/span> &lt;span class="m">3&lt;/span> connected 6554-9829
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815522000&lt;/span> &lt;span class="m">4&lt;/span> connected 9830-13106
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF redisClusterWriter connected to redis cluster successful. &lt;span class="nv">addresses&lt;/span>&lt;span class="o">=[&lt;/span>192.168.1.91:6379 192.168.1.98:6379 192.168.1.92:6379 192.168.1.93:6379 192.168.1.94:6379&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF create RedisClusterWriter: 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF not &lt;span class="nb">set&lt;/span> status port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF start syncing...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:45 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> start &lt;span class="nb">read&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:50 INF &lt;span class="nv">read_count&lt;/span>&lt;span class="o">=[&lt;/span>301839&lt;span class="o">]&lt;/span>, &lt;span class="nv">read_ops&lt;/span>&lt;span class="o">=[&lt;/span>62949.67&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_count&lt;/span>&lt;span class="o">=[&lt;/span>301838&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_ops&lt;/span>&lt;span class="o">=[&lt;/span>62949.67&lt;span class="o">]&lt;/span>, &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file synced: 69.52%
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:52 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file parse &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:18:52 INF all &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>檢查一下，恢復數據後，數據分布和集群slot狀況&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">327164&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">0&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">326861&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">218263&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">0&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">872288&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">53.24 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="恢復dump-master3rdb數據">恢復dump-master3，rdb數據&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改要恢復數據的rdb檔案位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># vim shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">filepath&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/root/redis-shake/dumprdbfile/dump-master3.rdb&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>開始恢復dump-master3.rdb數據至cluster&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ./redis-shake shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF load config from file: shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF log_level: &lt;span class="o">[&lt;/span>info&lt;span class="o">]&lt;/span>, log_file: &lt;span class="o">[&lt;/span>/root/redis-shake/data/shake.log&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF changed work dir to &lt;span class="o">[&lt;/span>/root/redis-shake/data&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF GOMAXPROCS defaults to the value of runtime.NumCPU &lt;span class="o">[&lt;/span>8&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF not &lt;span class="nb">set&lt;/span> pprof port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF no &lt;span class="k">function&lt;/span> script
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF create RdbReader: /root/redis-shake/dumprdbfile/dump-master3.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379@16379 myself,master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815636000&lt;/span> &lt;span class="m">1&lt;/span> connected 0-3276
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815635243&lt;/span> &lt;span class="m">5&lt;/span> connected 13107-16383
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815636000&lt;/span> &lt;span class="m">2&lt;/span> connected 3277-6553
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815638000&lt;/span> &lt;span class="m">3&lt;/span> connected 6554-9829
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815639056&lt;/span> &lt;span class="m">4&lt;/span> connected 9830-13106
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF redisClusterWriter connected to redis cluster successful. &lt;span class="nv">addresses&lt;/span>&lt;span class="o">=[&lt;/span>192.168.1.91:6379 192.168.1.98:6379 192.168.1.92:6379 192.168.1.93:6379 192.168.1.94:6379&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF create RedisClusterWriter: 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF not &lt;span class="nb">set&lt;/span> status port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF start syncing...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:39 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> start &lt;span class="nb">read&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:44 INF &lt;span class="nv">read_count&lt;/span>&lt;span class="o">=[&lt;/span>335689&lt;span class="o">]&lt;/span>, &lt;span class="nv">read_ops&lt;/span>&lt;span class="o">=[&lt;/span>82529.84&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_count&lt;/span>&lt;span class="o">=[&lt;/span>335689&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_ops&lt;/span>&lt;span class="o">=[&lt;/span>82529.84&lt;span class="o">]&lt;/span>, &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file synced: 57.47%
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:45 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file parse &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:20:45 INF all &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>檢查一下，恢復數據後，數據分布和集群slot狀況&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">327164&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">0&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">326860&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">327959&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">327538&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">1309521&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">79.93 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="恢復dump-master4rdb數據">恢復dump-master4，rdb數據&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改要恢復數據的rdb檔案位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># vim shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">filepath&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/root/redis-shake/dumprdbfile/dump-master4.rdb&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>開始恢復dump-master4.rdb數據至cluster&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ./redis-shake shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF load config from file: shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF log_level: &lt;span class="o">[&lt;/span>info&lt;span class="o">]&lt;/span>, log_file: &lt;span class="o">[&lt;/span>/root/redis-shake/data/shake.log&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF changed work dir to &lt;span class="o">[&lt;/span>/root/redis-shake/data&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF GOMAXPROCS defaults to the value of runtime.NumCPU &lt;span class="o">[&lt;/span>8&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF not &lt;span class="nb">set&lt;/span> pprof port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF no &lt;span class="k">function&lt;/span> script
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF create RdbReader: /root/redis-shake/dumprdbfile/dump-master4.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379@16379 myself,master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815696000&lt;/span> &lt;span class="m">1&lt;/span> connected 0-3276
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815695487&lt;/span> &lt;span class="m">5&lt;/span> connected 13107-16383
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815699501&lt;/span> &lt;span class="m">2&lt;/span> connected 3277-6553
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815695000&lt;/span> &lt;span class="m">3&lt;/span> connected 6554-9829
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815697000&lt;/span> &lt;span class="m">4&lt;/span> connected 9830-13106
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF redisClusterWriter connected to redis cluster successful. &lt;span class="nv">addresses&lt;/span>&lt;span class="o">=[&lt;/span>192.168.1.91:6379 192.168.1.98:6379 192.168.1.92:6379 192.168.1.93:6379 192.168.1.94:6379&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF create RedisClusterWriter: 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF not &lt;span class="nb">set&lt;/span> status port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF start syncing...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:39 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> start &lt;span class="nb">read&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:44 INF &lt;span class="nv">read_count&lt;/span>&lt;span class="o">=[&lt;/span>219205&lt;span class="o">]&lt;/span>, &lt;span class="nv">read_ops&lt;/span>&lt;span class="o">=[&lt;/span>48733.57&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_count&lt;/span>&lt;span class="o">=[&lt;/span>219204&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_ops&lt;/span>&lt;span class="o">=[&lt;/span>48733.57&lt;span class="o">]&lt;/span>, &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file synced: 53.23%
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:48 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file parse &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:21:48 INF all &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>檢查一下，恢復數據後，數據分布和集群slot狀況&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">437387&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">149&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">437074&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">437832&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">437593&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">1750035&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">106.81 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="恢復dump-master5rdb數據">恢復dump-master5，rdb數據&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改要恢復數據的rdb檔案位置&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># vim shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">filepath&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;/root/redis-shake/dumprdbfile/dump-master5.rdb&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>開始恢復dump-master5.rdb數據至cluster&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># ./redis-shake shake.toml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF load config from file: shake.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF log_level: &lt;span class="o">[&lt;/span>info&lt;span class="o">]&lt;/span>, log_file: &lt;span class="o">[&lt;/span>/root/redis-shake/data/shake.log&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF changed work dir to &lt;span class="o">[&lt;/span>/root/redis-shake/data&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF GOMAXPROCS defaults to the value of runtime.NumCPU &lt;span class="o">[&lt;/span>8&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF not &lt;span class="nb">set&lt;/span> pprof port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF no &lt;span class="k">function&lt;/span> script
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF create RdbReader: /root/redis-shake/dumprdbfile/dump-master5.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379@16379 myself,master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815801000&lt;/span> &lt;span class="m">1&lt;/span> connected 0-3276
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815800000&lt;/span> &lt;span class="m">5&lt;/span> connected 13107-16383
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815799000&lt;/span> &lt;span class="m">2&lt;/span> connected 3277-6553
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815801921&lt;/span> &lt;span class="m">3&lt;/span> connected 6554-9829
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF redisClusterWriter load cluster nodes. &lt;span class="nv">line&lt;/span>&lt;span class="o">=&lt;/span>eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379@16379 master - &lt;span class="m">0&lt;/span> &lt;span class="m">1702815800000&lt;/span> &lt;span class="m">4&lt;/span> connected 9830-13106
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF redisClusterWriter connected to redis cluster successful. &lt;span class="nv">addresses&lt;/span>&lt;span class="o">=[&lt;/span>192.168.1.91:6379 192.168.1.98:6379 192.168.1.92:6379 192.168.1.93:6379 192.168.1.94:6379&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF create RedisClusterWriter: 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF not &lt;span class="nb">set&lt;/span> status port
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF start syncing...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:23 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> start &lt;span class="nb">read&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:28 INF &lt;span class="nv">read_count&lt;/span>&lt;span class="o">=[&lt;/span>318286&lt;span class="o">]&lt;/span>, &lt;span class="nv">read_ops&lt;/span>&lt;span class="o">=[&lt;/span>61021.11&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_count&lt;/span>&lt;span class="o">=[&lt;/span>318285&lt;span class="o">]&lt;/span>, &lt;span class="nv">write_ops&lt;/span>&lt;span class="o">=[&lt;/span>61021.11&lt;span class="o">]&lt;/span>, &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file synced: 59.98%
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:30 INF &lt;span class="o">[&lt;/span>rdb_reader&lt;span class="o">]&lt;/span> rdb file parse &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2023-12-17 20:23:30 INF all &lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>檢查一下，恢復數據後，數據分布和集群slot狀況&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis-shake&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">436710&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">437406&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">436424&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">437055&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">436830&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">2184425&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">133.33 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="分析數據">分析數據&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217202511.png"
+width="1221"
+height="811"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217202511_hubbad321770ed9063655dbcc7392e6aef_147929_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217202511_hubbad321770ed9063655dbcc7392e6aef_147929_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="150"
+data-flex-basis="361px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217203437.png"
+width="1661"
+height="832"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217203437_hu91070495c515dc52476009876a80df1b_116118_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217203437_hu91070495c515dc52476009876a80df1b_116118_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="199"
+data-flex-basis="479px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217203507.png"
+width="1681"
+height="902"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217203507_huc302e745bb689e5d0fc211bec2dadd78_265363_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217203507_huc302e745bb689e5d0fc211bec2dadd78_265363_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="186"
+data-flex-basis="447px"
+>&lt;/p>
+&lt;p>以下是將RBD檔案複製到REDIS目錄，一台一台REDIS服務重啟，慢慢導入RBD數據的效果&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217180124.png"
+width="1677"
+height="807"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217180124_hu8fe506ee02ff998d1d1e8dc4d146a970_106504_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217180124_hu8fe506ee02ff998d1d1e8dc4d146a970_106504_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="207"
+data-flex-basis="498px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217180139.png"
+width="1676"
+height="909"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217180139_hucd14407a271551d597e0c9776110b94b_261103_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217180139_hucd14407a271551d597e0c9776110b94b_261103_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="184"
+data-flex-basis="442px"
+>&lt;/p>
+&lt;p>看起來效果是一樣，但是使用Redis-Shake，有幾個好處：&lt;/p>
+&lt;ol>
+&lt;li>Redis服務不用重啟，線上恢復數據&lt;/li>
+&lt;li>Redis slot不會有異常分配狀況，還要使用&amp;ndash;cluster fix的狀況發生&lt;/li>
+&lt;li>恢復數據非常快，一個dump恢復大約5秒完成&lt;/li>
+&lt;/ol>
+&lt;h2 id="測試數據是否正確">測試數據，是否正確&lt;/h2>
+&lt;p>來查查看數據，是不是跟之前使用重啟Redis服務恢復數據時，得到的一樣&lt;/p>
+&lt;p>以下是使用重啟Redis服務恢復數據時，查到的key和value&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis01 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 -c&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key剛好就在redis01主機上，所以執行直接顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:362C74F290B63E5F751DCF1E49EC34BEAF6822F0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis02主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> DRM01001000347201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5914&lt;span class="o">]&lt;/span> located at 192.168.1.12:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis03主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.12:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>10759&lt;span class="o">]&lt;/span> located at 192.168.1.13:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.13:6379&amp;gt; SMEMBERS spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$aef3b17d&lt;/span>&lt;span class="s2">-ed6f-4c4e-9cc3-ef69eda6f33c&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis04主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.13:6379&amp;gt; &lt;span class="nb">type&lt;/span> TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>12921&lt;span class="o">]&lt;/span> located at 192.168.1.14:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.14:6379&amp;gt; hgetall TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;path&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;/reader/book_content_unpack/teb/2022/10/17/TON01001010231201/TON01001010231201&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;iv&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">4&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;06ac4696c8a4bb94ecb7e82b38a1dc3f&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;key&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">6&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;36971e857d647324cb59e1cdf58d7071&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis05主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.14:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>16326&lt;span class="o">]&lt;/span> located at 192.168.1.18:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.18:6379&amp;gt; SMEMBERS spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$f0d82ce3&lt;/span>&lt;span class="s2">-28e3-493c-b992-439565cf987e&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis02主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.18:6379&amp;gt; &lt;span class="nb">type&lt;/span> BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5895&lt;span class="o">]&lt;/span> located at 192.168.1.12:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.12:6379&amp;gt; hgetall BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;0_5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;{\&amp;#34;result\&amp;#34;:\&amp;#34;00\&amp;#34;,\&amp;#34;syncTime\&amp;#34;:\&amp;#34;20231202164546\&amp;#34;,\&amp;#34;ebooks\&amp;#34;:[{\&amp;#34;deliverId\&amp;#34;:\&amp;#34;SON03001000560201\&amp;#34;,\&amp;#34;contentId\&amp;#34;:\&amp;#34;SON03001000560\&amp;#34;,\&amp;#34;title\&amp;#34;:\&amp;#34;\xe6\x8a\x95\xe8\xb3\x875\xe5\xb9\xb4\xef\xbc\x8c\xe6\x9c\xac\xe9\x87\x91\xe5\xbe\x9e4\xe8\x90\xac\xe5\x88\xb01\xe5\x84\x84\xe7\x9a\x84\xe5\xa5\xb3\xe4\xba\xba\xef\xbc\x9a\xe5\xbe\x9e\xe7\x9c\x81\xe9\x8c\xa2\xe3\x80\x81\xe5\xae\x9a\xe5\xad\x98\xe5\x88\xb0\xe8\x82\xa1\xe7\xa5\xa8\xef\xbc\x8c\xe5\xb0\x88\xe5\xb1\xac\xe5\xb0\x8f\xe8\xb3\x87\xe5\xa5\xb3\xe7\x9a\x84\xe8\xb3\xaa\xe6\x84\x9f\xe7\x90\x86\xe8\xb2\xa1\xe6\x8f\x90\xe6\xa1\x88\&amp;#34;,\&amp;#34;publisher\&amp;#34;:\&amp;#34;\xe5\xb4\xa7\xe7\x87\x81\xe6\x96\x87\xe5\x8c\x96\&amp;#34;,\&amp;#34;author\&amp;#34;:\&amp;#34;\xe6\xb7\x98\xe6\xb7\x98\&amp;#34;,\&amp;#34;bodyTypeCode\&amp;#34;:\&amp;#34;201\&amp;#34;,\&amp;#34;ebookType\&amp;#34;:\&amp;#34;\xe6\x9b\xb8\xe7\xb1\x8d\&amp;#34;,\&amp;#34;categories\&amp;#34;:[\&amp;#34;\xe9\x87\x91\xe8\x9e\x8d\xe7\x90\x86\xe8\xb2\xa1\&amp;#34;],
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;font color=red>注意：可以看到，數據都正確，此方法恢復數據，可行&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 -c&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key剛好就在redis01主機上，所以執行直接顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:362C74F290B63E5F751DCF1E49EC34BEAF6822F0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis92主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> DRM01001000347201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5914&lt;span class="o">]&lt;/span> located at 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis94主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>10759&lt;span class="o">]&lt;/span> located at 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; SMEMBERS spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$aef3b17d&lt;/span>&lt;span class="s2">-ed6f-4c4e-9cc3-ef69eda6f33c&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key剛好就在redis94主機上，所以執行直接顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; &lt;span class="nb">type&lt;/span> TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; hgetall TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;path&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;/reader/book_content_unpack/teb/2022/10/17/TON01001010231201/TON01001010231201&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;key&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">4&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;36971e857d647324cb59e1cdf58d7071&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;iv&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">6&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;06ac4696c8a4bb94ecb7e82b38a1dc3f&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis98主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>16326&lt;span class="o">]&lt;/span> located at 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379&amp;gt; SMEMBERS spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$f0d82ce3&lt;/span>&lt;span class="s2">-28e3-493c-b992-439565cf987e&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis92主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379&amp;gt; &lt;span class="nb">type&lt;/span> BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5895&lt;span class="o">]&lt;/span> located at 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379&amp;gt; hgetall BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;0_5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;{\&amp;#34;result\&amp;#34;:\&amp;#34;00\&amp;#34;,\&amp;#34;syncTime\&amp;#34;:\&amp;#34;20231202164546\&amp;#34;,\&amp;#34;ebooks\&amp;#34;:[{\&amp;#34;deliverId\&amp;#34;:\&amp;#34;SON03001000560201\&amp;#34;,\&amp;#34;contentId\&amp;#34;:\&amp;#34;SON03001000560\&amp;#34;,\&amp;#34;title\&amp;#34;:\&amp;#34;\xe6\x8a\x95\xe8\xb3\x875\xe5\xb9\xb4\xef\xbc\x8c\xe6\x9c\xac\xe9\x87\x91\xe5\xbe\x9e4\xe8\x90\xac\xe5\x88\xb01\xe5\x84\x84\xe7\x9a\x84\xe5\xa5\xb3\xe4\xba\xba\xef\xbc\x9a\xe5\xbe\x9e\xe7\x9c\x81\xe9\x8c\xa2\xe3\x80\x81\xe5\xae\x9a\xe5\xad\x98\xe5\x88\xb0\xe8\x82\xa1\xe7\xa5\xa8\xef\xbc\x8c\xe5\xb0\x88\xe5\xb1\xac\xe5\xb0\x8f\xe8\xb3\x87\xe5\xa5\xb3\xe7\x9a\x84\xe8\xb3\xaa\xe6\x84\x9f\xe7\x90\x86\xe8\xb2\xa1\xe6\x8f\x90\xe6\xa1\x88\&amp;#34;,\&amp;#34;publisher\&amp;#34;:\&amp;#34;\xe5\xb4\xa7\xe7\x87\x81\xe6\x96\x87\xe5\x8c\x96\&amp;#34;,\&amp;#34;author\&amp;#34;:\&amp;#34;\xe6\xb7\x98\xe6\xb7\x98\&amp;#34;,\&amp;#34;bodyTypeCode\&amp;#34;:\&amp;#34;201\&amp;#34;,\&amp;#34;ebookType\&amp;#34;:\&amp;#34;\xe6\x9b\xb8\xe7\xb1\x8d\&amp;#34;,\&amp;#34;categories\&amp;#34;:[\&amp;#34;\xe9\x87\x91
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用RedisInsight 1.x版，BULK ACTIONS功能，還原數據，從一個cluster遷移所有分片數據到另一個cluster，結果->有些數據Key Name被修改了，此方式不可行</title><link>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/</link><pubDate>Sun, 17 Dec 2023 17:05:34 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/</guid><description>&lt;h2 id="redis-cluster主機ip表">Redis Cluster主機IP表&lt;/h2>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217182757.png"
 width="668"
 height="1011"
@@ -529,6 +1199,7 @@ data-flex-basis="442px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$f0d82ce3&lt;/span>&lt;span class="s2">-28e3-493c-b992-439565cf987e&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis02主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.18:6379&amp;gt; &lt;span class="nb">type&lt;/span> BOOK_CASE_LIST_U_39048951
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5895&lt;span class="o">]&lt;/span> located at 192.168.1.12:6379
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>

@@ -148,7 +148,18 @@ data-flex-basis="293px"
 &lt;h2 id="go環境安裝">go環境安裝&lt;/h2>
 &lt;p>官網： &lt;a class="link" href="https://go.dev/dl/" target="_blank" rel="noopener"
 >https://go.dev/dl/&lt;/a>&lt;/p>
-&lt;h3 id="mac系統">mac系統&lt;/h3>
+&lt;h3 id="linux系統">linux系統&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># sudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># sudo vim /etc/profile&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 加到最後面&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">export&lt;/span> &lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$PATH&lt;/span>:/usr/local/go/bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># source /etc/profile&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># go version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">go version go1.21.5 linux/amd64
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="mac系統">mac系統&lt;/h3>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104144958.png"
 width="1406"
 height="663"

@@ -529,6 +529,7 @@ data-flex-basis="442px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$f0d82ce3&lt;/span>&lt;span class="s2">-28e3-493c-b992-439565cf987e&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis02主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.18:6379&amp;gt; &lt;span class="nb">type&lt;/span> BOOK_CASE_LIST_U_39048951
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5895&lt;span class="o">]&lt;/span> located at 192.168.1.12:6379
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
