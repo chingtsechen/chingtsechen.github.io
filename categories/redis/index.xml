@@ -1,4 +1,590 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>redis on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/redis/</link><description>Recent content in redis on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 00:31:18 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/redis/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Kubernetes架設RedisInsight 1.x版，管理Redis集群</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-redisinsight/</link><pubDate>Sun, 17 Dec 2023 00:31:18 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-redisinsight/</guid><description>&lt;p>參考網址：https://docs.redis.com/latest/ri/installing/install-k8s/&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>redis on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/redis/</link><description>Recent content in redis on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 18:49:32 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/redis/index.xml" rel="self" type="application/rss+xml"/><item><title>使用RedisInsight 1.x版，BULK ACTIONS功能，還原數據，從一個cluster遷移所有分片數據到另一個cluster，結果->有些數據Key Name被修改了，此方式不可行</title><link>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/</link><pubDate>Sun, 17 Dec 2023 17:05:34 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/</guid><description>&lt;h2 id="redis-cluster主機ip表">Redis Cluster主機IP表&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217182757.png"
+width="668"
+height="1011"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217182757_hu958cbfd0a734f396244b4db5ea229923_132015_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217182757_hu958cbfd0a734f396244b4db5ea229923_132015_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="66"
+data-flex-basis="158px"
+>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;th>&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>主機名稱&lt;/td>
+&lt;td>主機IP&lt;/td>
+&lt;td>角色&lt;/td>
+&lt;td>主機IP&lt;/td>
+&lt;td>角色&lt;/td>
+&lt;td>跟隨&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis91&lt;/td>
+&lt;td>192.168.1.91:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.91:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.92:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis92&lt;/td>
+&lt;td>192.168.1.92:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.92:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.93:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis93&lt;/td>
+&lt;td>192.168.1.93:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.93:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.91:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis94&lt;/td>
+&lt;td>192.168.1.94:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.94:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.98:6380&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>redis98&lt;/td>
+&lt;td>192.168.1.98:6379&lt;/td>
+&lt;td>master&lt;/td>
+&lt;td>192.168.1.98:6380&lt;/td>
+&lt;td>slave&lt;/td>
+&lt;td>192.168.1.94:6380&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="redisinsight添加redis主機">RedisInsight添加Redis主機&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170716.png"
+width="1112"
+height="679"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170716_hu8941ff57d904a7570160d2b84b67f41c_52216_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170716_hu8941ff57d904a7570160d2b84b67f41c_52216_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="163"
+data-flex-basis="393px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170728.png"
+width="1118"
+height="632"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170728_hu063dd0b54e9d99400b14cc8c918e0655_90309_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170728_hu063dd0b54e9d99400b14cc8c918e0655_90309_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="176"
+data-flex-basis="424px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170744.png"
+width="1155"
+height="700"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170744_hu8099a67496bdb5dfde1d28b49eb4b9c4_63457_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170744_hu8099a67496bdb5dfde1d28b49eb4b9c4_63457_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="165"
+data-flex-basis="396px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173105.png"
+width="1679"
+height="775"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173105_hu0e7edbdab7fde8c2c7e2dba7a6e95699_116971_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173105_hu0e7edbdab7fde8c2c7e2dba7a6e95699_116971_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="216"
+data-flex-basis="519px"
+>&lt;/p>
+&lt;h2 id="使用bulk-action-restore數據">使用BULK ACTION Restore數據&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170841.png"
+width="1118"
+height="774"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170841_hu55eae7e8d5f6eee98578b69c9738d807_100007_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217170841_hu55eae7e8d5f6eee98578b69c9738d807_100007_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="144"
+data-flex-basis="346px"
+>&lt;/p>
+&lt;p>我是用k8s佈屬RedisInsight，所以才看一下，佈屬到哪個節點，需要把要恢復數據的RBD檔案，傳至那台主機RedisInsight POD裡面&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -o wide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight-cf7f6847b-s2zgg 1/1 Running &lt;span class="m">0&lt;/span> 18h 10.201.255.218 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">test-nginx 1/1 Running &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>13d ago&lt;span class="o">)&lt;/span> 13d 10.201.14.154 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-dt5xd 1/1 Running &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>13d ago&lt;span class="o">)&lt;/span> 13d 10.201.255.211 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-ggmrz 1/1 Running &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>13d ago&lt;span class="o">)&lt;/span> 13d 10.201.14.148 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-jsvck 1/1 Running &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>13d ago&lt;span class="o">)&lt;/span> 13d 10.201.255.215 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker ps &lt;span class="p">|&lt;/span> grep -i redis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5524bf7385e4 64a3d4d7e868 &lt;span class="s2">&amp;#34;bash ./docker-entry…&amp;#34;&lt;/span> &lt;span class="m">18&lt;/span> hours ago Up &lt;span class="m">18&lt;/span> hours k8s_redisinsight_redisinsight-cf7f6847b-s2zgg_default_65440569-c6e2-4f40-b836-8bf2b0c9b511_0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">efebd005bac3 registry.k8s.io/pause:3.9 &lt;span class="s2">&amp;#34;/pause&amp;#34;&lt;/span> &lt;span class="m">18&lt;/span> hours ago Up &lt;span class="m">18&lt;/span> hours k8s_POD_redisinsight-cf7f6847b-s2zgg_default_65440569-c6e2-4f40-b836-8bf2b0c9b511_0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker &lt;span class="nb">exec&lt;/span> -ti 5524bf7385e4 bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight@redisinsight-cf7f6847b-s2zgg:/app$ ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">6015&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> appicon.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-rw-r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">841&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> docker-entry.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">377&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> entry.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">2511&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> manage.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-rw-r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">6850&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> pyinstaller.spec
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">24&lt;/span> root root &lt;span class="m">4096&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> redisinsight
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-rw-r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">1089&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> requirements.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">26991&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> startup.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight@redisinsight-cf7f6847b-s2zgg:/app$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>將要恢復數據的RBD檔案，傳至RedisInsight POD裡面&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# chown -R root:root dump-master*.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# chmod o+rw dump-master*.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker cp dump-master1.rdb 5524bf7385e4:/app/dump-master1.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker cp dump-master2.rdb 5524bf7385e4:/app/dump-master2.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker cp dump-master3.rdb 5524bf7385e4:/app/dump-master3.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker cp dump-master4.rdb 5524bf7385e4:/app/dump-master4.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# docker cp dump-master5.rdb 5524bf7385e4:/app/dump-master5.rdb
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">redisinsight@redisinsight-cf7f6847b-s2zgg:/app$ ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total &lt;span class="m">1758796&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">6015&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> appicon.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-rw-r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">841&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> docker-entry.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw----rw- &lt;span class="m">1&lt;/span> root root &lt;span class="m">343630318&lt;/span> Dec &lt;span class="m">5&lt;/span> 07:27 dump-master1.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw----rw- &lt;span class="m">1&lt;/span> root root &lt;span class="m">348759548&lt;/span> Dec &lt;span class="m">5&lt;/span> 07:32 dump-master2.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw----rw- &lt;span class="m">1&lt;/span> root root &lt;span class="m">349938872&lt;/span> Dec &lt;span class="m">5&lt;/span> 07:53 dump-master3.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw----rw- &lt;span class="m">1&lt;/span> root root &lt;span class="m">402484559&lt;/span> Dec &lt;span class="m">5&lt;/span> 07:56 dump-master4.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw----rw- &lt;span class="m">1&lt;/span> root root &lt;span class="m">356118026&lt;/span> Dec &lt;span class="m">5&lt;/span> 07:56 dump-master5.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">377&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> entry.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">2511&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> manage.pyc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-rw-r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">6850&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> pyinstaller.spec
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">24&lt;/span> root root &lt;span class="m">4096&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> redisinsight
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-rw-r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">1089&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> requirements.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> root root &lt;span class="m">26991&lt;/span> May &lt;span class="m">2&lt;/span> &lt;span class="m">2023&lt;/span> startup.pyc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>開始恢復數據
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173157.png"
+width="1124"
+height="774"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173157_hu24a702ba6f3fc8c7d4b878270ed652e5_107549_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173157_hu24a702ba6f3fc8c7d4b878270ed652e5_107549_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="145"
+data-flex-basis="348px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173216.png"
+width="1716"
+height="787"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173216_hud738e7dae71b3ecce62c0ff15ac06370_115574_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173216_hud738e7dae71b3ecce62c0ff15ac06370_115574_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="218"
+data-flex-basis="523px"
+>&lt;/p>
+&lt;p>恢復數據完成
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173438.png"
+width="1714"
+height="789"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173438_hu934af6320153a37e888616a64c623532_113353_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173438_hu934af6320153a37e888616a64c623532_113353_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="217"
+data-flex-basis="521px"
+>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">122790&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">75980&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">91349&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">76507&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">76336&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">442962&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">27.04 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再選第二個rbd檔進行恢復
+&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173551.png"
+width="1711"
+height="767"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173551_hu09f9e6f01303187eae4fce88869a6eaa_128490_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173551_hu09f9e6f01303187eae4fce88869a6eaa_128490_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="223"
+data-flex-basis="535px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173646.png"
+width="1718"
+height="844"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173646_huaf632375579d3507ea0ea82dc245424e_124377_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173646_huaf632375579d3507ea0ea82dc245424e_124377_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="203"
+data-flex-basis="488px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173937.png"
+width="1714"
+height="790"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173937_hu2e766fa75da7d163520a39c4b5a93aae_119721_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217173937_hu2e766fa75da7d163520a39c4b5a93aae_119721_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="216"
+data-flex-basis="520px"
+>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">198625&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">152593&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">198771&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">184053&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">152590&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">886632&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">54.12 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>再選第三個rbd檔進行恢復，陸續將5個都恢復完成&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217174037.png"
+width="1716"
+height="773"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217174037_hu5f22c996f6384f509836bf44138693cf_134780_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217174037_hu5f22c996f6384f509836bf44138693cf_134780_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="221"
+data-flex-basis="532px"
+>&lt;/p>
+&lt;p>陸續完成五個dump.rdb的RESTORE&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217174851.png"
+width="1716"
+height="759"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217174851_hu20fe9b2924c3d0f7d31686b02efd9333_136972_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217174851_hu20fe9b2924c3d0f7d31686b02efd9333_136972_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="226"
+data-flex-basis="542px"
+>&lt;/p>
+&lt;p>可以看到，key是平均寫入每個master，slot也不會有什麼改變&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 --cluster check 192.168.1.91:6379&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.91:6379 &lt;span class="o">(&lt;/span>2c05c930...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">442550&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379 &lt;span class="o">(&lt;/span>c40f72b0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">444646&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379 &lt;span class="o">(&lt;/span>71d88e30...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">443416&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.93:6379 &lt;span class="o">(&lt;/span>caa1fb6b...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">444081&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3276&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379 &lt;span class="o">(&lt;/span>eaeb50d0...&lt;span class="o">)&lt;/span> -&amp;gt; &lt;span class="m">443884&lt;/span> keys &lt;span class="p">|&lt;/span> &lt;span class="m">3277&lt;/span> slots &lt;span class="p">|&lt;/span> &lt;span class="m">1&lt;/span> slaves.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> &lt;span class="m">2218577&lt;/span> keys in &lt;span class="m">5&lt;/span> masters.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">135.41 keys per slot on average.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o">(&lt;/span>using node 192.168.1.91:6379&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 2c05c930c506e54ebea35f8f0b731754cd44082a 192.168.1.91:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>0-3276&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 1709189e2036c2e0c4168189be9074d66bce2991 192.168.1.92:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 2c05c930c506e54ebea35f8f0b731754cd44082a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>13107-16383&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: 71d88e302c0a7ec240cbbb6f8380786d01da984c 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>3277-6553&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: caa1fb6b5fbc4e133b5ef472e2def11e836481f7 192.168.1.93:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>6554-9829&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3276&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 500ed38b799c6d5ad13483f8e0fee45fc9142d69 192.168.1.94:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates c40f72b0ee3ac4be0b9ddaea4d16079f723e13bf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 533669750790e904050e917657beae942185a407 192.168.1.91:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates caa1fb6b5fbc4e133b5ef472e2def11e836481f7
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: b0bff6695a1318da9a01af2550c85de1e8e81a83 192.168.1.93:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates 71d88e302c0a7ec240cbbb6f8380786d01da984c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">M: eaeb50d0d31025f1589b7c8cdc12867f7a474c24 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots:&lt;span class="o">[&lt;/span>9830-13106&lt;span class="o">]&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="m">3277&lt;/span> slots&lt;span class="o">)&lt;/span> master
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="m">1&lt;/span> additional replica&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">S: 2b487243e0c78adb93ac73017d04a6ad39b51c36 192.168.1.98:6380
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> slots: &lt;span class="o">(&lt;/span>&lt;span class="m">0&lt;/span> slots&lt;span class="o">)&lt;/span> slave
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> replicates eaeb50d0d31025f1589b7c8cdc12867f7a474c24
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All nodes agree about slots configuration.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k">for&lt;/span> open slots...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>OK&lt;span class="o">]&lt;/span> All &lt;span class="m">16384&lt;/span> slots covered.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="分析數據">分析數據&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175052.png"
+width="1652"
+height="756"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175052_hu1e6f69fa541db1247a7b9997e31f2b7d_98815_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175052_hu1e6f69fa541db1247a7b9997e31f2b7d_98815_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="218"
+data-flex-basis="524px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175113.png"
+width="1215"
+height="720"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175113_hu958f04d58f0c25c1ed4f6b09ce32f109_101955_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175113_hu958f04d58f0c25c1ed4f6b09ce32f109_101955_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="168"
+data-flex-basis="405px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175141.png"
+width="707"
+height="549"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175141_hu521eac495c8b9ba0c2ed1b45668fe721_37116_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175141_hu521eac495c8b9ba0c2ed1b45668fe721_37116_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="128"
+data-flex-basis="309px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175157.png"
+width="1679"
+height="913"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175157_huc2153e67b2b306265b0dd5015c4b6120_122574_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175157_huc2153e67b2b306265b0dd5015c4b6120_122574_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="183"
+data-flex-basis="441px"
+>&lt;/p>
+&lt;p>會讓REDIS執行一次bgsave，存下目前的所有key，並使用SYNC，將檔案複製到RedisInsight目錄/db/rsnaps裡面來進行分析&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># ll&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">總計 &lt;span class="m">595660&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">609714517&lt;/span> 12月 &lt;span class="m">17&lt;/span> 17:53 dump6379.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">175&lt;/span> 12月 &lt;span class="m">17&lt;/span> 17:16 dump6380.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">1303&lt;/span> 12月 &lt;span class="m">16&lt;/span> 22:17 nodes-6379.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">1303&lt;/span> 12月 &lt;span class="m">16&lt;/span> 22:17 nodes-6380.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">109501&lt;/span> 12月 &lt;span class="m">16&lt;/span> 22:01 redis6380.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">109501&lt;/span> 12月 &lt;span class="m">16&lt;/span> 22:01 redis.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redis redis &lt;span class="m">1041&lt;/span> 12月 &lt;span class="m">16&lt;/span> 22:01 users.acl
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">redisinsight@redisinsight-cf7f6847b-s2zgg:/db/rsnaps$ &lt;span class="nb">pwd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/db/rsnaps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight@redisinsight-cf7f6847b-s2zgg:/db/rsnaps$ ls -lh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total 5.0G
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 975M Dec &lt;span class="m">17&lt;/span> 09:56 2a974363-c6f6-4d86-9333-68a5d83f46a2.rsnap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 647M Dec &lt;span class="m">17&lt;/span> 09:52 2a974363-c6f6-4d86-9333-68a5d83f46a21702806698_0.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 568M Dec &lt;span class="m">17&lt;/span> 09:52 2a974363-c6f6-4d86-9333-68a5d83f46a21702806733_1.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 579M Dec &lt;span class="m">17&lt;/span> 09:53 2a974363-c6f6-4d86-9333-68a5d83f46a21702806764_2.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 582M Dec &lt;span class="m">17&lt;/span> 09:53 2a974363-c6f6-4d86-9333-68a5d83f46a21702806794_3.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 583M Dec &lt;span class="m">17&lt;/span> 09:54 2a974363-c6f6-4d86-9333-68a5d83f46a21702806827_4.rdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 819M Dec &lt;span class="m">16&lt;/span> 15:10 f784974f-a2e9-4dec-a74c-2b309d733efe.rsnap
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>執行完畢後&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">redisinsight@redisinsight-cf7f6847b-s2zgg:/db/rsnaps$ ls -lh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total 1.8G
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 975M Dec &lt;span class="m">17&lt;/span> 09:56 2a974363-c6f6-4d86-9333-68a5d83f46a2.rsnap
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> redisinsight redisinsight 819M Dec &lt;span class="m">16&lt;/span> 15:10 f784974f-a2e9-4dec-a74c-2b309d733efe.rsnap
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>用RedisInsight BULK ACTIONS復原數據的效果&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175808.png"
+width="1664"
+height="878"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175808_huf5fd5049a9d41f530456b6c2b3e5a547_140279_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175808_huf5fd5049a9d41f530456b6c2b3e5a547_140279_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="189"
+data-flex-basis="454px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175855.png"
+width="1681"
+height="913"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175855_hu025e17bfca9d8479fb79a7c3cbf5b100_262186_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217175855_hu025e17bfca9d8479fb79a7c3cbf5b100_262186_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="184"
+data-flex-basis="441px"
+>&lt;/p>
+&lt;p>以下是將RBD檔案複製到REDIS目錄，一台一台REDIS服務重啟，慢慢導入RBD數據的效果&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217180124.png"
+width="1677"
+height="807"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217180124_hu8fe506ee02ff998d1d1e8dc4d146a970_106504_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217180124_hu8fe506ee02ff998d1d1e8dc4d146a970_106504_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="207"
+data-flex-basis="498px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217180139.png"
+width="1676"
+height="909"
+srcset="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217180139_hucd14407a271551d597e0c9776110b94b_261103_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redisinsight-bulk-actions/media/Pasted-image-20231217180139_hucd14407a271551d597e0c9776110b94b_261103_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="184"
+data-flex-basis="442px"
+>&lt;/p>
+&lt;p>看起來效果是一樣，但是使用RedisInsight BULK ACTIONS，有幾個好處：&lt;/p>
+&lt;ol>
+&lt;li>Redis服務不用重啟，線上恢復數據&lt;/li>
+&lt;li>Redis slot不會有異常分配狀況，還要使用&amp;ndash;cluster fix的狀況發生&lt;/li>
+&lt;/ol>
+&lt;h2 id="測試數據是否正確結果-有些數據key-name被修改了">測試數據，是否正確，結果-&amp;gt;有些數據Key Name被修改了&lt;/h2>
+&lt;p>來查查看數據，是不是跟之前使用重啟Redis服務恢復數據時，得到的一樣&lt;/p>
+&lt;p>以下是使用重啟Redis服務恢復數據時，查到的key和value&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis01 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 -c&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key剛好就在redis01主機上，所以執行直接顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:362C74F290B63E5F751DCF1E49EC34BEAF6822F0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis02主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> DRM01001000347201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5914&lt;span class="o">]&lt;/span> located at 192.168.1.12:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis03主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.12:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>10759&lt;span class="o">]&lt;/span> located at 192.168.1.13:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.13:6379&amp;gt; SMEMBERS spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$aef3b17d&lt;/span>&lt;span class="s2">-ed6f-4c4e-9cc3-ef69eda6f33c&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis04主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.13:6379&amp;gt; &lt;span class="nb">type&lt;/span> TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>12921&lt;span class="o">]&lt;/span> located at 192.168.1.14:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.14:6379&amp;gt; hgetall TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;path&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;/reader/book_content_unpack/teb/2022/10/17/TON01001010231201/TON01001010231201&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;iv&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">4&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;06ac4696c8a4bb94ecb7e82b38a1dc3f&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;key&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">6&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;36971e857d647324cb59e1cdf58d7071&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看key type，此key在redis05主機上，會Redirected到此key所在slot主機上，再顯示type&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.14:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>16326&lt;span class="o">]&lt;/span> located at 192.168.1.18:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.18:6379&amp;gt; SMEMBERS spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;\xac\xed\x00\x05t\x00&lt;/span>&lt;span class="nv">$f0d82ce3&lt;/span>&lt;span class="s2">-28e3-493c-b992-439565cf987e&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.18:6379&amp;gt; &lt;span class="nb">type&lt;/span> BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5895&lt;span class="o">]&lt;/span> located at 192.168.1.12:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.12:6379&amp;gt; hgetall BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;0_5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;{\&amp;#34;result\&amp;#34;:\&amp;#34;00\&amp;#34;,\&amp;#34;syncTime\&amp;#34;:\&amp;#34;20231202164546\&amp;#34;,\&amp;#34;ebooks\&amp;#34;:[{\&amp;#34;deliverId\&amp;#34;:\&amp;#34;SON03001000560201\&amp;#34;,\&amp;#34;contentId\&amp;#34;:\&amp;#34;SON03001000560\&amp;#34;,\&amp;#34;title\&amp;#34;:\&amp;#34;\xe6\x8a\x95\xe8\xb3\x875\xe5\xb9\xb4\xef\xbc\x8c\xe6\x9c\xac\xe9\x87\x91\xe5\xbe\x9e4\xe8\x90\xac\xe5\x88\xb01\xe5\x84\x84\xe7\x9a\x84\xe5\xa5\xb3\xe4\xba\xba\xef\xbc\x9a\xe5\xbe\x9e\xe7\x9c\x81\xe9\x8c\xa2\xe3\x80\x81\xe5\xae\x9a\xe5\xad\x98\xe5\x88\xb0\xe8\x82\xa1\xe7\xa5\xa8\xef\xbc\x8c\xe5\xb0\x88\xe5\xb1\xac\xe5\xb0\x8f\xe8\xb3\x87\xe5\xa5\xb3\xe7\x9a\x84\xe8\xb3\xaa\xe6\x84\x9f\xe7\x90\x86\xe8\xb2\xa1\xe6\x8f\x90\xe6\xa1\x88\&amp;#34;,\&amp;#34;publisher\&amp;#34;:\&amp;#34;\xe5\xb4\xa7\xe7\x87\x81\xe6\x96\x87\xe5\x8c\x96\&amp;#34;,\&amp;#34;author\&amp;#34;:\&amp;#34;\xe6\xb7\x98\xe6\xb7\x98\&amp;#34;,\&amp;#34;bodyTypeCode\&amp;#34;:\&amp;#34;201\&amp;#34;,\&amp;#34;ebookType\&amp;#34;:\&amp;#34;\xe6\x9b\xb8\xe7\xb1\x8d\&amp;#34;,\&amp;#34;categories\&amp;#34;:[\&amp;#34;\xe9\x87\x91\xe8\x9e\x8d\xe7\x90\x86\xe8\xb2\xa1\&amp;#34;],
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;font color=red>注意：可以看到，有些數據找不到了&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@redis91 redis&lt;span class="o">]&lt;/span>&lt;span class="c1"># redis-cli --user 帳號 --pass 密碼 -c&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Warning: Using a password with &lt;span class="s1">&amp;#39;-a&amp;#39;&lt;/span> or &lt;span class="s1">&amp;#39;-u&amp;#39;&lt;/span> option on the &lt;span class="nb">command&lt;/span> line interface may not be safe.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 此數據找不到了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:362C74F290B63E5F751DCF1E49EC34BEAF6822F0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">none
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">127.0.0.1:6379&amp;gt; &lt;span class="nb">type&lt;/span> DRM01001000347201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5914&lt;span class="o">]&lt;/span> located at 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 此數據找不到了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:EBB87CF1F764E6BACCC709323FE1457065B0CC8E
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>10759&lt;span class="o">]&lt;/span> located at 192.168.1.94:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">none
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; &lt;span class="nb">type&lt;/span> TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; hgetall TON01001010231201
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;path&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;/reader/book_content_unpack/teb/2022/10/17/TON01001010231201/TON01001010231201&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">3&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;key&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">4&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;36971e857d647324cb59e1cdf58d7071&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">5&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;iv&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">6&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;06ac4696c8a4bb94ecb7e82b38a1dc3f&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 此數據找不到了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.94:6379&amp;gt; &lt;span class="nb">type&lt;/span> spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:25E30A2AB63FE661B9AE7803EAD9A9AC234097FC
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>16326&lt;span class="o">]&lt;/span> located at 192.168.1.98:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">none
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.98:6379&amp;gt; &lt;span class="nb">type&lt;/span> BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-&amp;gt; Redirected to slot &lt;span class="o">[&lt;/span>5895&lt;span class="o">]&lt;/span> located at 192.168.1.92:6379
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">hash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.92:6379&amp;gt; hgetall BOOK_CASE_LIST_U_39048951
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;0_5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2&lt;span class="o">)&lt;/span> &lt;span class="s2">&amp;#34;{\&amp;#34;result\&amp;#34;:\&amp;#34;00\&amp;#34;,\&amp;#34;syncTime\&amp;#34;:\&amp;#34;20231202164546\&amp;#34;,\&amp;#34;ebooks\&amp;#34;:[{\&amp;#34;deliverId\&amp;#34;:\&amp;#34;SON03001000560201\&amp;#34;,\&amp;#34;contentId\&amp;#34;:\&amp;#34;SON03001000560\&amp;#34;,\&amp;#34;title\&amp;#34;:\&amp;#34;\xe6\x8a\x95\xe8\xb3\x875\xe5\xb9\xb4\xef\xbc\x8c\xe6\x9c\xac\xe9\x87\x91\xe5\xbe\x9e4\xe8\x90\xac\xe5\x88\xb01\xe5\x84\x84\xe7\x9a\x84\xe5\xa5\xb3\xe4\xba\xba\xef\xbc\x9a\xe5\xbe\x9e\xe7\x9c\x81\xe9\x8c\xa2\xe3\x80\x81\xe5\xae\x9a\xe5\xad\x98\xe5\x88\xb0\xe8\x82\xa1\xe7\xa5\xa8\xef\xbc\x8c\xe5\xb0\x88\xe5\xb1\xac\xe5\xb0\x8f\xe8\xb3\x87\xe5\xa5\xb3\xe7\x9a\x84\xe8\xb3\xaa\xe6\x84\x9f\xe7\x90\x86\xe8\xb2\xa1\xe6\x8f\x90\xe6\xa1\x88\&amp;#34;,\&amp;#34;publisher\&amp;#34;:\&amp;#34;\xe5\xb4\xa7\xe7\x87\x81\xe6\x96\x87\xe5\x8c\x96\&amp;#34;,\&amp;#34;author\&amp;#34;:\&amp;#34;\xe6\xb7\x98\xe6\xb7\x98\&amp;#34;,\&amp;#34;bodyTypeCode\&amp;#34;:\&amp;#34;201\&amp;#34;,\&amp;#34;ebookType\&amp;#34;:\&amp;#34;\xe6\x9b\xb8\xe7\xb1\x8d\&amp;#34;,\&amp;#34;categories\&amp;#34;:[\&amp;#34;\xe9
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;font color=red>可以看到，數據樣式變了，此恢復數據方式會有問題，不可用&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 原數據&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">spring:session:index:org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME:362C74F290B63E5F751DCF1E49EC34BEAF6822F0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 用RedisInsight BULK ACTIONS恢復後的數據樣式變這樣&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">\x&lt;/span>19spring:session:index:org.s&lt;span class="sb">`&lt;/span>&lt;span class="se">\x&lt;/span>18&lt;span class="se">\t&lt;/span>framework.&lt;span class="se">\x&lt;/span>a0!&lt;span class="se">\x&lt;/span>01.F &lt;span class="se">\&amp;#34;\x&lt;/span>02ByI@&lt;span class="err">&amp;#39;&lt;/span>&lt;span class="se">\x&lt;/span>00N &lt;span class="se">\x&lt;/span>1b&lt;span class="se">\x&lt;/span>00S&lt;span class="se">\x&lt;/span>808&lt;span class="se">\x&lt;/span>1eRepository.PRINCIPAL_NAME_INDEX&lt;span class="sb">`&lt;/span>&lt;span class="se">\n\x&lt;/span>1f:8E09B7E74AAA48FF8481847092A40E8&lt;span class="se">\b&lt;/span>A0FBB829A
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>使用Kubernetes架設RedisInsight 1.x版，管理Redis集群</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-redisinsight/</link><pubDate>Sun, 17 Dec 2023 00:31:18 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-redisinsight/</guid><description>&lt;p>參考網址：https://docs.redis.com/latest/ri/installing/install-k8s/&lt;/p>
 &lt;h2 id="create-the-redisinsight-deployment-and-service">Create the RedisInsight deployment and service&lt;/h2>
 &lt;p>&lt;font color=red>沒有持久化數據，也就是POD重起，設定數據就會消失&lt;/font>&lt;/p>
 &lt;p>Below is an annotated YAML file that will create a RedisInsight deployment and a service in a k8s cluster.&lt;/p>
