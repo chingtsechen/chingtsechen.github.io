@@ -1,4 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>blog on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/blog/</link><description>Recent content in blog on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 19 Nov 2023 18:11:15 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Github Gist將Google Colab嵌入網頁顯示</title><link>https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/</link><pubDate>Sun, 19 Nov 2023 18:11:15 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/</guid><description>&lt;h2 id="google雲端硬碟中創建colab">Google雲端硬碟中，創建Colab&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>blog on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/blog/</link><description>Recent content in blog on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 21:38:38 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Github Hugo Build Timeout(報錯原因If this is just a slow template, you can try to increase the 'timeout' config setting.)</title><link>https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/</link><pubDate>Sun, 17 Dec 2023 21:38:38 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217213939.png"
+width="1711"
+height="656"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217213939_hu846f4b638c60ac52c8d11b770692e003_160894_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217213939_hu846f4b638c60ac52c8d11b770692e003_160894_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="260"
+data-flex-basis="625px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217213954.png"
+width="1703"
+height="813"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217213954_hu29eb38c7713ca957ae817bc9e794d928_104444_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217213954_hu29eb38c7713ca957ae817bc9e794d928_104444_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="209"
+data-flex-basis="502px"
+>&lt;/p>
+&lt;p>&lt;font color=red>報錯主要原因&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">If this is just a slow template, you can try to increase the &amp;#39;timeout&amp;#39; config setting.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217214027.png"
+width="1700"
+height="941"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217214027_hu7b87f3bd92b3b7efc5c80a77d15a3a35_206972_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217214027_hu7b87f3bd92b3b7efc5c80a77d15a3a35_206972_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="180"
+data-flex-basis="433px"
+>&lt;/p>
+&lt;p>修改hugo檔案timeout&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 檔案位置，最後面添加以下timeout = 100000設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">config/_default/config.toml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build Timeout Settings (Because Error: &amp;#34;If this is just a slow template, you can try to increase the &amp;#39;timeout&amp;#39; config setting.&amp;#34;)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">timeout&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">100000&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>修改完，就可以正常build了&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217214847.png"
+width="1677"
+height="811"
+srcset="https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217214847_hu736f3ad1f8bd24115bc439b3992736c8_82822_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/github-hugo-build-timeout/media/Pasted-image-20231217214847_hu736f3ad1f8bd24115bc439b3992736c8_82822_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="206"
+data-flex-basis="496px"
+>&lt;/p></description></item><item><title>使用Github Gist將Google Colab嵌入網頁顯示</title><link>https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/</link><pubDate>Sun, 19 Nov 2023 18:11:15 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/</guid><description>&lt;h2 id="google雲端硬碟中創建colab">Google雲端硬碟中，創建Colab&lt;/h2>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/google-colab-embed-blog-js/media/Pasted-image-20231119181713.png"
 width="1115"
 height="705"
