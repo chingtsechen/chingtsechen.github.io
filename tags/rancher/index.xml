@@ -1,4 +1,218 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rancher on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/rancher/</link><description>Recent content in rancher on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 07 Oct 2023 02:00:00 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/rancher/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</link><pubDate>Sat, 07 Oct 2023 02:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rancher on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/rancher/</link><description>Recent content in rancher on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Dec 2023 21:54:42 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/rancher/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes 使用Rancher管理平台 安裝Prometheus監控</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</link><pubDate>Mon, 18 Dec 2023 21:54:42 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</guid><description>&lt;p>參考網址：
+&lt;a class="link" href="https://ranchermanager.docs.rancher.com/zh/how-to-guides/advanced-user-guides/monitoring-alerting-guides/enable-monitoring" target="_blank" rel="noopener"
+>https://ranchermanager.docs.rancher.com/zh/how-to-guides/advanced-user-guides/monitoring-alerting-guides/enable-monitoring&lt;/a>&lt;/p>
+&lt;p>&lt;font color=red>注意：&lt;/font>&lt;/p>
+&lt;p>&lt;font color=red>由於我之前有安裝rook-ceph，也有用到prometheus監控rook-ceph集群，所以也有安裝prometheus-operator，現在rancher安裝的prometheus也會用到prometheus-operator，所以這裡要刪除掉，不然會有衝突，導致rancher安裝的prometheus無法啟動。&lt;/font>&lt;/p>
+&lt;p>&lt;font color=red>等安裝好rancher的prometheus，再來重新安裝rook-ceph用的prometheus。&lt;/font>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl delete -f bundle.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;alertmanagerconfigs.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;alertmanagers.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;podmonitors.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;probes.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;prometheusagents.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;prometheuses.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;prometheusrules.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;scrapeconfigs.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;servicemonitors.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">customresourcedefinition.apiextensions.k8s.io &lt;span class="s2">&amp;#34;thanosrulers.monitoring.coreos.com&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clusterrolebinding.rbac.authorization.k8s.io &lt;span class="s2">&amp;#34;prometheus-operator&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">clusterrole.rbac.authorization.k8s.io &lt;span class="s2">&amp;#34;prometheus-operator&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">deployment.apps &lt;span class="s2">&amp;#34;prometheus-operator&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">serviceaccount &lt;span class="s2">&amp;#34;prometheus-operator&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">service &lt;span class="s2">&amp;#34;prometheus-operator&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="安裝prometheus">安裝Prometheus&lt;/h2>
+&lt;p>點選左下角，Cluster Tools-&amp;gt; Monitoring&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235722.png"
+width="1707"
+height="946"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235722_hu741b6d593547bd44901779f738acfa9f_200228_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235722_hu741b6d593547bd44901779f738acfa9f_200228_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="180"
+data-flex-basis="433px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235912.png"
+width="1717"
+height="948"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235912_huf9a4c3031e451ab1209e7fc9739d2185_131124_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235912_huf9a4c3031e451ab1209e7fc9739d2185_131124_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="434px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235944.png"
+width="1713"
+height="948"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235944_hu683003fbddde459c613ad621ceb56f70_135976_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231218235944_hu683003fbddde459c613ad621ceb56f70_135976_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="180"
+data-flex-basis="433px"
+>&lt;/p>
+&lt;p>Prometheus修改資料存儲天數，和使用持久化數據&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000304.png"
+width="1719"
+height="945"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000304_hu4ca4fb6c3f4fceb808fa610437250c92_156240_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000304_hu4ca4fb6c3f4fceb808fa610437250c92_156240_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="436px"
+>&lt;/p>
+&lt;p>Grafana使用持久化數據&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000406.png"
+width="1719"
+height="868"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000406_hu87d5b8b891b89edc637fb6f1bd96f210_99800_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000406_hu87d5b8b891b89edc637fb6f1bd96f210_99800_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="198"
+data-flex-basis="475px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000427.png"
+width="1718"
+height="946"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000427_hu80f4cb3e46af77fb072b26e5a478aa29_112547_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000427_hu80f4cb3e46af77fb072b26e5a478aa29_112547_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="435px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000732.png"
+width="1719"
+height="909"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000732_hu175959e3b476af4e2d901ebefd4f5f58_376241_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219000732_hu175959e3b476af4e2d901ebefd4f5f58_376241_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="189"
+data-flex-basis="453px"
+>&lt;/p>
+&lt;p>安裝完成&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl get pod -n cattle-monitoring-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">alertmanager-rancher-monitoring-alertmanager-0 2/2 Running &lt;span class="m">1&lt;/span> &lt;span class="o">(&lt;/span>49s ago&lt;span class="o">)&lt;/span> 58s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">prometheus-rancher-monitoring-prometheus-0 3/3 Running &lt;span class="m">0&lt;/span> 56s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-grafana-568d4fc6d5-zsnq7 3/4 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-kube-state-metrics-56b4477cc-2zgmf 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-operator-c66c76fd9-cns8h 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-adapter-7494f789f6-x2v6p 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-65n2k 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-7t4nt 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-s9kwh 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-w8tv9 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-zzqpc 1/1 Running &lt;span class="m">0&lt;/span> 88s
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219004042.png"
+width="1718"
+height="761"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219004042_hu0842e95e2649b8c35fcf46110ec67e3b_228426_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219004042_hu0842e95e2649b8c35fcf46110ec67e3b_228426_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="225"
+data-flex-basis="541px"
+>&lt;/p>
+&lt;h2 id="測試monitoring功能">測試Monitoring功能&lt;/h2>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219012927.png"
+width="1713"
+height="943"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219012927_hu0fc5ea31c669cf294c8ebbe871fa7c48_134397_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219012927_hu0fc5ea31c669cf294c8ebbe871fa7c48_134397_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="435px"
+>&lt;/p>
+&lt;h3 id="查看prometheus">查看Prometheus&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013023.png"
+width="1712"
+height="944"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013023_hu55f4ff22df1ab0fb0c3e02512c362a2d_154901_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013023_hu55f4ff22df1ab0fb0c3e02512c362a2d_154901_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="435px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013037.png"
+width="1717"
+height="944"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013037_hub88a9b4b816e5d68de46b102bed26cb1_205158_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013037_hub88a9b4b816e5d68de46b102bed26cb1_205158_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="436px"
+>&lt;/p>
+&lt;h3 id="查看alertmanager">查看Alertmanager&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013059.png"
+width="1716"
+height="947"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013059_hu7656d9b1bc82251953d7222d79385f62_154593_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013059_hu7656d9b1bc82251953d7222d79385f62_154593_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="434px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013112.png"
+width="1714"
+height="946"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013112_hu8fa7c34531028b95562c015662ac949e_98701_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013112_hu8fa7c34531028b95562c015662ac949e_98701_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="434px"
+>&lt;/p>
+&lt;h3 id="查看grafana">查看Grafana&lt;/h3>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013140.png"
+width="1713"
+height="946"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013140_hu6f1736b6a39cc2458e21493953e45551_154723_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013140_hu6f1736b6a39cc2458e21493953e45551_154723_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="434px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013201.png"
+width="1712"
+height="947"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013201_hue1073a9af7617e17a85afad4b23e249f_193601_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013201_hue1073a9af7617e17a85afad4b23e249f_193601_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="180"
+data-flex-basis="433px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013221.png"
+width="1714"
+height="924"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013221_huca277ea012c3d6d9912547b1911bb616_128457_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219013221_huca277ea012c3d6d9912547b1911bb616_128457_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="185"
+data-flex-basis="445px"
+>&lt;/p>
+&lt;h3 id="重新安裝rook-ceph用的prometheus">重新安裝rook-ceph用的prometheus&lt;/h3>
+&lt;p>重新安裝rook-ceph用的prometheus，prometheus-operator就不用安裝了，也就是最前面刪除的bundle.yaml那個檔案。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f prometheus.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">prometheus.monitoring.coreos.com/rook-prometheus created
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f prometheus-service.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The Service &lt;span class="s2">&amp;#34;rook-prometheus&amp;#34;&lt;/span> is invalid: spec.ports&lt;span class="o">[&lt;/span>0&lt;span class="o">]&lt;/span>.nodePort: Invalid value: 30900: provided port is already allocated
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples/monitoring# kubectl create -f service-monitor.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">servicemonitor.monitoring.coreos.com/rook-ceph-mgr created
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219014254.png"
+width="1716"
+height="553"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219014254_huc4ba3b28f91efb3ae172b630efc72e6d_104348_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219014254_huc4ba3b28f91efb3ae172b630efc72e6d_104348_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="310"
+data-flex-basis="744px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219014312.png"
+width="1717"
+height="948"
+srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219014312_hu00e271da05919ef24beef98d6f7ed7aa_254549_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/media/Pasted-image-20231219014312_hu00e271da05919ef24beef98d6f7ed7aa_254549_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="181"
+data-flex-basis="434px"
+>&lt;/p></description></item><item><title>使用Docker安裝Rancher管理平台，納管現有k8s集群(單節點-非高可用)</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</link><pubDate>Sat, 07 Oct 2023 02:00:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620.png"
 width="1185"
 height="787"
 srcset="https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620_hu5a39cd61ec6101b6320b865185a3e4e0_367454_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/kubernetes-docker/media/Pasted-image-20230920224620_hu5a39cd61ec6101b6320b865185a3e4e0_367454_1024x0_resize_box_3.png 1024w"
