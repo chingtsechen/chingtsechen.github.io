@@ -96,10 +96,10 @@
 </span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=n>f</span><span class=o>.</span><span class=n>read</span><span class=p>())</span>
 </span></span><span class=line><span class=cl>    <span class=c1># print(f.read(2).decode(&#39;utf8&#39;))</span>
 </span></span><span class=line><span class=cl>    <span class=c1># f.seek(-1, 2)</span>
-</span></span><span class=line><span class=cl>    <span class=c1># print(f.tell())  # 返回游標距離文件開頭產生的位元組數</span>
+</span></span><span class=line><span class=cl>    <span class=c1># print(f.tell())  # 返回游標距離文件開頭產生的字節數</span>
 </span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;
 </span></span></span><span class=line><span class=cl><span class=s2>    seek(offset, whence)
-</span></span></span><span class=line><span class=cl><span class=s2>        offset是位移量 以位元組為單位
+</span></span></span><span class=line><span class=cl><span class=s2>        offset是位移量 以字節為單位
 </span></span></span><span class=line><span class=cl><span class=s2>        whence是模式   0  1  2
 </span></span></span><span class=line><span class=cl><span class=s2>            0是基於文件開頭
 </span></span></span><span class=line><span class=cl><span class=s2>                文本和二進位制模式都可以使用
@@ -113,6 +113,8 @@
 </span></span><span class=line><span class=cl>     <span class=n>自己輸入想要拷貝的數據路徑</span> <span class=n>自己輸入拷貝到哪個地方的目標路徑</span>
 </span></span><span class=line><span class=cl>     <span class=n>任何類型數據皆可拷貝</span>
 </span></span><span class=line><span class=cl>     <span class=n>ps</span><span class=p>:</span><span class=n>個別電腦C槽文件由於權限問題可能無法拷貝</span> <span class=n>換其他盤嘗試即可</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=mf>1.</span><span class=n>獲取想要拷貝的文件路徑</span>
 </span></span><span class=line><span class=cl><span class=n>source_file_path</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s1>&#39;請輸入您想要拷貝的文件路徑&gt;&gt;&gt;:&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
 </span></span><span class=line><span class=cl><span class=mf>2.</span><span class=n>獲取目標文件的路徑</span>
@@ -133,7 +135,8 @@
 </span></span><span class=line><span class=cl>      <span class=n>用戶可以多帳號切換登入</span><span class=p>(</span><span class=n>多用戶</span><span class=p>)</span>  <span class=n>文件內有多個用戶資訊</span>
 </span></span><span class=line><span class=cl>      <span class=n>ps</span><span class=p>:</span><span class=n>思考多用戶數據情況下如何組織文件內數據結構較為簡單</span>
 </span></span><span class=line><span class=cl>    <span class=n>提示</span><span class=p>:</span><span class=n>本質其實就是昨天作業的第二道題</span> <span class=n>只不過資料庫由數據類型變成文件</span>
-</span></span><span class=line><span class=cl>   
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=k>while</span> <span class=kc>True</span><span class=p>:</span>
 </span></span><span class=line><span class=cl>    <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;&#34;&#34;
 </span></span></span><span class=line><span class=cl><span class=s2>    1.註冊功能
