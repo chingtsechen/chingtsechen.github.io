@@ -1,4 +1,246 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>docker-compose on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/docker-compose/</link><description>Recent content in docker-compose on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 15 Nov 2023 22:26:25 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/docker-compose/index.xml" rel="self" type="application/rss+xml"/><item><title>Thanos部署Prometheus高可用(docker-compose) + redis_exporter(docker-compose)</title><link>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</link><pubDate>Wed, 15 Nov 2023 22:26:25 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</guid><description>&lt;h3 id="前情提要與架構規劃">前情提要與架構規劃&lt;/h3>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>docker-compose on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/docker-compose/</link><description>Recent content in docker-compose on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 12 Jan 2024 14:41:34 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/docker-compose/index.xml" rel="self" type="application/rss+xml"/><item><title>Zookeeper-Kafka集群佈署(Docker-Compose)</title><link>https://blog.goldfishbrain-fighting.com/2024/docker-compose-zookeeper-kafka-multinodes-cluster/</link><pubDate>Fri, 12 Jan 2024 14:41:34 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/docker-compose-zookeeper-kafka-multinodes-cluster/</guid><description>&lt;p>參考專案: &lt;a class="link" href="https://hub.docker.com/r/bitnami/kafka" target="_blank" rel="noopener"
+>https://hub.docker.com/r/bitnami/kafka&lt;/a>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>主機名稱&lt;/th>
+&lt;th>主機IP&lt;/th>
+&lt;th>node.name&lt;/th>
+&lt;th>角色&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>k8s-master71u&lt;/td>
+&lt;td>192.168.1.71&lt;/td>
+&lt;td>zookeeper1&lt;br>&lt;br>kafka1&lt;/td>
+&lt;td>zookeeper&lt;br>&lt;br>kafka&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>k8s-master72u&lt;/td>
+&lt;td>192.168.1.72&lt;/td>
+&lt;td>zookeeper2&lt;br>&lt;br>kafka2&lt;/td>
+&lt;td>zookeeper&lt;br>&lt;br>kafka&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>k8s-master73u&lt;/td>
+&lt;td>192.168.1.73&lt;/td>
+&lt;td>zookeeper3&lt;br>&lt;br>kafka3&lt;/td>
+&lt;td>zookeeper&lt;br>&lt;br>kafka&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="zookeeperkafka集群建置">Zookeeper+Kafka集群建置&lt;/h3>
+&lt;h4 id="目錄結構">目錄結構&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# tree -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── docker-compose.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── etc
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   ├── localtime
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── timezone
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── kafka
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│   └── .gitignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── zookeeper
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── .gitignore
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="設定docker-composeyml">設定docker-compose.yml&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 三台k8s-master71u、k8s-master72u、k8s-master73u設定都要修改&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">修改如下:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master71u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. zookeeper1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. ZOO_SERVER_ID: &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. ZOO_SERVERS: 0.0.0.0:2888:3888,192.168.1.72:2888:3888,192.168.1.73:2888:3888
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 4. kafka1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5. KAFKA_ADVERTISED_HOST_NAME: 192.168.1.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 6. KAFKA_HOST_NAME: 192.168.1.71
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 7. KAFKA_BROKER_ID: &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 8. KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.71:9092
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master72u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. zookeeper2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. ZOO_SERVER_ID: &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. ZOO_SERVERS: 192.168.1.71:2888:3888,0.0.0.0:2888:3888,192.168.1.73:2888:3888
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 4. kafka2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5. KAFKA_ADVERTISED_HOST_NAME: 192.168.1.72
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 6. KAFKA_HOST_NAME: 192.168.1.72
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 7. KAFKA_BROKER_ID: &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 8. KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.72:9092
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master73u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 1. zookeeper3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 2. ZOO_SERVER_ID: &lt;span class="m">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 3. ZOO_SERVERS: 192.168.1.71:2888:3888,192.168.1.72:2888:3888,0.0.0.0:2888:3888
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 4. kafka3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 5. KAFKA_ADVERTISED_HOST_NAME: 192.168.1.73
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 6. KAFKA_HOST_NAME: 192.168.1.73
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 7. KAFKA_BROKER_ID: &lt;span class="m">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 8. KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.73:9092
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>以下是k8s-master71u的docker-compose.yml&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="l">root@k8s-master71u:/data/zookeeper-kafka# cat docker-compose.yml&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c"># https://hub.docker.com/r/bitnami/kafka&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c"># https://hub.docker.com/r/bitnami/zookeeper&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;2&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">zookeeper1&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;bitnami/zookeeper:latest&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">unless-stopped&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">network_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;host&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hostname&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">zookeeper1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">zookeeper1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">2181&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2181&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">2888&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2888&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">3888&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">3888&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ZOO_SERVER_ID&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ZOO_SERVERS&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">0.0.0.0&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2888&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">3888&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="m">192.168.1.72&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2888&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">3888&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="m">192.168.1.73&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2888&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">3888&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ALLOW_ANONYMOUS_LOGIN&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">yes&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./zookeeper/data:/bitnami/zookeeper&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="c"># 校時文件&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./etc/localtime:/etc/localtime&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./etc/timezone:/etc/timezone&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">kafka1&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;bitnami/kafka:latest&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">unless-stopped&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">network_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;host&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hostname&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">kafka1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">kafka1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="m">9092&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">9092&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_ADVERTISED_HOST_NAME&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">192.168.1.71&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_HOST_NAME&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">192.168.1.71&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_ADVERTISED_PORT&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">9092&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_BROKER_ID&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_CFG_ZOOKEEPER_CONNECT&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">192.168.1.71&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2181&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="m">192.168.1.72&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2181&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="m">192.168.1.73&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">2181&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_CFG_ADVERTISED_LISTENERS&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">PLAINTEXT://192.168.1.71:9092&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_CFG_LISTENERS&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">PLAINTEXT://:9092&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ALLOW_PLAINTEXT_LISTENER&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">yes&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./kafka/data:/bitnami/kafka&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="c"># 校時文件&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./etc/localtime:/etc/localtime&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./etc/timezone:/etc/timezone&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="目錄權限修改">目錄權限修改&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# chmod &lt;span class="m">777&lt;/span> -R zookeeper
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# chmod &lt;span class="m">777&lt;/span> -R kafka
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/zookeeper-kafka# chmod &lt;span class="m">777&lt;/span> -R zookeeper
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/zookeeper-kafka# chmod &lt;span class="m">777&lt;/span> -R kafka
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/zookeeper-kafka# chmod &lt;span class="m">777&lt;/span> -R zookeeper
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/zookeeper-kafka# chmod &lt;span class="m">777&lt;/span> -R kafka
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="服務啟動">服務啟動&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 啟動&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# docker compose up -d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Running 4/4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ✔ Container kafka1 Started 0.1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ✔ Container zookeeper1 Started 0.1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ! kafka1 Published ports are discarded when using host network mode 0.0s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ! zookeeper1 Published ports are discarded when using host network mode 0.0s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# docker compose ps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME IMAGE COMMAND SERVICE CREATED STATUS PORTS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kafka1 bitnami/kafka:latest &lt;span class="s2">&amp;#34;/opt/bitnami/scripts/kafka/entrypoint.sh /opt/bitnami/scripts/kafka/run.sh&amp;#34;&lt;/span> kafka1 &lt;span class="m">15&lt;/span> seconds ago Up &lt;span class="m">14&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">zookeeper1 bitnami/zookeeper:latest &lt;span class="s2">&amp;#34;/opt/bitnami/scripts/zookeeper/entrypoint.sh /opt/bitnami/scripts/zookeeper/run.sh&amp;#34;&lt;/span> zookeeper1 &lt;span class="m">15&lt;/span> seconds ago Up &lt;span class="m">14&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/zookeeper-kafka# docker compose up -d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Running 4/4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ✔ Container kafka2 Started 0.1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ✔ Container zookeeper2 Started 0.1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ! kafka2 Published ports are discarded when using host network mode 0.0s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ! zookeeper2 Published ports are discarded when using host network mode 0.0s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/zookeeper-kafka# docker compose ps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME IMAGE COMMAND SERVICE CREATED STATUS PORTS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kafka2 bitnami/kafka:latest &lt;span class="s2">&amp;#34;/opt/bitnami/scripts/kafka/entrypoint.sh /opt/bitnami/scripts/kafka/run.sh&amp;#34;&lt;/span> kafka2 &lt;span class="m">15&lt;/span> seconds ago Up &lt;span class="m">14&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">zookeeper2 bitnami/zookeeper:latest &lt;span class="s2">&amp;#34;/opt/bitnami/scripts/zookeeper/entrypoint.sh /opt/bitnami/scripts/zookeeper/run.sh&amp;#34;&lt;/span> zookeeper2 &lt;span class="m">15&lt;/span> seconds ago Up &lt;span class="m">14&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/zookeeper-kafka# docker compose up -d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>+&lt;span class="o">]&lt;/span> Running 4/4
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ✔ Container kafka3 Started 0.1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ✔ Container zookeeper3 Started 0.1s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ! kafka3 Published ports are discarded when using host network mode 0.0s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ! zookeeper3 Published ports are discarded when using host network mode 0.0s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:/data/zookeeper-kafka# docker compose ps
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME IMAGE COMMAND SERVICE CREATED STATUS PORTS
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kafka3 bitnami/kafka:latest &lt;span class="s2">&amp;#34;/opt/bitnami/scripts/kafka/entrypoint.sh /opt/bitnami/scripts/kafka/run.sh&amp;#34;&lt;/span> kafka3 &lt;span class="m">15&lt;/span> seconds ago Up &lt;span class="m">14&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">zookeeper3 bitnami/zookeeper:latest &lt;span class="s2">&amp;#34;/opt/bitnami/scripts/zookeeper/entrypoint.sh /opt/bitnami/scripts/zookeeper/run.sh&amp;#34;&lt;/span> zookeeper3 &lt;span class="m">15&lt;/span> seconds ago Up &lt;span class="m">14&lt;/span> seconds
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="測試kafka消息推送與消費功能是否正常">測試kafka消息推送與消費功能是否正常&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 進到一個kafka (71的kafka)，測試kafka消息推送與消費功能是否正常&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# docker &lt;span class="nb">exec&lt;/span> -ti kafka1 bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka1:/$
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 創建一個topic為test&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka1:/$ kafka-topics.sh --create --topic &lt;span class="nb">test&lt;/span> --bootstrap-server localhost:9092 --partitions &lt;span class="m">3&lt;/span> --replication-factor &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Created topic test.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 消費&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka1:/$ kafka-console-consumer.sh --topic &lt;span class="nb">test&lt;/span> --bootstrap-server localhost:9092
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 進到另一個kafka (72的kafka)，推送數據到topic test&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:/data/zookeeper-kafka# docker &lt;span class="nb">exec&lt;/span> -ti kafka2 bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka2:/$
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka2:/$ kafka-console-producer.sh --topic &lt;span class="nb">test&lt;/span> --broker-list localhost:9092
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;nihao
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;^CI have no name!@kafka2:/$
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 回到kafka (71的kafka)，可以看到消費&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:/data/zookeeper-kafka# docker &lt;span class="nb">exec&lt;/span> -it kafka bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka1:/$ kafka-console-consumer.sh --topic &lt;span class="nb">test&lt;/span> --bootstrap-server localhost:9092
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hello
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nihao
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">^CProcessed a total of &lt;span class="m">9&lt;/span> messages
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">I have no name!@kafka1:/$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Thanos部署Prometheus高可用(docker-compose) + redis_exporter(docker-compose)</title><link>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</link><pubDate>Wed, 15 Nov 2023 22:26:25 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/thanos-docker-compose-multinodes/</guid><description>&lt;h3 id="前情提要與架構規劃">前情提要與架構規劃&lt;/h3>
 &lt;p>官方Github: &lt;a class="link" href="https://github.com/thanos-io/thanos" target="_blank" rel="noopener"
 >https://github.com/thanos-io/thanos&lt;/a>&lt;/p>
 &lt;p>參考專案:  &lt;a class="link" href="https://github.com/thanos-community/thanos-docker-compose" target="_blank" rel="noopener"
