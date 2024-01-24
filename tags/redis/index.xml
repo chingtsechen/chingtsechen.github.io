@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>redis on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/redis/</link><description>Recent content in redis on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Dec 2023 18:49:32 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/redis/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Redis-Shake，還原數據，從一個cluster遷移所有分片數據到另一個cluster，結果->可行，恢復數據非常快</title><link>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/</link><pubDate>Sun, 17 Dec 2023 18:49:32 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/</guid><description>&lt;p>專案GitHub網址：
 &lt;a class="link" href="https://github.com/tair-opensource/RedisShake" target="_blank" rel="noopener"
 >https://github.com/tair-opensource/RedisShake&lt;/a>&lt;/p>
+&lt;p>使用這個版本：
+&lt;a class="link" href="https://github.com/tair-opensource/RedisShake/releases/tag/v4.0.2" target="_blank" rel="noopener"
+>https://github.com/tair-opensource/RedisShake/releases/tag/v4.0.2&lt;/a>&lt;/p>
 &lt;h2 id="redis-cluster主機ip表">Redis Cluster主機IP表&lt;/h2>
 &lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/redis-cluster-database-transfer-with-redis-shake/media/Pasted-image-20231217182757.png"
 width="668"
