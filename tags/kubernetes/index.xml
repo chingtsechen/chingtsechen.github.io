@@ -1,4 +1,168 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kubernetes on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/kubernetes/</link><description>Recent content in kubernetes on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Dec 2023 21:54:42 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes 使用Rancher管理平台 安裝Prometheus監控</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</link><pubDate>Mon, 18 Dec 2023 21:54:42 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</guid><description>&lt;p>參考網址：
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/kubernetes/</link><description>Recent content in Kubernetes on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Mar 2024 16:04:36 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>kubernetes nodelocaldns 解析自定義domain失敗</title><link>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</link><pubDate>Sun, 17 Mar 2024 16:04:36 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321.png"
+width="874"
+height="1101"
+srcset="https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321_hu511830542aba15362dc0bb39918d1bf1_382790_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321_hu511830542aba15362dc0bb39918d1bf1_382790_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="79"
+data-flex-basis="190px"
+>&lt;/p>
+&lt;p>參考資料：
+&lt;a class="link" href="https://www.qikqiak.com/post/resolve-coredns-hosts-invalid/" target="_blank" rel="noopener"
+>https://www.qikqiak.com/post/resolve-coredns-hosts-invalid/&lt;/a>&lt;/p>
+&lt;p>設定coredns hosts解析custom domain(web.jimmyhom.tw)，kubernetes內部pod，一樣無法正常解析到custom domain。&lt;/p>
+&lt;p>&lt;font color=red>需將其nodelocaldns的configmap修改一下，將其forward到coredns。&lt;/font>&lt;/p>
+&lt;ol>
+&lt;li>測試未修改前，在coredns添加hosts設定，pod無法正常解析到web.jimmyhom.tw&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight-cf7f6847b-s2zgg 1/1 Running &lt;span class="m">5&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 91d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">test-nginx 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-dt5xd 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-ggmrz 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-jsvck 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 測試是否可以解析到&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl &lt;span class="nb">exec&lt;/span> -ti test-nginx sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> is DEPRECATED and will be removed in a future version. Use kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> -- &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> instead.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># curl web.jimmyhome.tw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl: &lt;span class="o">(&lt;/span>6&lt;span class="o">)&lt;/span> Could not resolve host: web.jimmyhome.tw
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># ping web.jimmyhome.tw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ping: bad address &lt;span class="s1">&amp;#39;web.jimmyhome.tw&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 更改coredns設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get cm coredns -o yaml -n kube-system &amp;gt; coredns-cm.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apiVersion: v1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">data:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Corefile: &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .:53 &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> errors &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> health &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> lameduck 5s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ready
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> kubernetes cluster.local in-addr.arpa ip6.arpa &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pods insecure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> fallthrough in-addr.arpa ip6.arpa
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> hosts &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> 192.168.1.60 web.jimmyhome.tw
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> fallthrough
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 套用設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl apply -f coredns-cm.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">configmap/coredns configured&lt;span class="o">](&lt;/span>&amp;lt;root@k8s-master71u:~# kubectl apply -f coredns-cm.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">configmap/coredns configured
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 重啟pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod coredns-57c7559cc8-sq8c4 -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;coredns-57c7559cc8-sq8c4&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod coredns-57c7559cc8-vrf7g -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;coredns-57c7559cc8-vrf7g&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n kube-system &lt;span class="p">|&lt;/span> grep -i coredns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">coredns-57c7559cc8-dpjkw 1/1 Running &lt;span class="m">0&lt;/span> 41s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">coredns-57c7559cc8-ng9kk 1/1 Running &lt;span class="m">0&lt;/span> 24s&amp;gt;&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 測試，一樣解析不到&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl &lt;span class="nb">exec&lt;/span> -ti test-nginx sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> is DEPRECATED and will be removed in a future version. Use kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> -- &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> instead.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># curl web.jimmyhome.tw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl: &lt;span class="o">(&lt;/span>6&lt;span class="o">)&lt;/span> Could not resolve host: web.jimmyhome.tw
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># ping web.jimmyhome.tw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ping: bad address &lt;span class="s1">&amp;#39;web.jimmyhome.tw&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>修改nodelocaldns設定，pod正常能解析到web.jimmyhom.tw&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 更改nodelocaldns設定&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl get cm nodelocaldns -n kube-system -o yaml &amp;gt; nodelocaldns-configmap.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# vim nodelocaldns-configmap.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 原本forward . /etc/resolv.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .:53 &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> errors
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cache &lt;span class="m">30&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> reload
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> loop
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">bind&lt;/span> 169.254.25.10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> forward . /etc/resolv.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prometheus :9253
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 修改成forward&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> .:53 &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> errors
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cache &lt;span class="m">30&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> reload
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> loop
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">bind&lt;/span> 169.254.25.10 10.202.0.3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> forward . 10.202.0.3 &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> force_tcp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prometheus :9253
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl apply -f nodelocaldns-configmap.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">configmap/nodelocaldns configured
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 重啟pod&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod nodelocaldns-5wcc7 -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;nodelocaldns-5wcc7&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod nodelocaldns-nsnh4 -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;nodelocaldns-nsnh4&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod nodelocaldns-nwgxn -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;nodelocaldns-nwgxn&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod nodelocaldns-pvwx6 -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;nodelocaldns-pvwx6&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl delete pod nodelocaldns-zvmsk -n kube-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;nodelocaldns-zvmsk&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n kube-system &lt;span class="p">|&lt;/span> grep nodelocaldns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nodelocaldns-5pb2r 1/1 Running &lt;span class="m">2&lt;/span> &lt;span class="o">(&lt;/span>28s ago&lt;span class="o">)&lt;/span> 30s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nodelocaldns-g82jn 1/1 Running &lt;span class="m">0&lt;/span> 49s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nodelocaldns-gtkpd 1/1 Running &lt;span class="m">0&lt;/span> 59s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nodelocaldns-l9t5p 1/1 Running &lt;span class="m">0&lt;/span> 70s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nodelocaldns-m9rnv 1/1 Running &lt;span class="m">0&lt;/span> 39s
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 測試可以ping web.jimmyhome.tw和curl web.jimmyhome.tw了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl &lt;span class="nb">exec&lt;/span> -ti test-nginx sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> is DEPRECATED and will be removed in a future version. Use kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> -- &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> instead.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># ping web.jimmyhome.tw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">PING web.jimmyhome.tw &lt;span class="o">(&lt;/span>192.168.1.60&lt;span class="o">)&lt;/span>: &lt;span class="m">56&lt;/span> data bytes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 192.168.1.60: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">63&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.470 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 192.168.1.60: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">63&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.335 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 192.168.1.60: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">2&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">63&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.393 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 192.168.1.60: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">3&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">63&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.289 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">^C
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">--- web.jimmyhome.tw ping statistics ---
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">4&lt;/span> packets transmitted, &lt;span class="m">4&lt;/span> packets received, 0% packet loss
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">round-trip min/avg/max &lt;span class="o">=&lt;/span> 0.289/0.371/0.470 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># curl web.jimmyhome.tw&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;!DOCTYPE html PUBLIC &lt;span class="s2">&amp;#34;-//W3C//DTD XHTML 1.0 Transitional//EN&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;lt;html &lt;span class="nv">xmlns&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;http://www.w3.org/1999/xhtml&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;!--
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Modified from the Debian original &lt;span class="k">for&lt;/span> Ubuntu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Last updated: 2022-03-22
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> See: https://launchpad.net/bugs/1966004
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> --&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;head&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;meta http-equiv&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Content-Type&amp;#34;&lt;/span> &lt;span class="nv">content&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;text/html; charset=UTF-8&amp;#34;&lt;/span> /&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;title&amp;gt;Apache2 Ubuntu Default Page: It works&amp;lt;/title&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;style &lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;text/css&amp;#34;&lt;/span> &lt;span class="nv">media&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;screen&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Kubernetes 使用Rancher管理平台 安裝Prometheus監控</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</link><pubDate>Mon, 18 Dec 2023 21:54:42 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</guid><description>&lt;p>參考網址：
 &lt;a class="link" href="https://ranchermanager.docs.rancher.com/zh/how-to-guides/advanced-user-guides/monitoring-alerting-guides/enable-monitoring" target="_blank" rel="noopener"
 >https://ranchermanager.docs.rancher.com/zh/how-to-guides/advanced-user-guides/monitoring-alerting-guides/enable-monitoring&lt;/a>&lt;/p>
 &lt;p>&lt;font color=red>注意：&lt;/font>&lt;/p>

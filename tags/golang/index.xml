@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>golang on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/golang/</link><description>Recent content in golang on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Oct 2023 09:31:05 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>go介紹、安裝配置環境、寫第一個go程序、go基礎語法、變量、基本數據類型、運算符、輸入輸出函數</title><link>https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/</link><pubDate>Sat, 28 Oct 2023 09:31:05 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/golang.png" alt="Featured image of post go介紹、安裝配置環境、寫第一個go程序、go基礎語法、變量、基本數據類型、運算符、輸入輸出函數" />&lt;h2 id="go介紹">Go介紹&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/golang/</link><description>Recent content in Golang on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 28 Oct 2023 09:31:05 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>go介紹、安裝配置環境、寫第一個go程序、go基礎語法、變量、基本數據類型、運算符、輸入輸出函數</title><link>https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/</link><pubDate>Sat, 28 Oct 2023 09:31:05 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/</guid><description>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/golang.png" alt="Featured image of post go介紹、安裝配置環境、寫第一個go程序、go基礎語法、變量、基本數據類型、運算符、輸入輸出函數" />&lt;h2 id="go介紹">Go介紹&lt;/h2>
 &lt;p>GOOGLE開發的&lt;/p>
 &lt;p>PYTHON開發效率極高
 C語言、C++極致運行性能&lt;/p>
@@ -112,10 +112,10 @@ data-flex-basis="303px"
 &lt;p>匯編語言：指令符號化010010010101 =&amp;gt; ADD&lt;/p>
 &lt;p>高級語言：多條指令合成一條指令&lt;/p>
 &lt;/blockquote>
-&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104142007.png"
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted%20image%2020231104142007.png"
 width="466"
 height="537"
-srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104142007_hu9e3df888aa5789d1d262dcafcd3846c0_25963_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted-image-20231104142007_hu9e3df888aa5789d1d262dcafcd3846c0_25963_1024x0_resize_box_3.png 1024w"
+srcset="https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted%20image%2020231104142007_hu9e3df888aa5789d1d262dcafcd3846c0_25963_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2023/golang-self-learning-basic-introduction-golang001/media/Pasted%20image%2020231104142007_hu9e3df888aa5789d1d262dcafcd3846c0_25963_1024x0_resize_box_3.png 1024w"
 loading="lazy"
 class="gallery-image"
 data-flex-grow="86"
