@@ -161,6 +161,24 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:~# reboot
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# reboot
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# reboot
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="4">
+&lt;li>查看bgp狀況&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl node status
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Calico process is running.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">IPv4 BGP status
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+--------------+-------------------+-------+----------+-------------+
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">|&lt;/span> PEER ADDRESS &lt;span class="p">|&lt;/span> PEER TYPE &lt;span class="p">|&lt;/span> STATE &lt;span class="p">|&lt;/span> SINCE &lt;span class="p">|&lt;/span> INFO &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+--------------+-------------------+-------+----------+-------------+
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">|&lt;/span> 192.168.1.72 &lt;span class="p">|&lt;/span> node-to-node mesh &lt;span class="p">|&lt;/span> up &lt;span class="p">|&lt;/span> 15:53:34 &lt;span class="p">|&lt;/span> Established &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">|&lt;/span> 192.168.1.73 &lt;span class="p">|&lt;/span> node-to-node mesh &lt;span class="p">|&lt;/span> up &lt;span class="p">|&lt;/span> 15:54:20 &lt;span class="p">|&lt;/span> Established &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">|&lt;/span> 192.168.1.75 &lt;span class="p">|&lt;/span> node-to-node mesh &lt;span class="p">|&lt;/span> up &lt;span class="p">|&lt;/span> 15:53:58 &lt;span class="p">|&lt;/span> Established &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">|&lt;/span> 192.168.1.76 &lt;span class="p">|&lt;/span> node-to-node mesh &lt;span class="p">|&lt;/span> up &lt;span class="p">|&lt;/span> 15:54:40 &lt;span class="p">|&lt;/span> Established &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">+--------------+-------------------+-------+----------+-------------+
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">IPv6 BGP status
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">No IPv6 peers found.
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>kubernetes nodelocaldns 解析自定義domain失敗</title><link>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</link><pubDate>Sun, 17 Mar 2024 16:04:36 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321.png"
 width="874"
 height="1101"
