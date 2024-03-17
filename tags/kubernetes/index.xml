@@ -102,7 +102,7 @@ data-flex-basis="190px"
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cache &lt;span class="m">30&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> reload
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> loop
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">bind&lt;/span> 169.254.25.10 10.202.0.3
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">bind&lt;/span> 169.254.25.10
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> forward . 10.202.0.3 &lt;span class="o">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> force_tcp
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
