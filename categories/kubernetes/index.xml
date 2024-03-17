@@ -62,13 +62,11 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># set VXLAN encapsulation mode: &amp;#34;Always&amp;#34;, &amp;#34;CrossSubnet&amp;#34;, &amp;#34;Never&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico_vxlan_mode: &lt;span class="s1">&amp;#39;Never&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
-&lt;li>
-&lt;p>佈屬(無法使用ansible再佈屬，所以直接進k8s修改設定)&lt;/p>
-&lt;ol>
-&lt;li>切換calico_network_backend為bird&lt;/li>
+&lt;li>佈屬(無法使用ansible再佈屬，所以直接進k8s修改設定)&lt;/li>
 &lt;/ol>
-&lt;/li>
-&lt;/ol>
+&lt;ul>
+&lt;li>1.切換calico_network_backend為bird&lt;/li>
+&lt;/ul>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# vim /etc/kubernetes/calico-config.yml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">data:
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster_type: &lt;span class="s2">&amp;#34;kubespray&amp;#34;&lt;/span>
@@ -76,11 +74,15 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl apply -f /etc/kubernetes/calico-config.yml
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">configmap/calico-config configured
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>2.設定calico mode ipip和vxlan為Never
-&lt;/code>&lt;/pre>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>2.設定calico mode ipip和vxlan為Never&lt;/li>
+&lt;/ul>
 &lt;p>修改設定
 &amp;ldquo;ipipMode&amp;rdquo;:&amp;ldquo;Never&amp;rdquo;, &amp;ldquo;vxlanMode&amp;rdquo;:&amp;ldquo;Never&amp;rdquo;&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 設定下去會POD之間都會連不到喔，除非重啟calico&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl patch felixconfig default -p &lt;span class="s1">&amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;vxlanEnabled&amp;#34;:false}}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 設定下去會POD之間都會連不到喔，除非重啟calico&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl patch ippool default-pool -p &lt;span class="s1">&amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;ipipMode&amp;#34;:&amp;#34;Never&amp;#34;, &amp;#34;vxlanMode&amp;#34;:&amp;#34;Never&amp;#34;}}&amp;#39;&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully patched &lt;span class="m">1&lt;/span> &lt;span class="s1">&amp;#39;IPPool&amp;#39;&lt;/span> resource
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
@@ -131,7 +133,9 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">172.18.0.0/16 dev br-9b299fee73c0 proto kernel scope link src 172.18.0.1 linkdown
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.0/24 dev ens160 proto kernel scope link src 192.168.1.71
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>測試跨節點，網路是否通的&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>3.測試跨節點，網路是否通的&lt;/li>
+&lt;/ul>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -o wide
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight-cf7f6847b-s2zgg 1/1 Running &lt;span class="m">5&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 91d 10.201.255.199 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
