@@ -1,4 +1,163 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/kubernetes/</link><description>Recent content in Kubernetes on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Mar 2024 16:04:36 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>kubernetes nodelocaldns 解析自定義domain失敗</title><link>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</link><pubDate>Sun, 17 Mar 2024 16:04:36 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321.png"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/kubernetes/</link><description>Recent content in Kubernetes on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Mar 2024 17:05:04 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>使用kubespray專案佈屬，calico bgp沒有啟動</title><link>https://blog.goldfishbrain-fighting.com/2024/kubernetes-use-kubespray-deploy-calico-bgp-backend-process-bird-is-not-running/</link><pubDate>Sun, 17 Mar 2024 17:05:04 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/kubernetes-use-kubespray-deploy-calico-bgp-backend-process-bird-is-not-running/</guid><description>&lt;p>參考網址：
+&lt;a class="link" href="https://github.com/kubernetes-sigs/kubespray/blob/master/docs/calico.md" target="_blank" rel="noopener"
+>https://github.com/kubernetes-sigs/kubespray/blob/master/docs/calico.md&lt;/a>&lt;/p>
+&lt;p>&lt;font color=red>需將kubespray專案佈屬，預設值修改為以下&lt;/font>&lt;/p>
+&lt;p>&lt;strong>BGP mode&lt;/strong>&lt;/p>
+&lt;p>To enable BGP no-encapsulation mode:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">calico_ipip_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;Never&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">calico_vxlan_mode&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;Never&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">calico_network_backend&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s1">&amp;#39;bird&amp;#39;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol>
+&lt;li>查看目前bgp狀況&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl get nodes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master71u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master72u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master73u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node75u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node76u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl get ippool -o wide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME CIDR NAT IPIPMODE VXLANMODE DISABLED DISABLEBGPEXPORT SELECTOR
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default-pool 10.201.0.0/16 &lt;span class="nb">true&lt;/span> Never Always &lt;span class="nb">false&lt;/span> &lt;span class="nb">false&lt;/span> all&lt;span class="o">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 看到 The BGP backend process (BIRD) is not running.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl node status
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Calico process is running.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">The BGP backend process &lt;span class="o">(&lt;/span>BIRD&lt;span class="o">)&lt;/span> is not running.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="2">
+&lt;li>修改kubespray專案設定&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">(&lt;/span>kubespray-venv&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>root@ansible kubespray&lt;span class="o">]&lt;/span>&lt;span class="c1"># vim inventory/mycluster/group_vars/k8s_cluster/k8s-net-calico.yml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 以下是預設&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set calico network backend: &amp;#34;bird&amp;#34;, &amp;#34;vxlan&amp;#34; or &amp;#34;none&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># bird enable BGP routing, required for ipip and no encapsulation modes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># calico_network_backend: vxlan&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># IP in IP and VXLAN is mutualy exclusive modes.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># set IP in IP encapsulation mode: &amp;#34;Always&amp;#34;, &amp;#34;CrossSubnet&amp;#34;, &amp;#34;Never&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># calico_ipip_mode: &amp;#39;Never&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># set VXLAN encapsulation mode: &amp;#34;Always&amp;#34;, &amp;#34;CrossSubnet&amp;#34;, &amp;#34;Never&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># calico_vxlan_mode: &amp;#39;Always&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 修改為&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set calico network backend: &amp;#34;bird&amp;#34;, &amp;#34;vxlan&amp;#34; or &amp;#34;none&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># bird enable BGP routing, required for ipip and no encapsulation modes&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico_network_backend: &lt;span class="s1">&amp;#39;bird&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># IP in IP and VXLAN is mutualy exclusive modes.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># set IP in IP encapsulation mode: &amp;#34;Always&amp;#34;, &amp;#34;CrossSubnet&amp;#34;, &amp;#34;Never&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico_ipip_mode: &lt;span class="s1">&amp;#39;Never&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># set VXLAN encapsulation mode: &amp;#34;Always&amp;#34;, &amp;#34;CrossSubnet&amp;#34;, &amp;#34;Never&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico_vxlan_mode: &lt;span class="s1">&amp;#39;Never&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="3">
+&lt;li>
+&lt;p>佈屬(無法使用ansible再佈屬，所以直接進k8s修改設定)&lt;/p>
+&lt;ol>
+&lt;li>切換calico_network_backend為bird&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# vim /etc/kubernetes/calico-config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">data:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cluster_type: &lt;span class="s2">&amp;#34;kubespray&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> calico_backend: &lt;span class="s2">&amp;#34;bird&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl apply -f /etc/kubernetes/calico-config.yml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">configmap/calico-config configured
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>2.設定calico mode ipip和vxlan為Never
+&lt;/code>&lt;/pre>
+&lt;p>修改設定
+&amp;ldquo;ipipMode&amp;rdquo;:&amp;ldquo;Never&amp;rdquo;, &amp;ldquo;vxlanMode&amp;rdquo;:&amp;ldquo;Never&amp;rdquo;&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 設定下去會POD之間都會連不到喔，除非重啟calico&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl patch ippool default-pool -p &lt;span class="s1">&amp;#39;{&amp;#34;spec&amp;#34;:{&amp;#34;ipipMode&amp;#34;:&amp;#34;Never&amp;#34;, &amp;#34;vxlanMode&amp;#34;:&amp;#34;Never&amp;#34;}}&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Successfully patched &lt;span class="m">1&lt;/span> &lt;span class="s1">&amp;#39;IPPool&amp;#39;&lt;/span> resource
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# calicoctl get ippool -o wide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME CIDR NAT IPIPMODE VXLANMODE DISABLED DISABLEBGPEXPORT SELECTOR
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default-pool 10.201.0.0/16 &lt;span class="nb">true&lt;/span> Never Never &lt;span class="nb">false&lt;/span> &lt;span class="nb">false&lt;/span> all&lt;span class="o">()&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>重啟calico&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n kube-system &lt;span class="p">|&lt;/span> grep calico
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-kube-controllers-777ff6cddb-d4htx 1/1 Running &lt;span class="m">8&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 105d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-4qhfj 1/1 Running &lt;span class="m">8&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 105d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-9wrql 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 105d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-9xzmn 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 105d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-m975z 1/1 Running &lt;span class="m">8&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 105d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-s9w4x 1/1 Running &lt;span class="m">9&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 105d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 重啟calico&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# &lt;span class="k">for&lt;/span> i in &lt;span class="sb">`&lt;/span>kubectl get pod -n kube-system &lt;span class="p">|&lt;/span> grep calico &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $1}&amp;#39;&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="k">do&lt;/span> kubectl delete pod &lt;span class="nv">$i&lt;/span> -n kube-system &lt;span class="p">;&lt;/span>&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;calico-kube-controllers-777ff6cddb-d4htx&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;calico-node-4qhfj&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;calico-node-9wrql&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;calico-node-9xzmn&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;calico-node-m975z&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pod &lt;span class="s2">&amp;#34;calico-node-s9w4x&amp;#34;&lt;/span> deleted
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n kube-system &lt;span class="p">|&lt;/span> grep calico
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-kube-controllers-777ff6cddb-xbmt2 1/1 Running &lt;span class="m">0&lt;/span> 26s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-fn4pp 1/1 Running &lt;span class="m">0&lt;/span> 25s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-vrmk7 1/1 Running &lt;span class="m">0&lt;/span> 24s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-w8k8p 1/1 Running &lt;span class="m">0&lt;/span> 23s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-x8j4b 1/1 Running &lt;span class="m">0&lt;/span> 24s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">calico-node-zc5pm 1/1 Running &lt;span class="m">0&lt;/span> 24s
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 可以看到去各節點的路由，都是從實體介面ens160出去了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# ip route
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default via 192.168.1.1 dev ens160 proto static
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.14.128/26 via 192.168.1.75 dev ens160 proto bird
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.96.0/26 via 192.168.1.73 dev ens160 proto bird
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.126.0/26 via 192.168.1.72 dev ens160 proto bird
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">blackhole 10.201.133.0/26 proto bird
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.133.8 dev cali755b97c9930 scope link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.133.10 dev cali0c704e12b74 scope link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.133.14 dev cali95c22b6e0f1 scope link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.133.22 dev cali2787253e85e scope link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.133.29 dev cali3e0b78920ca scope link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">10.201.255.192/26 via 192.168.1.76 dev ens160 proto bird
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">172.18.0.0/16 dev br-9b299fee73c0 proto kernel scope link src 172.18.0.1 linkdown
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">192.168.1.0/24 dev ens160 proto kernel scope link src 192.168.1.71
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>測試跨節點，網路是否通的&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -o wide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">redisinsight-cf7f6847b-s2zgg 1/1 Running &lt;span class="m">5&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 91d 10.201.255.199 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">test-nginx 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d 10.201.14.162 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-dt5xd 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d 10.201.255.230 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-ggmrz 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d 10.201.14.136 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">web2-5d48fb75c5-jsvck 1/1 Running &lt;span class="m">7&lt;/span> &lt;span class="o">(&lt;/span>79d ago&lt;span class="o">)&lt;/span> 104d 10.201.255.217 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 測試跨節點，網路是通的&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl &lt;span class="nb">exec&lt;/span> -ti test-nginx sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> is DEPRECATED and will be removed in a future version. Use kubectl &lt;span class="nb">exec&lt;/span> &lt;span class="o">[&lt;/span>POD&lt;span class="o">]&lt;/span> -- &lt;span class="o">[&lt;/span>COMMAND&lt;span class="o">]&lt;/span> instead.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/ &lt;span class="c1"># ping 10.201.255.230&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">PING 10.201.255.230 &lt;span class="o">(&lt;/span>10.201.255.230&lt;span class="o">)&lt;/span>: &lt;span class="m">56&lt;/span> data bytes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 10.201.255.230: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">62&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.445 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 10.201.255.230: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">62&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.364 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 10.201.255.230: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">2&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">62&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.447 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="m">64&lt;/span> bytes from 10.201.255.230: &lt;span class="nv">seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">3&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">62&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.357 ms
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 重啟節點一樣沒問題，如果是在營運的主機，就別重啟了&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# reboot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master72u:~# reboot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master73u:~# reboot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node75u:~# reboot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-node76u:~# reboot
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>kubernetes nodelocaldns 解析自定義domain失敗</title><link>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</link><pubDate>Sun, 17 Mar 2024 16:04:36 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/</guid><description>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321.png"
 width="874"
 height="1101"
 srcset="https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321_hu511830542aba15362dc0bb39918d1bf1_382790_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/media/Pasted-image-20240317161321_hu511830542aba15362dc0bb39918d1bf1_382790_1024x0_resize_box_3.png 1024w"
