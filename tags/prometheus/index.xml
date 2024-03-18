@@ -1,4 +1,190 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Prometheus on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/prometheus/</link><description>Recent content in Prometheus on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Dec 2023 21:54:42 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/prometheus/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes 使用Rancher管理平台 安裝Prometheus監控</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</link><pubDate>Mon, 18 Dec 2023 21:54:42 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</guid><description>&lt;p>參考網址：
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Prometheus on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/tags/prometheus/</link><description>Recent content in Prometheus on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 19 Mar 2024 00:18:30 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/tags/prometheus/index.xml" rel="self" type="application/rss+xml"/><item><title>Kubernetes Rancher管理平台 Prometheus監控調度到master節點</title><link>https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/</link><pubDate>Tue, 19 Mar 2024 00:18:30 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/</guid><description>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 添加標籤monitoring=enabled&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl label node k8s-master71u &lt;span class="nv">monitoring&lt;/span>&lt;span class="o">=&lt;/span>enabled
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl label node k8s-master72u &lt;span class="nv">monitoring&lt;/span>&lt;span class="o">=&lt;/span>enabled
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl label node k8s-master73u &lt;span class="nv">monitoring&lt;/span>&lt;span class="o">=&lt;/span>enabled
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 佈屬時，修改helm yaml檔&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prometheusSpec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalAlertManagerConfigs: &lt;span class="o">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalAlertManagerConfigsSecret: &lt;span class="o">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalAlertRelabelConfigs: &lt;span class="o">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalAlertRelabelConfigsSecret: &lt;span class="o">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalPrometheusSecretsAnnotations: &lt;span class="o">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalRemoteRead: &lt;span class="o">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalRemoteWrite: &lt;span class="o">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalScrapeConfigs: &lt;span class="o">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> additionalScrapeConfigsSecret: &lt;span class="o">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> affinity:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> nodeAffinity:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> requiredDuringSchedulingIgnoredDuringExecution:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> nodeSelectorTerms:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - matchExpressions:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - key: monitoring
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: In
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> values:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - enabled
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> storageSpec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> volumeClaimTemplate:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> spec:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> accessModes:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - ReadWriteMany
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> resources:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> requests:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> storage: 50Gi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> storageClassName: rook-cephfs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> thanos: &lt;span class="o">{}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> tolerations:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - effect: NoExecute
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: Exists
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - effect: NoSchedule
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: Exists
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/media/Pasted-image-20240319002149.png"
+width="570"
+height="410"
+srcset="https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/media/Pasted-image-20240319002149_hubba712153778764a563fd1629a1d2c30_92369_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/media/Pasted-image-20240319002149_hubba712153778764a563fd1629a1d2c30_92369_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="139"
+data-flex-basis="333px"
+>&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/media/Pasted-image-20240319002232.png"
+width="658"
+height="470"
+srcset="https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/media/Pasted-image-20240319002232_hu593c7ddb5e1427bb69f0300e19c08373_90672_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/kubernetes-rancher-install-prometheus-selector-to-master/media/Pasted-image-20240319002232_hu593c7ddb5e1427bb69f0300e19c08373_90672_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="140"
+data-flex-basis="336px"
+>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## Prometheus調度到master了，但是狀態都是Init:0/1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get pod -n cattle-monitoring-system -o wide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">alertmanager-rancher-monitoring-alertmanager-0 2/2 Running &lt;span class="m">0&lt;/span> 18m 10.201.14.153 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">prometheus-rancher-monitoring-prometheus-0 0/3 Init:0/1 &lt;span class="m">0&lt;/span> 2m24s &amp;lt;none&amp;gt; k8s-master71u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-grafana-568d4fc6d5-cvw6z 4/4 Running &lt;span class="m">0&lt;/span> 18m 10.201.255.201 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-kube-state-metrics-56b4477cc-gp4lz 1/1 Running &lt;span class="m">0&lt;/span> 18m 10.201.255.214 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-operator-679b99d785-8x79c 1/1 Running &lt;span class="m">0&lt;/span> 18m 10.201.14.154 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-adapter-7494f789f6-kgjdv 1/1 Running &lt;span class="m">0&lt;/span> 18m 10.201.14.140 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-gq66p 1/1 Running &lt;span class="m">0&lt;/span> 18m 192.168.1.72 k8s-master72u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-jvdc2 1/1 Running &lt;span class="m">0&lt;/span> 18m 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-nmqq2 1/1 Running &lt;span class="m">0&lt;/span> 18m 192.168.1.73 k8s-master73u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-rcldf 1/1 Running &lt;span class="m">0&lt;/span> 18m 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-rk6pz 1/1 Running &lt;span class="m">0&lt;/span> 18m 192.168.1.71 k8s-master71u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 查看原因&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl describe pod prometheus-rancher-monitoring-prometheus-0 -n cattle-monitoring-system
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Events:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Type Reason Age From Message
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ---- ------ ---- ---- -------
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Normal Scheduled 2m39s default-scheduler Successfully assigned cattle-monitoring-system/prometheus-rancher-monitoring-prometheus-0 to k8s-master71u
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Warning FailedMount 112s kubelet MountVolume.MountDevice failed &lt;span class="k">for&lt;/span> volume &lt;span class="s2">&amp;#34;pvc-972b866f-bc9a-42e0-a34a-0f2a0aa8acac&amp;#34;&lt;/span> : kubernetes.io/csi: attacher.MountDevice failed to create newCsiDriverClient: driver name rook-ceph.cephfs.csi.ceph.com not found in the list of registered CSI drivers
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Warning FailedMount 37s kubelet Unable to attach or mount volumes: unmounted &lt;span class="nv">volumes&lt;/span>&lt;span class="o">=[&lt;/span>prometheus-rancher-monitoring-prometheus-db&lt;span class="o">]&lt;/span>, unattached &lt;span class="nv">volumes&lt;/span>&lt;span class="o">=[&lt;/span>prometheus-rancher-monitoring-prometheus-db config kube-api-access-85ljn prometheus-nginx tls-assets nginx-home config-out prometheus-rancher-monitoring-prometheus-rulefiles-0 web-config&lt;span class="o">]&lt;/span>: timed out waiting &lt;span class="k">for&lt;/span> the condition
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>參考網址:
+&lt;a class="link" href="https://www.cnblogs.com/lswweb/p/13860186.html" target="_blank" rel="noopener"
+>https://www.cnblogs.com/lswweb/p/13860186.html&lt;/a>&lt;/p>
+&lt;p>查看現況csidrivers&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get csinodes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME DRIVERS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master71u &lt;span class="m">0&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master72u &lt;span class="m">0&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master73u &lt;span class="m">0&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node75u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node76u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~# kubectl get csidrivers
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME ATTACHREQUIRED PODINFOONMOUNT STORAGECAPACITY TOKENREQUESTS REQUIRESREPUBLISH MODES AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rook-ceph.cephfs.csi.ceph.com &lt;span class="nb">true&lt;/span> &lt;span class="nb">false&lt;/span> &lt;span class="nb">false&lt;/span> &amp;lt;unset&amp;gt; &lt;span class="nb">false&lt;/span> Persistent 91d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rook-ceph.rbd.csi.ceph.com &lt;span class="nb">true&lt;/span> &lt;span class="nb">false&lt;/span> &lt;span class="nb">false&lt;/span> &amp;lt;unset&amp;gt; &lt;span class="nb">false&lt;/span> Persistent 91d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# kubectl get pod -n rook-ceph -o wide &lt;span class="p">|&lt;/span> grep csi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-7b5fj 2/2 Running &lt;span class="m">10&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-k2xgp 2/2 Running &lt;span class="m">10&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-provisioner-668dfcf95b-qbfpz 5/5 Running &lt;span class="m">27&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 10.201.14.191 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-provisioner-668dfcf95b-xvg52 5/5 Running &lt;span class="m">25&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 10.201.255.236 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-ddxqm 2/2 Running &lt;span class="m">10&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-dlv8p 2/2 Running &lt;span class="m">10&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-provisioner-5b78f67bbb-76qjd 5/5 Running &lt;span class="m">27&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 10.201.14.188 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-provisioner-5b78f67bbb-p8jj8 5/5 Running &lt;span class="m">25&lt;/span> &lt;span class="o">(&lt;/span>24h ago&lt;span class="o">)&lt;/span> 91d 10.201.255.204 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>添加容忍污點將csidrivers也佈屬到master節點&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# vim operator.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (Optional) CephCSI provisioner NodeAffinity (applied to both CephFS and RBD provisioner).&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># CSI_PROVISIONER_NODE_AFFINITY: &amp;#34;role=storage-node; storage=rook, ceph&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (Optional) CephCSI provisioner tolerations list(applied to both CephFS and RBD provisioner).&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Put here list of taints you want to tolerate in YAML format.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># CSI provisioner would be best to start on the same nodes as other ceph daemons.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> CSI_PROVISIONER_TOLERATIONS: &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - effect: NoSchedule
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> key: node-role.kubernetes.io/control-plane
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: Exists
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - effect: NoExecute
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> key: node-role.kubernetes.io/etcd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: Exists
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (Optional) CephCSI plugin NodeAffinity (applied to both CephFS and RBD plugin).&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># CSI_PLUGIN_NODE_AFFINITY: &amp;#34;role=storage-node; storage=rook, ceph&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># (Optional) CephCSI plugin tolerations list(applied to both CephFS and RBD plugin).&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Put here list of taints you want to tolerate in YAML format.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># CSI plugins need to be started on all the nodes where the clients need to mount the storage.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> CSI_PLUGIN_TOLERATIONS: &lt;span class="p">|&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - effect: NoSchedule
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> key: node-role.kubernetes.io/control-plane
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: Exists
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - effect: NoExecute
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> key: node-role.kubernetes.io/etcd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> operator: Exists
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# kubectl apply -f operator.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# kubectl get pod -n rook-ceph -o wide &lt;span class="p">|&lt;/span> grep csi
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-2cj79 2/2 Running &lt;span class="m">0&lt;/span> 5m29s 192.168.1.72 k8s-master72u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-b4jcd 2/2 Running &lt;span class="m">0&lt;/span> 5m29s 192.168.1.71 k8s-master71u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-cmfvm 2/2 Running &lt;span class="m">0&lt;/span> 117s 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-ldml2 2/2 Running &lt;span class="m">0&lt;/span> 114s 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-provisioner-75d8bf7fc5-69rw9 5/5 Running &lt;span class="m">0&lt;/span> 5m25s 10.201.255.235 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-provisioner-75d8bf7fc5-vnqzc 5/5 Running &lt;span class="m">0&lt;/span> 5m25s 10.201.14.162 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-cephfsplugin-vbxv2 2/2 Running &lt;span class="m">0&lt;/span> 5m29s 192.168.1.73 k8s-master73u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-8glkf 2/2 Running &lt;span class="m">0&lt;/span> 113s 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-d2cbd 2/2 Running &lt;span class="m">0&lt;/span> 5m29s 192.168.1.73 k8s-master73u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-ltlzk 2/2 Running &lt;span class="m">0&lt;/span> 117s 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-msj62 2/2 Running &lt;span class="m">0&lt;/span> 5m29s 192.168.1.72 k8s-master72u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-provisioner-5f74ff45d5-kfg9c 5/5 Running &lt;span class="m">0&lt;/span> 5m26s 10.201.255.249 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-provisioner-5f74ff45d5-sq2ph 5/5 Running &lt;span class="m">0&lt;/span> 5m26s 10.201.14.161 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">csi-rbdplugin-tzsbz 2/2 Running &lt;span class="m">0&lt;/span> 5m29s 192.168.1.71 k8s-master71u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# kubectl get csinodes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME DRIVERS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master71u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master72u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-master73u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node75u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k8s-node76u &lt;span class="m">2&lt;/span> 106d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>可以看到Prometheus也成功調度到master了&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@k8s-master71u:~/rook/deploy/examples# kubectl get pod -n cattle-monitoring-system -o wide
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE IP NODE NOMINATED NODE READINESS GATES
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">alertmanager-rancher-monitoring-alertmanager-0 2/2 Running &lt;span class="m">0&lt;/span> 67m 10.201.14.153 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">prometheus-rancher-monitoring-prometheus-0 3/3 Running &lt;span class="m">0&lt;/span> 51m 10.201.133.34 k8s-master71u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-grafana-568d4fc6d5-cvw6z 4/4 Running &lt;span class="m">0&lt;/span> 68m 10.201.255.201 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-kube-state-metrics-56b4477cc-gp4lz 1/1 Running &lt;span class="m">0&lt;/span> 68m 10.201.255.214 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-operator-679b99d785-8x79c 1/1 Running &lt;span class="m">0&lt;/span> 68m 10.201.14.154 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-adapter-7494f789f6-kgjdv 1/1 Running &lt;span class="m">0&lt;/span> 68m 10.201.14.140 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-gq66p 1/1 Running &lt;span class="m">0&lt;/span> 68m 192.168.1.72 k8s-master72u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-jvdc2 1/1 Running &lt;span class="m">0&lt;/span> 68m 192.168.1.76 k8s-node76u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-nmqq2 1/1 Running &lt;span class="m">0&lt;/span> 68m 192.168.1.73 k8s-master73u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-rcldf 1/1 Running &lt;span class="m">0&lt;/span> 68m 192.168.1.75 k8s-node75u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rancher-monitoring-prometheus-node-exporter-rk6pz 1/1 Running &lt;span class="m">0&lt;/span> 68m 192.168.1.71 k8s-master71u &amp;lt;none&amp;gt; &amp;lt;none&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Kubernetes 使用Rancher管理平台 安裝Prometheus監控</title><link>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</link><pubDate>Mon, 18 Dec 2023 21:54:42 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/kubernetes-rancher-install-prometheus/</guid><description>&lt;p>參考網址：
 &lt;a class="link" href="https://ranchermanager.docs.rancher.com/zh/how-to-guides/advanced-user-guides/monitoring-alerting-guides/enable-monitoring" target="_blank" rel="noopener"
 >https://ranchermanager.docs.rancher.com/zh/how-to-guides/advanced-user-guides/monitoring-alerting-guides/enable-monitoring&lt;/a>&lt;/p>
 &lt;p>&lt;font color=red>注意：&lt;/font>&lt;/p>
