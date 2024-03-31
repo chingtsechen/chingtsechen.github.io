@@ -1,0 +1,936 @@
+<!doctype html><html lang=en-us dir=ltr><head><script async src="https://www.googletagmanager.com/gtag/js?id=G-QB4H991E1G"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-QB4H991E1G")</script><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content='安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline'><meta name=keywords content="翻轉吧金魚腦,安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline"><title>安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline</title>
+<link rel=canonical href=https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-kubernetes/><link rel=stylesheet href=/scss/style.min.7fb7f5621081d8ecec310edc2d95cc0b431358ce9c30c3ee8601b16732dbef57.css><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><meta name=referrer content="no-referrer-when-downgrade"><script src=//cdn.bootcss.com/jquery/3.2.1/jquery.min.js></script><script>$(document).ready(function(){var e=setInterval(s,100),t=100,n=50;function s(){$("#busuanzi_container_site_pv").css("display")!="none"&&(clearInterval(e),$("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html())+t),$("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html())+n))}})</script><meta property='og:title' content='安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline'><meta property='og:description' content='安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline'><meta property='og:url' content='https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-kubernetes/'><meta property='og:site_name' content='翻轉吧金魚腦'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='kubernetes'><meta property='article:tag' content='gitlab'><meta property='article:published_time' content='2024-03-31T17:04:59+08:00'><meta property='article:modified_time' content='2024-03-31T17:04:59+08:00'><meta name=twitter:title content="安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline"><meta name=twitter:description content="安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline"><link rel="shortcut icon" href=/favicon.png><script async src="https://www.googletagmanager.com/gtag/js?id=G-QB4H991E1G"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-QB4H991E1G")</script><meta name=google-site-verification content="EkUcMLTrO3RDZzjREX9Dffy2lcjWCR-2Qtu8VF4b8sQ"><meta content="翻轉吧金魚腦,安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline" name=keywords></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><div id=article-toolbar style=position:sticky;top:5px;z-index:1000><a href=/ class=back-home><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="15 6 9 12 15 18"/></svg>
+<span>返回</span></a></div><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目錄</h2><div class=widget--toc><nav id=TableOfContents><ul><li><ul><li><ul><li><ul><li><a href=#安裝helm3>安裝helm3</a></li><li><a href=#配置chart-儲存庫>配置chart 儲存庫</a></li><li><a href=#更新配置資訊>更新配置資訊</a></li><li><a href=#部署chart>部署chart</a></li></ul></li></ul></li></ul></li><li><a href=#測試-runner-執行pipeline>測試 Runner 執行pipeline</a></li><li><a href=#解決構建快取問題>解決構建快取問題</a></li><li><a href=#解決構建製品問題>解決構建製品問題</a></li></ul></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/kubernetes/ style=background-color:#0000e3;color:#fff>kubernetes</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/2024/install-gitlab-runner-in-kubernetes/>安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline</a></h2><h3 class=article-subtitle>安裝Gitlab-runner在kubernetes上，並註冊與執行pipeline</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>2024/03/31</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>閱讀時間: 16 分鐘</time></div></footer></div></header><section class=article-content><section class="toc toc--inline"><h2>目錄</h2><div><nav id=TableOfContents><ul><li><ul><li><ul><li><ul><li><a href=#安裝helm3>安裝helm3</a></li><li><a href=#配置chart-儲存庫>配置chart 儲存庫</a></li><li><a href=#更新配置資訊>更新配置資訊</a></li><li><a href=#部署chart>部署chart</a></li></ul></li></ul></li></ul></li><li><a href=#測試-runner-執行pipeline>測試 Runner 執行pipeline</a></li><li><a href=#解決構建快取問題>解決構建快取問題</a></li><li><a href=#解決構建製品問題>解決構建製品問題</a></li></ul></nav></div></section><h4 id=安裝helm3>安裝helm3</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>https://github.com/helm/helm/releases
+</span></span><span class=line><span class=cl>tar -zxvf helm-v3.13.1-linux-amd64.tar.gz
+</span></span><span class=line><span class=cl>mv linux-amd64/helm /usr/local/bin/helm
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# helm version
+</span></span><span class=line><span class=cl>version.BuildInfo<span class=o>{</span>Version:<span class=s2>&#34;v3.13.1&#34;</span>, GitCommit:<span class=s2>&#34;3547a4b5bf5edb5478ce352e18858d8a552a4110&#34;</span>, GitTreeState:<span class=s2>&#34;clean&#34;</span>, GoVersion:<span class=s2>&#34;go1.20.8&#34;</span><span class=o>}</span>
+</span></span></code></pre></div><h4 id=配置chart-儲存庫>配置chart 儲存庫</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1>## 添加chart儲存庫</span>
+</span></span><span class=line><span class=cl>helm repo add gitlab https://charts.gitlab.io
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 驗證源</span>
+</span></span><span class=line><span class=cl>helm repo list
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>##查詢可以安裝的gitlab-runner chart</span>
+</span></span><span class=line><span class=cl>helm search repo -l gitlab/gitlab-runner
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# helm repo add gitlab https://charts.gitlab.io
+</span></span><span class=line><span class=cl><span class=s2>&#34;gitlab&#34;</span> has been added to your repositories
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# helm repo list
+</span></span><span class=line><span class=cl>NAME                	URL
+</span></span><span class=line><span class=cl>rancher-stable      	https://releases.rancher.com/server-charts/stable
+</span></span><span class=line><span class=cl>jetstack            	https://charts.jetstack.io
+</span></span><span class=line><span class=cl>prometheus-community	https://prometheus-community.github.io/helm-charts
+</span></span><span class=line><span class=cl>gitlab              	https://charts.gitlab.io
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# helm search repo -l gitlab/gitlab-runner
+</span></span><span class=line><span class=cl>NAME                	CHART VERSION	APP VERSION	DESCRIPTION
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.63.0       	16.10.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.62.1       	16.9.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.62.0       	16.9.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.61.3       	16.8.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.61.2       	16.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.61.1       	16.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.61.0       	16.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.60.1       	16.7.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.60.0       	16.7.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.59.3       	16.6.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.59.2       	16.6.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.59.1       	16.6.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.59.0       	16.6.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.58.2       	16.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.58.1       	16.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.58.0       	16.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.57.2       	16.4.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.57.1       	16.4.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.57.0       	16.4.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.56.3       	16.3.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.56.2       	16.3.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.56.1       	16.3.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.56.0       	16.3.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.55.3       	16.2.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.55.2       	16.2.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.55.1       	16.2.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.55.0       	16.2.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.54.1       	16.1.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.54.0       	16.1.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.53.3       	16.0.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.53.2       	16.0.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.53.1       	16.0.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.53.0       	16.0.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.52.1       	15.11.1    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.52.0       	15.11.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.51.1       	15.10.1    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.51.0       	15.10.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.50.1       	15.9.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.50.0       	15.9.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.49.3       	15.8.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.49.2       	15.8.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.49.1       	15.8.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.49.0       	15.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.48.3       	15.7.4     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.48.2       	15.7.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.48.1       	15.7.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.48.0       	15.7.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.47.3       	15.6.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.47.2       	15.6.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.47.1       	15.6.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.47.0       	15.6.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.46.1       	15.5.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.46.0       	15.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.45.2       	15.4.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.45.1       	15.4.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.45.0       	15.4.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.44.3       	15.3.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.44.2       	15.3.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.44.1       	15.3.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.44.0       	15.3.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.43.2       	15.2.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.43.1       	15.2.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.43.0       	15.2.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.42.0       	15.1.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.41.1       	15.0.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.41.0       	15.0.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.40.1       	14.10.1    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.40.0       	14.10.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.39.1       	14.9.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.39.0       	14.9.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.38.2       	14.8.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.38.1       	14.8.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.38.0       	14.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.37.3       	14.7.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.37.2       	14.7.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.37.1       	bleeding   	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.37.0       	14.7.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.36.1       	14.6.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.36.0       	14.6.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.35.3       	14.5.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.35.2       	14.5.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.35.0       	14.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.34.2       	14.4.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.34.1       	14.4.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.34.0       	14.4.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.33.3       	14.3.4     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.33.2       	14.3.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.33.1       	14.3.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.33.0       	14.3.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.32.0       	14.2.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.31.0       	14.1.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.30.0       	14.0.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.29.0       	13.12.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.28.0       	13.11.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.27.0       	13.10.0    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.26.0       	13.9.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.25.0       	13.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.24.0       	13.7.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.23.0       	13.6.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.22.0       	13.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.21.1       	13.4.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.21.0       	13.4.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.20.2       	13.3.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.20.1       	13.3.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.20.0       	13.3.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.19.4       	13.2.4     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.19.3       	13.2.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.19.2       	13.2.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.19.1       	13.2.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.19.0       	13.2.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.18.3       	13.1.3     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.18.2       	13.1.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.18.1       	13.1.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.18.0       	13.1.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.17.2       	13.0.2     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.17.1       	13.0.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.17.0       	13.0.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.16.2       	12.10.3    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.16.1       	12.10.2    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.16.0       	12.10.1    	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.15.1       	12.9.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.15.0       	12.9.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.14.0       	12.8.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.13.1       	12.7.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.13.0       	12.7.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.12.0       	12.6.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.11.0       	12.5.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.10.1       	12.4.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.10.0       	12.4.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.9.1        	12.3.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.9.0        	12.3.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.8.0        	12.2.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.7.0        	12.1.0     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.6.1        	12.0.1     	GitLab Runner
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.6.0        	12.0.0     	GitLab Runner
+</span></span></code></pre></div><h4 id=更新配置資訊>更新配置資訊</h4><p>目前我的gitlab版本是12.3.9，所以runner我就安裝12.4的，CHART版本就是0.10.0</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>NAME                	CHART VERSION	APP VERSION	DESCRIPTION
+</span></span><span class=line><span class=cl>gitlab/gitlab-runner	0.10.0       	12.4.0     	GitLab Runner
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1>## 獲取相關版本的chart包</span>
+</span></span><span class=line><span class=cl>helm fetch gitlab/gitlab-runner --version<span class=o>=</span>0.10.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>root@zeyang-nuc-service ~<span class=o>]</span><span class=c1># ls</span>
+</span></span><span class=line><span class=cl>Desktop                        es
+</span></span><span class=line><span class=cl>Documents                      gitlab-runner-0.15.0.tgz
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1>## 獲取相關版本的chart包</span>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# helm fetch gitlab/gitlab-runner --version<span class=o>=</span>0.10.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# ll
+</span></span><span class=line><span class=cl>-rw-r--r--  <span class=m>1</span> root root <span class=m>11744</span> Mar <span class=m>31</span> 09:16 gitlab-runner-0.10.0.tgz
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# tar -xzvf gitlab-runner-0.10.0.tgz
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# <span class=nb>cd</span> gitlab-runner/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~/gitlab-runner# ll
+</span></span><span class=line><span class=cl>total <span class=m>52</span>
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root   <span class=m>190</span> Mar <span class=m>31</span> 09:18 ./
+</span></span><span class=line><span class=cl>drwx------ <span class=m>13</span> root root  <span class=m>4096</span> Mar <span class=m>31</span> 09:18 ../
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root  <span class=m>2973</span> Oct <span class=m>21</span>  <span class=m>2019</span> CHANGELOG.md*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root   <span class=m>345</span> Oct <span class=m>21</span>  <span class=m>2019</span> Chart.yaml*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root   <span class=m>796</span> Oct <span class=m>21</span>  <span class=m>2019</span> CONTRIBUTING.md*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root  <span class=m>1782</span> Oct <span class=m>21</span>  <span class=m>2019</span> .gitlab-ci.yml*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root   <span class=m>362</span> Oct <span class=m>21</span>  <span class=m>2019</span> .helmignore*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root  <span class=m>1084</span> Oct <span class=m>21</span>  <span class=m>2019</span> LICENSE*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root  <span class=m>1305</span> Oct <span class=m>21</span>  <span class=m>2019</span> NOTICE*
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root   <span class=m>229</span> Oct <span class=m>21</span>  <span class=m>2019</span> README.md*
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>2</span> root root  <span class=m>4096</span> Mar <span class=m>31</span> 09:18 templates/
+</span></span><span class=line><span class=cl>-rwxr-xr-x  <span class=m>1</span> root root <span class=m>11896</span> Oct <span class=m>21</span>  <span class=m>2019</span> values.yaml*
+</span></span></code></pre></div><p>values.yml</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/gitlab-runner# cat values.yaml
+</span></span><span class=line><span class=cl><span class=c1>## GitLab Runner Image</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl><span class=c1>## By default it&#39;s using gitlab/gitlab-runner:alpine-v{VERSION}</span>
+</span></span><span class=line><span class=cl><span class=c1>## where {VERSION} is taken from Chart.yaml from appVersion field</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: https://hub.docker.com/r/gitlab/gitlab-runner/tags/</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>image: gitlab/gitlab-runner:alpine-v12.4.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 鏡像下載策略</span>
+</span></span><span class=line><span class=cl>imagePullPolicy: IfNotPresent
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Gitlab伺服器地址</span>
+</span></span><span class=line><span class=cl>gitlabUrl: http://192.168.1.55/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## runner註冊token</span>
+</span></span><span class=line><span class=cl>runnerRegistrationToken: <span class=s2>&#34;BmSnpmSVS3CMxQ9Vyiki&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 終止之前註銷所有跑步者</span>
+</span></span><span class=line><span class=cl>unregisterRunners: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 當停止管道時等待其作業終止時間</span>
+</span></span><span class=line><span class=cl>terminationGracePeriodSeconds: <span class=m>3600</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Set the certsSecretName in order to pass custom certficates for GitLab Runner to use</span>
+</span></span><span class=line><span class=cl><span class=c1>## Provide resource name for a Kubernetes Secret Object in the same namespace,</span>
+</span></span><span class=line><span class=cl><span class=c1>## this is used to populate the /home/gitlab-runner/.gitlab-runner/certs/ directory</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: https://docs.gitlab.com/runner/configuration/tls-self-signed.html#supported-options-for-self-signed-certificates</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl><span class=c1># certsSecretName:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 配置最大並發作業數</span>
+</span></span><span class=line><span class=cl>concurrent: <span class=m>10</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 新作業檢查間隔</span>
+</span></span><span class=line><span class=cl>checkInterval: <span class=m>30</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## GitlabRunner日誌級別 debug, info, warn, error, fatal, panic</span>
+</span></span><span class=line><span class=cl>logLevel: info
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Configure GitLab Runner&#39;s logging format. Available values are: runner, text, json</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-global-section</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl><span class=c1># logFormat:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## For RBAC support:</span>
+</span></span><span class=line><span class=cl><span class=c1>##rbac:</span>
+</span></span><span class=line><span class=cl><span class=c1>##  create: true</span>
+</span></span><span class=line><span class=cl><span class=c1>##  ## Define specific rbac permissions.</span>
+</span></span><span class=line><span class=cl><span class=c1>##  resources: [&#34;pods&#34;, &#34;pods/exec&#34;, &#34;secrets&#34;]</span>
+</span></span><span class=line><span class=cl><span class=c1>##  verbs: [&#34;get&#34;, &#34;list&#34;, &#34;watch&#34;, &#34;create&#34;, &#34;patch&#34;, &#34;delete&#34;]</span>
+</span></span><span class=line><span class=cl>rbac:
+</span></span><span class=line><span class=cl>  create: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>  rules:
+</span></span><span class=line><span class=cl>  - resources: <span class=o>[</span><span class=s2>&#34;configmaps&#34;</span>,<span class=s2>&#34;events&#34;</span>,<span class=s2>&#34;pods&#34;</span>,<span class=s2>&#34;pods/attach&#34;</span>,<span class=s2>&#34;pods/exec&#34;</span>,<span class=s2>&#34;secrets&#34;</span>,<span class=s2>&#34;services&#34;</span>,<span class=o>]</span>
+</span></span><span class=line><span class=cl>    verbs: <span class=o>[</span><span class=s2>&#34;get&#34;</span>, <span class=s2>&#34;list&#34;</span>, <span class=s2>&#34;watch&#34;</span>, <span class=s2>&#34;create&#34;</span>, <span class=s2>&#34;patch&#34;</span>, <span class=s2>&#34;update&#34;</span>, <span class=s2>&#34;delete&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>  - apiGroups: <span class=o>[</span><span class=s2>&#34;&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>    resources: <span class=o>[</span><span class=s2>&#34;pods/exec&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>    verbs: <span class=o>[</span><span class=s2>&#34;create&#34;</span>, <span class=s2>&#34;patch&#34;</span>, <span class=s2>&#34;delete&#34;</span><span class=o>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Run the gitlab-bastion container with the ability to deploy/manage containers of jobs</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## cluster-wide or only within namespace</span>
+</span></span><span class=line><span class=cl>  clusterWideAccess: <span class=nb>false</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Use the following Kubernetes Service Account name if RBAC is disabled in this Helm chart (see rbac.create)</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># serviceAccountName: default</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify annotations for Service Accounts, useful for annotations such as eks.amazonaws.com/role-arn</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># serviceAccountAnnotations: {}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Configure integrated Prometheus metrics exporter</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: https://docs.gitlab.com/runner/monitoring/#configuration-of-the-metrics-http-server</span>
+</span></span><span class=line><span class=cl>metrics:
+</span></span><span class=line><span class=cl>  enabled: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Configuration for the Pods that that the runner launches for each new job</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>runners:
+</span></span><span class=line><span class=cl>  <span class=c1>## Default container image to use for builds when none is specified</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  image: ubuntu:16.04
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify one or more imagePullSecrets</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># imagePullSecrets: []</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify the image pull policy: never, if-not-present, always. The cluster default will be used if not set.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  imagePullPolicy: <span class=s2>&#34;if-not-present&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Defines number of concurrent requests for new job from GitLab</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-section</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## 限制來自GitLab的對新作業的並發請求數</span>
+</span></span><span class=line><span class=cl>  requestConcurrency: <span class=m>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify whether the runner should be locked to a specific project: true, false. Defaults to true.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  locked: <span class=nb>false</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify the tags associated with the runner. Comma-separated list of tags.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/ce/ci/runners/#using-tags</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  tags: <span class=s2>&#34;kubernetes-runner,k8s&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify if jobs without tags should be run.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## If not specified, Runner will default to true if no tags were specified. In other case it will</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## default to false.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/ce/ci/runners/#allowing-runners-with-tags-to-pick-jobs-without-tags</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  runUntagged: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify whether the runner should only run protected branches.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Defaults to False.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/ee/ci/runners/#protected-runners</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  protected: <span class=nb>false</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Run all containers with the privileged flag enabled</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## This will allow the docker:dind image to run if you need to run Docker</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## commands. Please read the docs before turning this on:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/executors/kubernetes.html#using-docker-dind</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  privileged: <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## The name of the secret containing runner-token and runner-registration-token</span>
+</span></span><span class=line><span class=cl>  <span class=c1># secret: gitlab-runner</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Namespace to run Kubernetes jobs in (defaults to the same namespace of this release)</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># namespace:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## The amount of time, in seconds, that needs to pass before the runner will</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## timeout attempting to connect to the container it has just created.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/executors/kubernetes.html</span>
+</span></span><span class=line><span class=cl>  pollTimeout: <span class=m>180</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Set maximum build log size in kilobytes, by default set to 4096 (4MB)</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-section</span>
+</span></span><span class=line><span class=cl>  outputLimit: <span class=m>4096</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Distributed runners caching</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://gitlab.com/gitlab-org/gitlab-runner/blob/master/docs/configuration/autoscale.md#distributed-runners-caching</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## If you want to use s3 based distributing caching:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## First of all you need to uncomment General settings and S3 settings sections.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Create a secret &#39;s3access&#39; containing &#39;accesskey&#39; &amp; &#39;secretkey&#39;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://aws.amazon.com/blogs/security/wheres-my-secret-access-key/</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## $ kubectl create secret generic s3access \</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##   --from-literal=accesskey=&#34;YourAccessKey&#34; \</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##   --from-literal=secretkey=&#34;YourSecretKey&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://kubernetes.io/docs/concepts/configuration/secret/</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## If you want to use gcs based distributing caching:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## First of all you need to uncomment General settings and GCS settings sections.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Access using credentials file:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Create a secret &#39;google-application-credentials&#39; containing your application credentials file.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runnerscachegcs-section</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## You could configure</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## $ kubectl create secret generic google-application-credentials \</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##   --from-file=gcs-application-credentials-file=./path-to-your-google-application-credentials-file.json</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://kubernetes.io/docs/concepts/configuration/secret/</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Access using access-id and private-key:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Create a secret &#39;gcsaccess&#39; containing &#39;gcs-access-id&#39; &amp; &#39;gcs-private-key&#39;.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-cache-gcs-section</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## You could configure</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## $ kubectl create secret generic gcsaccess \</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##   --from-literal=gcs-access-id=&#34;YourAccessID&#34; \</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##   --from-literal=gcs-private-key=&#34;YourPrivateKey&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://kubernetes.io/docs/concepts/configuration/secret/</span>
+</span></span><span class=line><span class=cl>  cache: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>    <span class=c1>## General settings</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cacheType: s3</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cachePath: &#34;gitlab_runner&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cacheShared: true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>## S3 settings</span>
+</span></span><span class=line><span class=cl>    <span class=c1># s3ServerAddress: s3.amazonaws.com</span>
+</span></span><span class=line><span class=cl>    <span class=c1># s3BucketName:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># s3BucketLocation:</span>
+</span></span><span class=line><span class=cl>    <span class=c1># s3CacheInsecure: false</span>
+</span></span><span class=line><span class=cl>    <span class=c1># secretName: s3access</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1>## GCS settings</span>
+</span></span><span class=line><span class=cl>    <span class=c1># gcsBucketName:</span>
+</span></span><span class=line><span class=cl>    <span class=c1>## Use this line for access using access-id and private-key</span>
+</span></span><span class=line><span class=cl>    <span class=c1># secretName: gcsaccess</span>
+</span></span><span class=line><span class=cl>    <span class=c1>## Use this line for access using google-application-credentials file</span>
+</span></span><span class=line><span class=cl>    <span class=c1># secretName: google-application-credentials</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Build Container specific configuration</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  builds: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cpuLimit: 200m</span>
+</span></span><span class=line><span class=cl>    <span class=c1># memoryLimit: 256Mi</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cpuRequests: 100m</span>
+</span></span><span class=line><span class=cl>    <span class=c1># memoryRequests: 128Mi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Service Container specific configuration</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  services: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cpuLimit: 200m</span>
+</span></span><span class=line><span class=cl>    <span class=c1># memoryLimit: 256Mi</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cpuRequests: 100m</span>
+</span></span><span class=line><span class=cl>    <span class=c1># memoryRequests: 128Mi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Helper Container specific configuration</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  helpers: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cpuLimit: 200m</span>
+</span></span><span class=line><span class=cl>    <span class=c1># memoryLimit: 256Mi</span>
+</span></span><span class=line><span class=cl>    <span class=c1># cpuRequests: 100m</span>
+</span></span><span class=line><span class=cl>    <span class=c1># memoryRequests: 128Mi</span>
+</span></span><span class=line><span class=cl>    <span class=c1># image: gitlab/gitlab-runner-helper:x86_64-latest</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Service Account to be used for runners</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># serviceAccountName:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## If Gitlab is not reachable through $CI_SERVER_URL</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># cloneUrl:</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify node labels for CI job pods assignment</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># nodeSelector: {}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify pod labels for CI job pods</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># podLabels: {}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Specify annotations for job pods, useful for annotations such as iam.amazonaws.com/role</span>
+</span></span><span class=line><span class=cl>  <span class=c1># podAnnotations: {}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1>## Configure environment variables that will be injected to the pods that are created while</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## the build is running. These variables are passed as parameters, i.e. `--env &#34;NAME=VALUE&#34;`,</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## to `gitlab-runner register` command.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## Note that `envVars` (see below) are only present in the runner pod, not the pods that are</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## created for each build.</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1>## ref: https://docs.gitlab.com/runner/commands/#gitlab-runner-register</span>
+</span></span><span class=line><span class=cl>  <span class=c1>##</span>
+</span></span><span class=line><span class=cl>  <span class=c1># env:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   NAME: VALUE</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Configure securitycontext</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: http://kubernetes.io/docs/user-guide/security-context/</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>securityContext:
+</span></span><span class=line><span class=cl>  fsGroup: <span class=m>65533</span>
+</span></span><span class=line><span class=cl>  runAsUser: <span class=m>100</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Configure resource requests and limits</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: http://kubernetes.io/docs/user-guide/compute-resources/</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>resources: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>  <span class=c1># limits:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   memory: 256Mi</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   cpu: 200m</span>
+</span></span><span class=line><span class=cl>  <span class=c1># requests:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   memory: 128Mi</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   cpu: 100m</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Affinity for pod assignment</span>
+</span></span><span class=line><span class=cl><span class=c1>## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>affinity: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Node labels for pod assignment</span>
+</span></span><span class=line><span class=cl><span class=c1>## Ref: https://kubernetes.io/docs/user-guide/node-selection/</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>nodeSelector: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>  <span class=c1># Example: The gitlab runner manager should not run on spot instances so you can assign</span>
+</span></span><span class=line><span class=cl>  <span class=c1># them to the regular worker nodes only.</span>
+</span></span><span class=line><span class=cl>  <span class=c1># node-role.kubernetes.io/worker: &#34;true&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## List of node taints to tolerate (requires Kubernetes &gt;= 1.6)</span>
+</span></span><span class=line><span class=cl><span class=c1>## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>tolerations: <span class=o>[]</span>
+</span></span><span class=line><span class=cl>  <span class=c1># Example: Regular worker nodes may have a taint, thus you need to tolerate the taint</span>
+</span></span><span class=line><span class=cl>  <span class=c1># when you assign the gitlab runner manager with nodeSelector or affinity to the nodes.</span>
+</span></span><span class=line><span class=cl>  <span class=c1># - key: &#34;node-role.kubernetes.io/worker&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   operator: &#34;Exists&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Configure environment variables that will be present when the registration command runs</span>
+</span></span><span class=line><span class=cl><span class=c1>## This provides further control over the registration process and the config.toml file</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: `gitlab-runner register --help`</span>
+</span></span><span class=line><span class=cl><span class=c1>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl><span class=c1># envVars:</span>
+</span></span><span class=line><span class=cl><span class=c1>#   - name: RUNNER_EXECUTOR</span>
+</span></span><span class=line><span class=cl><span class=c1>#     value: kubernetes</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## list of hosts and IPs that will be injected into the pod&#39;s hosts file</span>
+</span></span><span class=line><span class=cl>hostAliases: <span class=o>[]</span>
+</span></span><span class=line><span class=cl>  <span class=c1># Example:</span>
+</span></span><span class=line><span class=cl>  <span class=c1># - ip: &#34;127.0.0.1&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   hostnames:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   - &#34;foo.local&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   - &#34;bar.local&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1># - ip: &#34;10.1.2.3&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   hostnames:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   - &#34;foo.remote&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   - &#34;bar.remote&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Annotations to be added to manager pod</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>podAnnotations: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>  <span class=c1># Example:</span>
+</span></span><span class=line><span class=cl>  <span class=c1># iam.amazonaws.com/role: &lt;my_role_arn&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Labels to be added to manager pod</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl>podLabels: <span class=o>{}</span>
+</span></span><span class=line><span class=cl>  <span class=c1># Example:</span>
+</span></span><span class=line><span class=cl>  <span class=c1># owner.team: &lt;my_cool_team&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## HPA support for custom metrics:</span>
+</span></span><span class=line><span class=cl><span class=c1>## This section enables runners to autoscale based on defined custom metrics.</span>
+</span></span><span class=line><span class=cl><span class=c1>## In order to use this functionality, Need to enable a custom metrics API server by</span>
+</span></span><span class=line><span class=cl><span class=c1>## implementing &#34;custom.metrics.k8s.io&#34; using supported third party adapter</span>
+</span></span><span class=line><span class=cl><span class=c1>## Example: https://github.com/directxman12/k8s-prometheus-adapter</span>
+</span></span><span class=line><span class=cl><span class=c1>##</span>
+</span></span><span class=line><span class=cl><span class=c1>#hpa: {}</span>
+</span></span><span class=line><span class=cl>  <span class=c1># minReplicas: 1</span>
+</span></span><span class=line><span class=cl>  <span class=c1># maxReplicas: 10</span>
+</span></span><span class=line><span class=cl>  <span class=c1># metrics:</span>
+</span></span><span class=line><span class=cl>  <span class=c1># - type: Pods</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#   pods:</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#     metricName: gitlab_runner_jobs</span>
+</span></span><span class=line><span class=cl>  <span class=c1>#     targetAverageValue: 400m</span>
+</span></span></code></pre></div><h4 id=部署chart>部署chart</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1>## 創建runner</span>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# helm install gitlab-runner --namespace <span class=nb>test</span> ./gitlab-runner
+</span></span><span class=line><span class=cl>NAME: gitlab-runner
+</span></span><span class=line><span class=cl>LAST DEPLOYED: Sun Mar <span class=m>31</span> 09:40:46 <span class=m>2024</span>
+</span></span><span class=line><span class=cl>NAMESPACE: <span class=nb>test</span>
+</span></span><span class=line><span class=cl>STATUS: deployed
+</span></span><span class=line><span class=cl>REVISION: <span class=m>1</span>
+</span></span><span class=line><span class=cl>TEST SUITE: None
+</span></span><span class=line><span class=cl>NOTES:
+</span></span><span class=line><span class=cl>Your GitLab Runner should now be registered against the GitLab instance reachable at: <span class=s2>&#34;http://192.168.1.55/&#34;</span>
+</span></span></code></pre></div><p>此時可以回到Gitlab頁面，查看runner是否已註冊</p><p>確定已註冊成功了</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331174235.png width=1713 height=647 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331174235_hu0230bca1ebedb31c247b5f17daf6bd4a_159289_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331174235_hu0230bca1ebedb31c247b5f17daf6bd4a_159289_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=264 data-flex-basis=635px></p><p>進k8s查看，可以看到namespace test下，已經有一個runner產生</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/gitlab-runner# kubectl get pod -n <span class=nb>test</span>
+</span></span><span class=line><span class=cl>NAME                                           READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>gitlab-runner-gitlab-runner-648b664dbf-knshw   1/1     Running   <span class=m>0</span>          3m57s
+</span></span></code></pre></div><h1 id=測試-runner-執行pipeline>測試 Runner 執行pipeline</h1><p>在專案新增一個名為.gitlab-ci.yml的檔案</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331174954.png width=1451 height=829 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331174954_hu1d25d93376249a0a3ed08c74f4245c08_83877_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331174954_hu1d25d93376249a0a3ed08c74f4245c08_83877_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=175 data-flex-basis=420px></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>before_script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mysql:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>alias</span><span class=p>:</span><span class=w> </span><span class=l>mysql-1  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>echo &#34;mvn clean &#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>echo &#34;deploy&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>production</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=l>http:/google.com</span><span class=w>
+</span></span></span></code></pre></div><p>調整Runner設定，並分配給Project使用</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175208.png width=1735 height=656 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175208_hu94356f3cacfcdc94fd1e51b77a31ac46_159802_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175208_hu94356f3cacfcdc94fd1e51b77a31ac46_159802_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=264 data-flex-basis=634px></p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175256.png width=1309 height=561 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175256_hu4a6b63093272dee331a9ba21e717be86_49482_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175256_hu4a6b63093272dee331a9ba21e717be86_49482_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=233 data-flex-basis=560px></p><p>執行pipeline</p><p>看到dns無法解析
+<img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175639.png width=1367 height=367 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175639_hua70fdde981df88d33b713241540d56b2_67104_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331175639_hua70fdde981df88d33b713241540d56b2_67104_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=372 data-flex-basis=893px></p><p>coredns添加hosts解析</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl get configmaps coredns -n kube-system -o yaml &gt; coredns-configmaps.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# vim coredns-configmaps.yaml
+</span></span><span class=line><span class=cl>apiVersion: v1
+</span></span><span class=line><span class=cl>data:
+</span></span><span class=line><span class=cl>  Corefile: <span class=p>|</span>
+</span></span><span class=line><span class=cl>    .:53 <span class=o>{</span>
+</span></span><span class=line><span class=cl>        errors <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        health <span class=o>{</span>
+</span></span><span class=line><span class=cl>            lameduck 5s
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        ready
+</span></span><span class=line><span class=cl>        kubernetes cluster.local in-addr.arpa ip6.arpa <span class=o>{</span>
+</span></span><span class=line><span class=cl>          pods insecure
+</span></span><span class=line><span class=cl>          fallthrough in-addr.arpa ip6.arpa
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        hosts <span class=o>{</span>
+</span></span><span class=line><span class=cl>          192.168.1.55 gitlab.jimmyhome.tw
+</span></span><span class=line><span class=cl>          fallthrough
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl apply -f coredns-configmaps.yaml
+</span></span></code></pre></div><p>重啟coredns服務</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl delete pod coredns-57c7559cc8-sq8c4 -n kube-system
+</span></span><span class=line><span class=cl>pod <span class=s2>&#34;coredns-57c7559cc8-sq8c4&#34;</span> deleted
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl delete pod coredns-57c7559cc8-vrf7g -n kube-system
+</span></span><span class=line><span class=cl>pod <span class=s2>&#34;coredns-57c7559cc8-vrf7g&#34;</span> deleted
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n kube-system
+</span></span><span class=line><span class=cl>NAME                                       READY   STATUS    RESTARTS          AGE
+</span></span><span class=line><span class=cl>cadvisor-8ksn8                             1/1     Running   <span class=m>3</span> <span class=o>(</span>19h ago<span class=o>)</span>       93d
+</span></span><span class=line><span class=cl>cadvisor-zxskk                             1/1     Running   <span class=m>3</span> <span class=o>(</span>19h ago<span class=o>)</span>       93d
+</span></span><span class=line><span class=cl>calico-kube-controllers-777ff6cddb-xbmt2   1/1     Running   <span class=m>5</span> <span class=o>(</span>19h ago<span class=o>)</span>       13d
+</span></span><span class=line><span class=cl>calico-node-5gfmb                          1/1     Running   <span class=m>1</span> <span class=o>(</span>19h ago<span class=o>)</span>       13d
+</span></span><span class=line><span class=cl>calico-node-7vxfv                          1/1     Running   <span class=m>1</span> <span class=o>(</span>19h ago<span class=o>)</span>       13d
+</span></span><span class=line><span class=cl>calico-node-cpxc6                          1/1     Running   <span class=m>1</span> <span class=o>(</span>19h ago<span class=o>)</span>       13d
+</span></span><span class=line><span class=cl>calico-node-k7xmf                          1/1     Running   <span class=m>1</span> <span class=o>(</span>19h ago<span class=o>)</span>       13d
+</span></span><span class=line><span class=cl>calico-node-x5fhs                          1/1     Running   <span class=m>1</span> <span class=o>(</span>19h ago<span class=o>)</span>       13d
+</span></span><span class=line><span class=cl>coredns-57c7559cc8-7ktfj                   1/1     Running   <span class=m>0</span>                 25s
+</span></span><span class=line><span class=cl>coredns-57c7559cc8-hzxfv                   1/1     Running   <span class=m>0</span>                 8s
+</span></span></code></pre></div><p>再一次重新執行pipeline</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331181124.png width=1411 height=561 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331181124_hud997113e41a86b961cefcb6f72a4a86e_44532_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331181124_hud997113e41a86b961cefcb6f72a4a86e_44532_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=251 data-flex-basis=603px></p><p>執行pipeline時，k8s裡面會產生executor pod來執行任務</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 產生 executor，執行任務</span>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n <span class=nb>test</span>
+</span></span><span class=line><span class=cl>NAME                                           READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>gitlab-runner-gitlab-runner-648b664dbf-knshw   1/1     Running   <span class=m>0</span>          26m
+</span></span><span class=line><span class=cl>runner-r9nmxgfb-project-7-concurrent-0chf72    3/3     Running   <span class=m>0</span>          3s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 執行完畢，executor 自動delete掉</span>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n <span class=nb>test</span>
+</span></span><span class=line><span class=cl>NAME                                           READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>gitlab-runner-gitlab-runner-648b664dbf-knshw   1/1     Running   <span class=m>0</span>          26m
+</span></span><span class=line><span class=cl>runner-r9nmxgfb-project-7-concurrent-0chf72    2/3     Error     <span class=m>0</span>          4s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># executor消失</span>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n <span class=nb>test</span>
+</span></span><span class=line><span class=cl>NAME                                           READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>gitlab-runner-gitlab-runner-648b664dbf-knshw   1/1     Running   <span class=m>0</span>          26m
+</span></span></code></pre></div><p>可以看到，確定是使用，我們分配的runner執行</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331181213.png width=1380 height=700 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331181213_hu0e8b8ddf2355b0eadfdf5ca53585ebc5_84559_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331181213_hu0e8b8ddf2355b0eadfdf5ca53585ebc5_84559_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=197 data-flex-basis=473px></p><h1 id=解決構建快取問題>解決構建快取問題</h1><p>所謂的構建快取就是我們在進行maven等構建工具打包時所依賴的包。預設會在私服中獲取，加快構建速度可以在本地快取一份。在此，我們需要創建PVC來持久化構建快取，加速構建速度。為了節省儲存空間決定不在每個項目中儲存構建快取，而是配置全局快取。
+<img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331184647.png width=1375 height=825 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331184647_hu0aae08903a330af1426a7f65afb7637d_155323_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331184647_hu0aae08903a330af1426a7f65afb7637d_155323_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=166 data-flex-basis=400px></p><p>創建pvc</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331185327.png width=1917 height=512 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331185327_hu6e8385d52d4db40d8f65aafa4606fac9_59866_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331185327_hu6e8385d52d4db40d8f65aafa4606fac9_59866_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=374 data-flex-basis=898px></p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331185518.png width=1675 height=483 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331185518_hudb4cb5e5a35e57039fae0eb503f2e345_60512_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331185518_hudb4cb5e5a35e57039fae0eb503f2e345_60512_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=346 data-flex-basis=832px></p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331190252.png width=1863 height=491 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331190252_hue77cb29deedfe81f32318b3656ca84a8_79499_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331190252_hue77cb29deedfe81f32318b3656ca84a8_79499_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=379 data-flex-basis=910px></p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331190355.png width=1912 height=518 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331190355_hud6337978f11c0397c6647d6e44f90a11_81336_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331190355_hud6337978f11c0397c6647d6e44f90a11_81336_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=369 data-flex-basis=885px></p><p>第一步：編輯value.yml文件，添加構建快取資訊配置。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/gitlab-runner# vim values.yaml
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## 當停止管道時等待其作業終止時間</span>
+</span></span><span class=line><span class=cl>terminationGracePeriodSeconds: <span class=m>3600</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## configure build cache</span>
+</span></span><span class=line><span class=cl>cibuild:
+</span></span><span class=line><span class=cl>  cache:
+</span></span><span class=line><span class=cl>    pvcName: ci-build-cache-pvc
+</span></span><span class=line><span class=cl>    mountPath: /home/gitlab-runner/ci-build-cache
+</span></span></code></pre></div><p>第二步：編輯templates/configmap.yml文件，entrypoint部分添加runner配置。在start之前添加，這樣runner在創建構建pod的時候會根據配置掛載pvc。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~/gitlab-runner# vim templates/configmap.yaml
+</span></span><span class=line><span class=cl>    <span class=c1># add build cache</span>
+</span></span><span class=line><span class=cl>    cat &gt;&gt;/home/gitlab-runner/.gitlab-runner/config.toml <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>      [[runners.kubernetes.volumes.pvc]]
+</span></span></span><span class=line><span class=cl><span class=s>      name = &#34;{{.Values.cibuild.cache.pvcName}}&#34;
+</span></span></span><span class=line><span class=cl><span class=s>      mount_path = &#34;{{.Values.cibuild.cache.mountPath}}&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=c1># Start the runner</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exec</span> /entrypoint run --user<span class=o>=</span>gitlab-runner <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>      --working-directory<span class=o>=</span>/home/gitlab-runner
+</span></span></code></pre></div><p>到此gitlab-runner chart部分配置就完成了，接下來可以通過Helm命令進行創建和更新了。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# helm upgrade gitlab-runner --namespace <span class=nb>test</span> ./gitlab-runner
+</span></span><span class=line><span class=cl>Release <span class=s2>&#34;gitlab-runner&#34;</span> has been upgraded. Happy Helming!
+</span></span><span class=line><span class=cl>NAME: gitlab-runner
+</span></span><span class=line><span class=cl>LAST DEPLOYED: Sun Mar <span class=m>31</span> 11:10:46 <span class=m>2024</span>
+</span></span><span class=line><span class=cl>NAMESPACE: <span class=nb>test</span>
+</span></span><span class=line><span class=cl>STATUS: deployed
+</span></span><span class=line><span class=cl>REVISION: <span class=m>6</span>
+</span></span><span class=line><span class=cl>TEST SUITE: None
+</span></span><span class=line><span class=cl>NOTES:
+</span></span><span class=line><span class=cl>Your GitLab Runner should now be registered against the GitLab instance reachable at: <span class=s2>&#34;http://192.168.1.55/&#34;</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n <span class=nb>test</span>
+</span></span><span class=line><span class=cl>NAME                                           READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>gitlab-runner-gitlab-runner-7c4f66c9bb-jkg96   1/1     Running   <span class=m>0</span>          59s
+</span></span></code></pre></div><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191243.png width=1751 height=647 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191243_hu93cddc4d0eae3e848801baf16d3a40cf_159511_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191243_hu93cddc4d0eae3e848801baf16d3a40cf_159511_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=270 data-flex-basis=649px></p><p>構建測試</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191848.png width=1640 height=824 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191848_hu6578b5ec6c0d18da817d717c6f39cc84_189936_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191848_hu6578b5ec6c0d18da817d717c6f39cc84_189936_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=199 data-flex-basis=477px></p><p>可以看到executor，確實有掛載pvc</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191642.png width=1879 height=605 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191642_hu4adedfa1d239950e4b771268400a2105_136342_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331191642_hu4adedfa1d239950e4b771268400a2105_136342_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=310 data-flex-basis=745px></p><p>部署完成了，後續使用構建工具打包時添加指定快取目錄。例如：maven</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mvn clean package  -DskipTests -Dmaven.repo.local<span class=o>=</span>/home/gitlab-runner/ci-build-cache/maven  
+</span></span></code></pre></div><p>.gitlab-ci.yml</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>before_script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mysql:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>alias</span><span class=p>:</span><span class=w> </span><span class=l>mysql-1  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn clean package  -DskipTests -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>echo &#34;deploy&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>production</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=l>http:/google.com</span><span class=w>
+</span></span></span></code></pre></div><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192150.png width=1327 height=828 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192150_hu40fa11af2a2ce26dc5ca661a54a9e562_89489_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192150_hu40fa11af2a2ce26dc5ca661a54a9e562_89489_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=384px></p><p>可以看到，已經有緩存了，不會再去下載
+<img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192558.png width=1368 height=816 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192558_hub060d74a05aa2576169f7ba1f300becc_170278_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192558_hub060d74a05aa2576169f7ba1f300becc_170278_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=167 data-flex-basis=402px></p><p>可以看到有緩存和無緩存，pipeline執行時間上確實有差</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192739.png width=1052 height=176 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192739_hu4d25d293093c49f05fb0925de537d9e2_38189_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331192739_hu4d25d293093c49f05fb0925de537d9e2_38189_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=597 data-flex-basis=1434px></p><p>查看緩存檔案，是否真的存在pvc中</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# ceph-fuse -m 10.202.172.63:6789,10.202.232.220:6789,10.202.191.144:6789 /mnt/mycephfs
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# <span class=nb>cd</span> /mnt/mycephfs/volumes/csi/csi-vol-5fa68a6a-7d6c-4bef-8b6b-04d59aa62598/7663c2ab-b1e9-4f20-87d9-cf3de6f729c0/maven
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:/mnt/mycephfs/volumes/csi/csi-vol-5fa68a6a-7d6c-4bef-8b6b-04d59aa62598/7663c2ab-b1e9-4f20-87d9-cf3de6f729c0/maven# ll
+</span></span><span class=line><span class=cl>total <span class=m>8</span>
+</span></span><span class=line><span class=cl>drwxr-xr-x <span class=m>15</span> root root <span class=m>34573465</span> Mar <span class=m>31</span> 11:22 ./
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root <span class=m>34573465</span> Mar <span class=m>31</span> 11:22 ../
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root   <span class=m>333176</span> Mar <span class=m>31</span> 11:22 backport-util-concurrent/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root   <span class=m>798096</span> Mar <span class=m>31</span> 11:22 ch/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root    <span class=m>44925</span> Mar <span class=m>31</span> 11:22 classworlds/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>6</span> root root  <span class=m>3187173</span> Mar <span class=m>31</span> 11:22 com/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root   <span class=m>429136</span> Mar <span class=m>31</span> 11:22 commons-io/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>4</span> root root    <span class=m>20095</span> Mar <span class=m>31</span> 11:22 io/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>4</span> root root   <span class=m>146461</span> Mar <span class=m>31</span> 11:22 javax/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root   <span class=m>338878</span> Mar <span class=m>31</span> 11:22 junit/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root  <span class=m>1006247</span> Mar <span class=m>31</span> 11:22 mysql/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root     <span class=m>4997</span> Mar <span class=m>31</span> 11:22 net/
+</span></span><span class=line><span class=cl>drwxr-xr-x <span class=m>18</span> root root <span class=m>28229427</span> Mar <span class=m>31</span> 11:22 org/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root     <span class=m>7896</span> Mar <span class=m>31</span> 11:22 xmlpull/
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>3</span> root root    <span class=m>26958</span> Mar <span class=m>31</span> 11:22 xpp3/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root@k8s-master71u:~# umount /mnt/mycephfs
+</span></span></code></pre></div><h1 id=解決構建製品問題>解決構建製品問題</h1><p>在kubernetes中對cache支持一般，我們可以使用artifacts進行代替。但是考慮到artifacts收集製品會占用儲存空間，所以準備研究下如何配置統一的快取。實際上我們可以將repo目錄做成持久化。</p><p>經過測試，在使用kubernetes執行器創建的構建pod會默認掛載一個空目錄。此目錄用於儲存每次下載的代碼，因為是空目錄的原因導致後續測試pod無法獲取需要重新下載代碼，這還不要緊，重要的是構建生成的文件target目錄都不存在了導致後續步驟接連失敗。</p><p>問題演示 :
+每個stages，都會重新下載代碼，導致上一個流程編譯完產生的target，在下一個stages，不會存在，如果要測試其功能，就無法執行</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200702.png width=1298 height=809 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200702_hu7e8354016e5d34f8f4c501b3e614579e_95650_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200702_hu7e8354016e5d34f8f4c501b3e614579e_95650_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=385px></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>before_script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mysql:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>alias</span><span class=p>:</span><span class=w> </span><span class=l>mysql-1  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn clean package  -DskipTests -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls target/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>test</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>test</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls target/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn test -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>echo &#34;deploy&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>production</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=l>http:/google.com</span><span class=w>
+</span></span></span></code></pre></div><p>build流程，是有target目錄
+<img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200900.png width=1663 height=817 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200900_huf7eae8f674853ddf0817a3988fa2e9f2_187417_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200900_huf7eae8f674853ddf0817a3988fa2e9f2_187417_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=203 data-flex-basis=488px></p><p>test流程，是沒有target目錄</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331201006.png width=1685 height=719 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331201006_hu6305594ced893369e4b026db5afc4aef_139668_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331201006_hu6305594ced893369e4b026db5afc4aef_139668_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=234 data-flex-basis=562px></p><p>經過測試在本地的pv中能夠看到，下載的代碼文件。但是默認每次每個job運行的時候都會獲取遠程最新的代碼，會把構建目錄刪除掉，此時就需要配置git checkout策略了。其實按照我們目前的場景，不需要每個作業都下載代碼。只要第一個作業下載好最新的代碼，然後運行流水線即可。當在運行流水線的過程中遇到新代碼提交可以放到下次流水線執行。</p><p>需要在ci文件中定義<code>GIT_CHECKOUT</code>變數，預設值為true，即每次都需要代碼下載。我們將全局配置為false然後在build作業中配置為true。也就實現了只在build作業下載最新代碼了。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>GIT_CHECKOUT</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;false&#34;</span><span class=w> 
+</span></span></span></code></pre></div><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331201748.png width=1273 height=792 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331201748_hu3e74734ed6ada210d9485e4de3944136_94941_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331201748_hu3e74734ed6ada210d9485e4de3944136_94941_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=160 data-flex-basis=385px></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>before_script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mysql:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>alias</span><span class=p>:</span><span class=w> </span><span class=l>mysql-1  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn clean package  -DskipTests -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls target/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>test</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>variables</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>GIT_CHECKOUT</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;false&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>test</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls target/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn test -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>echo &#34;deploy&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>production</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=l>http:/google.com</span><span class=w>
+</span></span></span></code></pre></div><p>可以看到，就算不重新下載代碼，一樣不會有target，因為使用kubernetes執行器創建的構建pod會默認掛載一個空目錄。</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331202007.png width=1518 height=680 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331202007_hu0b0ec9f4183c93bbe88eb561adf2d3b0_133549_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331202007_hu0b0ec9f4183c93bbe88eb561adf2d3b0_133549_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=223 data-flex-basis=535px></p><p>創建repo持久化pvc</p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200005.png width=1915 height=504 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200005_hu6563fb5096a40b3da557123a53b54ed5_88283_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200005_hu6563fb5096a40b3da557123a53b54ed5_88283_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=379 data-flex-basis=911px></p><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200111.png width=1067 height=587 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200111_hu4352eae6d23398dd6fe74bad5e3d6d18_91348_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331200111_hu4352eae6d23398dd6fe74bad5e3d6d18_91348_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=181 data-flex-basis=436px></p><p>編譯values.yaml文件添加註冊配置變數。<code>RUNNER_BUILDS_DIR</code>定義構建目錄。<code>CUSTOM_BUILD_DIR_ENABLED</code>開啟自訂構建目錄配置。</p><p>添加repo目錄快取配置，我們把自訂的構建目錄放到默認構建目錄的下面builds目錄中。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=l>root@k8s-master71u:~/gitlab-runner# vim values.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>## configure build cache</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>cibuild</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>cache</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>pvcName</span><span class=p>:</span><span class=w> </span><span class=l>ci-build-cache-pvc</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/home/gitlab-runner/ci-build-cache</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>builds</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>pvcName</span><span class=p>:</span><span class=w> </span><span class=l>ci-build-dir-pvc</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>mountPath</span><span class=p>:</span><span class=w> </span><span class=l>/home/gitlab-runner/ci-build-dir/builds</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>## Configure environment variables that will be present when the registration command runs</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>## This provides further control over the registration process and the config.toml file</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>## ref: `gitlab-runner register --help`</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>## ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>##</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c># envVars:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#   - name: RUNNER_EXECUTOR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c>#     value: kubernetes</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>envVars</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>RUNNER_BUILDS_DIR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;/home/gitlab-runner/ci-build-dir/&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>CUSTOM_BUILD_DIR_ENABLED</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>value</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span></code></pre></div><p>編輯templates/configmap.yml</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=l>root@k8s-master71u:~/gitlab-runner# vim templates/configmap.yaml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c># add build cache</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>cat &gt;&gt;/home/gitlab-runner/.gitlab-runner/config.toml &lt;&lt;EOF</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[[</span><span class=l>runners.kubernetes.volumes.pvc]]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>name = &#34;{{.Values.cibuild.cache.pvcName}}&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>mount_path = &#34;{{.Values.cibuild.cache.mountPath}}&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=p>[[</span><span class=l>runners.kubernetes.volumes.pvc]]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>name = &#34;{{.Values.cibuild.builds.pvcName}}&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=l>mount_path = &#34;{{.Values.cibuild.builds.mountPath}}&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=l>EOF</span><span class=w>
+</span></span></span></code></pre></div><p>更新runner</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# helm upgrade gitlab-runner --namespace <span class=nb>test</span> ./gitlab-runner
+</span></span><span class=line><span class=cl>Release <span class=s2>&#34;gitlab-runner&#34;</span> has been upgraded. Happy Helming!
+</span></span><span class=line><span class=cl>NAME: gitlab-runner
+</span></span><span class=line><span class=cl>LAST DEPLOYED: Sun Mar <span class=m>31</span> 12:30:59 <span class=m>2024</span>
+</span></span><span class=line><span class=cl>NAMESPACE: <span class=nb>test</span>
+</span></span><span class=line><span class=cl>STATUS: deployed
+</span></span><span class=line><span class=cl>REVISION: <span class=m>7</span>
+</span></span><span class=line><span class=cl>TEST SUITE: None
+</span></span><span class=line><span class=cl>NOTES:
+</span></span><span class=line><span class=cl>Your GitLab Runner should now be registered against the GitLab instance reachable at: <span class=s2>&#34;http://192.168.1.55/&#34;</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>root@k8s-master71u:~# kubectl get pod -n <span class=nb>test</span>
+</span></span><span class=line><span class=cl>NAME                                           READY   STATUS    RESTARTS   AGE
+</span></span><span class=line><span class=cl>gitlab-runner-gitlab-runner-59cb5fc9df-zfwb5   1/1     Running   <span class=m>0</span>          28s
+</span></span></code></pre></div><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331203203.png width=1332 height=603 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331203203_hu568d3a308608fbcc1b58797a1094926e_120927_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331203203_hu568d3a308608fbcc1b58797a1094926e_120927_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=220 data-flex-basis=530px></p><p>在CI文件中配置，如果不開啟自訂構建目錄配置會出現錯誤。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>variables</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>  <span class=n>GIT_CLONE_PATH</span><span class=p>:</span> <span class=o>$</span><span class=n>CI_BUILDS_DIR</span><span class=o>/</span><span class=n>builds</span><span class=o>/$</span><span class=n>CI_PROJECT_NAMESPACE</span><span class=o>/$</span><span class=n>CI_PROJECT_NAME</span><span class=o>/$</span><span class=n>CI_PIPELINE_ID</span>
+</span></span></code></pre></div><p><img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331203617.png width=1272 height=802 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331203617_hu6cf61bcb252712ff30cfb190f012cc88_98816_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331203617_hu6cf61bcb252712ff30cfb190f012cc88_98816_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=158 data-flex-basis=380px></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>before_script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>mysql:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>alias</span><span class=p>:</span><span class=w> </span><span class=l>mysql-1  </span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>variables</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>GIT_CLONE_PATH</span><span class=p>:</span><span class=w> </span><span class=l>$CI_BUILDS_DIR/builds/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CI_PIPELINE_ID</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn clean package  -DskipTests -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls target/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>test</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>variables</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>GIT_CHECKOUT</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;false&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>maven:3.6.3-jdk-8</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>test</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>ls target/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>mvn test -Dmaven.repo.local=/home/gitlab-runner/ci-build-cache/maven</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>sleep 10</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>tags</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>k8s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>echo &#34;deploy&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>production</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>url</span><span class=p>:</span><span class=w> </span><span class=l>http:/google.com</span><span class=w>
+</span></span></span></code></pre></div><p>可以看到，test流程有上一個流程build出來的target目錄
+<img src=/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331204028.png width=1617 height=821 srcset="/2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331204028_hu169641e7286254a8d3d160688ad8a0b9_211660_480x0_resize_box_3.png 480w, /2024/install-gitlab-runner-in-kubernetes/media/Pasted-image-20240331204028_hu169641e7286254a8d3d160688ad8a0b9_211660_1024x0_resize_box_3.png 1024w" loading=lazy class=gallery-image data-flex-grow=196 data-flex-basis=472px></p></section><footer class=article-footer><section class=article-tags><a href=/tags/kubernetes/>Kubernetes</a>
+<a href=/tags/gitlab/>Gitlab</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相關文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/2024/kubernetes-rancher-install-prometheus-selector-to-master/><div class=article-details><h2 class=article-title>Kubernetes Rancher管理平台 Prometheus監控調度到master節點</h2></div></a></article><article><a href=/2024/kubernetes-use-kubespray-deploy-calico-bgp-backend-process-bird-is-not-running/><div class=article-details><h2 class=article-title>使用kubespray專案佈屬，calico bgp沒有啟動</h2></div></a></article><article><a href=/2024/kubenetes-nodelocaldns-nslookup-custom-domain-error/><div class=article-details><h2 class=article-title>kubernetes nodelocaldns 解析自定義domain失敗</h2></div></a></article><article><a href=/2023/kubernetes-rancher-install-prometheus/><div class=article-details><h2 class=article-title>Kubernetes 使用Rancher管理平台 安裝Prometheus監控</h2></div></a></article><article class=has-image><a href=/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/><div class=article-image><img src=/2023/ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived/media/_hu22d4264949f439b8802769db5f69cb0d_36536_c0cd8f7cf63dffc0c7cb863e69c61601.png width=250 height=150 loading=lazy alt="Featured image of post 使用kubespray專案，用ansible批量佈屬生產環境高可用kubernetes集群(haproxy、keepalived)" data-key=ansible-deploy-kubernetes-cluster-use-kubespray-haproxy-keepalived data-hash="md5-ksOzdmc4vGgYLEYiVrH4yg=="></div><div class=article-details><h2 class=article-title>使用kubespray專案，用ansible批量佈屬生產環境高可用kubernetes集群(haproxy、keepalived)</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//blog-goldfishbrain-fighting-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2022 -
+2024 翻轉吧金魚腦</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 建立<br>主題 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.20.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 設計</section><section class=totalcount>發表了128篇文章 ·
+總計63.96k字</section><section class=running-time>本站已運行
+<span id=runningdays class=running-days></span></section><section class=visit-count><span id=busuanzi_container_site_pv style=display:none>本站總訪問量 <span id=busuanzi_value_site_pv></span> 次 </span>·
+<span id=busuanzi_container_site_uv style=display:none>總訪客數 <span id=busuanzi_value_site_uv></span> 人</span></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script><a href=# id=back-to-top title=返回顶部></a><style>#back-to-top{display:none;position:fixed;bottom:20px;right:55px;width:55px;height:55px;border-radius:7px;background-color:rgba(64,158,255,.5);box-shadow:var(--shadow-l2);font-size:30px;text-align:center;line-height:50px;cursor:pointer}#back-to-top:before{content:' ';display:inline-block;position:relative;top:0;transform:rotate(135deg);height:10px;width:10px;border-width:0 0 2px 2px;border-color:var(--back-to-top-color);border-style:solid}#back-to-top:hover:before{border-color:#2674e0}@media screen and (max-width:768px){#back-to-top{bottom:20px;right:20px;width:40px;height:40px;font-size:10px}}@media screen and (min-width:1024px){#back-to-top{bottom:20px;right:40px}}@media screen and (min-width:1280px){#back-to-top{bottom:20px;right:55px}}@media screen and (min-width:1536px){#back-to-top{visibility:hidden}}</style><script>function backToTop(){document.documentElement.scrollIntoView({behavior:"smooth"})}window.onload=function(){let t=this.document.documentElement.scrollTop||this.document.body.scrollTop,e=this.document.getElementById("back-to-top");t>0?e.style.display="inline":e.style.display="none"},window.onscroll=function(){let t=this.document.documentElement.scrollTop||this.document.body.scrollTop,e=this.document.getElementById("back-to-top");t<200?e.style.display="none":(e.style.display="inline",e.addEventListener("click",backToTop,!1))}</script><script>(function(){var t,e=window;if(e.ChannelIO)return e.console.error("ChannelIO script included twice.");t=function(){t.c(arguments)},t.q=[],t.c=function(e){t.q.push(e)},e.ChannelIO=t;function n(){if(e.ChannelIOInitialized)return;e.ChannelIOInitialized=!0;var n,t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://cdn.channel.io/plugin/ch-plugin-web.js",n=document.getElementsByTagName("script")[0],n.parentNode&&n.parentNode.insertBefore(t,n)}document.readyState==="complete"?n():(e.addEventListener("DOMContentLoaded",n),e.addEventListener("load",n))})(),ChannelIO("boot",{pluginKey:"ad479103-2d28-421a-a916-ae09e72ce014"})</script><script>let s1="2023-10-7";s1=new Date(s1.replace(/-/g,"/"));let s2=new Date,timeDifference=s2.getTime()-s1.getTime(),days=Math.floor(timeDifference/(1e3*60*60*24)),hours=Math.floor(timeDifference%(1e3*60*60*24)/(1e3*60*60)),minutes=Math.floor(timeDifference%(1e3*60*60)/(1e3*60)),result=days+"天"+hours+"小時"+minutes+"分鐘";document.getElementById("runningdays").innerHTML=result</script></body></html>
