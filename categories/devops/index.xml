@@ -1,4 +1,301 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>devops on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/devops/</link><description>Recent content in devops on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 08 Oct 2023 11:49:00 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Jenkins+Gitlab+Ansible 版控與佈屬 Redis Redis-Sentinel集群</title><link>https://blog.goldfishbrain-fighting.com/2023/devops-jenkins-gitlab-ansible-redis/</link><pubDate>Sun, 08 Oct 2023 11:49:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/devops-jenkins-gitlab-ansible-redis/</guid><description>&lt;h1 id="今日大綱">今日大綱&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>devops on 翻轉吧金魚腦</title><link>https://blog.goldfishbrain-fighting.com/categories/devops/</link><description>Recent content in devops on 翻轉吧金魚腦</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 31 Mar 2024 16:46:28 +0800</lastBuildDate><atom:link href="https://blog.goldfishbrain-fighting.com/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>安裝Gitlab-runner在linux主機上(centos)，並註冊與執行pipeline</title><link>https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/</link><pubDate>Sun, 31 Mar 2024 16:46:28 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/</guid><description>&lt;h1 id="安裝gitlab-runner">安裝Gitlab Runner&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@docker ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.rpm.sh | sudo bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@docker ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># yum list gitlab-runner --showduplicates | sort -r&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Repository base is listed more than once in the configuration
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Repository updates is listed more than once in the configuration
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Repository extras is listed more than once in the configuration
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Repository centosplus is listed more than once in the configuration
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> * updates: mirror01.idc.hinet.net
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Loading mirror speeds from cached hostfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Loaded plugins: fastestmirror
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.9.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.9.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.8.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.8.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.7.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.7.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.6.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.6.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.6.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.5.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.4.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.4.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.4.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.3.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.3.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.3.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.2.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.2.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.2.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.1.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.1.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.10.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.0.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.0.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.0.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 16.0.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.9.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.9.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.8.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.8.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.8.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.8.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.7.4-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.7.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.7.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.7.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.7.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.6.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.6.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.6.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.6.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.5.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.5.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.5.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.4.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.4.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.4.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.3.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.3.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.3.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.3.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.2.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.2.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.2.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.1.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.11.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.11.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.1.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.10.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.10.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.0.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 15.0.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.9.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.9.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.9.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.8.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.8.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.8.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.7.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.7.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.6.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.6.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.5.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.5.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.5.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.4.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.4.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.4.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.3.4-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.3.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.3.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.3.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.2.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.1.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.10.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.10.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.0.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 14.0.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.9.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.8.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.7.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.6.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.5.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.4.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.4.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.3.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.3.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.3.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.2.4-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.2.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.2.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.2.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.2.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.1.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.1.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.12.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.1.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.11.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.1.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.10.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.0.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.0.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 13.0.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.9.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.9.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.8.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.7.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.7.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.6.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.5.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.4.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.4.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.3.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.2.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.10.3-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.10.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.1.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.10.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.10.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.0.2-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.0.1-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gitlab-runner.x86_64 12.0.0-1 runner_gitlab-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@docker ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># sudo yum install gitlab-runner-12.4.0-1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="gitlab-runner註冊">Gitlab Runner註冊&lt;/h1>
+&lt;p>進到已安裝的Gitlab管理頁面，點選Runners，可以看到URL和token&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165311.png"
+width="1703"
+height="548"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165311_hu40900f95c39bdb02c72f6dfc0492fc68_142487_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165311_hu40900f95c39bdb02c72f6dfc0492fc68_142487_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="310"
+data-flex-basis="745px"
+>&lt;/p>
+&lt;p>進行註冊&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>root@docker ~&lt;span class="o">]&lt;/span>&lt;span class="c1"># gitlab-runner register&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Runtime platform &lt;span class="nv">arch&lt;/span>&lt;span class="o">=&lt;/span>amd64 &lt;span class="nv">os&lt;/span>&lt;span class="o">=&lt;/span>linux &lt;span class="nv">pid&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">15214&lt;/span> &lt;span class="nv">revision&lt;/span>&lt;span class="o">=&lt;/span>1564076b &lt;span class="nv">version&lt;/span>&lt;span class="o">=&lt;/span>12.4.0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Running in system-mode.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please enter the gitlab-ci coordinator URL &lt;span class="o">(&lt;/span>e.g. https://gitlab.com/&lt;span class="o">)&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http://192.168.1.55/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please enter the gitlab-ci token &lt;span class="k">for&lt;/span> this runner:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">BmSnpmSVS3CMxQ9Vyiki
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please enter the gitlab-ci description &lt;span class="k">for&lt;/span> this runner:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>docker&lt;span class="o">]&lt;/span>: devops-service-runner
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please enter the gitlab-ci tags &lt;span class="k">for&lt;/span> this runner &lt;span class="o">(&lt;/span>comma separated&lt;span class="o">)&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">build
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Registering runner... succeeded &lt;span class="nv">runner&lt;/span>&lt;span class="o">=&lt;/span>BmSnpmSV
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please enter the executor: parallels, virtualbox, docker-ssh+machine, kubernetes, custom, docker, docker-ssh, shell, ssh, docker+machine:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">shell
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Runner registered successfully. Feel free to start it, but &lt;span class="k">if&lt;/span> it&lt;span class="err">&amp;#39;&lt;/span>s running already the config should be automatically reloaded!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>此時可以回到Gitlab頁面，查看runner是否已註冊&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165528.png"
+width="1311"
+height="569"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165528_hufb2be9430dd16e26e1a6ab1aacd88e34_114833_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165528_hufb2be9430dd16e26e1a6ab1aacd88e34_114833_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="230"
+data-flex-basis="552px"
+>
+確定已註冊，調整Runner設定，並分配給Project使用&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165643.png"
+width="1287"
+height="619"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165643_hufc51c7498b74892e6aa446224758f92c_85668_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165643_hufc51c7498b74892e6aa446224758f92c_85668_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="207"
+data-flex-basis="498px"
+>&lt;/p>
+&lt;p>這裡可以看到，我分配給demo-ci-service project使用
+&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165743.png"
+width="1304"
+height="456"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165743_hua6ee695c9aa70849f781761a365922c8_101664_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165743_hua6ee695c9aa70849f781761a365922c8_101664_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="285"
+data-flex-basis="686px"
+>&lt;/p>
+&lt;h1 id="測試-runner-執行pipeline">測試 Runner 執行pipeline&lt;/h1>
+&lt;p>在專案新增一個名為.gitlab-ci.yml的檔案&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165923.png"
+width="1009"
+height="571"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165923_hu844c094cec17ef2c00f5f4e343d91330_68754_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331165923_hu844c094cec17ef2c00f5f4e343d91330_68754_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="176"
+data-flex-basis="424px"
+>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yml" data-lang="yml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">before_script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;before-script!!&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">variables&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">DOMAIN&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">example.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">stages&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">codescan&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">before_script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;before-script in job&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stage&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;mvn clean &amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;mvn install&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;$DOMAIN&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">after_script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;after script in buildjob&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">unittest&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stage&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;run test&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">deploy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stage&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;hello deploy&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">sleep 2;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">codescan&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stage&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">codescan&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;codescan&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">sleep 5;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">after_script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">echo &amp;#34;after-script&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">ech&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>保存並執行pipeline&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170107.png"
+width="1697"
+height="695"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170107_hu2481090078c1879a8e6537a300d4bf0a_137679_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170107_hu2481090078c1879a8e6537a300d4bf0a_137679_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="244"
+data-flex-basis="586px"
+>&lt;/p>
+&lt;p>可以看到，執行完成&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170208.png"
+width="1279"
+height="678"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170208_hu507f227958892e328ca79cdcd72a5d25_49476_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170208_hu507f227958892e328ca79cdcd72a5d25_49476_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="188"
+data-flex-basis="452px"
+>&lt;/p>
+&lt;p>可以看到，確定是使用，我們分配的runner執行&lt;/p>
+&lt;p>&lt;img src="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170250.png"
+width="1185"
+height="707"
+srcset="https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170250_hu71a6580a0afba6110fed958f08a72296_72155_480x0_resize_box_3.png 480w, https://blog.goldfishbrain-fighting.com/2024/install-gitlab-runner-in-linux-baremetal/media/Pasted-image-20240331170250_hu71a6580a0afba6110fed958f08a72296_72155_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+class="gallery-image"
+data-flex-grow="167"
+data-flex-basis="402px"
+>&lt;/p></description></item><item><title>Jenkins+Gitlab+Ansible 版控與佈屬 Redis Redis-Sentinel集群</title><link>https://blog.goldfishbrain-fighting.com/2023/devops-jenkins-gitlab-ansible-redis/</link><pubDate>Sun, 08 Oct 2023 11:49:00 +0800</pubDate><guid>https://blog.goldfishbrain-fighting.com/2023/devops-jenkins-gitlab-ansible-redis/</guid><description>&lt;h1 id="今日大綱">今日大綱&lt;/h1>
 &lt;ol>
 &lt;li>Ansible自動化安裝Redis、Redis-Sentinel服務&lt;/li>
 &lt;li>Gitlab redis-config設定檔管理
